@@ -6,11 +6,10 @@ using Avalonia.Media;
 using Calcy.Core;
 using Calcy.UI.Controls;
 using Calcy.UI.Services;
-using Calcy.UI.Theming;
 
 namespace Calcy.App;
 
-/// <summary>The top bar: logo, mode dropdown, quick setting chips, colour scheme menu, settings and help.</summary>
+/// <summary>The top bar: logo, mode dropdown, quick setting chips, settings and help.</summary>
 internal sealed class TopBar : Border
 {
     private readonly AppServices _services;
@@ -18,9 +17,7 @@ internal sealed class TopBar : Border
     private readonly PixelButton _modeButton;
     private readonly PixelButton _angleChip;
     private readonly PixelButton _resultChip;
-    private readonly PixelButton _formatChip;
     private readonly Flyout _modeFlyout;
-    private readonly Flyout _colourFlyout;
     private string _currentMode = "advanced";
 
     public event EventHandler<string>? ModeSelected;
@@ -95,32 +92,15 @@ internal sealed class TopBar : Border
             services.NotifySettingsChanged();
         };
         ToolTip.SetTip(_resultChip, "Results: fractions first (Casio style) or decimals first");
-        _formatChip = Chip(null);
-        _formatChip.Click += (_, _) => SettingsRequested?.Invoke(this, EventArgs.Empty);
-        ToolTip.SetTip(_formatChip, "Number format (open Settings)");
 
-        _colourFlyout = new Flyout { Placement = PlacementMode.BottomEdgeAlignedRight };
-        var colours = new PixelButton { Padding = new Thickness(10, 4), MinHeight = 44, VerticalAlignment = VerticalAlignment.Center };
-        colours.Bind(BackgroundProperty, colours.GetResourceObservable("Calcy.Bar"));
-        colours.Bind(BorderBrushProperty, colours.GetResourceObservable("Calcy.BarInk"));
-        colours.Classes.Add("flat");
-        var colourLabel = new PixelText { Text = "COLOURS", PixelSize = 2, VerticalAlignment = VerticalAlignment.Center };
-        colourLabel.Bind(PixelText.ForegroundProperty, colourLabel.GetResourceObservable("Calcy.BarInk"));
-        colours.Content = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, Children = { new SchemeSwatchIcon { Width = 20, Height = 20 }, colourLabel } };
-        colours.Flyout = _colourFlyout;
-        colours.Click += (_, _) => _colourFlyout.Content = BuildColourMenu();
-        ToolTip.SetTip(colours, "Colour scheme (applies everywhere)");
-
-        var settings = IconButton("settings", "Settings (Ctrl+,)");
+        var settings = IconButton("settings", "Settings (Ctrl+,), press again to close");
         settings.Click += (_, _) => SettingsRequested?.Invoke(this, EventArgs.Empty);
-        var help = IconButton("help", "Help and function catalog (F1)");
+        var help = IconButton("help", "Help and function catalog (F1), press again to close");
         help.Click += (_, _) => HelpRequested?.Invoke(this, EventArgs.Empty);
 
         var right = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10, VerticalAlignment = VerticalAlignment.Center };
         right.Children.Add(_angleChip);
         right.Children.Add(_resultChip);
-        right.Children.Add(_formatChip);
-        right.Children.Add(colours);
         right.Children.Add(settings);
         right.Children.Add(help);
 
@@ -160,7 +140,6 @@ internal sealed class TopBar : Border
         var s = _services.Settings;
         _angleChip.Content = s.Angle switch { AngleMode.Degree => "DEG", AngleMode.Gradian => "GRAD", _ => "RAD" };
         _resultChip.Content = s.Results == ResultPreference.ExactFirst ? "FRAC" : "DEC";
-        _formatChip.Content = $"{s.Format.ToString().ToUpperInvariant()} {s.Digits}";
     }
 
     public void SetMode(string id)
@@ -222,56 +201,6 @@ internal sealed class TopBar : Border
         return Framed(stack);
     }
 
-    private Control BuildColourMenu()
-    {
-        var stack = new StackPanel { Width = 360 };
-        var header = new Border { Padding = new Thickness(12, 8), BorderThickness = new Thickness(0, 0, 0, 3) };
-        header.Bind(BackgroundProperty, header.GetResourceObservable("Calcy.Head"));
-        header.Bind(BorderBrushProperty, header.GetResourceObservable("Calcy.Line"));
-        var ht = new PixelText { Text = "COLOUR SCHEME", PixelSize = 1.5 };
-        ht.Bind(PixelText.ForegroundProperty, ht.GetResourceObservable("Calcy.Ink"));
-        header.Child = ht;
-        stack.Children.Add(header);
-        foreach (var scheme in ColorSchemes.All)
-        {
-            var swatch = new StackPanel { Orientation = Orientation.Horizontal };
-            foreach (var token in new[] { "Ground", "Paper", "Head", "Sel", "Primary", "G1" })
-                swatch.Children.Add(new Border { Width = 16, Height = 22, Background = new SolidColorBrush(scheme[token]) });
-            var frame = new Border { Child = swatch, BorderThickness = new Thickness(2), VerticalAlignment = VerticalAlignment.Center };
-            frame.Bind(BorderBrushProperty, frame.GetResourceObservable("Calcy.Line"));
-            var name = new TextBlock { Text = scheme.Name, FontSize = 16, FontWeight = FontWeight.SemiBold, VerticalAlignment = VerticalAlignment.Center };
-            name.Bind(TextBlock.FontFamilyProperty, name.GetResourceObservable("Calcy.Font.Body"));
-            var mark = new TextBlock { Text = scheme.Id == _services.Theme.Current.Id ? "SELECTED" : "", FontSize = 10, Classes = { "label" }, VerticalAlignment = VerticalAlignment.Center };
-            var grid = new Grid { ColumnDefinitions = new ColumnDefinitions("Auto,*,Auto"), ColumnSpacing = 12 };
-            Grid.SetColumn(frame, 0);
-            Grid.SetColumn(name, 1);
-            Grid.SetColumn(mark, 2);
-            grid.Children.Add(frame);
-            grid.Children.Add(name);
-            grid.Children.Add(mark);
-            var item = new Button
-            {
-                Content = grid,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                Padding = new Thickness(12, 8),
-                BorderThickness = new Thickness(0, 0, 0, 2),
-                CornerRadius = new CornerRadius(0),
-            };
-            item.Bind(BackgroundProperty, item.GetResourceObservable(scheme.Id == _services.Theme.Current.Id ? "Calcy.Sel" : "Calcy.Paper"));
-            item.Bind(BorderBrushProperty, item.GetResourceObservable("Calcy.Key"));
-            item.Bind(TemplatedControl.ForegroundProperty, item.GetResourceObservable("Calcy.Ink"));
-            var id = scheme.Id;
-            item.Click += (_, _) =>
-            {
-                _colourFlyout.Hide();
-                _services.SetScheme(id);
-            };
-            stack.Children.Add(item);
-        }
-        return Framed(stack);
-    }
-
     private static Control Framed(Control content)
     {
         var b = new Border { Child = content, BorderThickness = new Thickness(4) };
@@ -302,28 +231,6 @@ internal sealed class LogoIcon : Control
     {
         base.OnAttachedToVisualTree(e);
         ActualThemeVariantChanged += (_, _) => InvalidateVisual();
-        if (Application.Current is { } app) app.ResourcesChanged += (_, _) => InvalidateVisual();
-    }
-}
-
-/// <summary>Four squares in the current scheme's accent colours.</summary>
-internal sealed class SchemeSwatchIcon : Control
-{
-    public override void Render(DrawingContext context)
-    {
-        double s = Math.Min(Bounds.Width, Bounds.Height) / 16.0;
-        string[] keys = ["Calcy.Sel", "Calcy.Head", "Calcy.Primary", "Calcy.Mem"];
-        Rect[] rects = [new(2, 2, 5, 5), new(9, 2, 5, 5), new(2, 9, 5, 5), new(9, 9, 5, 5)];
-        using (context.PushTransform(Matrix.CreateScale(s, s)))
-        {
-            for (int i = 0; i < 4; i++)
-                context.FillRectangle(this.FindResource(keys[i]) as IBrush ?? Brushes.Gray, rects[i]);
-        }
-    }
-
-    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
-    {
-        base.OnAttachedToVisualTree(e);
         if (Application.Current is { } app) app.ResourcesChanged += (_, _) => InvalidateVisual();
     }
 }

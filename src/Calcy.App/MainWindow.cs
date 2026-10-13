@@ -41,8 +41,8 @@ public sealed class MainWindow : Window
 
         _top = new TopBar(services);
         _top.ModeSelected += (_, id) => ShowMode(id);
-        _top.SettingsRequested += (_, _) => ShowMode("settings");
-        _top.HelpRequested += (_, _) => ShowMode("help");
+        _top.SettingsRequested += (_, _) => ToggleMode("settings");
+        _top.HelpRequested += (_, _) => ToggleMode("help");
 
         var dither = new DitherBackground();
         dither.Bind(DitherBackground.BackgroundProperty, dither.GetResourceObservable("Calcy.Ground"));
@@ -116,6 +116,9 @@ public sealed class MainWindow : Window
 
     private string _previous = "advanced";
 
+    /// <summary>Opens Settings or Help, or closes it again when it is already showing.</summary>
+    public void ToggleMode(string id) => ShowMode(_current == id ? _previous : id);
+
     /// <summary>For screenshots and tests: send text to the current mode's input.</summary>
     public void SendInput(string text)
     {
@@ -149,9 +152,10 @@ public sealed class MainWindow : Window
             }
             if (e.Key == Key.E) { ShowMode("code"); e.Handled = true; return; }
             if (e.Key == Key.N && e.KeyModifiers.HasFlag(KeyModifiers.Shift)) { ShowMode("notebook"); e.Handled = true; return; }
-            if (e.Key == Key.OemComma) { ShowMode("settings"); e.Handled = true; return; }
+            if (e.Key == Key.OemComma) { ToggleMode("settings"); e.Handled = true; return; }
         }
-        if (e.Key == Key.F1) { ShowMode("help"); e.Handled = true; }
+        if (e.Key == Key.F1) { ToggleMode("help"); e.Handled = true; }
+        else if (e.Key == Key.Escape && _current is "settings" or "help") { ShowMode(_previous); e.Handled = true; }
     }
 }
 

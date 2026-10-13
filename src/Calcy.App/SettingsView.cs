@@ -18,21 +18,14 @@ internal sealed class SettingsView : UserControl
     public SettingsView(AppServices services, Action back)
     {
         _s = services;
-        var root = new DockPanel { Margin = new Thickness(24) };
+        var root = new Grid { RowDefinitions = new RowDefinitions("*,Auto"), Margin = new Thickness(24, 24, 24, 16) };
 
-        var nav = new PixelPanel { Header = "Settings", Width = 260, VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(0, 0, 24, 0) };
-        var navStack = new StackPanel { Spacing = 0 };
-        foreach (var s in new[] { "Results and input", "Look", "Code sandbox", "AI connections", "About Calcy" })
-        {
-            var t = new TextBlock { Text = s, FontSize = 16, Margin = new Thickness(14, 10) };
-            navStack.Children.Add(t);
-        }
-        var backButton = new PixelButton { Content = "BACK TO CALCULATOR", Classes = { "primary" }, Margin = new Thickness(12), HorizontalAlignment = HorizontalAlignment.Stretch };
-        backButton.Click += (_, _) => back();
-        navStack.Children.Add(backButton);
-        nav.Content = navStack;
-        DockPanel.SetDock(nav, Dock.Left);
-        root.Children.Add(nav);
+        // The settings button, Ctrl+, and Esc close Settings too; this button is for anyone who doesn't know that.
+        var close = new PixelButton { Content = "CLOSE", Classes = { "primary" }, MinWidth = 140, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 14, 12, 0) };
+        ToolTip.SetTip(close, "Close Settings (Esc)");
+        close.Click += (_, _) => back();
+        Grid.SetRow(close, 1);
+        root.Children.Add(close);
 
         var content = new StackPanel { Spacing = 22 };
         content.Children.Add(ResultsPanel());
