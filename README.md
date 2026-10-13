@@ -21,6 +21,16 @@ the app (`Calcy`) and the terminal calculator and MCP server (`calcy-cli`); no .
 | Any other Linux (glibc) | `calcy-<version>-linux-x64.tar.gz` | Unpack anywhere and run `Calcy` |
 
 Arm64 Linux packages are built too (`arm64.deb`, `aarch64.rpm`, `linux-arm64.tar.gz`).
+
+The Linux packages are signed with the Calcy release key (`calcy-signing-key.asc` in each release and in
+`build/linux`, fingerprint `9ABC 1F60 CCD1 6081 FECE 853C 9FD7 437C 4F0E E964`):
+
+```bash
+gpg --import calcy-signing-key.asc
+gpg --verify calcy_<version>_amd64.deb.asc calcy_<version>_amd64.deb
+sudo rpm --import calcy-signing-key.asc && rpm -K calcy-<version>.x86_64.rpm
+gpg --verify SHA256SUMS.txt.asc SHA256SUMS.txt && sha256sum -c --ignore-missing SHA256SUMS.txt
+```
 ## Requirements for building
 
 - .NET 10 SDK

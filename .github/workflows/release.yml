@@ -132,6 +132,45 @@ jobs:
           -FileVersion ${{ needs.version.outputs.file_version }}
           -Commit ${{ needs.version.outputs.commit }}
           -Output artifacts
+      - name: Sign the Linux packages
+        if: runner.os == 'Linux'
+        shell: bash
+        env:
+          SIGNING_KEY: ${{ secrets.LINUX_SIGNING_KEY }}
+          EXPECTED_FINGERPRINT: ${{ vars.LINUX_SIGNING_FINGERPRINT }}
+        run: |
+          set -euo pipefail
+          if [ -z "$SIGNING_KEY" ]; then
+            echo "::warning::The LINUX_SIGNING_KEY secret is not set, so the Linux packages are not signed."
+            exit 0
+          fi
+          export GNUPGHOME=$(mktemp -d)
+          trap 'gpgconf --kill gpg-agent; rm -rf "$GNUPGHOME"' EXIT
+          printf '%s\n' "$SIGNING_KEY" | gpg --batch --quiet --import
+          fpr=$(gpg --batch --with-colons --list-secret-keys | awk -F: '/^fpr/ {print $10; exit}')
+          published=$(gpg --batch --with-colons --import-options show-only --import build/linux/calcy-signing-key.asc | awk -F: '/^fpr/ {print $10; exit}')
+          # Users verify with the public key in the repository, so the secret must be the same key.
+          if [ "$fpr" != "$published" ]; then
+            echo "::error::The signing key ($fpr) is not the one in build/linux/calcy-signing-key.asc ($published)."
+            exit 1
+          fi
+          if [ -n "$EXPECTED_FINGERPRINT" ] && [ "$fpr" != "$EXPECTED_FINGERPRINT" ]; then
+            echo "::error::The signing key ($fpr) does not match the LINUX_SIGNING_FINGERPRINT variable ($EXPECTED_FINGERPRINT)."
+            exit 1
+          fi
+          # Embedded rpm signatures, checked by rpm -K and by dnf once the key is imported.
+          rpmsign --define "_gpg_name $fpr" --define "_gpg_digest_algo sha256" --addsign artifacts/*.rpm
+          rpmdb=$(mktemp -d)
+          rpm --dbpath "$rpmdb" --initdb
+          rpmkeys --dbpath "$rpmdb" --import build/linux/calcy-signing-key.asc
+          rpmkeys --dbpath "$rpmdb" --checksig artifacts/*.rpm
+          # Detached signatures for every Linux package, verified straight away.
+          for f in artifacts/*.rpm artifacts/*.deb artifacts/*.tar.gz; do
+            gpg --batch --yes --local-user "$fpr" --armor --detach-sign --output "$f.asc" "$f"
+            gpg --batch --verify "$f.asc" "$f"
+          done
+          cp build/linux/calcy-signing-key.asc artifacts/
+          echo "Signed with $fpr" >> "$GITHUB_STEP_SUMMARY"
       - name: Smoke test (Windows)
         if: matrix.rid == 'win-x64'
         shell: pwsh
@@ -170,6 +209,7 @@ jobs:
             artifacts/*.tar.gz
             artifacts/*.deb
             artifacts/*.rpm
+            artifacts/*.asc
           if-no-files-found: error
           retention-days: 30
 
@@ -201,6 +241,25 @@ jobs:
         with:
           name: packages-linux-x64
           path: packages
+      - name: Check the signatures
+        run: |
+          set -eu
+          if [ ! -f packages/calcy-signing-key.asc ]; then
+            echo "::warning::The packages are not signed."
+            exit 0
+          fi
+          if [ "${{ matrix.kind }}" = "deb" ]; then
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get update
+            apt-get install -y --no-install-recommends gnupg
+            export GNUPGHOME=$(mktemp -d)
+            gpg --batch --import packages/calcy-signing-key.asc
+            gpg --batch --verify packages/*.deb.asc packages/*.deb
+          else
+            # rpm checks the embedded signature against the imported key.
+            rpm --import packages/calcy-signing-key.asc
+            rpm --checksig packages/*.rpm | tee /dev/stderr | grep -q "signatures OK"
+          fi
       - name: Install the .deb with its dependencies
         if: matrix.kind == 'deb'
         run: |
@@ -242,6 +301,20 @@ jobs:
           merge-multiple: true
       - name: Checksums
         run: cd packages && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - name: Sign the checksums
+        env:
+          SIGNING_KEY: ${{ secrets.LINUX_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$SIGNING_KEY" ]; then
+            echo "::warning::The LINUX_SIGNING_KEY secret is not set, so SHA256SUMS.txt is not signed."
+            exit 0
+          fi
+          export GNUPGHOME=$(mktemp -d)
+          trap 'gpgconf --kill gpg-agent; rm -rf "$GNUPGHOME"' EXIT
+          printf '%s\n' "$SIGNING_KEY" | gpg --batch --quiet --import
+          gpg --batch --yes --armor --detach-sign --output packages/SHA256SUMS.txt.asc packages/SHA256SUMS.txt
+          gpg --batch --verify packages/SHA256SUMS.txt.asc packages/SHA256SUMS.txt
       - name: Create the draft release
         env:
           GH_TOKEN: ${{ github.token }}
