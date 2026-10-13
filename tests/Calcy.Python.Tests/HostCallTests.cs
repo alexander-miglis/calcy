@@ -66,6 +66,17 @@ public class TimeLimitPauseTests
     }
 
     [Fact]
+    public void ALongHostCallTimesOutEvenWhenTheProgramEndsRightAfter()
+    {
+        // The clock is read every 1024 steps; after a host call it is read at the next statement.
+        var sb = new StringBuilder();
+        var e = NewEngine(TimeSpan.FromMilliseconds(300), sb);
+        var r = e.Execute("import host\nhost.wait_plain(600)\nprint('not reached')");
+        Assert.Equal(ExecutionStatus.TimedOut, r.Status);
+        Assert.Equal("", sb.ToString());
+    }
+
+    [Fact]
     public void EngineWaitOutsideTimeLimitReturnsTheValue()
     {
         var sb = new StringBuilder();

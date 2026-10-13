@@ -216,7 +216,7 @@ internal sealed class Interp
         if (Ct.IsCancellationRequested)
             throw Terminate(TerminationReason.Cancelled, "execution was cancelled");
         if (_timeout.HasValue && LimitedElapsed > _timeout.Value)
-            throw Terminate(TerminationReason.Timeout, $"execution time limit of {_timeout.Value.TotalSeconds:0.###} s exceeded");
+            throw TimeLimitExceeded();
         if (MaxMemory > 0 && (++_checks & 31) == 0)
         {
             long used = GC.GetTotalMemory(false) - _memoryBaseline;
@@ -252,8 +252,15 @@ internal sealed class Interp
         if (_pauseDepth == 0) return;
         if (--_pauseDepth == 0) _paused += _clock.Elapsed - _pauseStart;
         // check cancellation at the next statement
-        NextCheck = Math.Min(NextCheck, Steps + 1);
+        CheckSoon();
     }
+
+    /// <summary>The error that ends a run at its time limit.</summary>
+    public TerminationException TimeLimitExceeded() =>
+        Terminate(TerminationReason.Timeout, $"execution time limit of {_timeout.GetValueOrDefault().TotalSeconds:0.###} s exceeded");
+
+    /// <summary>Checks the limits and cancellation at the next step, for example after a host call that took a while.</summary>
+    public void CheckSoon() => NextCheck = Math.Min(NextCheck, Steps + 1);
 
     /// <summary>Excludes time spent waiting for the host (for example in input()) from the timeout.</summary>
     public T Paused<T>(Func<T> f)

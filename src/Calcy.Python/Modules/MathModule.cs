@@ -22,6 +22,52 @@ internal static class MathModule
         return new PyFloat(r);
     }
 
+    /// <summary>
+    /// Cube root rounded to the nearest double on every platform. Math.Cbrt comes from the C library, and glibc's
+    /// is up to 2 units in the last place off (cbrt(27) printed 3.0000000000000004 on Linux).
+    /// </summary>
+    internal static double Cbrt(double x)
+    {
+        if (x == 0 || !double.IsFinite(x)) return Math.Cbrt(x);
+        double a = Math.Abs(x);
+        double r = Math.Cbrt(a);
+        // The double within 3 units of r whose cube is closest to a, compared exactly; r comes first so it wins ties.
+        var candidates = new List<double> { r };
+        double down = r, up = r;
+        for (int i = 0; i < 3; i++)
+        {
+            down = Math.BitDecrement(down);
+            up = Math.BitIncrement(up);
+            candidates.Add(down);
+            candidates.Add(up);
+        }
+        var (ma, ea) = Split(a);
+        int k = ea;
+        foreach (var c in candidates) k = Math.Min(k, 3 * Split(c).Exponent);
+        double best = r;
+        BigInteger bestError = BigInteger.MinusOne;
+        foreach (var c in candidates)
+        {
+            var (mc, ec) = Split(c);
+            var error = BigInteger.Abs((BigInteger.Pow(mc, 3) << (3 * ec - k)) - (ma << (ea - k)));
+            if (bestError.Sign < 0 || error < bestError)
+            {
+                best = c;
+                bestError = error;
+            }
+        }
+        return Math.CopySign(best, x);
+    }
+
+    /// <summary>A positive finite double as mantissa times a power of two.</summary>
+    private static (BigInteger Mantissa, int Exponent) Split(double v)
+    {
+        long bits = BitConverter.DoubleToInt64Bits(v);
+        int exp = (int)((bits >> 52) & 0x7FF);
+        long frac = bits & 0xFFFFFFFFFFFFFL;
+        return exp == 0 ? (frac, -1074) : (frac | (1L << 52), exp - 1075);
+    }
+
     public static PyModule Create()
     {
         var m = new PyModule("math", new Namespace(), true);
@@ -51,7 +97,7 @@ internal static class MathModule
         F1("expm1", Expm1, true);
         F1("log1p", x => x <= -1 ? (x == -1 ? double.NegativeInfinity : double.NaN) : Log1p(x));
         F1("fabs", Math.Abs);
-        F1("cbrt", Math.Cbrt);
+        F1("cbrt", Cbrt);
         F1("erf", SpecialFunctions.Erf);
         F1("erfc", SpecialFunctions.Erfc);
         F1("degrees", x => x * (180.0 / Math.PI));

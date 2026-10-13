@@ -21,7 +21,8 @@ internal static class TestSupport
             _done = true;
             var field = typeof(Headless).GetField("_session", BindingFlags.NonPublic | BindingFlags.Static);
             if (field is null || field.GetValue(null) is not null) return;
-            field.SetValue(null, HeadlessUnitTestSession.StartNew(typeof(SkiaEntry)));
+            // One app for the whole assembly: rebuilding it for every test raced with the render loop now and then.
+            field.SetValue(null, HeadlessUnitTestSession.StartNew(typeof(SkiaEntry), AvaloniaTestIsolationLevel.PerAssembly));
         }
     }
 

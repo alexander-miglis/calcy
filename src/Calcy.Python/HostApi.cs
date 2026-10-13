@@ -585,6 +585,12 @@ internal static class HostBridge
         {
             throw PyErr.RuntimeError($"{name}() failed: {e.Message}");
         }
+        finally
+        {
+            // Time spent in the host counts unless it was paused, so look at the clock before the next statement
+            // rather than up to 1024 steps later (a long call followed by a short ending would otherwise finish).
+            Interp.CurrentOrNull?.CheckSoon();
+        }
     }
 
     public static PythonException ToPython(PythonRaiseException e)

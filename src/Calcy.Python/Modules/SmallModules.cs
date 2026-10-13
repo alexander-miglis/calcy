@@ -205,8 +205,10 @@ internal static class TimeModule
                 truncated = true;
             }
             engine.DoSleep(wanted, ctx.Ct);
-            if (truncated) ctx.Steps = Math.Max(ctx.Steps, ctx.NextCheck);
             ctx.Check();
+            // The limit falls inside this sleep. Timers can wake a fraction of a millisecond early (Linux does),
+            // so stop here rather than trusting the clock to read past the limit.
+            if (truncated) throw ctx.TimeLimitExceeded();
             return Py.None;
         });
         m.AddFunction("ctime", (a, kw) =>
