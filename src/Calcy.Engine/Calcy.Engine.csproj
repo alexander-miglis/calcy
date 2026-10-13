@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.Engine</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.Core\Calcy.Core.csproj" />
+    <ProjectReference Include="..\Calcy.Cas\Calcy.Cas.csproj" />
+    <ProjectReference Include="..\Calcy.Numerics\Calcy.Numerics.csproj" />
+    <ProjectReference Include="..\Calcy.Statistics\Calcy.Statistics.csproj" />
+    <ProjectReference Include="..\Calcy.Formulas\Calcy.Formulas.csproj" />
+    <ProjectReference Include="..\Calcy.Units\Calcy.Units.csproj" />
+  </ItemGroup>
+</Project>

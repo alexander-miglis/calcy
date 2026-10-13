@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Matrix mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Matrix" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+
+    <section aria-label="Matrix library" style="flex: 1 1 200px; max-width: 220px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Matrices</h2>
+      <sc-for list="{{library}}" as="m" hint-placeholder-count="3">
+        <button type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px 14px; min-height: 52px; border: 0; border-bottom: 3px solid var(--line); cursor: pointer; color: var(--ink); background-color: {{m.bg}}">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700">{{m.name}}</span>
+          <span style="font-family: 'Silkscreen', monospace; font-size: 12px">{{m.dims}}</span>
+        </button>
+      </sc-for>
+      <div style="padding: 10px 14px; font-size: 13px; color: var(--muted)">Use them anywhere: A⁻¹·B, det(A), A².</div>
+    </section>
+
+    <section aria-label="Matrix editor" style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <div style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 14px; background-color: var(--sel); border-bottom: 4px solid var(--line)">
+          <h2 style="margin: 0; font-family: 'Silkscreen', monospace; font-size: 14px">Edit {{selName}}</h2>
+          <div style="display: flex; gap: 14px; align-items: center; font-family: 'Silkscreen', monospace; font-size: 12px">
+            <span>Rows</span>
+            <button type="button" onClick="{{rowsDown}}" aria-label="Fewer rows" style="width: 36px; height: 36px; border: 2px solid var(--line); background-color: var(--paper); font-size: 16px; color: var(--ink)">−</button>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px">{{rows}}</span>
+            <button type="button" onClick="{{rowsUp}}" aria-label="More rows" style="width: 36px; height: 36px; border: 2px solid var(--line); background-color: var(--paper); font-size: 16px; color: var(--ink)">+</button>
+            <span>Cols</span>
+            <button type="button" onClick="{{colsDown}}" aria-label="Fewer columns" style="width: 36px; height: 36px; border: 2px solid var(--line); background-color: var(--paper); font-size: 16px; color: var(--ink)">−</button>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px">{{cols}}</span>
+            <button type="button" onClick="{{colsUp}}" aria-label="More columns" style="width: 36px; height: 36px; border: 2px solid var(--line); background-color: var(--paper); font-size: 16px; color: var(--ink)">+</button>
+          </div>
+        </div>
+        <div style="padding: 20px; display: flex; justify-content: center">
+          <div style="display: flex; align-items: stretch">
+            <span style="width: 12px; border: 4px solid var(--ink); border-right: 0"></span>
+            <div style="display: grid; gap: 8px; padding: 8px 10px; grid-template-columns: {{gridCols}}">
+              <sc-for list="{{cells}}" as="c" hint-placeholder-count="9">
+                <input type="text" aria-label="{{c.label}}" value="{{c.v}}" onChange="{{c.set}}" style="width: 84px; min-height: 48px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 20px; text-align: center; background-color: var(--card); color: var(--ink)">
+              </sc-for>
+            </div>
+            <span style="width: 12px; border: 4px solid var(--ink); border-left: 0"></span>
+          </div>
+        </div>
+        <div style="padding: 0 14px 12px; font-size: 13px; color: var(--muted); text-align: center">Cells take fractions (2/3), decimals and expressions (√2, π/4). Results stay exact.</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{ops}}" as="o" hint-placeholder-count="9">
+          <button type="button" onClick="{{o.run}}" style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--ink); min-height: 52px; border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); cursor: pointer; background-color: {{o.bg}}">{{o.label}}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center; background-color: var(--paper); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); padding: 10px">
+        <span style="flex: 1; min-height: 48px; border: 3px solid var(--line); background-color: var(--card); display: flex; align-items: center; padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 20px; color: var(--ink)">A⁻¹ · B</span>
+        <button type="button" onClick="{{runSolve}}" aria-label="Calculate" style="font-family: 'Silkscreen', monospace; font-size: 22px; color: var(--ink); background-color: var(--primary); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); width: 72px; min-height: 52px">=</button>
+      </div>
+    </section>
+
+    <aside aria-label="Matrix cards" style="flex: 1 1 300px; max-width: 360px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column; max-height: 760px">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--mem); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Cards</h2>
+      <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="2">
+          <article style="border: 3px solid {{c.border}}; background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="padding: 4px 8px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">#{{c.n}}  {{c.title}}</div>
+            <div style="padding: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+              <sc-if value="{{c.isMatrix}}" hint-placeholder-val="{{ true }}">
+                <div style="display: flex; align-items: stretch">
+                  <span style="width: 8px; border: 3px solid var(--ink); border-right: 0"></span>
+                  <div style="display: grid; gap: 4px 14px; padding: 4px 8px; font-family: 'JetBrains Mono', monospace; font-size: 17px; text-align: center; grid-template-columns: {{c.gridCols}}">
+                    <sc-for list="{{c.cells}}" as="x" hint-placeholder-count="3"><span>{{x}}</span></sc-for>
+                  </div>
+                  <span style="width: 8px; border: 3px solid var(--ink); border-left: 0"></span>
+                </div>
+              </sc-if>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; white-space: pre-line">{{c.text}}</span>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sel: 'A',
+      mats: {
+        A: { r: 3, c: 3, v: ['2', '1', '-1', '-3', '-1', '2', '-2', '1', '2'] },
+        B: { r: 3, c: 1, v: ['8', '-11', '-3'] },
+        C: { r: 2, c: 2, v: ['1', '2', '3', '4'] }
+      },
+      cards: []
+    };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a || 1; }
+  fr(n, d = 1) { if (d < 0) { n = -n; d = -d; } const g = this.gcd(n, d); return [n / g, d / g]; }
+  add(p, q) { return this.fr(p[0] * q[1] + q[0] * p[1], p[1] * q[1]); }
+  sub(p, q) { return this.fr(p[0] * q[1] - q[0] * p[1], p[1] * q[1]); }
+  mul(p, q) { return this.fr(p[0] * q[0], p[1] * q[1]); }
+  div(p, q) { return this.fr(p[0] * q[1], p[1] * q[0]); }
+  str(p) { return p[1] === 1 ? String(p[0]) : p[0] + '/' + p[1]; }
+  parse(s) {
+    s = String(s).trim();
+    if (s.includes('/')) { const [a, b] = s.split('/'); return this.fr(parseInt(a, 10) || 0, parseInt(b, 10) || 1); }
+    if (s.includes('.')) { const k = s.split('.')[1].length; return this.fr(Math.round(parseFloat(s) * 10 ** k), 10 ** k); }
+    return this.fr(parseInt(s, 10) || 0, 1);
+  }
+  grid(m) { const out = []; for (let i = 0; i < m.r; i++) { out.push([]); for (let j = 0; j < m.c; j++) out[i].push(this.parse(m.v[i * m.c + j])); } return out; }
+  rref(M) {
+    const A = M.map(r => r.slice()); const rows = A.length, cols = A[0].length; let lead = 0, rank = 0;
+    for (let r = 0; r < rows && lead < cols; r++) {
+      let i = r;
+      while (A[i][lead][0] === 0) { i++; if (i === rows) { i = r; lead++; if (lead === cols) return { A, rank }; } }
+      [A[i], A[r]] = [A[r], A[i]];
+      const lv = A[r][lead];
+      A[r] = A[r].map(x => this.div(x, lv));
+      for (let k = 0; k < rows; k++) if (k !== r) { const f = A[k][lead]; A[k] = A[k].map((x, j) => this.sub(x, this.mul(f, A[r][j]))); }
+      lead++; rank++;
+    }
+    return { A, rank };
+  }
+  det(M) {
+    const A = M.map(r => r.slice()); const n = A.length; let d = [1, 1];
+    for (let c = 0; c < n; c++) {
+      let p = c; while (p < n && A[p][c][0] === 0) p++;
+      if (p === n) return [0, 1];
+      if (p !== c) { [A[p], A[c]] = [A[c], A[p]]; d = this.mul(d, [-1, 1]); }
+      d = this.mul(d, A[c][c]);
+      for (let r = c + 1; r < n; r++) { const f = this.div(A[r][c], A[c][c]); A[r] = A[r].map((x, j) => this.sub(x, this.mul(f, A[c][j]))); }
+    }
+    return d;
+  }
+  inverse(M) {
+    const n = M.length; const aug = M.map((r, i) => [...r, ...Array.from({ length: n }, (_, j) => [i === j ? 1 : 0, 1])]);
+    const { A, rank } = this.rref(aug);
+    if (rank < n || A.slice(0, n).some((r, i) => r[i][0] !== 1 || r[i][1] !== 1)) return null;
+    return A.map(r => r.slice(n));
+  }
+  matmul(X, Y) { return X.map(r => Y[0].map((_, j) => r.reduce((s, x, k) => this.add(s, this.mul(x, Y[k][j])), [0, 1]))); }
+  eig(M) {
+    const n = M.length; const a = M.map(r => r.map(p => p[0] / p[1]));
+    let coeffs;
+    if (n === 2) coeffs = [1, -(a[0][0] + a[1][1]), a[0][0] * a[1][1] - a[0][1] * a[1][0]];
+    else if (n === 3) {
+      const tr = a[0][0] + a[1][1] + a[2][2];
+      const m2 = a[0][0] * a[1][1] - a[0][1] * a[1][0] + a[0][0] * a[2][2] - a[0][2] * a[2][0] + a[1][1] * a[2][2] - a[1][2] * a[2][1];
+      const d = this.det(M); coeffs = [1, -tr, m2, -(d[0] / d[1])];
+    } else return null;
+    const deg = coeffs.length - 1;
+    let roots = Array.from({ length: deg }, (_, k) => ({ re: Math.cos(2 * Math.PI * k / deg + 0.4) * 1.3, im: Math.sin(2 * Math.PI * k / deg + 0.4) * 1.3 }));
+    const evalP = z => coeffs.reduce((acc, c) => ({ re: acc.re * z.re - acc.im * z.im + c, im: acc.re * z.im + acc.im * z.re }), { re: 0, im: 0 });
+    for (let it = 0; it < 300; it++) {
+      roots = roots.map((z, i) => {
+        let den = { re: 1, im: 0 };
+        roots.forEach((w, j) => { if (i !== j) { const dr = z.re - w.re, di = z.im - w.im; den = { re: den.re * dr - den.im * di, im: den.re * di + den.im * dr }; } });
+        const p = evalP(z); const dd = den.re * den.re + den.im * den.im || 1e-30;
+        return { re: z.re - (p.re * den.re + p.im * den.im) / dd, im: z.im - (p.im * den.re - p.re * den.im) / dd };
+      });
+    }
+    return roots.map(z => Math.abs(z.im) < 1e-9 ? String(Number(z.re.toFixed(6))) : Number(z.re.toFixed(4)) + (z.im < 0 ? ' − ' : ' + ') + Math.abs(Number(z.im.toFixed(4))) + 'i');
+  }
+  push(card) { this.setState({ cards: [card, ...this.state.cards] }); }
+  matCard(title, M) { return { title, isMatrix: true, gridCols: 'repeat(' + M[0].length + ', auto)', cells: M.flat().map(p => this.str(p)), text: '', border: 'var(--line)' }; }
+  run(op) {
+    const s = this.state, name = s.sel, m = s.mats[name], M = this.grid(m);
+    const square = m.r === m.c;
+    const err = t => this.push({ title: op + '(' + name + ')', isMatrix: false, text: t, border: 'var(--err)' });
+    if (op === 'det') { if (!square) return err('det needs a square matrix'); return this.push({ title: 'det(' + name + ')', isMatrix: false, text: '= ' + this.str(this.det(M)), border: 'var(--line)' }); }
+    if (op === 'inv') { if (!square) return err('Only square matrices have an inverse'); const inv = this.inverse(M); return inv ? this.push(this.matCard(name + '⁻¹', inv)) : err(name + ' is singular (det = 0), so it has no inverse'); }
+    if (op === 'T') return this.push(this.matCard(name + 'ᵀ', M[0].map((_, j) => M.map(r => r[j]))));
+    if (op === 'rref') return this.push(this.matCard('rref(' + name + ')', this.rref(M).A));
+    if (op === 'rank') return this.push({ title: 'rank(' + name + ')', isMatrix: false, text: '= ' + this.rref(M).rank, border: 'var(--line)' });
+    if (op === 'tr') { if (!square) return err('trace needs a square matrix'); return this.push({ title: 'trace(' + name + ')', isMatrix: false, text: '= ' + this.str(M.reduce((t, r, i) => this.add(t, r[i]), [0, 1])), border: 'var(--line)' }); }
+    if (op === 'sq') { if (!square) return err('Only square matrices can be squared'); return this.push(this.matCard(name + '²', this.matmul(M, M))); }
+    if (op === 'eig') { if (!square) return err('Eigenvalues need a square matrix'); const e = this.eig(M); return e ? this.push({ title: 'eigenvalues(' + name + ')', isMatrix: false, text: 'λ = ' + e.join(',  '), border: 'var(--line)' }) : err('Eigenvalues shown for sizes up to 3 in this mockup'); }
+    if (op === 'AB') { const A = this.grid(s.mats.A), B = this.grid(s.mats.B); if (A[0].length !== B.length) return err('A has ' + A[0].length + ' columns but B has ' + B.length + ' rows'); return this.push(this.matCard('A · B', this.matmul(A, B))); }
+  }
+  solve() {
+    const s = this.state, A = this.grid(s.mats.A), B = this.grid(s.mats.B);
+    if (A.length !== A[0].length || B.length !== A.length) return this.push({ title: 'A⁻¹ · B', isMatrix: false, text: 'Sizes do not match', border: 'var(--err)' });
+    const inv = this.inverse(A);
+    if (!inv) return this.push({ title: 'A⁻¹ · B', isMatrix: false, text: 'A is singular: no unique solution', border: 'var(--err)' });
+    this.push(this.matCard('A⁻¹ · B  (solves A·x = B)', this.matmul(inv, B)));
+  }
+  resize(dr, dc) {
+    const s = this.state, m = s.mats[s.sel];
+    const r = Math.max(1, Math.min(6, m.r + dr)), c = Math.max(1, Math.min(6, m.c + dc));
+    const v = []; for (let i = 0; i < r; i++) for (let j = 0; j < c; j++) v.push(i < m.r && j < m.c ? m.v[i * m.c + j] : '0');
+    this.setState({ mats: { ...s.mats, [s.sel]: { r, c, v } } });
+  }
+  renderVals() {
+    const s = this.state, m = s.mats[s.sel];
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const setCell = i => e => { const v = [...m.v]; v[i] = e.target.value; this.setState({ mats: { ...s.mats, [s.sel]: { ...m, v } } }); };
+    const ops = [['det', 'det', 'var(--head)'], ['inv', s.sel + '⁻¹', 'var(--head)'], ['T', s.sel + 'ᵀ', 'var(--head)'], ['rref', 'rref', 'var(--head)'], ['rank', 'rank', 'var(--head)'], ['tr', 'trace', 'var(--key)'], ['sq', s.sel + '²', 'var(--key)'], ['eig', 'eigen λ', 'var(--key)'], ['AB', 'A · B', 'var(--ok)']];
+    const defaults = [
+      { title: 'A⁻¹ · B  (solves A·x = B)', isMatrix: true, gridCols: 'repeat(1, auto)', cells: ['2', '3', '-1'], text: 'x = 2, y = 3, z = −1', border: 'var(--line)' },
+      { title: 'det(A)', isMatrix: false, text: '= -1', border: 'var(--line)' }
+    ];
+    const all = [...s.cards, ...defaults];
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      library: Object.entries(s.mats).map(([name, mm]) => ({ name, dims: mm.r + ' × ' + mm.c, pressed: name === s.sel ? 'true' : 'false', bg: name === s.sel ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ sel: name }) })),
+      selName: s.sel, rows: m.r, cols: m.c,
+      rowsUp: () => this.resize(1, 0), rowsDown: () => this.resize(-1, 0), colsUp: () => this.resize(0, 1), colsDown: () => this.resize(0, -1),
+      gridCols: 'repeat(' + m.c + ', minmax(0, auto))',
+      cells: m.v.map((v, i) => ({ v, label: s.sel + ' row ' + (Math.floor(i / m.c) + 1) + ' column ' + (i % m.c + 1), set: setCell(i) })),
+      ops: ops.map(([id, label, bg]) => ({ label, bg, run: () => this.run(id) })),
+      runSolve: () => this.solve(),
+      cards: all.map((c, i) => ({ ...c, n: all.length - i }))
+    };
+  }
+}
+</script>
+</body>
+</html>

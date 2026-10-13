@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.Modes.Advanced</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.UI\Calcy.UI.csproj" />
+    <ProjectReference Include="..\Calcy.Engine\Calcy.Engine.csproj" />
+    <ProjectReference Include="..\Calcy.UI.Math\Calcy.UI.Math.csproj" />
+  </ItemGroup>
+</Project>

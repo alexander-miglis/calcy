@@ -1,0 +1,63 @@
+name: Bug report
+description: Something in Calcy gives a wrong answer, crashes or does not work as it should.
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The REPORT A BUG button in Calcy (Help, or Settings > About) fills in the first three fields for you.
+  - type: input
+    id: version
+    attributes:
+      label: Calcy version
+      description: Help > REPORT A BUG fills this in; on the command line run `calcy --version` or `calcy-cli --version`.
+      placeholder: Calcy 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 11, macOS 15, Ubuntu 24.04, Fedora 42, ...
+    validations:
+      required: true
+  - type: input
+    id: mode
+    attributes:
+      label: Mode
+      description: Which screen were you using (simple, advanced, graphing, statistics, ..., cli or mcp)?
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: For a wrong answer, give the exact input and the answer Calcy showed.
+      placeholder: "I typed solve(x^2 = 2, x) and got ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Graphing mode
+        2. Type y = 1/x
+        3. ...
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or anything else
+      description: Drag images in here. Do not include personal data.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing issues and this is not a duplicate.
+          required: true

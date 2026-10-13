@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Graphing mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Graphing" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+
+    <section aria-label="Expressions" style="flex: 1 1 300px; max-width: 330px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Expressions</h2>
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-bottom: 3px solid var(--line)">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <button type="button" onClick="{{r.toggle}}" aria-label="{{r.toggleLabel}}" aria-pressed="{{r.pressed}}" style="width: 30px; height: 30px; flex: none; border: 3px solid var(--line); cursor: pointer; background-color: {{r.swatch}}"></button>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; flex: 1; min-width: 0; color: {{r.text}}">{{r.expr}}</span>
+            <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: var(--muted)">{{r.kind}}</span>
+          </div>
+          <sc-if value="{{r.hasSlider}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; align-items: center; gap: 8px; padding-left: 40px">
+              <label for="slider-a" style="font-family: 'JetBrains Mono', monospace; font-size: 15px; min-width: 64px">a = {{aText}}</label>
+              <input id="slider-a" type="range" min="-3" max="3" step="0.1" value="{{a}}" onChange="{{setA}}" onInput="{{setA}}" style="flex: 1; accent-color: var(--g2)">
+              <button type="button" onClick="{{togglePlay}}" aria-label="{{playLabel}}" style="width: 36px; height: 36px; border: 2px solid var(--line); background-color: var(--sel); color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center">
+                <sc-if value="{{playing}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 3h4v10H3z M9 3h4v10H9z"/></svg></sc-if>
+                <sc-if value="{{paused}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M4 2h2v12H4z M6 3h2v10H6z M8 4h2v8H8z M10 6h2v4h-2z"/></svg></sc-if>
+              </button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+      <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 8px">
+        <div style="min-height: 44px; border: 3px dashed var(--muted); display: flex; align-items: center; padding: 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--muted)">+ type y = …, r = …, x² + y² = …</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; border: 2px solid var(--line); padding: 4px 6px; background-color: var(--card)">□/□</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; border: 2px solid var(--line); padding: 4px 6px; background-color: var(--card)">√□</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; border: 2px solid var(--line); padding: 4px 6px; background-color: var(--card)">□ⁿ</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; border: 2px solid var(--line); padding: 4px 6px; background-color: var(--card)">θ</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; border: 2px solid var(--line); padding: 4px 6px; background-color: var(--card)">≤</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; border: 2px solid var(--line); padding: 4px 6px; background-color: var(--card)">{x&gt;0}</span>
+          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; border: 2px solid var(--line); padding: 5px 6px; background-color: var(--head)">Symbols</span>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Graph" style="flex: 999 1 640px; min-width: 0; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 8px 10px; background-color: var(--key); border-bottom: 4px solid var(--line)">
+        <div role="tablist" aria-label="View" style="display: flex">
+          <sc-for list="{{views}}" as="v" hint-placeholder-count="3">
+            <button type="button" role="tab" aria-selected="{{v.selected}}" onClick="{{v.pick}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 38px; padding: 0 12px; border: 2px solid var(--line); margin-right: -2px; cursor: pointer; background-color: {{v.bg}}">{{v.label}}</button>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <button type="button" aria-label="Zoom in" style="width: 38px; height: 38px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 16px; color: var(--ink)">+</button>
+          <button type="button" aria-label="Zoom out" style="width: 38px; height: 38px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 16px; color: var(--ink)">−</button>
+          <button type="button" style="min-height: 38px; padding: 0 8px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink)">Fit</button>
+          <button type="button" style="min-height: 38px; padding: 0 8px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink)">Square</button>
+          <button type="button" style="min-height: 38px; padding: 0 8px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink)">Trig</button>
+          <button type="button" style="min-height: 38px; padding: 0 8px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink)">Window</button>
+          <button type="button" style="min-height: 38px; padding: 0 8px; border: 2px solid var(--line); background-color: var(--sel); font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink)">Analyse ▾</button>
+          <button type="button" style="min-height: 38px; padding: 0 8px; border: 2px solid var(--line); background-color: var(--paper); font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink)">Export</button>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap">
+        <sc-if value="{{showGraph}}" hint-placeholder-val="{{ true }}">
+          <div style="flex: 2 1 420px; min-width: 0; padding: 8px">
+            <svg viewBox="0 0 760 570" role="img" aria-label="Graph of the expressions" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)" shape-rendering="crispEdges">
+              <defs>
+                <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse"><rect x="0" y="6" width="2" height="2" style="fill: var(--g3)"></rect><rect x="2" y="4" width="2" height="2" style="fill: var(--g3)"></rect><rect x="4" y="2" width="2" height="2" style="fill: var(--g3)"></rect><rect x="6" y="0" width="2" height="2" style="fill: var(--g3)"></rect></pattern>
+                <clipPath id="plot"><rect x="0" y="0" width="760" height="570"></rect></clipPath>
+              </defs>
+              <sc-for list="{{gridX}}" as="g" hint-placeholder-count="13"><line x1="{{g.p}}" y1="0" x2="{{g.p}}" y2="570" style="stroke: var(--grid); stroke-width: 1"></line></sc-for>
+              <sc-for list="{{gridY}}" as="g" hint-placeholder-count="9"><line x1="0" y1="{{g.p}}" x2="760" y2="{{g.p}}" style="stroke: var(--grid); stroke-width: 1"></line></sc-for>
+              <line x1="0" y1="285" x2="760" y2="285" style="stroke: var(--ink); stroke-width: 2"></line>
+              <line x1="380" y1="0" x2="380" y2="570" style="stroke: var(--ink); stroke-width: 2"></line>
+              <sc-for list="{{tickX}}" as="t" hint-placeholder-count="6"><text x="{{t.p}}" y="302" font-family="Silkscreen, monospace" font-size="12" text-anchor="middle" style="fill: var(--muted)">{{t.label}}</text></sc-for>
+              <sc-for list="{{tickY}}" as="t" hint-placeholder-count="4"><text x="372" y="{{t.p}}" font-family="Silkscreen, monospace" font-size="12" text-anchor="end" style="fill: var(--muted)">{{t.label}}</text></sc-for>
+              <g clip-path="url(#plot)" shape-rendering="geometricPrecision">
+                <sc-if value="{{v3}}" hint-placeholder-val="{{ true }}">
+                  <polygon points="{{ineq}}" fill="url(#hatch)" fill-opacity="0.45"></polygon>
+                  <polyline points="{{ineqLine}}" fill="none" stroke-dasharray="10 6" style="stroke: var(--g3); stroke-width: 3"></polyline>
+                </sc-if>
+                <sc-if value="{{v4}}" hint-placeholder-val="{{ true }}"><polyline points="{{circle}}" fill="none" style="stroke: var(--g4); stroke-width: 3"></polyline></sc-if>
+                <sc-if value="{{v1}}" hint-placeholder-val="{{ true }}"><polyline points="{{f1}}" fill="none" stroke-linejoin="round" style="stroke: var(--g1); stroke-width: 4"></polyline></sc-if>
+                <sc-if value="{{v2}}" hint-placeholder-val="{{ true }}"><polyline points="{{f2}}" fill="none" stroke-linejoin="round" style="stroke: var(--g2); stroke-width: 4"></polyline></sc-if>
+                <sc-if value="{{v5}}" hint-placeholder-val="{{ true }}">
+                  <rect x="{{ptX}}" y="{{ptY}}" width="12" height="12" style="fill: var(--g5); stroke: var(--line); stroke-width: 2"></rect>
+                  <text x="{{ptLX}}" y="{{ptLY}}" font-family="Silkscreen, monospace" font-size="13" style="fill: var(--ink)">A (2, 2)</text>
+                </sc-if>
+              </g>
+              <sc-for list="{{pois}}" as="p" hint-placeholder-count="5">
+                <rect x="{{p.x}}" y="{{p.y}}" width="10" height="10" style="fill: {{p.fill}}; stroke: var(--line); stroke-width: 2"></rect>
+              </sc-for>
+              <sc-if value="{{hasTip}}" hint-placeholder-val="{{ true }}">
+                <rect x="{{tipX}}" y="{{tipY}}" width="196" height="46" style="fill: var(--sel); stroke: var(--line); stroke-width: 3"></rect>
+                <text x="{{tipTX}}" y="{{tipTY1}}" font-family="Silkscreen, monospace" font-size="12" style="fill: var(--ink)">{{tipTitle}}</text>
+                <text x="{{tipTX}}" y="{{tipTY2}}" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" style="fill: var(--ink)">{{tipText}}</text>
+              </sc-if>
+            </svg>
+          </div>
+        </sc-if>
+        <sc-if value="{{showTable}}" hint-placeholder-val="{{ false }}">
+          <div style="flex: 1 1 280px; min-width: 0; padding: 8px">
+            <table style="width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 15px; background-color: var(--card); border: 3px solid var(--line)">
+              <thead><tr style="background-color: var(--head)"><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 12px">x</th><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 12px">y₁ = x² − 2</th><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 12px">y₂ = a·sin(x)</th></tr></thead>
+              <tbody>
+                <sc-for list="{{table}}" as="t" hint-placeholder-count="13">
+                  <tr><td style="border: 2px solid var(--line); padding: 5px 8px; text-align: right">{{t.x}}</td><td style="border: 2px solid var(--line); padding: 5px 8px; text-align: right">{{t.y1}}</td><td style="border: 2px solid var(--line); padding: 5px 8px; text-align: right">{{t.y2}}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+            <div style="display: flex; gap: 10px; padding-top: 8px; font-size: 13px; color: var(--muted)">Start −3, step 0.5. Click a row to jump the trace there.</div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="padding: 6px 12px 10px; font-size: 13px; color: var(--muted)">Drag to pan, scroll to zoom. Grey dots are points of interest; pick one in the cards to see it.</div>
+    </section>
+
+    <aside aria-label="Analysis cards" style="flex: 1 1 260px; max-width: 300px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--sel); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Analysis</h2>
+      <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="5">
+          <article style="border: 3px solid var(--line); background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="padding: 4px 8px; border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px; background-color: {{c.head}}">{{c.title}}</div>
+            <div style="padding: 8px 10px; display: flex; flex-direction: column; gap: 6px">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700">{{c.text}}</span>
+              <sc-if value="{{c.hasShow}}" hint-placeholder-val="{{ true }}">
+                <button type="button" onClick="{{c.show}}" style="align-self: flex-start; font-family: 'Silkscreen', monospace; font-size: 10px; color: var(--ink); background-color: var(--key); border: 2px solid var(--line); min-height: 32px; padding: 0 8px; cursor: pointer">Show on graph</button>
+              </sc-if>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  componentWillUnmount() { if (this.timer) clearInterval(this.timer); }
+  togglePlay() {
+    if (this.timer) { clearInterval(this.timer); this.timer = null; this.setState({ playing: false }); return; }
+    this.timer = setInterval(() => {
+      const a = this.state.a ?? 1.5;
+      let next = Math.round((a + 0.1) * 10) / 10;
+      if (next > 3) next = -3;
+      this.setState({ a: next });
+    }, 120);
+    this.setState({ playing: true });
+  }
+  renderVals() {
+    const sc = this.state.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const a = this.state.a ?? 1.5;
+    const view = this.state.view ?? 'Graph';
+    const vis = this.state.vis ?? { 1: true, 2: true, 3: true, 4: true, 5: true };
+    const X0 = -6, X1 = 6, Y0 = -4.5, Y1 = 4.5, W = 760, H = 570;
+    const px = x => ((x - X0) / (X1 - X0) * W);
+    const py = y => ((Y1 - y) / (Y1 - Y0) * H);
+    const pt = (x, y) => px(x).toFixed(1) + ',' + py(y).toFixed(1);
+    const sample = f => { const out = []; for (let i = 0; i <= 400; i++) { const x = X0 + (X1 - X0) * i / 400; out.push(pt(x, f(x))); } return out.join(' '); };
+    const f1 = x => x * x - 2;
+    const f2 = x => a * Math.sin(x);
+    const circle = []; for (let i = 0; i <= 160; i++) { const t = 2 * Math.PI * i / 160; circle.push(pt(3 * Math.cos(t), 3 * Math.sin(t))); }
+    const g = x => f1(x) - f2(x);
+    const inter = [];
+    let prev = g(X0);
+    for (let i = 1; i <= 600; i++) {
+      const x = X0 + (X1 - X0) * i / 600, v = g(x);
+      if (prev === 0 || prev * v < 0) {
+        let lo = x - (X1 - X0) / 600, hi = x;
+        for (let k = 0; k < 60; k++) { const m = (lo + hi) / 2; if (g(lo) * g(m) <= 0) hi = m; else lo = m; }
+        inter.push((lo + hi) / 2);
+      }
+      prev = v;
+    }
+    const r = Math.SQRT2;
+    const poiData = [
+      { id: 'root1', x: -r, y: 0, title: 'Root of y₁', text: 'x = −√2 ≈ −1.414' },
+      { id: 'root2', x: r, y: 0, title: 'Root of y₁', text: 'x = √2 ≈ 1.414' },
+      { id: 'min', x: 0, y: -2, title: 'Minimum of y₁', text: '(0, −2)' },
+      ...inter.slice(0, 2).map((x, i) => ({ id: 'int' + i, x, y: f1(x), title: 'y₁ meets y₂', text: '(' + x.toFixed(3) + ', ' + f1(x).toFixed(3) + ')' }))
+    ];
+    const sel = this.state.sel ?? 'min';
+    const selP = poiData.find(p => p.id === sel) ?? poiData[2];
+    const tipX = Math.min(Math.max(px(selP.x) + 14, 4), W - 200), tipY = Math.min(Math.max(py(selP.y) - 60, 4), H - 50);
+    const rowsDef = [
+      [1, 'var(--g1)', 'y = x² − 2', 'function'],
+      [2, 'var(--g2)', 'y = a·sin(x)', 'function'],
+      [3, 'var(--g3)', 'y < x/2', 'inequality'],
+      [4, 'var(--g4)', 'x² + y² = 9', 'implicit'],
+      [5, 'var(--g5)', 'A = (2, 2)', 'point']
+    ];
+    const setVis = (id) => this.setState({ vis: { ...vis, [id]: !vis[id] } });
+    const table = [];
+    for (let i = 0; i <= 12; i++) { const x = -3 + i * 0.5; table.push({ x: x.toFixed(1), y1: f1(x).toFixed(4).replace(/\.?0+$/, ''), y2: f2(x).toFixed(4) }); }
+    const gridX = [];
+    for (let x = -6; x <= 6; x++) gridX.push({ p: px(x).toFixed(1) });
+    const gridY = [];
+    for (let y = -4; y <= 4; y++) gridY.push({ p: py(y).toFixed(1) });
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      a, aText: a.toFixed(1),
+      setA: (e) => this.setState({ a: parseFloat(e.target.value) }),
+      playing: !!this.state.playing, paused: !this.state.playing,
+      playLabel: this.state.playing ? 'Pause animation' : 'Animate a',
+      togglePlay: () => this.togglePlay(),
+      rows: rowsDef.map(([id, color, expr, kind]) => ({
+        expr, kind,
+        swatch: vis[id] ? color : 'var(--paper)',
+        text: vis[id] ? 'var(--ink)' : 'var(--muted)',
+        pressed: vis[id] ? 'true' : 'false',
+        toggleLabel: (vis[id] ? 'Hide ' : 'Show ') + expr,
+        toggle: () => setVis(id),
+        hasSlider: id === 2
+      })),
+      v1: vis[1], v2: vis[2], v3: vis[3], v4: vis[4], v5: vis[5],
+      f1: sample(f1), f2: sample(f2), circle: circle.join(' '),
+      ineq: [pt(-6, -3), pt(6, 3), pt(6, -4.5), pt(-6, -4.5)].join(' '),
+      ineqLine: [pt(-6, -3), pt(6, 3)].join(' '),
+      ptX: (px(2) - 6).toFixed(1), ptY: (py(2) - 6).toFixed(1), ptLX: (px(2) + 12).toFixed(1), ptLY: (py(2) - 10).toFixed(1),
+      gridX, gridY,
+      tickX: [-6, -4, -2, 2, 4, 6].map(v => ({ p: px(v).toFixed(1), label: String(v) })),
+      tickY: [-4, -2, 2, 4].map(v => ({ p: (py(v) + 4).toFixed(1), label: String(v) })),
+      pois: poiData.map(p => ({ x: (px(p.x) - 5).toFixed(1), y: (py(p.y) - 5).toFixed(1), fill: p.id === sel ? 'var(--sel)' : 'var(--key)' })),
+      hasTip: true, tipX: tipX.toFixed(1), tipY: tipY.toFixed(1), tipTX: (tipX + 10).toFixed(1), tipTY1: (tipY + 18).toFixed(1), tipTY2: (tipY + 37).toFixed(1),
+      tipTitle: selP.title, tipText: selP.text,
+      views: ['Graph', 'Table', 'Split'].map(v => ({ label: v, selected: v === view ? 'true' : 'false', bg: v === view ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ view: v }) })),
+      showGraph: view !== 'Table', showTable: view !== 'Graph',
+      table,
+      cards: [
+        ...poiData.map(p => ({ title: p.title, text: p.text, head: p.id === sel ? 'var(--sel)' : 'var(--key)', hasShow: true, show: () => this.setState({ sel: p.id, view: view === 'Table' ? 'Split' : view }) })),
+        { title: '∫ y₁ from −1 to 2', text: '= −3  (signed area)', head: 'var(--head)', hasShow: false, show: null },
+        { title: 'dy₂/dx at x = 0', text: '= a = ' + a.toFixed(1), head: 'var(--head)', hasShow: false, show: null }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

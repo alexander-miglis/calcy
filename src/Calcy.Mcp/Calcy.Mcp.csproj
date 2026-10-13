@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.Mcp</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.Core\Calcy.Core.csproj" />
+    <ProjectReference Include="..\Calcy.Engine\Calcy.Engine.csproj" />
+    <ProjectReference Include="..\Calcy.Graphing\Calcy.Graphing.csproj" />
+    <ProjectReference Include="..\Calcy.Scripting\Calcy.Scripting.csproj" />
+    <ProjectReference Include="..\Calcy.Imaging\Calcy.Imaging.csproj" />
+  </ItemGroup>
+</Project>

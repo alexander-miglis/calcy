@@ -1,0 +1,716 @@
+{
+  "category": "waves",
+  "formulas": [
+    {
+      "id": "wave-speed",
+      "name": "Wave equation (speed, frequency, wavelength)",
+      "subcategory": "Wave basics",
+      "level": "school",
+      "equation": "v = f*λ",
+      "displayLatex": "v = f\\lambda",
+      "variables": [
+        { "symbol": "v", "name": "wave speed", "unit": "m/s", "description": "Speed at which the wave travels.", "positive": true },
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "Number of waves passing a point each second.", "positive": true },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Distance between neighbouring crests.", "positive": true }
+      ],
+      "explanation": "In one period a wave moves forward by one wavelength. Since f periods fit in each second, the wave travels f λ metres per second. This holds for every kind of wave: sound, light, water and waves on strings.",
+      "whenToUse": "Use it to convert between frequency and wavelength for any wave whose speed you know.",
+      "assumptions": ["the wave speed is constant in the medium"],
+      "example": {
+        "story": "A tuning fork sounds the note A at 440 Hz in air where sound travels at 343 m/s. What is the wavelength?",
+        "given": { "v": 343, "f": 440 },
+        "solveFor": "λ",
+        "result": 0.7795455,
+        "unit": "m",
+        "tolerance": 1e-7,
+        "steps": ["λ = v / f", "λ = 343 / 440", "λ ≈ 0.78 m"]
+      },
+      "related": ["frequency-period", "photon-energy-wavelength", "string-harmonics"],
+      "tags": ["wave equation", "wave speed", "wavelength", "frequency", "v = f lambda"]
+    },
+    {
+      "id": "frequency-period",
+      "name": "Frequency and period",
+      "subcategory": "Wave basics",
+      "level": "school",
+      "equation": "f = 1 / T",
+      "displayLatex": "f = \\frac{1}{T}",
+      "variables": [
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "Cycles per second.", "positive": true },
+        { "symbol": "T", "name": "period", "unit": "s", "description": "Time for one cycle.", "positive": true }
+      ],
+      "explanation": "Frequency counts cycles per second and the period is the time for one cycle, so each is the reciprocal of the other. One hertz is one cycle per second.",
+      "whenToUse": "Use it for any repeating motion: waves, oscillations, rotations, clock signals and alternating current.",
+      "assumptions": [],
+      "example": {
+        "story": "An oscilloscope shows a signal repeating every 2.5 ms. What is its frequency?",
+        "given": { "T": 0.0025 },
+        "solveFor": "f",
+        "result": 400,
+        "unit": "Hz",
+        "tolerance": 1e-9,
+        "steps": ["f = 1 / 0.0025", "f = 400 Hz"]
+      },
+      "related": ["wave-speed", "angular-frequency", "angular-velocity-period"],
+      "tags": ["frequency", "period", "hertz", "cycles per second", "reciprocal"]
+    },
+    {
+      "id": "wave-speed-on-string",
+      "name": "Wave speed on a stretched string",
+      "subcategory": "Wave basics",
+      "level": "university",
+      "equation": "v = sqrt(F_T / μ)",
+      "displayLatex": "v = \\sqrt{\\frac{F_T}{\\mu}}",
+      "variables": [
+        { "symbol": "v", "name": "wave speed", "unit": "m/s", "description": "Speed of transverse waves on the string.", "positive": true },
+        { "symbol": "F_T", "name": "tension", "unit": "N", "description": "Force stretching the string.", "positive": true },
+        { "symbol": "μ", "name": "linear density", "unit": "kg/m", "description": "Mass per metre of string.", "positive": true }
+      ],
+      "explanation": "A tighter string pulls back harder when displaced, so waves move faster; a heavier string responds more slowly. The speed is the square root of tension over mass per length. Tuning a guitar changes the tension and therefore the speed and pitch.",
+      "whenToUse": "Use it for guitar, violin and piano strings, and for waves on ropes and cables.",
+      "assumptions": ["small amplitude", "perfectly flexible string"],
+      "example": {
+        "story": "A string with linear density 0.01 kg/m is under a tension of 100 N. How fast do waves travel along it?",
+        "given": { "F_T": 100, "μ": 0.01 },
+        "solveFor": "v",
+        "result": 100,
+        "unit": "m/s",
+        "tolerance": 1e-9,
+        "steps": ["F/μ = 100 / 0.01 = 10 000", "v = √10 000 = 100 m/s"]
+      },
+      "related": ["string-harmonics", "wave-speed"],
+      "tags": ["string", "tension", "linear density", "wave speed", "guitar", "mersenne"]
+    },
+    {
+      "id": "string-harmonics",
+      "name": "Harmonics of a string or open pipe",
+      "subcategory": "Sound",
+      "level": "school",
+      "equation": "f = n*v / (2*L)",
+      "displayLatex": "f_n = \\frac{n v}{2L}",
+      "variables": [
+        { "symbol": "f", "name": "frequency of harmonic n", "unit": "Hz", "description": "Frequency of the standing wave.", "positive": true },
+        { "symbol": "n", "name": "harmonic number", "unit": "", "description": "1 for the fundamental, 2 for the second harmonic, and so on.", "positive": true, "integer": true },
+        { "symbol": "v", "name": "wave speed", "unit": "m/s", "description": "Speed of waves on the string or in the pipe.", "positive": true },
+        { "symbol": "L", "name": "length", "unit": "m", "description": "Vibrating length.", "positive": true }
+      ],
+      "explanation": "A string fixed at both ends (or a pipe open at both ends) can only hold standing waves that fit a whole number of half-wavelengths into its length: L = nλ/2. Combining with v = fλ gives the allowed frequencies. The lowest, n = 1, is the fundamental; the others are whole-number multiples.",
+      "whenToUse": "Use it for stringed instruments, flutes and other open pipes, and standing wave experiments.",
+      "assumptions": ["fixed ends (string) or open ends (pipe)", "end corrections ignored for pipes"],
+      "example": {
+        "story": "A guitar string vibrates over 0.65 m and waves travel along it at 286 m/s. What is its fundamental frequency?",
+        "given": { "n": 1, "v": 286, "L": 0.65 },
+        "solveFor": "f",
+        "result": 220,
+        "unit": "Hz",
+        "tolerance": 1e-9,
+        "steps": ["f₁ = 1 × 286 / (2 × 0.65)", "f₁ = 286 / 1.3 = 220 Hz (the note A3)"]
+      },
+      "related": ["closed-pipe-harmonics", "wave-speed-on-string", "wave-speed"],
+      "tags": ["harmonics", "standing waves", "fundamental frequency", "overtones", "string", "open pipe"]
+    },
+    {
+      "id": "closed-pipe-harmonics",
+      "name": "Harmonics of a pipe closed at one end",
+      "subcategory": "Sound",
+      "level": "school",
+      "equation": "f = n*v / (4*L)",
+      "displayLatex": "f_n = \\frac{n v}{4L}, \\quad n = 1, 3, 5, \\dots",
+      "variables": [
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "Frequency of the standing wave.", "positive": true },
+        { "symbol": "n", "name": "harmonic number", "unit": "", "description": "An odd number: 1, 3, 5, ...", "positive": true, "integer": true },
+        { "symbol": "v", "name": "speed of sound", "unit": "m/s", "description": "Speed of sound in the air inside.", "defaultValue": 343, "positive": true },
+        { "symbol": "L", "name": "pipe length", "unit": "m", "description": "Length of the air column.", "positive": true }
+      ],
+      "explanation": "A closed end must be a node and an open end an antinode, so the pipe holds an odd number of quarter-wavelengths: L = nλ/4 with n odd. Only odd harmonics are present, which gives instruments like the clarinet their hollow tone. The fundamental is half the frequency of an open pipe of the same length.",
+      "whenToUse": "Use it for clarinets, organ pipes stopped at one end, bottles you blow across, and resonance tube experiments.",
+      "assumptions": ["n odd", "end correction ignored"],
+      "example": {
+        "story": "Blowing across a bottle with a 0.25 m air column, what fundamental note do you hear (v = 343 m/s)?",
+        "given": { "n": 1, "v": 343, "L": 0.25 },
+        "solveFor": "f",
+        "result": 343,
+        "unit": "Hz",
+        "tolerance": 1e-9,
+        "steps": ["f₁ = 343 / (4 × 0.25)", "f₁ = 343 Hz"]
+      },
+      "related": ["string-harmonics", "speed-of-sound-in-air"],
+      "tags": ["closed pipe", "resonance tube", "odd harmonics", "standing waves", "organ pipe"]
+    },
+    {
+      "id": "speed-of-sound-in-air",
+      "name": "Speed of sound in air and temperature",
+      "subcategory": "Sound",
+      "level": "school",
+      "equation": "v = 331.3*sqrt(1 + T_C / 273.15)",
+      "displayLatex": "v \\approx 331.3\\sqrt{1 + \\frac{\\theta}{273.15}}\\ \\text{m/s}",
+      "variables": [
+        { "symbol": "v", "name": "speed of sound", "unit": "m/s", "description": "Speed of sound in dry air.", "positive": true },
+        { "symbol": "T_C", "name": "air temperature", "unit": "°C", "description": "Temperature in degrees Celsius.", "min": -273.15 }
+      ],
+      "explanation": "Sound travels faster in warmer air because the molecules move faster. The speed is proportional to the square root of the absolute temperature, and 331.3 m/s is its value at 0 °C. Near room temperature it rises by about 0.6 m/s per degree.",
+      "whenToUse": "Use it to correct the speed of sound for temperature in echo timing, music and acoustics.",
+      "assumptions": ["dry air treated as an ideal gas", "humidity ignored"],
+      "example": {
+        "story": "How fast does sound travel in air at 20 °C?",
+        "given": { "T_C": 20 },
+        "solveFor": "v",
+        "result": 343.2146,
+        "unit": "m/s",
+        "tolerance": 0.001,
+        "steps": ["1 + 20/273.15 ≈ 1.07322", "√1.07322 ≈ 1.035963", "v ≈ 331.3 × 1.035963 ≈ 343.2 m/s"]
+      },
+      "related": ["wave-speed", "rms-speed-of-gas", "doppler-effect-sound"],
+      "tags": ["speed of sound", "sound speed", "temperature", "acoustics", "air"]
+    },
+    {
+      "id": "doppler-effect-sound",
+      "name": "Doppler effect for sound",
+      "subcategory": "Sound",
+      "level": "school",
+      "equation": "f_o = f_s*(v + v_o) / (v - v_s)",
+      "displayLatex": "f_o = f_s \\frac{v + v_o}{v - v_s}",
+      "variables": [
+        { "symbol": "f_o", "name": "observed frequency", "unit": "Hz", "description": "Frequency heard by the observer.", "positive": true },
+        { "symbol": "f_s", "name": "source frequency", "unit": "Hz", "description": "Frequency emitted by the source.", "positive": true },
+        { "symbol": "v", "name": "speed of sound", "unit": "m/s", "description": "Speed of sound in the air.", "defaultValue": 343, "positive": true },
+        { "symbol": "v_o", "name": "observer speed", "unit": "m/s", "description": "Positive when the observer moves towards the source." },
+        { "symbol": "v_s", "name": "source speed", "unit": "m/s", "description": "Positive when the source moves towards the observer." }
+      ],
+      "explanation": "A source moving towards you squashes the waves in front of it, so the wavelength is shorter and the pitch higher; moving away stretches them. An observer moving towards the source meets the crests more often. Both effects combine in this formula.",
+      "whenToUse": "Use it for sirens passing by, speed guns, ultrasound blood-flow scans and bat echolocation.",
+      "assumptions": ["speeds much less than the speed of sound", "motion along the line joining source and observer", "still air"],
+      "source": "Sign convention: v_o is positive when the observer moves towards the source, v_s is positive when the source moves towards the observer.",
+      "example": {
+        "story": "An ambulance siren at 700 Hz approaches a standing pedestrian at 25 m/s. What frequency does the pedestrian hear (v = 343 m/s)?",
+        "given": { "f_s": 700, "v": 343, "v_o": 0, "v_s": 25 },
+        "solveFor": "f_o",
+        "result": 755.03145,
+        "unit": "Hz",
+        "tolerance": 1e-4,
+        "steps": ["f = 700 × (343 + 0) / (343 - 25)", "f = 700 × 343 / 318", "f ≈ 755 Hz, higher while approaching"]
+      },
+      "related": ["doppler-shift-light", "wave-speed", "beat-frequency"],
+      "tags": ["doppler", "doppler effect", "siren", "pitch shift", "moving source", "moving observer"]
+    },
+    {
+      "id": "doppler-shift-light",
+      "name": "Doppler shift of light (low speed)",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "Δλ = λ_0*v / c",
+      "displayLatex": "\\frac{\\Delta\\lambda}{\\lambda_0} = \\frac{v}{c}",
+      "variables": [
+        { "symbol": "Δλ", "name": "wavelength shift", "unit": "m", "description": "Observed minus emitted wavelength; positive is a redshift." },
+        { "symbol": "λ_0", "name": "emitted wavelength", "unit": "m", "description": "Wavelength measured at rest (in the lab).", "positive": true },
+        { "symbol": "v", "name": "recession speed", "unit": "m/s", "description": "Speed away from the observer (negative if approaching)." }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "Light from a source moving away is stretched to longer wavelengths (redshift); from a source approaching it is compressed (blueshift). For speeds much less than light, the fractional shift equals v/c. Astronomers use it to measure how fast stars and galaxies move.",
+      "whenToUse": "Use it for the motion of stars, galaxies, exoplanet wobbles and radar speed measurements.",
+      "assumptions": ["v much less than c (use the relativistic formula otherwise)", "motion along the line of sight"],
+      "example": {
+        "story": "The hydrogen line at 656.28 nm is observed in a galaxy receding at 3.0 × 10⁶ m/s. By how much is it shifted?",
+        "given": { "λ_0": 6.5628e-7, "v": 3000000 },
+        "solveFor": "Δλ",
+        "result": 6.56734e-9,
+        "unit": "m",
+        "tolerance": 1e-13,
+        "steps": ["v / c = 3 × 10⁶ / 2.998 × 10⁸ ≈ 0.010007", "Δλ ≈ 656.28 nm × 0.010007 ≈ 6.57 nm", "Observed at about 662.85 nm, a redshift"]
+      },
+      "related": ["doppler-effect-sound", "wave-speed"],
+      "tags": ["redshift", "blueshift", "doppler", "light", "astronomy", "galaxy"]
+    },
+    {
+      "id": "refractive-index",
+      "name": "Refractive index",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "n = c / v",
+      "displayLatex": "n = \\frac{c}{v}",
+      "variables": [
+        { "symbol": "n", "name": "refractive index", "unit": "", "description": "How many times slower light travels in the material than in vacuum.", "min": 1 },
+        { "symbol": "v", "name": "speed of light in the material", "unit": "m/s", "description": "Speed of light inside the material.", "positive": true }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "Light slows down in transparent materials. The refractive index is the ratio of its speed in vacuum to its speed in the material: about 1.0003 for air, 1.33 for water, 1.5 for glass and 2.42 for diamond. A higher index bends light more at a boundary.",
+      "whenToUse": "Use it to find the speed of light in a material, or its refractive index from that speed.",
+      "assumptions": ["n depends slightly on wavelength (dispersion)"],
+      "example": {
+        "story": "Light travels through a glass block at 2.0 × 10⁸ m/s. What is the refractive index of the glass?",
+        "given": { "v": 200000000 },
+        "solveFor": "n",
+        "result": 1.4989623,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["n = 299 792 458 / 200 000 000", "n ≈ 1.50"]
+      },
+      "related": ["snells-law", "critical-angle"],
+      "tags": ["refractive index", "index of refraction", "speed of light in glass", "optical density"]
+    },
+    {
+      "id": "snells-law",
+      "name": "Snell's law of refraction",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "n_1*sin(θ_1) = n_2*sin(θ_2)",
+      "displayLatex": "n_1\\sin\\theta_1 = n_2\\sin\\theta_2",
+      "variables": [
+        { "symbol": "n_1", "name": "first refractive index", "unit": "", "description": "Refractive index of the medium the light comes from.", "min": 1 },
+        { "symbol": "θ_1", "name": "angle of incidence", "unit": "rad", "description": "Angle between the incoming ray and the normal, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "n_2", "name": "second refractive index", "unit": "", "description": "Refractive index of the medium the light enters.", "min": 1 },
+        { "symbol": "θ_2", "name": "angle of refraction", "unit": "rad", "description": "Angle between the refracted ray and the normal, in radians.", "min": 0, "max": 1.5707963267948966 }
+      ],
+      "explanation": "When light crosses into a material where it travels more slowly, it bends towards the normal; into a faster material it bends away. Snell's law makes this exact: n sin θ is the same on both sides. Angles are measured from the normal, the line at right angles to the surface.",
+      "whenToUse": "Use it for lenses, prisms, swimming pools that look shallow, optical fibres and rainbows.",
+      "assumptions": ["angles measured from the normal, in radians"],
+      "example": {
+        "story": "A ray in air (n = 1.00) hits glass (n = 1.50) at 45 degrees to the normal. At what angle does it travel in the glass?",
+        "given": { "n_1": 1, "θ_1": 0.7853981633974483, "n_2": 1.5 },
+        "solveFor": "θ_2",
+        "result": 0.49088,
+        "unit": "rad",
+        "tolerance": 0.0001,
+        "steps": ["sin θ₂ = 1.00 × sin 45° / 1.50 ≈ 0.4714", "θ₂ = asin(0.4714)", "θ₂ ≈ 0.491 rad (28.1°)"]
+      },
+      "related": ["refractive-index", "critical-angle", "brewster-angle"],
+      "tags": ["snell", "snells law", "refraction", "bending of light", "law of refraction", "angle of refraction"]
+    },
+    {
+      "id": "critical-angle",
+      "name": "Critical angle for total internal reflection",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "sin(θ_c) = n_2 / n_1",
+      "displayLatex": "\\sin\\theta_c = \\frac{n_2}{n_1}",
+      "variables": [
+        { "symbol": "θ_c", "name": "critical angle", "unit": "rad", "description": "Smallest angle of incidence for total internal reflection, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "n_2", "name": "outer refractive index", "unit": "", "description": "Refractive index of the less dense medium outside.", "min": 1 },
+        { "symbol": "n_1", "name": "inner refractive index", "unit": "", "description": "Refractive index of the denser medium the light is in.", "min": 1 }
+      ],
+      "explanation": "Going from a dense to a less dense medium, light bends away from the normal. At the critical angle the refracted ray would skim along the surface (θ₂ = 90 degrees), and beyond it all the light reflects back. Setting θ₂ = 90 degrees in Snell's law gives this formula.",
+      "whenToUse": "Use it for optical fibres, diamonds, binocular prisms and why underwater surfaces look silvery.",
+      "assumptions": ["n₁ > n₂"],
+      "example": {
+        "story": "What is the critical angle for light going from glass (n = 1.5) into air (n = 1.0)?",
+        "given": { "n_2": 1, "n_1": 1.5 },
+        "solveFor": "θ_c",
+        "result": 0.7297277,
+        "unit": "rad",
+        "tolerance": 1e-7,
+        "steps": ["sin θ_c = 1.0 / 1.5 ≈ 0.6667", "θ_c = asin(0.6667)", "θ_c ≈ 0.730 rad (41.8°)"]
+      },
+      "related": ["snells-law", "refractive-index"],
+      "tags": ["critical angle", "total internal reflection", "tir", "optical fibre", "optical fiber"]
+    },
+    {
+      "id": "brewster-angle",
+      "name": "Brewster's angle",
+      "subcategory": "Optics",
+      "level": "university",
+      "equation": "tan(θ_B) = n_2 / n_1",
+      "displayLatex": "\\tan\\theta_B = \\frac{n_2}{n_1}",
+      "variables": [
+        { "symbol": "θ_B", "name": "Brewster angle", "unit": "rad", "description": "Angle of incidence at which reflected light is fully polarised.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "n_2", "name": "second refractive index", "unit": "", "description": "Refractive index of the medium the light enters.", "min": 1 },
+        { "symbol": "n_1", "name": "first refractive index", "unit": "", "description": "Refractive index of the medium the light comes from.", "min": 1 }
+      ],
+      "explanation": "At Brewster's angle, the reflected and refracted rays are at right angles. Light polarised in the plane of incidence then cannot reflect at all, so the reflected light is completely polarised. Polarising sunglasses block this glare from water and roads.",
+      "whenToUse": "Use it for glare reduction, polarisers made of glass plates, and laser windows.",
+      "assumptions": ["non-absorbing materials"],
+      "example": {
+        "story": "At what angle of incidence is light reflected from glass (n = 1.5) in air fully polarised?",
+        "given": { "n_2": 1.5, "n_1": 1 },
+        "solveFor": "θ_B",
+        "result": 0.9827937,
+        "unit": "rad",
+        "tolerance": 1e-7,
+        "steps": ["tan θ_B = 1.5 / 1.0 = 1.5", "θ_B = atan(1.5) ≈ 0.983 rad (56.3°)"]
+      },
+      "related": ["snells-law", "malus-law"],
+      "tags": ["brewster", "polarisation", "polarization", "glare", "polarizing angle"]
+    },
+    {
+      "id": "thin-lens-equation",
+      "name": "Thin lens equation",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "1 / f = 1 / d_o + 1 / d_i",
+      "displayLatex": "\\frac{1}{f} = \\frac{1}{d_o} + \\frac{1}{d_i}",
+      "variables": [
+        { "symbol": "f", "name": "focal length", "unit": "m", "description": "Positive for a converging lens, negative for a diverging lens." },
+        { "symbol": "d_o", "name": "object distance", "unit": "m", "description": "Distance from the object to the lens.", "positive": true },
+        { "symbol": "d_i", "name": "image distance", "unit": "m", "description": "Positive for a real image on the far side, negative for a virtual image." }
+      ],
+      "explanation": "Rays from one point of an object pass through a thin lens and meet again at one point of the image. Similar triangles in the ray diagram lead to this simple relation between the object distance, image distance and focal length. An object inside the focal length gives a negative d_i, meaning a virtual, magnified image (a magnifying glass).",
+      "whenToUse": "Use it to find where a lens forms an image: cameras, projectors, eyes, glasses and magnifiers.",
+      "assumptions": ["thin lens", "rays close to the axis (paraxial)"],
+      "source": "Real-is-positive convention. Textbooks using the Cartesian convention write 1/f = 1/v - 1/u with u negative for real objects; the results agree.",
+      "example": {
+        "story": "An object is 0.30 m from a converging lens of focal length 0.10 m. Where is the image?",
+        "given": { "f": 0.1, "d_o": 0.3 },
+        "solveFor": "d_i",
+        "result": 0.15,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["1/d_i = 1/0.10 - 1/0.30 = 10 - 3.333", "1/d_i ≈ 6.667", "d_i = 0.15 m, a real image behind the lens"]
+      },
+      "related": ["magnification", "lens-power"],
+      "tags": ["lens equation", "thin lens", "focal length", "image distance", "lens formula", "optics"]
+    },
+    {
+      "id": "magnification",
+      "name": "Magnification",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "M = h_i / h_o",
+      "displayLatex": "M = \\frac{h_i}{h_o} = \\frac{d_i}{d_o}",
+      "variables": [
+        { "symbol": "M", "name": "magnification", "unit": "", "description": "How many times larger the image is than the object." },
+        { "symbol": "h_i", "name": "image height", "unit": "m", "description": "Height of the image." },
+        { "symbol": "h_o", "name": "object height", "unit": "m", "description": "Height of the object.", "positive": true }
+      ],
+      "explanation": "Magnification compares image size with object size. For a thin lens it also equals d_i/d_o, from the same similar triangles that give the lens equation. A magnification above 1 means an enlarged image and below 1 a smaller one.",
+      "whenToUse": "Use it for microscopes, magnifying glasses, projectors and cameras.",
+      "assumptions": ["sign conventions for inverted images vary; here only sizes are compared"],
+      "example": {
+        "story": "A 2 cm tall object produces a 6 cm tall image on a screen. What is the magnification?",
+        "given": { "h_i": 0.06, "h_o": 0.02 },
+        "solveFor": "M",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["M = 0.06 / 0.02", "M = 3"]
+      },
+      "related": ["thin-lens-equation", "lens-power"],
+      "tags": ["magnification", "image size", "enlargement", "lens", "microscope"]
+    },
+    {
+      "id": "lens-power",
+      "name": "Power of a lens",
+      "subcategory": "Optics",
+      "level": "school",
+      "equation": "P = 1 / f",
+      "displayLatex": "P = \\frac{1}{f}",
+      "variables": [
+        { "symbol": "P", "name": "lens power", "unit": "m⁻¹", "description": "Optical power in dioptres (1 D = 1 m⁻¹)." },
+        { "symbol": "f", "name": "focal length", "unit": "m", "description": "Focal length in metres (negative for diverging lenses)." }
+      ],
+      "explanation": "A strongly converging lens has a short focal length and a large power. Opticians use dioptres, the reciprocal of the focal length in metres. Powers of thin lenses in contact simply add.",
+      "whenToUse": "Use it for glasses and contact lens prescriptions, and for combining lenses.",
+      "assumptions": ["thin lens", "focal length in metres"],
+      "example": {
+        "story": "A reading glass lens has a focal length of 0.25 m. What is its power?",
+        "given": { "f": 0.25 },
+        "solveFor": "P",
+        "result": 4,
+        "unit": "m⁻¹",
+        "tolerance": 1e-9,
+        "steps": ["P = 1 / 0.25", "P = 4 dioptres"]
+      },
+      "related": ["thin-lens-equation", "magnification"],
+      "tags": ["lens power", "dioptre", "diopter", "glasses prescription", "focal length"]
+    },
+    {
+      "id": "malus-law",
+      "name": "Malus's law",
+      "subcategory": "Optics",
+      "level": "university",
+      "equation": "I = I_0*cos(θ)^2",
+      "displayLatex": "I = I_0\\cos^2\\theta",
+      "variables": [
+        { "symbol": "I", "name": "transmitted intensity", "unit": "W/m²", "description": "Intensity after the polariser.", "min": 0 },
+        { "symbol": "I_0", "name": "incident intensity", "unit": "W/m²", "description": "Intensity of the polarised light arriving.", "min": 0 },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle between the light's polarisation and the polariser's axis, in radians." }
+      ],
+      "explanation": "A polariser passes only the part of the electric field along its axis, E cos θ. Intensity goes with the square of the field, giving the cos² θ factor. Crossed polarisers (θ = 90 degrees) block the light completely.",
+      "whenToUse": "Use it for polarising filters, LCD screens, sunglasses and stress analysis.",
+      "assumptions": ["the incoming light is already polarised", "ideal polariser"],
+      "example": {
+        "story": "Polarised light of intensity 100 W/m² meets a polariser at 60 degrees to its polarisation. What intensity gets through?",
+        "given": { "I_0": 100, "θ": 1.0471975511965976 },
+        "solveFor": "I",
+        "result": 25,
+        "unit": "W/m²",
+        "tolerance": 1e-9,
+        "steps": ["cos 60° = 0.5, squared = 0.25", "I = 100 × 0.25 = 25 W/m²"]
+      },
+      "related": ["brewster-angle", "inverse-square-intensity"],
+      "tags": ["malus", "polariser", "polarizer", "polarisation", "polarization", "intensity"]
+    },
+    {
+      "id": "diffraction-grating",
+      "name": "Diffraction grating equation",
+      "subcategory": "Interference and diffraction",
+      "level": "school",
+      "equation": "d*sin(θ) = n*λ",
+      "displayLatex": "d\\sin\\theta = n\\lambda",
+      "variables": [
+        { "symbol": "d", "name": "slit spacing", "unit": "m", "description": "Distance between neighbouring lines (1 divided by lines per metre).", "positive": true },
+        { "symbol": "θ", "name": "angle of the maximum", "unit": "rad", "description": "Angle of the bright line from the straight-through direction, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "n", "name": "order", "unit": "", "description": "0 for straight through, 1 for the first bright line each side, and so on.", "integer": true, "min": 0 },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the light.", "positive": true }
+      ],
+      "explanation": "Light from neighbouring slits travels paths that differ by d sin θ. When that difference is a whole number of wavelengths, all the waves arrive in step and add to a bright line. Many slits make these lines very sharp, which is why gratings are used to measure wavelengths.",
+      "whenToUse": "Use it in spectroscopy, to measure the wavelength of a laser, or to explain the colours on a CD.",
+      "assumptions": ["light falls on the grating at right angles", "far-field (screen distant)"],
+      "example": {
+        "story": "Sodium light (589 nm) falls on a grating with 600 lines per mm. At what angle is the first-order maximum?",
+        "given": { "d": 1.6666666666666667e-6, "n": 1, "λ": 5.89e-7 },
+        "solveFor": "θ",
+        "result": 0.361203,
+        "unit": "rad",
+        "tolerance": 1e-5,
+        "steps": ["d = 1 / 600 000 m ≈ 1.667 × 10⁻⁶ m", "sin θ = 589 × 10⁻⁹ / 1.667 × 10⁻⁶ = 0.3534", "θ ≈ 0.361 rad (20.7°)"]
+      },
+      "related": ["double-slit-fringe-spacing", "single-slit-minimum", "wave-speed"],
+      "tags": ["diffraction grating", "grating equation", "spectrum", "interference", "orders", "spectroscopy"]
+    },
+    {
+      "id": "double-slit-fringe-spacing",
+      "name": "Young's double slit fringe spacing",
+      "subcategory": "Interference and diffraction",
+      "level": "school",
+      "equation": "w = λ*L / d",
+      "displayLatex": "w = \\frac{\\lambda L}{d}",
+      "variables": [
+        { "symbol": "w", "name": "fringe spacing", "unit": "m", "description": "Distance between neighbouring bright fringes on the screen.", "positive": true },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the light.", "positive": true },
+        { "symbol": "L", "name": "screen distance", "unit": "m", "description": "Distance from the slits to the screen.", "positive": true },
+        { "symbol": "d", "name": "slit separation", "unit": "m", "description": "Distance between the two slits.", "positive": true }
+      ],
+      "explanation": "Light from two slits interferes: bright fringes appear where the path difference is a whole number of wavelengths. For small angles that happens every λL/d along the screen. Young's experiment in 1801 was key evidence that light is a wave.",
+      "whenToUse": "Use it to measure a wavelength from a double slit pattern, or to predict the fringe pattern.",
+      "assumptions": ["small angles: L much larger than the fringe spacing", "monochromatic, coherent light"],
+      "example": {
+        "story": "A red laser (633 nm) shines through slits 0.5 mm apart onto a screen 2 m away. How far apart are the bright fringes?",
+        "given": { "λ": 6.33e-7, "L": 2, "d": 0.0005 },
+        "solveFor": "w",
+        "result": 0.002532,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["w = 633 × 10⁻⁹ × 2 / 0.0005", "w = 2.532 × 10⁻³ m (about 2.5 mm)"]
+      },
+      "related": ["diffraction-grating", "single-slit-minimum"],
+      "tags": ["young", "double slit", "interference", "fringe spacing", "fringe width"]
+    },
+    {
+      "id": "single-slit-minimum",
+      "name": "Single slit diffraction minima",
+      "subcategory": "Interference and diffraction",
+      "level": "university",
+      "equation": "a*sin(θ) = n*λ",
+      "displayLatex": "a\\sin\\theta = n\\lambda, \\quad n = 1, 2, 3, \\dots",
+      "variables": [
+        { "symbol": "a", "name": "slit width", "unit": "m", "description": "Width of the single slit.", "positive": true },
+        { "symbol": "θ", "name": "angle of the dark fringe", "unit": "rad", "description": "Angle of the n-th dark fringe from the centre, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "n", "name": "order of minimum", "unit": "", "description": "1 for the first dark fringe either side of centre.", "positive": true, "integer": true },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the light.", "positive": true }
+      ],
+      "explanation": "Split the slit into two halves: when light from the top edge travels λ/2 further than light from the middle, every pair of points cancels and the screen is dark. That happens when a sin θ = λ, and again at whole multiples. Narrower slits spread the light more.",
+      "whenToUse": "Use it for the width of the central diffraction maximum, measuring thin gaps or hairs, and understanding resolution limits.",
+      "assumptions": ["far-field (Fraunhofer) diffraction", "monochromatic light"],
+      "example": {
+        "story": "A 633 nm laser passes through a slit 0.1 mm wide. At what angle is the first dark fringe?",
+        "given": { "a": 0.0001, "n": 1, "λ": 6.33e-7 },
+        "solveFor": "θ",
+        "result": 0.00633004,
+        "unit": "rad",
+        "tolerance": 1e-8,
+        "steps": ["sin θ = 633 × 10⁻⁹ / 10⁻⁴ = 0.00633", "θ ≈ 0.00633 rad (0.36°)"]
+      },
+      "related": ["diffraction-grating", "rayleigh-criterion", "double-slit-fringe-spacing"],
+      "tags": ["single slit", "diffraction", "dark fringe", "minimum", "fraunhofer"]
+    },
+    {
+      "id": "rayleigh-criterion",
+      "name": "Rayleigh criterion (angular resolution)",
+      "subcategory": "Interference and diffraction",
+      "level": "university",
+      "equation": "θ = 1.22*λ / D",
+      "displayLatex": "\\theta \\approx 1.22\\frac{\\lambda}{D}",
+      "variables": [
+        { "symbol": "θ", "name": "smallest resolvable angle", "unit": "rad", "description": "Two point sources closer than this angle blur into one.", "positive": true },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the light.", "positive": true },
+        { "symbol": "D", "name": "aperture diameter", "unit": "m", "description": "Diameter of the lens, mirror or pupil.", "positive": true }
+      ],
+      "explanation": "Every circular aperture spreads a point of light into a small disc. Two points can just be told apart when the centre of one disc falls on the first dark ring of the other, at 1.22 λ/D. Bigger telescopes and shorter wavelengths give sharper images.",
+      "whenToUse": "Use it for the resolving power of telescopes, microscopes, cameras and the eye.",
+      "assumptions": ["circular aperture", "diffraction limited optics", "small angles"],
+      "example": {
+        "story": "What is the smallest angle a 10 cm telescope can resolve in green light (550 nm)?",
+        "given": { "λ": 5.5e-7, "D": 0.1 },
+        "solveFor": "θ",
+        "result": 6.71e-6,
+        "unit": "rad",
+        "tolerance": 1e-10,
+        "steps": ["θ = 1.22 × 550 × 10⁻⁹ / 0.1", "θ ≈ 6.7 × 10⁻⁶ rad (about 1.4 arcseconds)"]
+      },
+      "related": ["single-slit-minimum", "diffraction-grating"],
+      "tags": ["rayleigh", "resolution", "resolving power", "telescope", "airy disc", "diffraction limit"]
+    },
+    {
+      "id": "sound-intensity-level",
+      "name": "Sound intensity level (decibels)",
+      "subcategory": "Sound",
+      "level": "school",
+      "equation": "L = 10*log(I / I_0)",
+      "displayLatex": "L = 10\\log_{10}\\frac{I}{I_0}",
+      "variables": [
+        { "symbol": "L", "name": "sound level", "unit": "dB", "description": "Loudness on the decibel scale." },
+        { "symbol": "I", "name": "intensity", "unit": "W/m²", "description": "Sound power per square metre.", "positive": true },
+        { "symbol": "I_0", "name": "reference intensity", "unit": "W/m²", "description": "Threshold of hearing, 1 × 10⁻¹² W/m².", "defaultValue": 1e-12, "positive": true }
+      ],
+      "explanation": "Our ears respond to an enormous range of intensities, so loudness is measured on a logarithmic scale. Every factor of 10 in intensity adds 10 dB, and doubling the intensity adds about 3 dB. 0 dB is the quietest sound a young ear can hear and about 120 dB is painful.",
+      "whenToUse": "Use it to convert between sound intensity and decibels for noise levels, concerts and hearing protection.",
+      "assumptions": ["I₀ = 10⁻¹² W/m² (the standard reference for sound in air)"],
+      "example": {
+        "story": "A busy street has a sound intensity of 1 × 10⁻⁵ W/m². What is its sound level?",
+        "given": { "I": 1e-5, "I_0": 1e-12 },
+        "solveFor": "L",
+        "result": 70,
+        "unit": "dB",
+        "tolerance": 1e-9,
+        "steps": ["I / I₀ = 10⁻⁵ / 10⁻¹² = 10⁷", "log(10⁷) = 7", "L = 10 × 7 = 70 dB"]
+      },
+      "related": ["inverse-square-intensity", "log-quotient-rule"],
+      "tags": ["decibel", "db", "sound level", "loudness", "intensity level", "noise"]
+    },
+    {
+      "id": "inverse-square-intensity",
+      "name": "Intensity of a point source (inverse square law)",
+      "subcategory": "Wave basics",
+      "level": "school",
+      "equation": "I = P / (4*pi*r^2)",
+      "displayLatex": "I = \\frac{P}{4\\pi r^2}",
+      "variables": [
+        { "symbol": "I", "name": "intensity", "unit": "W/m²", "description": "Power per square metre at distance r.", "min": 0 },
+        { "symbol": "P", "name": "source power", "unit": "W", "description": "Total power emitted in all directions.", "min": 0 },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance from the source.", "positive": true }
+      ],
+      "explanation": "A source that radiates equally in all directions spreads its power over a sphere of area 4πr². Doubling the distance spreads it over four times the area, so the intensity drops to a quarter. The same law holds for light, sound and radiation from point sources.",
+      "whenToUse": "Use it for loudspeakers, light bulbs, stars and radioactive sources.",
+      "assumptions": ["point source radiating equally in all directions", "no absorption"],
+      "example": {
+        "story": "A speaker emits 10 W of sound equally in all directions. What is the intensity 5 m away?",
+        "given": { "P": 10, "r": 5 },
+        "solveFor": "I",
+        "result": 0.0318310,
+        "unit": "W/m²",
+        "tolerance": 1e-7,
+        "steps": ["Sphere area: 4π × 25 ≈ 314.16 m²", "I = 10 / 314.16 ≈ 0.0318 W/m²"]
+      },
+      "related": ["sound-intensity-level", "sphere-surface-area", "stefan-boltzmann-law"],
+      "tags": ["inverse square law", "intensity", "point source", "radiation", "spreading"]
+    },
+    {
+      "id": "beat-frequency",
+      "name": "Beat frequency",
+      "subcategory": "Sound",
+      "level": "school",
+      "equation": "f_b = abs(f_1 - f_2)",
+      "displayLatex": "f_b = |f_1 - f_2|",
+      "variables": [
+        { "symbol": "f_b", "name": "beat frequency", "unit": "Hz", "description": "How many times per second the loudness rises and falls.", "min": 0 },
+        { "symbol": "f_1", "name": "first frequency", "unit": "Hz", "description": "Frequency of the first sound.", "positive": true },
+        { "symbol": "f_2", "name": "second frequency", "unit": "Hz", "description": "Frequency of the second sound.", "positive": true }
+      ],
+      "explanation": "Two notes of nearly equal frequency drift in and out of step, so their combined loudness swells and fades. The number of swells per second is the difference between the frequencies. Musicians tune by adjusting until the beats disappear.",
+      "whenToUse": "Use it for tuning instruments and for measuring small frequency differences.",
+      "assumptions": ["the two frequencies are close"],
+      "example": {
+        "story": "A tuning fork at 440 Hz and a guitar string at 444 Hz sound together. How many beats per second are heard?",
+        "given": { "f_1": 440, "f_2": 444 },
+        "solveFor": "f_b",
+        "result": 4,
+        "unit": "Hz",
+        "tolerance": 1e-9,
+        "steps": ["f_b = |440 - 444|", "f_b = 4 Hz"]
+      },
+      "related": ["frequency-period", "doppler-effect-sound"],
+      "tags": ["beats", "beat frequency", "tuning", "interference", "sound"]
+    },
+    {
+      "id": "photon-energy-frequency",
+      "name": "Photon energy from frequency",
+      "subcategory": "Light and photons",
+      "level": "school",
+      "equation": "E = h*f",
+      "displayLatex": "E = hf",
+      "variables": [
+        { "symbol": "E", "name": "photon energy", "unit": "J", "description": "Energy carried by one photon.", "positive": true },
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "Frequency of the light.", "positive": true }
+      ],
+      "constants": ["planck-constant"],
+      "explanation": "Light comes in packets called photons, and each photon's energy is proportional to its frequency. Planck's constant is the proportionality factor. Blue photons carry more energy than red ones, and ultraviolet photons enough to damage skin.",
+      "whenToUse": "Use it for the photoelectric effect, atomic spectra, solar cells and counting photons in a beam.",
+      "assumptions": [],
+      "example": {
+        "story": "Green light has a frequency of 5.5 × 10¹⁴ Hz. What is the energy of one photon?",
+        "given": { "f": 5.5e14 },
+        "solveFor": "E",
+        "result": 3.6443386e-19,
+        "unit": "J",
+        "tolerance": 1e-25,
+        "steps": ["E = 6.626 × 10⁻³⁴ × 5.5 × 10¹⁴", "E ≈ 3.64 × 10⁻¹⁹ J (about 2.3 eV)"]
+      },
+      "related": ["photon-energy-wavelength", "photoelectric-equation", "frequency-period"],
+      "tags": ["photon energy", "planck relation", "e = hf", "quantum", "light energy"]
+    },
+    {
+      "id": "photon-energy-wavelength",
+      "name": "Photon energy from wavelength",
+      "subcategory": "Light and photons",
+      "level": "school",
+      "equation": "E = h*c / λ",
+      "displayLatex": "E = \\frac{hc}{\\lambda}",
+      "variables": [
+        { "symbol": "E", "name": "photon energy", "unit": "J", "description": "Energy carried by one photon.", "positive": true },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the light.", "positive": true }
+      ],
+      "constants": ["planck-constant", "speed-of-light"],
+      "explanation": "Combining E = h f with c = f λ gives E = h c / λ. Shorter wavelengths mean more energetic photons. A handy rule: photon energy in electronvolts is about 1240 divided by the wavelength in nanometres.",
+      "whenToUse": "Use it when the wavelength is given, as is usual for visible light, lasers and spectral lines.",
+      "assumptions": ["light in vacuum (or air, to good accuracy)"],
+      "example": {
+        "story": "A blue laser has a wavelength of 450 nm. What is the energy of each photon?",
+        "given": { "λ": 4.5e-7 },
+        "solveFor": "E",
+        "result": 4.4143241e-19,
+        "unit": "J",
+        "tolerance": 1e-25,
+        "steps": ["h c ≈ 1.986 × 10⁻²⁵ J·m", "E = 1.986 × 10⁻²⁵ / 4.5 × 10⁻⁷", "E ≈ 4.41 × 10⁻¹⁹ J (about 2.76 eV)"]
+      },
+      "related": ["photon-energy-frequency", "wave-speed", "rydberg-formula"],
+      "tags": ["photon energy", "e = hc / lambda", "wavelength", "quantum", "electronvolt"]
+    },
+    {
+      "id": "de-broglie-wavelength",
+      "name": "De Broglie wavelength",
+      "subcategory": "Light and photons",
+      "level": "school",
+      "equation": "λ = h / (m*v)",
+      "displayLatex": "\\lambda = \\frac{h}{p} = \\frac{h}{mv}",
+      "variables": [
+        { "symbol": "λ", "name": "de Broglie wavelength", "unit": "m", "description": "Wavelength associated with the moving particle.", "positive": true },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the particle.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed of the particle.", "positive": true }
+      ],
+      "constants": ["planck-constant"],
+      "explanation": "De Broglie proposed that every moving particle has a wavelength, equal to Planck's constant divided by its momentum. For electrons this wavelength is about the size of atoms, so electrons diffract through crystals. For everyday objects it is far too tiny to notice.",
+      "whenToUse": "Use it for electron diffraction, electron microscopes and the wave nature of matter.",
+      "assumptions": ["non-relativistic speeds (use relativistic momentum near c)"],
+      "example": {
+        "story": "What is the de Broglie wavelength of an electron (9.109 × 10⁻³¹ kg) moving at 1.0 × 10⁶ m/s?",
+        "given": { "m": 9.1093837015e-31, "v": 1000000 },
+        "solveFor": "λ",
+        "result": 7.273895e-10,
+        "unit": "m",
+        "tolerance": 1e-15,
+        "steps": ["p = 9.109 × 10⁻³¹ × 10⁶ ≈ 9.109 × 10⁻²⁵ kg·m/s", "λ = 6.626 × 10⁻³⁴ / 9.109 × 10⁻²⁵", "λ ≈ 7.27 × 10⁻¹⁰ m, about the spacing of atoms"]
+      },
+      "related": ["momentum", "photon-energy-wavelength", "heisenberg-uncertainty"],
+      "tags": ["de broglie", "matter wave", "wave particle duality", "electron diffraction", "wavelength"]
+    }
+  ]
+}

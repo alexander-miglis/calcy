@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.Modes.Programmer</RootNamespace>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.UI\Calcy.UI.csproj" />
+    <ProjectReference Include="..\Calcy.Engine\Calcy.Engine.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Calcy.Modes.Programmer.Tests" />
+  </ItemGroup>
+</Project>

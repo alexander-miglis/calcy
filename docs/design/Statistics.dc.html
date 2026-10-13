@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Statistics mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Statistics" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+
+    <section aria-label="Data" style="flex: 1 1 280px; max-width: 300px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background-color: var(--head); border-bottom: 4px solid var(--line)">
+        <h2 style="margin: 0; font-family: 'Silkscreen', monospace; font-size: 14px">Data</h2>
+        <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 10px; color: var(--ink); background-color: var(--paper); border: 2px solid var(--line); min-height: 32px; padding: 0 8px">Import CSV</button>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 15px">
+        <thead>
+          <tr>
+            <th style="border: 2px solid var(--line); padding: 4px; background-color: var(--key); font-family: 'Silkscreen', monospace; font-size: 10px; width: 34px">#</th>
+            <th style="border: 2px solid var(--line); padding: 4px; background-color: var(--sel); font-family: 'Silkscreen', monospace; font-size: 11px">L1 hours</th>
+            <th style="border: 2px solid var(--line); padding: 4px; background-color: var(--sel); font-family: 'Silkscreen', monospace; font-size: 11px">L2 score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="10">
+            <tr>
+              <td style="border: 2px solid var(--line); padding: 2px 4px; text-align: center; font-size: 12px; color: var(--muted)">{{r.n}}</td>
+              <td style="border: 2px solid var(--line); padding: 0"><input type="text" inputmode="decimal" aria-label="{{r.xLabel}}" value="{{r.x}}" onChange="{{r.setX}}" style="width: 100%; box-sizing: border-box; border: 0; padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 15px; text-align: right; background-color: var(--card); color: var(--ink); min-height: 34px"></td>
+              <td style="border: 2px solid var(--line); padding: 0"><input type="text" inputmode="decimal" aria-label="{{r.yLabel}}" value="{{r.y}}" onChange="{{r.setY}}" style="width: 100%; box-sizing: border-box; border: 0; padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 15px; text-align: right; background-color: var(--card); color: var(--ink); min-height: 34px"></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 8px">
+        <div style="border: 2px dashed var(--muted); padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted)">L3 = L2 / L1  (column formula)</div>
+        <div style="font-size: 13px; color: var(--muted)">Edit a cell: every stat and plot updates.</div>
+      </div>
+    </section>
+
+    <section aria-label="Analysis" style="flex: 999 1 560px; min-width: 0; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <div role="tablist" aria-label="Analysis type" style="display: flex; flex-wrap: wrap; background-color: var(--key); border-bottom: 4px solid var(--line); padding: 8px 10px; gap: 6px">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 40px; padding: 0 12px; border: 2px solid var(--line); box-shadow: 2px 2px 0 0 var(--line); cursor: pointer; background-color: {{t.bg}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{isReg}}" hint-placeholder-val="{{ true }}">
+        <div style="padding: 14px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+            <label for="model" style="font-family: 'Silkscreen', monospace; font-size: 12px">Model</label>
+            <select id="model" style="font-family: 'JetBrains Mono', monospace; font-size: 15px; min-height: 40px; border: 3px solid var(--line); background-color: var(--card); color: var(--ink); padding: 0 8px">
+              <option>Linear  y = ax + b</option><option>Quadratic  y = ax² + bx + c</option><option>Exponential  y = a·bˣ</option><option>Logarithmic  y = a + b·ln x</option><option>Power  y = a·xᵇ</option><option>Logistic  y = c / (1 + a·e^(−bx))</option><option>Sinusoidal  y = a·sin(bx + c) + d</option><option>Custom model…</option>
+            </select>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px">x: L1  y: L2</span>
+          </div>
+          <svg viewBox="0 0 640 300" role="img" aria-label="Scatter plot with fitted line" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+            <sc-for list="{{gridLines}}" as="g" hint-placeholder-count="5"><line x1="50" y1="{{g.y}}" x2="630" y2="{{g.y}}" style="stroke: var(--grid); stroke-width: 1"></line><text x="44" y="{{g.ty}}" font-family="Silkscreen, monospace" font-size="11" text-anchor="end" style="fill: var(--muted)">{{g.label}}</text></sc-for>
+            <line x1="50" y1="270" x2="630" y2="270" style="stroke: var(--ink); stroke-width: 2"></line>
+            <line x1="50" y1="10" x2="50" y2="270" style="stroke: var(--ink); stroke-width: 2"></line>
+            <sc-for list="{{xTicks}}" as="t" hint-placeholder-count="5"><text x="{{t.x}}" y="288" font-family="Silkscreen, monospace" font-size="11" text-anchor="middle" style="fill: var(--muted)">{{t.label}}</text></sc-for>
+            <line x1="{{lineX1}}" y1="{{lineY1}}" x2="{{lineX2}}" y2="{{lineY2}}" style="stroke: var(--g2); stroke-width: 4"></line>
+            <sc-for list="{{dots}}" as="d" hint-placeholder-count="10"><rect x="{{d.x}}" y="{{d.y}}" width="12" height="12" style="fill: var(--g1); stroke: var(--line); stroke-width: 2"></rect></sc-for>
+          </svg>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+            <div style="border: 3px solid var(--line); padding: 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">a (slope)</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700">{{regA}}</div></div>
+            <div style="border: 3px solid var(--line); padding: 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">b (intercept)</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700">{{regB}}</div></div>
+            <div style="border: 3px solid var(--line); padding: 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">r</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700">{{regR}}</div></div>
+            <div style="border: 3px solid var(--line); padding: 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">r²</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700">{{regR2}}</div></div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--primary); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); min-height: 44px; padding: 0 12px">Send y = ax + b to Graphing</button>
+            <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--key); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); min-height: 44px; padding: 0 12px">Residuals to L3</button>
+            <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--key); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); min-height: 44px; padding: 0 12px">Predict at x = …</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isOne}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 14px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; gap: 8px; align-items: center">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">List</span>
+            <button type="button" onClick="{{pickX}}" aria-pressed="{{oneXPressed}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 40px; padding: 0 12px; border: 2px solid var(--line); cursor: pointer; background-color: {{oneXBg}}">L1 hours</button>
+            <button type="button" onClick="{{pickY}}" aria-pressed="{{oneYPressed}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 40px; padding: 0 12px; border: 2px solid var(--line); cursor: pointer; background-color: {{oneYBg}}">L2 score</button>
+            <label style="display: flex; align-items: center; gap: 8px; margin-left: auto; font-family: 'Silkscreen', monospace; font-size: 11px">Quartiles
+              <select style="font-family: 'JetBrains Mono', monospace; font-size: 13px; min-height: 36px; border: 2px solid var(--line); background-color: var(--card); color: var(--ink)">
+                <option>TI / Casio</option><option>Tukey hinges</option><option>Excel inclusive</option><option>Excel exclusive</option>
+              </select>
+            </label>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{oneStats}}" as="s" hint-placeholder-count="12">
+              <div style="border: 3px solid var(--line); padding: 6px 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">{{s.k}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">{{s.v}}</div></div>
+            </sc-for>
+          </div>
+          <svg viewBox="0 0 640 90" role="img" aria-label="Box plot" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+            <line x1="{{bxMin}}" y1="45" x2="{{bxQ1}}" y2="45" style="stroke: var(--ink); stroke-width: 3"></line>
+            <line x1="{{bxQ3}}" y1="45" x2="{{bxMax}}" y2="45" style="stroke: var(--ink); stroke-width: 3"></line>
+            <rect x="{{bxQ1}}" y="20" width="{{bxW}}" height="50" style="fill: var(--head); stroke: var(--line); stroke-width: 3"></rect>
+            <line x1="{{bxMed}}" y1="20" x2="{{bxMed}}" y2="70" style="stroke: var(--line); stroke-width: 4"></line>
+            <rect x="{{bxMinR}}" y="35" width="6" height="20" style="fill: var(--ink)"></rect>
+            <rect x="{{bxMaxR}}" y="35" width="6" height="20" style="fill: var(--ink)"></rect>
+          </svg>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isTest}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 14px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-size: 15px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">1-sample T-test on L2</span>
+            <label style="display: flex; align-items: center; gap: 6px">μ₀ =
+              <input type="text" value="{{mu0}}" onChange="{{setMu0}}" aria-label="Hypothesised mean" style="width: 72px; font-family: 'JetBrains Mono', monospace; font-size: 16px; min-height: 40px; border: 3px solid var(--line); padding: 0 8px; background-color: var(--card); color: var(--ink)">
+            </label>
+            <span>alternative: μ ≠ μ₀</span>
+          </div>
+          <svg viewBox="0 0 640 200" role="img" aria-label="t distribution with shaded tails" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+            <polygon points="{{tailLeft}}" style="fill: var(--mem)"></polygon>
+            <polygon points="{{tailRight}}" style="fill: var(--mem)"></polygon>
+            <polyline points="{{tCurve}}" fill="none" style="stroke: var(--ink); stroke-width: 3"></polyline>
+            <line x1="20" y1="180" x2="620" y2="180" style="stroke: var(--ink); stroke-width: 2"></line>
+          </svg>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+            <div style="border: 3px solid var(--line); padding: 6px 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">t</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">{{tStat}}</div></div>
+            <div style="border: 3px solid var(--line); padding: 6px 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">p</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">{{pVal}}</div></div>
+            <div style="border: 3px solid var(--line); padding: 6px 8px; background-color: var(--card)"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">df</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">{{df}}</div></div>
+            <div style="border: 3px solid var(--line); padding: 6px 8px; background-color: {{decisionBg}}"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">at α = 0.05</div><div style="font-size: 16px; font-weight: 700">{{decision}}</div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isDist}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 14px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 15px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Normal, μ = 0, σ = 1</span>
+            <label style="display: flex; align-items: center; gap: 6px">from <input type="text" value="{{lo}}" onChange="{{setLo}}" aria-label="Lower bound" style="width: 70px; font-family: 'JetBrains Mono', monospace; font-size: 16px; min-height: 40px; border: 3px solid var(--line); padding: 0 8px; background-color: var(--card); color: var(--ink)"></label>
+            <label style="display: flex; align-items: center; gap: 6px">to <input type="text" value="{{hi}}" onChange="{{setHi}}" aria-label="Upper bound" style="width: 70px; font-family: 'JetBrains Mono', monospace; font-size: 16px; min-height: 40px; border: 3px solid var(--line); padding: 0 8px; background-color: var(--card); color: var(--ink)"></label>
+          </div>
+          <svg viewBox="0 0 640 200" role="img" aria-label="Normal curve with shaded area" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+            <polygon points="{{normArea}}" style="fill: var(--sel); stroke: var(--line); stroke-width: 2"></polygon>
+            <polyline points="{{normCurve}}" fill="none" style="stroke: var(--ink); stroke-width: 3"></polyline>
+            <line x1="20" y1="180" x2="620" y2="180" style="stroke: var(--ink); stroke-width: 2"></line>
+          </svg>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">P({{lo}} &lt; X &lt; {{hi}}) = {{normP}}</div>
+        </div>
+      </sc-if>
+    </section>
+
+    <aside aria-label="Statistics cards" style="flex: 1 1 250px; max-width: 290px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--mem); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Cards</h2>
+      <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+          <article style="border: 3px solid var(--line); background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="padding: 4px 8px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">{{c.title}}</div>
+            <div style="padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 14px; white-space: pre-line">{{c.text}}</div>
+          </article>
+        </sc-for>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      xs: ['1', '2', '2', '3', '4', '5', '5', '6', '7', '8'],
+      ys: ['52', '55', '60', '61', '66', '70', '72', '75', '80', '84'],
+      tab: 'Regression', one: 'y', mu0: '65', lo: '-1.96', hi: '1.96'
+    };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  lnGamma(z) {
+    const g = 7, c = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+    if (z < 0.5) return Math.log(Math.PI / Math.sin(Math.PI * z)) - this.lnGamma(1 - z);
+    z -= 1;
+    let x = c[0];
+    for (let i = 1; i < g + 2; i++) x += c[i] / (z + i);
+    const t = z + g + 0.5;
+    return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
+  }
+  tPdf(t, df) { return Math.exp(this.lnGamma((df + 1) / 2) - this.lnGamma(df / 2) - 0.5 * Math.log(df * Math.PI) - (df + 1) / 2 * Math.log(1 + t * t / df)); }
+  tTwoTail(t, df) {
+    const a = Math.abs(t), n = 2000, h = a / n;
+    let s = this.tPdf(0, df) + this.tPdf(a, df);
+    for (let i = 1; i < n; i++) s += (i % 2 ? 4 : 2) * this.tPdf(i * h, df);
+    return Math.max(0, 1 - 2 * (s * h / 3));
+  }
+  phi(x) {
+    const t = 1 / (1 + 0.2316419 * Math.abs(x));
+    const d = 0.3989422804014327 * Math.exp(-x * x / 2);
+    const p = d * t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 + t * (-1.821255978 + t * 1.330274429))));
+    return x >= 0 ? 1 - p : p;
+  }
+  quart(sorted) {
+    const n = sorted.length;
+    const med = a => a.length % 2 ? a[(a.length - 1) / 2] : (a[a.length / 2 - 1] + a[a.length / 2]) / 2;
+    return { q1: med(sorted.slice(0, Math.floor(n / 2))), med: med(sorted), q3: med(sorted.slice(Math.ceil(n / 2))) };
+  }
+  fmt(v, d = 4) { return Number.isFinite(v) ? String(Number(v.toFixed(d))) : '?'; }
+  renderVals() {
+    const s = this.state;
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const pairs = s.xs.map((x, i) => [parseFloat(x), parseFloat(s.ys[i])]).filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
+    const xs = pairs.map(p => p[0]), ys = pairs.map(p => p[1]), n = pairs.length;
+    const mean = a => a.reduce((t, v) => t + v, 0) / a.length;
+    const mx = mean(xs), my = mean(ys);
+    let sxx = 0, syy = 0, sxy = 0;
+    for (let i = 0; i < n; i++) { sxx += (xs[i] - mx) ** 2; syy += (ys[i] - my) ** 2; sxy += (xs[i] - mx) * (ys[i] - my); }
+    const a = sxy / sxx, b = my - a * mx, r = sxy / Math.sqrt(sxx * syy);
+    const px = x => 50 + x / 9 * 580;
+    const py = y => 270 - (y - 40) / 50 * 260;
+    const list = s.one === 'x' ? xs : ys;
+    const sorted = [...list].sort((p, q) => p - q);
+    const m1 = mean(list);
+    const sx = Math.sqrt(list.reduce((t, v) => t + (v - m1) ** 2, 0) / (list.length - 1));
+    const sigma = Math.sqrt(list.reduce((t, v) => t + (v - m1) ** 2, 0) / list.length);
+    const q = this.quart(sorted);
+    const bmin = sorted[0], bmax = sorted[sorted.length - 1];
+    const bpx = v => 20 + (v - bmin) / ((bmax - bmin) || 1) * 600;
+    const mu0 = parseFloat(s.mu0);
+    const sy = Math.sqrt(syy / (n - 1));
+    const tStat = (my - mu0) / (sy / Math.sqrt(n));
+    const df = n - 1;
+    const p = this.tTwoTail(tStat, df);
+    const tx = t => 320 + t * 60, ty = d => 180 - d * 400;
+    const curve = []; for (let i = 0; i <= 120; i++) { const t = -5 + i / 12; curve.push(tx(t).toFixed(1) + ',' + ty(this.tPdf(t, df)).toFixed(1)); }
+    const tail = (from, to) => { const pts = [tx(from).toFixed(1) + ',180']; for (let i = 0; i <= 40; i++) { const t = from + (to - from) * i / 40; pts.push(tx(t).toFixed(1) + ',' + ty(this.tPdf(t, df)).toFixed(1)); } pts.push(tx(to).toFixed(1) + ',180'); return pts.join(' '); };
+    const at = Math.min(Math.abs(tStat), 5);
+    const lo = parseFloat(s.lo), hi = parseFloat(s.hi);
+    const npdf = x => Math.exp(-x * x / 2) / Math.sqrt(2 * Math.PI);
+    const nx = x => 320 + x * 75, ny = d => 180 - d * 400;
+    const ncurve = []; for (let i = 0; i <= 120; i++) { const x = -4 + i / 15; ncurve.push(nx(x).toFixed(1) + ',' + ny(npdf(x)).toFixed(1)); }
+    const clo = Math.max(-4, Math.min(4, lo)), chi = Math.max(-4, Math.min(4, hi));
+    const narea = [nx(clo).toFixed(1) + ',180']; for (let i = 0; i <= 60; i++) { const x = clo + (chi - clo) * i / 60; narea.push(nx(x).toFixed(1) + ',' + ny(npdf(x)).toFixed(1)); } narea.push(nx(chi).toFixed(1) + ',180');
+    const tabs = ['1-Var', 'Regression', 'T-test', 'Distribution'];
+    const setCell = (key, i) => (e) => { const arr = [...s[key]]; arr[i] = e.target.value; this.setState({ [key]: arr }); };
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      rows: s.xs.map((x, i) => ({ n: i + 1, x, y: s.ys[i], xLabel: 'L1 row ' + (i + 1), yLabel: 'L2 row ' + (i + 1), setX: setCell('xs', i), setY: setCell('ys', i) })),
+      tabs: tabs.map(t => ({ label: t, selected: t === s.tab ? 'true' : 'false', bg: t === s.tab ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ tab: t }) })),
+      isReg: s.tab === 'Regression', isOne: s.tab === '1-Var', isTest: s.tab === 'T-test', isDist: s.tab === 'Distribution',
+      dots: pairs.map(([x, y]) => ({ x: (px(x) - 6).toFixed(1), y: (py(y) - 6).toFixed(1) })),
+      lineX1: px(0).toFixed(1), lineY1: py(b).toFixed(1), lineX2: px(9).toFixed(1), lineY2: py(a * 9 + b).toFixed(1),
+      gridLines: [50, 60, 70, 80, 90].map(v => ({ y: py(v).toFixed(1), ty: (py(v) + 4).toFixed(1), label: String(v) })),
+      xTicks: [0, 2, 4, 6, 8].map(v => ({ x: px(v).toFixed(1), label: String(v) })),
+      regA: this.fmt(a), regB: this.fmt(b), regR: this.fmt(r), regR2: this.fmt(r * r),
+      pickX: () => this.setState({ one: 'x' }), pickY: () => this.setState({ one: 'y' }),
+      oneXPressed: s.one === 'x' ? 'true' : 'false', oneYPressed: s.one === 'y' ? 'true' : 'false',
+      oneXBg: s.one === 'x' ? 'var(--sel)' : 'var(--paper)', oneYBg: s.one === 'y' ? 'var(--sel)' : 'var(--paper)',
+      oneStats: [
+        { k: 'n', v: String(list.length) }, { k: 'mean x̄', v: this.fmt(m1) }, { k: 'Sx', v: this.fmt(sx) }, { k: 'σx', v: this.fmt(sigma) },
+        { k: 'Σx', v: this.fmt(list.reduce((t, v) => t + v, 0)) }, { k: 'Σx²', v: this.fmt(list.reduce((t, v) => t + v * v, 0)) }, { k: 'min', v: this.fmt(bmin) }, { k: 'max', v: this.fmt(bmax) },
+        { k: 'Q1', v: this.fmt(q.q1) }, { k: 'median', v: this.fmt(q.med) }, { k: 'Q3', v: this.fmt(q.q3) }, { k: 'IQR', v: this.fmt(q.q3 - q.q1) }
+      ],
+      bxMin: bpx(bmin).toFixed(1), bxMax: bpx(bmax).toFixed(1), bxQ1: bpx(q.q1).toFixed(1), bxQ3: bpx(q.q3).toFixed(1), bxMed: bpx(q.med).toFixed(1), bxW: (bpx(q.q3) - bpx(q.q1)).toFixed(1),
+      bxMinR: (bpx(bmin) - 3).toFixed(1), bxMaxR: (bpx(bmax) - 3).toFixed(1),
+      mu0: s.mu0, setMu0: (e) => this.setState({ mu0: e.target.value }),
+      tStat: this.fmt(tStat), pVal: this.fmt(p, 5), df: String(df),
+      decision: p < 0.05 ? 'Reject H₀' : 'Keep H₀', decisionBg: p < 0.05 ? 'var(--sel)' : 'var(--card)',
+      tCurve: curve.join(' '), tailLeft: tail(-5, -at), tailRight: tail(at, 5),
+      lo: s.lo, hi: s.hi, setLo: (e) => this.setState({ lo: e.target.value }), setHi: (e) => this.setState({ hi: e.target.value }),
+      normCurve: ncurve.join(' '), normArea: narea.join(' '), normP: this.fmt(this.phi(hi) - this.phi(lo), 6),
+      cards: [
+        { title: '#3  LinReg ax+b  L1, L2', text: 'y = ' + this.fmt(a) + 'x + ' + this.fmt(b) + '\nr² = ' + this.fmt(r * r) },
+        { title: '#2  1-Var  L2', text: 'x̄ = ' + this.fmt(my) + '\nSx = ' + this.fmt(sy) + '\nn = ' + n },
+        { title: '#1  normalcdf', text: 'P(−1.96 < Z < 1.96)\n= 0.9500042' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

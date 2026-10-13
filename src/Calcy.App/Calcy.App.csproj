@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Calcy.App</RootNamespace>
+    <AssemblyName>Calcy</AssemblyName>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\calcy.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Headless" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.Core\Calcy.Core.csproj" />
+    <ProjectReference Include="..\Calcy.UI\Calcy.UI.csproj" />
+    <ProjectReference Include="..\Calcy.Engine\Calcy.Engine.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Simple\Calcy.Modes.Simple.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Advanced\Calcy.Modes.Advanced.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Notebook\Calcy.Modes.Notebook.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Statistics\Calcy.Modes.Statistics.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Code\Calcy.Modes.Code.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Formulas\Calcy.Modes.Formulas.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Solver\Calcy.Modes.Solver.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Finance\Calcy.Modes.Finance.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Graphing\Calcy.Modes.Graphing.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Matrix\Calcy.Modes.Matrix.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Convert\Calcy.Modes.Convert.csproj" />
+    <ProjectReference Include="..\Calcy.Modes.Programmer\Calcy.Modes.Programmer.csproj" />
+  </ItemGroup>
+</Project>

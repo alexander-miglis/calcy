@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.UI.Graph</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.Graphing\Calcy.Graphing.csproj" />
+    <ProjectReference Include="..\Calcy.UI\Calcy.UI.csproj" />
+  </ItemGroup>
+</Project>

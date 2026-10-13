@@ -1,0 +1,1271 @@
+{
+  "category": "algebra",
+  "formulas": [
+    {
+      "id": "quadratic-formula-plus",
+      "name": "Quadratic formula (plus root)",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "x_1 = (-b + sqrt(b^2 - 4*a*c)) / (2*a)",
+      "displayLatex": "x_1 = \\frac{-b + \\sqrt{b^2 - 4ac}}{2a}",
+      "variables": [
+        { "symbol": "x_1", "name": "root with the plus sign", "unit": "", "description": "A solution of a x² + b x + c = 0. When a > 0 it is the larger root." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x². It must not be zero." },
+        { "symbol": "b", "name": "coefficient of x", "unit": "", "description": "The number in front of x." },
+        { "symbol": "c", "name": "constant term", "unit": "", "description": "The number without any x." }
+      ],
+      "explanation": "Every quadratic equation a x² + b x + c = 0 can be solved with this formula. It comes from completing the square: divide by a, move c across, add (b/2a)² to both sides and take the square root. The ± in the full formula gives two roots; this version uses the plus sign. If the number under the root is negative there are no real roots.",
+      "whenToUse": "Use it whenever a quadratic does not factorise easily, or when you want exact roots quickly.",
+      "assumptions": ["a is not zero", "real roots need b² - 4ac ≥ 0"],
+      "example": {
+        "story": "Solve 2x² - 3x - 5 = 0 and find the root that uses the plus sign.",
+        "given": { "a": 2, "b": -3, "c": -5 },
+        "solveFor": "x_1",
+        "result": 2.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": [
+          "Discriminant: (-3)² - 4 × 2 × (-5) = 9 + 40 = 49",
+          "√49 = 7",
+          "x₁ = (3 + 7) / (2 × 2) = 10 / 4 = 2.5"
+        ]
+      },
+      "related": ["quadratic-formula-minus", "quadratic-discriminant", "vieta-sum-of-roots", "quadratic-vertex-x"],
+      "tags": ["quadratic", "abc formula", "roots", "solve quadratic", "second degree equation", "parabola", "zeros"]
+    },
+    {
+      "id": "quadratic-formula-minus",
+      "name": "Quadratic formula (minus root)",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "x_2 = (-b - sqrt(b^2 - 4*a*c)) / (2*a)",
+      "displayLatex": "x_2 = \\frac{-b - \\sqrt{b^2 - 4ac}}{2a}",
+      "variables": [
+        { "symbol": "x_2", "name": "root with the minus sign", "unit": "", "description": "A solution of a x² + b x + c = 0. When a > 0 it is the smaller root." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x². It must not be zero." },
+        { "symbol": "b", "name": "coefficient of x", "unit": "", "description": "The number in front of x." },
+        { "symbol": "c", "name": "constant term", "unit": "", "description": "The number without any x." }
+      ],
+      "explanation": "This is the second half of the quadratic formula, taking the minus sign in front of the square root. Together with the plus root it gives both solutions of a x² + b x + c = 0. The two roots are mirror images about the axis of symmetry x = -b/(2a).",
+      "whenToUse": "Use it together with the plus root to find both solutions of a quadratic equation.",
+      "assumptions": ["a is not zero", "real roots need b² - 4ac ≥ 0"],
+      "example": {
+        "story": "Find the smaller solution of x² - 5x + 6 = 0.",
+        "given": { "a": 1, "b": -5, "c": 6 },
+        "solveFor": "x_2",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": [
+          "Discriminant: (-5)² - 4 × 1 × 6 = 25 - 24 = 1",
+          "x₂ = (5 - √1) / 2",
+          "x₂ = 4 / 2 = 2"
+        ]
+      },
+      "related": ["quadratic-formula-plus", "quadratic-discriminant", "vieta-product-of-roots"],
+      "tags": ["quadratic", "abc formula", "roots", "solve quadratic", "second degree equation", "zeros"]
+    },
+    {
+      "id": "quadratic-discriminant",
+      "name": "Discriminant of a quadratic",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "D = b^2 - 4*a*c",
+      "displayLatex": "D = b^2 - 4ac",
+      "variables": [
+        { "symbol": "D", "name": "discriminant", "unit": "", "description": "Decides how many real roots the quadratic has." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x²." },
+        { "symbol": "b", "name": "coefficient of x", "unit": "", "description": "The number in front of x." },
+        { "symbol": "c", "name": "constant term", "unit": "", "description": "The number without any x." }
+      ],
+      "explanation": "The discriminant is the expression under the square root in the quadratic formula. If D > 0 there are two different real roots, if D = 0 there is exactly one (a repeated root), and if D < 0 there are no real roots because you cannot take the square root of a negative number. Graphically it tells you whether the parabola crosses, touches or misses the x axis.",
+      "whenToUse": "Use it to find out how many solutions a quadratic has before (or instead of) solving it, for example in questions about tangents or intersections.",
+      "assumptions": ["a is not zero"],
+      "example": {
+        "story": "How many real solutions does 3x² + 4x + 2 = 0 have?",
+        "given": { "a": 3, "b": 4, "c": 2 },
+        "solveFor": "D",
+        "result": -8,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": [
+          "D = 4² - 4 × 3 × 2",
+          "D = 16 - 24 = -8",
+          "D < 0, so there are no real solutions"
+        ]
+      },
+      "related": ["quadratic-formula-plus", "quadratic-formula-minus"],
+      "tags": ["discriminant", "delta", "number of roots", "b squared minus 4ac", "nature of roots"]
+    },
+    {
+      "id": "quadratic-vertex-x",
+      "name": "Axis of symmetry of a parabola",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "x_v = -b / (2*a)",
+      "displayLatex": "x_v = -\\frac{b}{2a}",
+      "variables": [
+        { "symbol": "x_v", "name": "x coordinate of the vertex", "unit": "", "description": "Where the parabola y = a x² + b x + c turns; also the line of symmetry." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x². It must not be zero." },
+        { "symbol": "b", "name": "coefficient of x", "unit": "", "description": "The number in front of x." }
+      ],
+      "explanation": "A parabola is symmetric about a vertical line through its turning point (vertex). That line sits exactly halfway between the two roots, which is the average of the plus and minus roots: -b/(2a). Setting the derivative 2a x + b to zero gives the same result.",
+      "whenToUse": "Use it to find the turning point, the maximum or minimum of a quadratic, or the line of symmetry when sketching a graph.",
+      "assumptions": ["a is not zero"],
+      "example": {
+        "story": "Find the line of symmetry of y = x² - 6x + 5.",
+        "given": { "a": 1, "b": -6 },
+        "solveFor": "x_v",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["x_v = -(-6) / (2 × 1)", "x_v = 6 / 2 = 3"]
+      },
+      "related": ["quadratic-vertex-y", "quadratic-formula-plus"],
+      "tags": ["vertex", "turning point", "axis of symmetry", "parabola", "maximum", "minimum"]
+    },
+    {
+      "id": "quadratic-vertex-y",
+      "name": "Turning point value of a parabola",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "y_v = c - b^2 / (4*a)",
+      "displayLatex": "y_v = c - \\frac{b^2}{4a}",
+      "variables": [
+        { "symbol": "y_v", "name": "y coordinate of the vertex", "unit": "", "description": "The minimum (if a > 0) or maximum (if a < 0) value of a x² + b x + c." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x². It must not be zero." },
+        { "symbol": "b", "name": "coefficient of x", "unit": "", "description": "The number in front of x." },
+        { "symbol": "c", "name": "constant term", "unit": "", "description": "The number without any x; also where the graph crosses the y axis." }
+      ],
+      "explanation": "Substituting x = -b/(2a) into a x² + b x + c gives the height of the vertex. This is the same as completing the square: a x² + b x + c = a(x + b/(2a))² + c - b²/(4a). The squared term is never negative, so c - b²/(4a) is the lowest value when a > 0 and the highest when a < 0.",
+      "whenToUse": "Use it for optimisation problems with a quadratic, such as the highest point of a thrown ball or the maximum area for a fixed fence length.",
+      "assumptions": ["a is not zero"],
+      "example": {
+        "story": "What is the minimum value of y = x² - 6x + 5?",
+        "given": { "a": 1, "b": -6, "c": 5 },
+        "solveFor": "y_v",
+        "result": -4,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["b² / (4a) = 36 / 4 = 9", "y_v = 5 - 9 = -4"]
+      },
+      "related": ["quadratic-vertex-x", "quadratic-discriminant"],
+      "tags": ["vertex", "turning point", "completing the square", "minimum value", "maximum value", "parabola"]
+    },
+    {
+      "id": "vieta-sum-of-roots",
+      "name": "Sum of the roots of a quadratic",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "s = -b / a",
+      "displayLatex": "x_1 + x_2 = -\\frac{b}{a}",
+      "variables": [
+        { "symbol": "s", "name": "sum of the roots", "unit": "", "description": "x₁ + x₂ for the two roots of a x² + b x + c = 0." },
+        { "symbol": "b", "name": "coefficient of x", "unit": "", "description": "The number in front of x." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x². It must not be zero." }
+      ],
+      "explanation": "If x₁ and x₂ are the roots, the quadratic factorises as a(x - x₁)(x - x₂). Expanding gives a x² - a(x₁ + x₂)x + a x₁ x₂, and comparing with a x² + b x + c shows x₁ + x₂ = -b/a. This is one of Vieta's formulas, and it also holds for complex roots.",
+      "whenToUse": "Use it to check your roots, or to answer questions about the roots without finding them.",
+      "assumptions": ["a is not zero", "roots are counted with multiplicity"],
+      "example": {
+        "story": "Without solving, find the sum of the roots of 2x² - 3x - 5 = 0.",
+        "given": { "b": -3, "a": 2 },
+        "solveFor": "s",
+        "result": 1.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["s = -(-3) / 2 = 1.5", "Check: the roots are 2.5 and -1, and 2.5 + (-1) = 1.5"]
+      },
+      "related": ["vieta-product-of-roots", "quadratic-formula-plus"],
+      "tags": ["vieta", "sum of roots", "viete", "relations between roots and coefficients"]
+    },
+    {
+      "id": "vieta-product-of-roots",
+      "name": "Product of the roots of a quadratic",
+      "subcategory": "Quadratics",
+      "level": "school",
+      "equation": "p = c / a",
+      "displayLatex": "x_1 x_2 = \\frac{c}{a}",
+      "variables": [
+        { "symbol": "p", "name": "product of the roots", "unit": "", "description": "x₁ × x₂ for the two roots of a x² + b x + c = 0." },
+        { "symbol": "c", "name": "constant term", "unit": "", "description": "The number without any x." },
+        { "symbol": "a", "name": "coefficient of x²", "unit": "", "description": "The number in front of x². It must not be zero." }
+      ],
+      "explanation": "Writing the quadratic as a(x - x₁)(x - x₂) and expanding, the constant term is a x₁ x₂. Comparing with c shows that the roots multiply to c/a. A negative product means one root is positive and the other negative.",
+      "whenToUse": "Use it to check roots, to build a quadratic from given roots, or to reason about the signs of the roots.",
+      "assumptions": ["a is not zero", "roots are counted with multiplicity"],
+      "example": {
+        "story": "Find the product of the roots of 2x² - 3x - 5 = 0.",
+        "given": { "c": -5, "a": 2 },
+        "solveFor": "p",
+        "result": -2.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["p = -5 / 2 = -2.5", "Check: 2.5 × (-1) = -2.5"]
+      },
+      "related": ["vieta-sum-of-roots", "quadratic-formula-minus"],
+      "tags": ["vieta", "product of roots", "viete", "relations between roots and coefficients"]
+    },
+    {
+      "id": "difference-of-squares",
+      "name": "Difference of two squares",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "a^2 - b^2 = (a + b)*(a - b)",
+      "displayLatex": "a^2 - b^2 = (a + b)(a - b)",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "first number", "unit": "", "description": "Any real number or expression." },
+        { "symbol": "b", "name": "second number", "unit": "", "description": "Any real number or expression." }
+      ],
+      "explanation": "Multiplying out (a + b)(a - b) gives a² - ab + ab - b², and the middle terms cancel. So a difference of two squares always factorises into a sum times a difference. It is one of the most useful factorisations in algebra.",
+      "whenToUse": "Use it to factorise expressions like x² - 9, to simplify fractions, or for quick mental arithmetic with numbers near a round number.",
+      "assumptions": [],
+      "example": {
+        "story": "Work out 103 × 97 in your head by writing it as (100 + 3)(100 - 3).",
+        "given": { "a": 100, "b": 3 },
+        "result": 9991,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["103 × 97 = (100 + 3)(100 - 3)", "= 100² - 3² = 10000 - 9", "= 9991"]
+      },
+      "related": ["binomial-square-sum", "binomial-square-difference", "sum-of-cubes"],
+      "tags": ["difference of squares", "factorise", "factorize", "special product", "conjugate"]
+    },
+    {
+      "id": "binomial-square-sum",
+      "name": "Square of a sum",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "(a + b)^2 = a^2 + 2*a*b + b^2",
+      "displayLatex": "(a + b)^2 = a^2 + 2ab + b^2",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "first term", "unit": "", "description": "Any real number or expression." },
+        { "symbol": "b", "name": "second term", "unit": "", "description": "Any real number or expression." }
+      ],
+      "explanation": "Squaring a sum is not the same as adding the squares: (a + b)² = (a + b)(a + b) = a² + ab + ba + b². The two middle products combine into 2ab. A picture helps: a square of side a + b splits into an a by a square, a b by b square and two a by b rectangles.",
+      "whenToUse": "Use it to expand brackets, to complete the square, or to square numbers like 51 quickly.",
+      "assumptions": [],
+      "example": {
+        "story": "Calculate 51² without a calculator.",
+        "given": { "a": 50, "b": 1 },
+        "result": 2601,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["51² = (50 + 1)²", "= 50² + 2 × 50 × 1 + 1²", "= 2500 + 100 + 1 = 2601"]
+      },
+      "related": ["binomial-square-difference", "binomial-cube", "difference-of-squares"],
+      "tags": ["binomial", "perfect square", "expand brackets", "square of a sum", "special product", "first binomial formula"]
+    },
+    {
+      "id": "binomial-square-difference",
+      "name": "Square of a difference",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "(a - b)^2 = a^2 - 2*a*b + b^2",
+      "displayLatex": "(a - b)^2 = a^2 - 2ab + b^2",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "first term", "unit": "", "description": "Any real number or expression." },
+        { "symbol": "b", "name": "second term", "unit": "", "description": "Any real number or expression." }
+      ],
+      "explanation": "This is the square of a sum with b replaced by -b. The cross term changes sign, giving -2ab, while b² stays positive because (-b)² = b².",
+      "whenToUse": "Use it to expand brackets like (x - 3)², and in completing the square.",
+      "assumptions": [],
+      "example": {
+        "story": "Calculate 49² without a calculator.",
+        "given": { "a": 50, "b": 1 },
+        "result": 2401,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["49² = (50 - 1)²", "= 2500 - 100 + 1", "= 2401"]
+      },
+      "related": ["binomial-square-sum", "difference-of-squares"],
+      "tags": ["binomial", "perfect square", "expand brackets", "square of a difference", "special product", "second binomial formula"]
+    },
+    {
+      "id": "binomial-cube",
+      "name": "Cube of a sum",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "(a + b)^3 = a^3 + 3*a^2*b + 3*a*b^2 + b^3",
+      "displayLatex": "(a + b)^3 = a^3 + 3a^2 b + 3ab^2 + b^3",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "first term", "unit": "", "description": "Any real number or expression." },
+        { "symbol": "b", "name": "second term", "unit": "", "description": "Any real number or expression." }
+      ],
+      "explanation": "Multiplying (a + b)² = a² + 2ab + b² by (a + b) once more gives four terms. The coefficients 1, 3, 3, 1 are the fourth row of Pascal's triangle, which is the general pattern of the binomial theorem.",
+      "whenToUse": "Use it to expand (x + k)³ quickly or to recognise a perfect cube.",
+      "assumptions": [],
+      "example": {
+        "story": "Calculate 11³ by splitting 11 into 10 + 1.",
+        "given": { "a": 10, "b": 1 },
+        "result": 1331,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["11³ = (10 + 1)³", "= 1000 + 3 × 100 × 1 + 3 × 10 × 1 + 1", "= 1000 + 300 + 30 + 1 = 1331"]
+      },
+      "related": ["binomial-square-sum", "sum-of-cubes"],
+      "tags": ["binomial", "cube", "pascal triangle", "binomial theorem", "expand brackets"]
+    },
+    {
+      "id": "sum-of-cubes",
+      "name": "Sum of two cubes",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "a^3 + b^3 = (a + b)*(a^2 - a*b + b^2)",
+      "displayLatex": "a^3 + b^3 = (a + b)(a^2 - ab + b^2)",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "first number", "unit": "", "description": "Any real number or expression." },
+        { "symbol": "b", "name": "second number", "unit": "", "description": "Any real number or expression." }
+      ],
+      "explanation": "A sum of two cubes always has (a + b) as a factor, because putting a = -b makes it zero. Dividing out that factor leaves a² - ab + b², which you can check by multiplying back.",
+      "whenToUse": "Use it to factorise expressions such as x³ + 8 or to simplify algebraic fractions.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the identity for a = 3 and b = 2.",
+        "given": { "a": 3, "b": 2 },
+        "result": 35,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Left: 27 + 8 = 35", "Right: (3 + 2)(9 - 6 + 4) = 5 × 7 = 35"]
+      },
+      "related": ["difference-of-cubes", "difference-of-squares", "binomial-cube"],
+      "tags": ["sum of cubes", "factorise", "factorize", "cubic", "special product"]
+    },
+    {
+      "id": "difference-of-cubes",
+      "name": "Difference of two cubes",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "a^3 - b^3 = (a - b)*(a^2 + a*b + b^2)",
+      "displayLatex": "a^3 - b^3 = (a - b)(a^2 + ab + b^2)",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "first number", "unit": "", "description": "Any real number or expression." },
+        { "symbol": "b", "name": "second number", "unit": "", "description": "Any real number or expression." }
+      ],
+      "explanation": "A difference of cubes always has (a - b) as a factor, because it is zero when a = b. The other factor a² + ab + b² has no real roots unless a = b = 0, so this is the complete factorisation over the real numbers.",
+      "whenToUse": "Use it to factorise expressions such as x³ - 27 or to find where a cubic crosses zero.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the identity for a = 10 and b = 2.",
+        "given": { "a": 10, "b": 2 },
+        "result": 992,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Left: 1000 - 8 = 992", "Right: (10 - 2)(100 + 20 + 4) = 8 × 124 = 992"]
+      },
+      "related": ["sum-of-cubes", "difference-of-squares"],
+      "tags": ["difference of cubes", "factorise", "factorize", "cubic", "special product"]
+    },
+    {
+      "id": "arithmetic-nth-term",
+      "name": "Arithmetic sequence, nth term",
+      "subcategory": "Sequences and series",
+      "level": "school",
+      "equation": "a_n = a_1 + (n - 1)*d",
+      "displayLatex": "a_n = a_1 + (n - 1)d",
+      "variables": [
+        { "symbol": "a_n", "name": "nth term", "unit": "", "description": "The term in position n." },
+        { "symbol": "a_1", "name": "first term", "unit": "", "description": "The term in position 1." },
+        { "symbol": "n", "name": "term number", "unit": "", "description": "The position in the sequence (1, 2, 3, ...).", "positive": true, "integer": true },
+        { "symbol": "d", "name": "common difference", "unit": "", "description": "The fixed amount added to get from one term to the next." }
+      ],
+      "explanation": "In an arithmetic sequence you add the same number d each time. To reach term n from the first term you take n - 1 steps, so you add d exactly n - 1 times. The terms lie on a straight line when plotted against n.",
+      "whenToUse": "Use it to find any term of a sequence that goes up or down by a fixed step, or to find which position a given value has.",
+      "assumptions": ["the difference between consecutive terms is constant"],
+      "example": {
+        "story": "The sequence 5, 8, 11, 14, ... continues. Which term is equal to 62?",
+        "given": { "a_n": 62, "a_1": 5, "d": 3 },
+        "solveFor": "n",
+        "result": 20,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["62 = 5 + (n - 1) × 3", "n - 1 = 57 / 3 = 19", "n = 20"]
+      },
+      "related": ["arithmetic-series-sum", "arithmetic-series-sum-first-last", "geometric-nth-term"],
+      "tags": ["arithmetic sequence", "arithmetic progression", "ap", "linear sequence", "nth term", "common difference"]
+    },
+    {
+      "id": "arithmetic-series-sum",
+      "name": "Arithmetic series sum",
+      "subcategory": "Sequences and series",
+      "level": "school",
+      "equation": "S_n = n / 2 * (2*a_1 + (n - 1)*d)",
+      "displayLatex": "S_n = \\frac{n}{2}\\left(2a_1 + (n - 1)d\\right)",
+      "variables": [
+        { "symbol": "S_n", "name": "sum of the first n terms", "unit": "", "description": "a₁ + a₂ + ... + aₙ." },
+        { "symbol": "n", "name": "number of terms", "unit": "", "description": "How many terms are added.", "positive": true, "integer": true },
+        { "symbol": "a_1", "name": "first term", "unit": "", "description": "The first term of the sequence." },
+        { "symbol": "d", "name": "common difference", "unit": "", "description": "The fixed step between terms." }
+      ],
+      "explanation": "Write the sum forwards and backwards and add the two lines: every pair of terms adds up to the same total, first plus last. There are n such pairs, which counts the sum twice, so S = n(first + last)/2. Replacing the last term by a₁ + (n - 1)d gives this form.",
+      "whenToUse": "Use it to add up many terms of an arithmetic sequence when you know the first term and the common difference.",
+      "assumptions": ["the sequence is arithmetic (constant difference)"],
+      "example": {
+        "story": "Find 3 + 7 + 11 + 15 + ... for the first 15 terms.",
+        "given": { "n": 15, "a_1": 3, "d": 4 },
+        "solveFor": "S_n",
+        "result": 465,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["2a₁ + (n - 1)d = 6 + 14 × 4 = 62", "S = 15 / 2 × 62", "S = 465"]
+      },
+      "related": ["arithmetic-series-sum-first-last", "arithmetic-nth-term", "geometric-series-sum"],
+      "tags": ["arithmetic series", "sum of arithmetic sequence", "arithmetic progression", "ap sum", "series"]
+    },
+    {
+      "id": "arithmetic-series-sum-first-last",
+      "name": "Arithmetic series sum (first and last term)",
+      "subcategory": "Sequences and series",
+      "level": "school",
+      "equation": "S_n = n*(a_1 + a_n) / 2",
+      "displayLatex": "S_n = \\frac{n(a_1 + a_n)}{2}",
+      "variables": [
+        { "symbol": "S_n", "name": "sum of the terms", "unit": "", "description": "The total of all n terms." },
+        { "symbol": "n", "name": "number of terms", "unit": "", "description": "How many terms are added.", "positive": true, "integer": true },
+        { "symbol": "a_1", "name": "first term", "unit": "", "description": "The first term." },
+        { "symbol": "a_n", "name": "last term", "unit": "", "description": "The last term that is added." }
+      ],
+      "explanation": "The sum of an arithmetic series is the number of terms times the average of the first and last term. The story goes that young Gauss used this to add 1 to 100 in seconds: 50 pairs each adding to 101.",
+      "whenToUse": "Use it when you know the first and last terms, for example sums of consecutive whole numbers.",
+      "assumptions": ["the sequence is arithmetic (constant difference)"],
+      "example": {
+        "story": "Add up all the whole numbers from 1 to 100.",
+        "given": { "n": 100, "a_1": 1, "a_n": 100 },
+        "solveFor": "S_n",
+        "result": 5050,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["S = 100 × (1 + 100) / 2", "S = 100 × 101 / 2 = 5050"]
+      },
+      "related": ["arithmetic-series-sum", "arithmetic-nth-term"],
+      "tags": ["gauss sum", "arithmetic series", "sum of integers", "triangular number", "series"]
+    },
+    {
+      "id": "geometric-nth-term",
+      "name": "Geometric sequence, nth term",
+      "subcategory": "Sequences and series",
+      "level": "school",
+      "equation": "a_n = a_1*r^(n - 1)",
+      "displayLatex": "a_n = a_1 r^{n-1}",
+      "variables": [
+        { "symbol": "a_n", "name": "nth term", "unit": "", "description": "The term in position n." },
+        { "symbol": "a_1", "name": "first term", "unit": "", "description": "The term in position 1." },
+        { "symbol": "r", "name": "common ratio", "unit": "", "description": "The fixed number each term is multiplied by." },
+        { "symbol": "n", "name": "term number", "unit": "", "description": "The position in the sequence (1, 2, 3, ...).", "positive": true, "integer": true }
+      ],
+      "explanation": "In a geometric sequence each term is the previous one multiplied by the same ratio r. Reaching term n takes n - 1 multiplications, which is r to the power n - 1. If |r| > 1 the terms grow quickly, and if |r| < 1 they shrink towards zero.",
+      "whenToUse": "Use it for anything that is repeatedly multiplied by the same factor: doubling, halving, interest, bouncing balls.",
+      "assumptions": ["the ratio between consecutive terms is constant"],
+      "example": {
+        "story": "The sequence 3, 6, 12, 24, ... doubles each time. What is the 10th term?",
+        "given": { "a_1": 3, "r": 2, "n": 10 },
+        "solveFor": "a_n",
+        "result": 1536,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["a₁₀ = 3 × 2⁹", "2⁹ = 512", "a₁₀ = 1536"]
+      },
+      "related": ["geometric-series-sum", "geometric-series-infinite", "arithmetic-nth-term", "compound-growth"],
+      "tags": ["geometric sequence", "geometric progression", "gp", "exponential sequence", "common ratio", "nth term"]
+    },
+    {
+      "id": "geometric-series-sum",
+      "name": "Geometric series sum",
+      "subcategory": "Sequences and series",
+      "level": "school",
+      "equation": "S_n = a_1*(1 - r^n) / (1 - r)",
+      "displayLatex": "S_n = \\frac{a_1(1 - r^n)}{1 - r}",
+      "variables": [
+        { "symbol": "S_n", "name": "sum of the first n terms", "unit": "", "description": "a₁ + a₁r + ... + a₁rⁿ⁻¹." },
+        { "symbol": "a_1", "name": "first term", "unit": "", "description": "The first term." },
+        { "symbol": "r", "name": "common ratio", "unit": "", "description": "The multiplier between terms. It must not be 1." },
+        { "symbol": "n", "name": "number of terms", "unit": "", "description": "How many terms are added.", "positive": true, "integer": true }
+      ],
+      "explanation": "Call the sum S. Multiplying S by r shifts every term one place along, so S - rS leaves only the first term minus the term after the last: S(1 - r) = a₁(1 - rⁿ). Dividing by 1 - r gives the formula.",
+      "whenToUse": "Use it to total a fixed number of terms that grow or shrink by a constant factor, such as savings plans or repeated doubling.",
+      "assumptions": ["r is not 1 (if r = 1 the sum is simply n a₁)"],
+      "example": {
+        "story": "One grain of rice goes on the first square of a chessboard, two on the second, four on the third, and so on. How many grains are on the first 10 squares?",
+        "given": { "a_1": 1, "r": 2, "n": 10 },
+        "solveFor": "S_n",
+        "result": 1023,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["S = 1 × (1 - 2¹⁰) / (1 - 2)", "S = (1 - 1024) / (-1)", "S = 1023"]
+      },
+      "related": ["geometric-series-infinite", "geometric-nth-term", "annuity-future-value"],
+      "tags": ["geometric series", "sum of geometric sequence", "geometric progression", "gp sum", "series"]
+    },
+    {
+      "id": "geometric-series-infinite",
+      "name": "Infinite geometric series",
+      "subcategory": "Sequences and series",
+      "level": "school",
+      "equation": "S = a_1 / (1 - r)",
+      "displayLatex": "S_\\infty = \\frac{a_1}{1 - r}, \\quad |r| < 1",
+      "variables": [
+        { "symbol": "S", "name": "sum to infinity", "unit": "", "description": "The limit of the partial sums as the number of terms grows without end." },
+        { "symbol": "a_1", "name": "first term", "unit": "", "description": "The first term." },
+        { "symbol": "r", "name": "common ratio", "unit": "", "description": "The multiplier between terms, strictly between -1 and 1.", "min": -1, "max": 1 }
+      ],
+      "explanation": "When |r| < 1, the term rⁿ in the finite sum formula shrinks to zero as n grows. The partial sums then settle down to a₁/(1 - r). An infinite number of terms can add up to a finite total because the terms get small fast enough.",
+      "whenToUse": "Use it for repeating decimals, bouncing ball distances and any process that continues forever with a shrinking factor.",
+      "assumptions": ["|r| < 1, otherwise the series has no finite sum"],
+      "example": {
+        "story": "Find the sum of 6 + 2 + 2/3 + 2/9 + ... continuing forever.",
+        "given": { "a_1": 6, "r": 0.3333333333333333 },
+        "solveFor": "S",
+        "result": 9,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["r = 2 / 6 = 1/3", "S = 6 / (1 - 1/3) = 6 / (2/3)", "S = 9"]
+      },
+      "related": ["geometric-series-sum", "geometric-nth-term"],
+      "tags": ["sum to infinity", "infinite series", "convergent series", "geometric series", "repeating decimal"]
+    },
+    {
+      "id": "exponent-product-rule",
+      "name": "Product rule for exponents",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "a^m*a^n = a^(m + n)",
+      "displayLatex": "a^m \\cdot a^n = a^{m+n}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "base", "unit": "", "description": "The number being raised to a power. Positive here so that any real exponent is allowed.", "positive": true },
+        { "symbol": "m", "name": "first exponent", "unit": "", "description": "Any real exponent." },
+        { "symbol": "n", "name": "second exponent", "unit": "", "description": "Any real exponent." }
+      ],
+      "explanation": "a^m means m copies of a multiplied together, and a^n means n copies. Multiplying them puts m + n copies side by side. The rule keeps working for negative and fractional exponents, which is why those are defined the way they are.",
+      "whenToUse": "Use it to simplify products of powers with the same base.",
+      "assumptions": ["same base on both factors", "a > 0 for non-integer exponents"],
+      "example": {
+        "story": "Simplify 2³ × 2⁴.",
+        "given": { "a": 2, "m": 3, "n": 4 },
+        "result": 128,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["2³ × 2⁴ = 2³⁺⁴ = 2⁷", "2⁷ = 128 (and 8 × 16 = 128)"]
+      },
+      "related": ["exponent-quotient-rule", "exponent-power-rule", "log-product-rule"],
+      "tags": ["laws of indices", "index laws", "exponent rules", "multiplying powers", "power rules"]
+    },
+    {
+      "id": "exponent-quotient-rule",
+      "name": "Quotient rule for exponents",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "a^m / a^n = a^(m - n)",
+      "displayLatex": "\\frac{a^m}{a^n} = a^{m-n}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "base", "unit": "", "description": "The number being raised to a power. Positive here so that any real exponent is allowed.", "positive": true },
+        { "symbol": "m", "name": "exponent on top", "unit": "", "description": "Any real exponent." },
+        { "symbol": "n", "name": "exponent below", "unit": "", "description": "Any real exponent." }
+      ],
+      "explanation": "Dividing cancels n of the m copies of a, leaving m - n copies. When m = n this gives a⁰ = 1, which is why any non-zero number to the power zero equals 1.",
+      "whenToUse": "Use it to simplify fractions of powers with the same base.",
+      "assumptions": ["same base on top and bottom", "a > 0 for non-integer exponents"],
+      "example": {
+        "story": "Simplify 5⁶ / 5⁴.",
+        "given": { "a": 5, "m": 6, "n": 4 },
+        "result": 25,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["5⁶ / 5⁴ = 5⁶⁻⁴ = 5²", "5² = 25"]
+      },
+      "related": ["exponent-product-rule", "negative-exponent", "log-quotient-rule"],
+      "tags": ["laws of indices", "index laws", "exponent rules", "dividing powers", "zero exponent"]
+    },
+    {
+      "id": "exponent-power-rule",
+      "name": "Power of a power",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "(a^m)^n = a^(m*n)",
+      "displayLatex": "(a^m)^n = a^{mn}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "base", "unit": "", "description": "The number being raised to a power. Positive here so that any real exponent is allowed.", "positive": true },
+        { "symbol": "m", "name": "inner exponent", "unit": "", "description": "Any real exponent." },
+        { "symbol": "n", "name": "outer exponent", "unit": "", "description": "Any real exponent." }
+      ],
+      "explanation": "Raising a^m to the power n means multiplying n copies of a^m, each containing m copies of a. That is m times n copies of a in total, so the exponents multiply.",
+      "whenToUse": "Use it to simplify nested powers such as (x²)³.",
+      "assumptions": ["a > 0 for non-integer exponents"],
+      "example": {
+        "story": "Simplify (3²)³.",
+        "given": { "a": 3, "m": 2, "n": 3 },
+        "result": 729,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["(3²)³ = 3²ˣ³ = 3⁶", "3⁶ = 729 (and 9³ = 729)"]
+      },
+      "related": ["exponent-product-rule", "fractional-exponent", "log-power-rule"],
+      "tags": ["laws of indices", "index laws", "exponent rules", "power of a power", "nested powers"]
+    },
+    {
+      "id": "negative-exponent",
+      "name": "Negative exponent",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "a^(-n) = 1 / a^n",
+      "displayLatex": "a^{-n} = \\frac{1}{a^n}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "base", "unit": "", "description": "Any positive number (any non-zero number for whole n).", "positive": true },
+        { "symbol": "n", "name": "exponent", "unit": "", "description": "Any real exponent." }
+      ],
+      "explanation": "A negative exponent means take the reciprocal. It follows from the quotient rule: a⁰ / aⁿ = a⁰⁻ⁿ = a⁻ⁿ, and a⁰ = 1. So 2⁻³ is one over 2³.",
+      "whenToUse": "Use it to rewrite fractions as powers (for differentiation, for example) or to make negative exponents positive.",
+      "assumptions": ["a is not zero"],
+      "example": {
+        "story": "Write 2⁻³ as a decimal.",
+        "given": { "a": 2, "n": 3 },
+        "result": 0.125,
+        "unit": "",
+        "tolerance": 1e-12,
+        "steps": ["2⁻³ = 1 / 2³", "= 1 / 8 = 0.125"]
+      },
+      "related": ["exponent-quotient-rule", "fractional-exponent"],
+      "tags": ["negative power", "negative index", "reciprocal", "laws of indices", "exponent rules"]
+    },
+    {
+      "id": "fractional-exponent",
+      "name": "Fractional exponent",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "a^(m / n) = root(a, n)^m",
+      "displayLatex": "a^{m/n} = \\left(\\sqrt[n]{a}\\right)^m",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "a", "name": "base", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "m", "name": "numerator", "unit": "", "description": "The power to raise the root to." },
+        { "symbol": "n", "name": "denominator", "unit": "", "description": "Which root to take (2 for square root, 3 for cube root).", "positive": true, "integer": true }
+      ],
+      "explanation": "The denominator of a fractional exponent is a root and the numerator is a power. This is forced by the power rule: (a^(1/n))ⁿ = a¹ = a, so a^(1/n) must be the nth root of a. Taking the root first usually keeps the numbers small.",
+      "whenToUse": "Use it to evaluate powers like 8^(2/3) by hand, or to rewrite roots as powers before differentiating.",
+      "assumptions": ["a > 0 (odd roots of negative numbers need care)"],
+      "example": {
+        "story": "Evaluate 8^(2/3) without a calculator.",
+        "given": { "a": 8, "m": 2, "n": 3 },
+        "result": 4,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["The cube root of 8 is 2", "2² = 4"]
+      },
+      "related": ["exponent-power-rule", "negative-exponent"],
+      "tags": ["rational exponent", "fractional index", "surd", "nth root", "laws of indices"]
+    },
+    {
+      "id": "logarithm-definition",
+      "name": "Logarithm",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "y = log(x, b)",
+      "displayLatex": "y = \\log_b x \\iff b^y = x",
+      "variables": [
+        { "symbol": "y", "name": "logarithm", "unit": "", "description": "The power you must raise b to in order to get x." },
+        { "symbol": "x", "name": "argument", "unit": "", "description": "The number whose logarithm is taken. It must be positive.", "positive": true },
+        { "symbol": "b", "name": "base", "unit": "", "description": "The base of the logarithm: positive and not 1 (10 and e are common).", "positive": true }
+      ],
+      "explanation": "A logarithm answers the question: to which power must I raise b to get x? So log₂ 8 = 3 because 2³ = 8. Logarithms undo exponentials, which makes them the tool for solving equations where the unknown is in an exponent.",
+      "whenToUse": "Use it whenever the unknown sits in an exponent, for example to find how long it takes for an amount to double.",
+      "assumptions": ["x > 0", "b > 0 and b ≠ 1"],
+      "example": {
+        "story": "Solve log₂ x = 5.",
+        "given": { "y": 5, "b": 2 },
+        "solveFor": "x",
+        "result": 32,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["log₂ x = 5 means 2⁵ = x", "x = 32"]
+      },
+      "related": ["log-product-rule", "log-change-of-base", "doubling-time"],
+      "tags": ["log", "logarithm", "ln", "natural log", "inverse of exponential", "lg"]
+    },
+    {
+      "id": "log-product-rule",
+      "name": "Logarithm of a product",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "log(x*y, b) = log(x, b) + log(y, b)",
+      "displayLatex": "\\log_b(xy) = \\log_b x + \\log_b y",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "x", "name": "first number", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "y", "name": "second number", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "b", "name": "base", "unit": "", "description": "Positive and not 1.", "positive": true }
+      ],
+      "explanation": "Logarithms are exponents, and when you multiply powers of the same base the exponents add. So the log of a product is the sum of the logs. This is why slide rules and log tables could turn multiplication into addition.",
+      "whenToUse": "Use it to split up or combine logarithms when simplifying or solving equations.",
+      "assumptions": ["x > 0 and y > 0", "b > 0 and b ≠ 1"],
+      "example": {
+        "story": "Check the rule with base 2, x = 8 and y = 4.",
+        "given": { "x": 8, "y": 4, "b": 2 },
+        "result": 5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Left: log₂(32) = 5", "Right: log₂ 8 + log₂ 4 = 3 + 2 = 5"]
+      },
+      "related": ["log-quotient-rule", "log-power-rule", "exponent-product-rule"],
+      "tags": ["log rules", "laws of logarithms", "product rule", "logarithm properties"]
+    },
+    {
+      "id": "log-quotient-rule",
+      "name": "Logarithm of a quotient",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "log(x / y, b) = log(x, b) - log(y, b)",
+      "displayLatex": "\\log_b\\frac{x}{y} = \\log_b x - \\log_b y",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "x", "name": "numerator", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "y", "name": "denominator", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "b", "name": "base", "unit": "", "description": "Positive and not 1.", "positive": true }
+      ],
+      "explanation": "Dividing powers of the same base subtracts the exponents, so the log of a quotient is the difference of the logs. A useful special case is log(1/y) = -log y.",
+      "whenToUse": "Use it to simplify logarithms of fractions, for example in decibel and pH calculations.",
+      "assumptions": ["x > 0 and y > 0", "b > 0 and b ≠ 1"],
+      "example": {
+        "story": "Check the rule with base 10, x = 1000 and y = 10.",
+        "given": { "x": 1000, "y": 10, "b": 10 },
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Left: log(100) = 2", "Right: log 1000 - log 10 = 3 - 1 = 2"]
+      },
+      "related": ["log-product-rule", "log-power-rule", "exponent-quotient-rule"],
+      "tags": ["log rules", "laws of logarithms", "quotient rule", "logarithm properties"]
+    },
+    {
+      "id": "log-power-rule",
+      "name": "Logarithm of a power",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "log(x^k, b) = k*log(x, b)",
+      "displayLatex": "\\log_b(x^k) = k \\log_b x",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "x", "name": "number", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "k", "name": "exponent", "unit": "", "description": "Any real exponent." },
+        { "symbol": "b", "name": "base", "unit": "", "description": "Positive and not 1.", "positive": true }
+      ],
+      "explanation": "Raising x to the power k multiplies its exponent (its logarithm) by k. This rule brings an exponent down in front, which is the key step in solving equations like 2ˣ = 10.",
+      "whenToUse": "Use it to solve exponential equations: take logs of both sides and bring the unknown exponent down.",
+      "assumptions": ["x > 0", "b > 0 and b ≠ 1"],
+      "example": {
+        "story": "Check the rule with base 10, x = 100 and k = 3.",
+        "given": { "x": 100, "k": 3, "b": 10 },
+        "result": 6,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Left: log(100³) = log(1 000 000) = 6", "Right: 3 × log 100 = 3 × 2 = 6"]
+      },
+      "related": ["log-product-rule", "log-change-of-base", "exponent-power-rule"],
+      "tags": ["log rules", "laws of logarithms", "power rule", "bring down exponent", "logarithm properties"]
+    },
+    {
+      "id": "log-change-of-base",
+      "name": "Change of base for logarithms",
+      "subcategory": "Exponents and logarithms",
+      "level": "school",
+      "equation": "log(x, b) = ln(x) / ln(b)",
+      "displayLatex": "\\log_b x = \\frac{\\ln x}{\\ln b}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "x", "name": "argument", "unit": "", "description": "A positive number.", "positive": true },
+        { "symbol": "b", "name": "base", "unit": "", "description": "Positive and not 1.", "positive": true }
+      ],
+      "explanation": "A logarithm in any base can be written using natural logs (or logs in any other common base). If y = log_b x then bʸ = x; taking ln of both sides gives y ln b = ln x. Dividing by ln b finishes the proof.",
+      "whenToUse": "Use it when your calculator only has ln and log, or to compare logarithms in different bases.",
+      "assumptions": ["x > 0", "b > 0 and b ≠ 1"],
+      "example": {
+        "story": "Find log₂ 10 using natural logarithms.",
+        "given": { "x": 10, "b": 2 },
+        "result": 3.321928094887362,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["ln 10 ≈ 2.302585 and ln 2 ≈ 0.693147", "log₂ 10 = 2.302585 / 0.693147 ≈ 3.3219"]
+      },
+      "related": ["logarithm-definition", "log-power-rule"],
+      "tags": ["change of base", "log base", "convert logarithm", "log rules"]
+    },
+    {
+      "id": "percentage-change",
+      "name": "Percentage change",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "p = (V_2 - V_1) / V_1 * 100",
+      "displayLatex": "p = \\frac{V_2 - V_1}{V_1} \\times 100\\%",
+      "variables": [
+        { "symbol": "p", "name": "percentage change", "unit": "%", "description": "Positive for an increase, negative for a decrease." },
+        { "symbol": "V_2", "name": "new value", "unit": "", "description": "The value after the change." },
+        { "symbol": "V_1", "name": "original value", "unit": "", "description": "The value before the change. It must not be zero." }
+      ],
+      "explanation": "The change is always compared with the original value, not the new one. Divide the change by the original, then multiply by 100 to turn the fraction into a percentage. A fall of 50 % followed by a rise of 50 % does not get you back to the start, because the second percentage is of a smaller number.",
+      "whenToUse": "Use it to describe price rises, discounts, population changes or the error of a measurement.",
+      "assumptions": ["V₁ is not zero"],
+      "example": {
+        "story": "A concert ticket went up from 80 to 92. What is the percentage increase?",
+        "given": { "V_2": 92, "V_1": 80 },
+        "solveFor": "p",
+        "result": 15,
+        "unit": "%",
+        "tolerance": 1e-9,
+        "steps": ["Change = 92 - 80 = 12", "12 / 80 = 0.15", "0.15 × 100 = 15 %"]
+      },
+      "related": ["percentage-multiplier", "percentage-of-amount", "profit-markup"],
+      "tags": ["percent change", "percentage increase", "percentage decrease", "relative change", "growth rate"]
+    },
+    {
+      "id": "percentage-of-amount",
+      "name": "Percentage of an amount",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "A = p / 100 * B",
+      "displayLatex": "A = \\frac{p}{100} \\times B",
+      "variables": [
+        { "symbol": "A", "name": "part", "unit": "", "description": "The amount that is p percent of the whole." },
+        { "symbol": "p", "name": "percentage", "unit": "%", "description": "The percentage." },
+        { "symbol": "B", "name": "whole", "unit": "", "description": "The amount the percentage is taken of." }
+      ],
+      "explanation": "Per cent means per hundred, so p % is the fraction p/100. Multiplying the whole by that fraction gives the part. Rearranged, p = 100 A / B tells you what percentage one amount is of another.",
+      "whenToUse": "Use it to find a percentage of something, or what percentage one number is of another.",
+      "assumptions": [],
+      "example": {
+        "story": "A student scores 45 out of 250 points on a long test. What percentage is that?",
+        "given": { "A": 45, "B": 250 },
+        "solveFor": "p",
+        "result": 18,
+        "unit": "%",
+        "tolerance": 1e-9,
+        "steps": ["45 = p / 100 × 250", "p = 45 / 250 × 100", "p = 18 %"]
+      },
+      "related": ["percentage-change", "percentage-multiplier"],
+      "tags": ["percent", "percentage", "fraction of amount", "proportion", "per cent"]
+    },
+    {
+      "id": "percentage-multiplier",
+      "name": "Percentage increase or decrease (multiplier)",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "V_2 = V_1*(1 + p / 100)",
+      "displayLatex": "V_2 = V_1\\left(1 + \\frac{p}{100}\\right)",
+      "variables": [
+        { "symbol": "V_2", "name": "new value", "unit": "", "description": "The value after the change." },
+        { "symbol": "V_1", "name": "original value", "unit": "", "description": "The value before the change." },
+        { "symbol": "p", "name": "percentage change", "unit": "%", "description": "Positive for an increase, negative for a decrease." }
+      ],
+      "explanation": "Increasing by p % is the same as multiplying by the multiplier 1 + p/100, for example 1.2 for a 20 % rise or 0.85 for a 15 % fall. Solving for the original value (dividing by the multiplier) is called a reverse percentage problem.",
+      "whenToUse": "Use it to apply a percentage change in one step, or to find the original price before a rise or discount.",
+      "assumptions": [],
+      "example": {
+        "story": "After a 20 % price rise a jacket costs 66. What did it cost before?",
+        "given": { "V_2": 66, "p": 20 },
+        "solveFor": "V_1",
+        "result": 55,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["The multiplier is 1 + 20/100 = 1.2", "V₁ = 66 / 1.2", "V₁ = 55"]
+      },
+      "related": ["percentage-change", "vat-gross-net", "compound-growth"],
+      "tags": ["reverse percentage", "multiplier", "percentage increase", "percentage decrease", "original price"]
+    },
+    {
+      "id": "compound-growth",
+      "name": "Exponential growth by a fixed percentage",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "N = N_0*(1 + r)^t",
+      "displayLatex": "N = N_0 (1 + r)^t",
+      "variables": [
+        { "symbol": "N", "name": "amount after t periods", "unit": "", "description": "The value after growing for t periods." },
+        { "symbol": "N_0", "name": "starting amount", "unit": "", "description": "The value at the start." },
+        { "symbol": "r", "name": "growth rate per period", "unit": "", "description": "As a decimal, so 2.5 % is 0.025." },
+        { "symbol": "t", "name": "number of periods", "unit": "", "description": "How many periods (years, months, ...) pass." }
+      ],
+      "explanation": "Growing by r each period means multiplying by 1 + r each period. After t periods you have multiplied by that factor t times. Unlike linear growth, the increase gets bigger every period because it is a percentage of an ever larger amount.",
+      "whenToUse": "Use it for populations, prices with inflation, savings and anything else that grows by the same percentage each period.",
+      "assumptions": ["the growth rate stays constant", "growth happens once per period"],
+      "example": {
+        "story": "A town of 12 000 people grows by 2.5 % per year. How many people live there after 8 years?",
+        "given": { "N_0": 12000, "r": 0.025, "t": 8 },
+        "solveFor": "N",
+        "result": 14620.83,
+        "unit": "",
+        "tolerance": 0.05,
+        "steps": ["Multiplier per year: 1.025", "1.025⁸ ≈ 1.218403", "N ≈ 12000 × 1.218403 ≈ 14 621 people"]
+      },
+      "related": ["compound-decay", "continuous-exponential-growth", "compound-interest", "geometric-nth-term"],
+      "tags": ["exponential growth", "compound growth", "growth factor", "percentage growth", "population growth"]
+    },
+    {
+      "id": "compound-decay",
+      "name": "Exponential decay by a fixed percentage",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "N = N_0*(1 - r)^t",
+      "displayLatex": "N = N_0 (1 - r)^t",
+      "variables": [
+        { "symbol": "N", "name": "amount after t periods", "unit": "", "description": "The value after shrinking for t periods." },
+        { "symbol": "N_0", "name": "starting amount", "unit": "", "description": "The value at the start." },
+        { "symbol": "r", "name": "decay rate per period", "unit": "", "description": "As a decimal, so 15 % is 0.15.", "min": 0, "max": 1 },
+        { "symbol": "t", "name": "number of periods", "unit": "", "description": "How many periods pass." }
+      ],
+      "explanation": "Losing r each period means keeping 1 - r of what was there, so you multiply by 1 - r every period. The amount never reaches zero but keeps shrinking by the same fraction. To find when it falls to a target value, take logarithms.",
+      "whenToUse": "Use it for depreciation, cooling-like processes described by a percentage, or medicine leaving the body at a fixed rate per hour.",
+      "assumptions": ["the decay rate stays constant", "0 ≤ r ≤ 1"],
+      "example": {
+        "story": "A car worth 20 000 loses 15 % of its value every year. After how many years is it worth 10 000?",
+        "given": { "N": 10000, "N_0": 20000, "r": 0.15 },
+        "solveFor": "t",
+        "result": 4.265,
+        "unit": "",
+        "tolerance": 0.001,
+        "steps": ["10000 = 20000 × 0.85ᵗ, so 0.85ᵗ = 0.5", "t = ln 0.5 / ln 0.85", "t ≈ 4.27 years"]
+      },
+      "related": ["compound-growth", "depreciation-declining-balance", "radioactive-decay"],
+      "tags": ["exponential decay", "depreciation", "decay factor", "percentage decrease", "half"]
+    },
+    {
+      "id": "continuous-exponential-growth",
+      "name": "Continuous exponential growth",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "N = N_0*e^(k*t)",
+      "displayLatex": "N = N_0 e^{kt}",
+      "variables": [
+        { "symbol": "N", "name": "amount at time t", "unit": "", "description": "The value after time t." },
+        { "symbol": "N_0", "name": "starting amount", "unit": "", "description": "The value at t = 0." },
+        { "symbol": "k", "name": "growth constant", "unit": "", "description": "Rate per unit of time; negative for decay. Use the same time unit as t." },
+        { "symbol": "t", "name": "time", "unit": "", "description": "Elapsed time, in the same unit that k is measured per." }
+      ],
+      "explanation": "When something grows at a rate proportional to its current size, the solution of dN/dt = kN is N₀e^(kt). The constant e appears because growth is happening all the time, not in steps. A positive k means growth and a negative k means decay.",
+      "whenToUse": "Use it for bacteria, continuous compounding, and any model where the rate of change is proportional to the amount.",
+      "assumptions": ["the rate of change is proportional to the amount", "k stays constant"],
+      "example": {
+        "story": "A culture starts with 500 bacteria and grows with k = 0.4 per hour. How many are there after 5 hours?",
+        "given": { "N_0": 500, "k": 0.4, "t": 5 },
+        "solveFor": "N",
+        "result": 3694.528,
+        "unit": "",
+        "tolerance": 0.001,
+        "steps": ["k t = 0.4 × 5 = 2", "e² ≈ 7.389056", "N ≈ 500 × 7.389056 ≈ 3695 bacteria"]
+      },
+      "related": ["doubling-time", "compound-growth", "compound-interest-continuous", "radioactive-decay"],
+      "tags": ["exponential growth", "natural growth", "e", "growth constant", "bacteria", "exponential model"]
+    },
+    {
+      "id": "doubling-time",
+      "name": "Doubling time",
+      "subcategory": "Percentages and growth",
+      "level": "school",
+      "equation": "T_d = ln(2) / k",
+      "displayLatex": "T_d = \\frac{\\ln 2}{k}",
+      "variables": [
+        { "symbol": "T_d", "name": "doubling time", "unit": "", "description": "The time it takes for the amount to double, in the unit k is measured per." },
+        { "symbol": "k", "name": "growth constant", "unit": "", "description": "The continuous growth rate per unit of time.", "positive": true }
+      ],
+      "explanation": "Doubling means e^(kT) = 2. Taking natural logs gives kT = ln 2, so T = ln 2 / k ≈ 0.693/k. Every doubling time the amount doubles again, whatever it is at the start.",
+      "whenToUse": "Use it to get a feel for how fast exponential growth is, or to find the growth constant from a known doubling time.",
+      "assumptions": ["continuous exponential growth with constant k"],
+      "example": {
+        "story": "A population grows continuously with k = 0.04 per year. How long does it take to double?",
+        "given": { "k": 0.04 },
+        "solveFor": "T_d",
+        "result": 17.3287,
+        "unit": "",
+        "tolerance": 0.0001,
+        "steps": ["T = ln 2 / 0.04", "T = 0.693147 / 0.04 ≈ 17.33 years"]
+      },
+      "related": ["continuous-exponential-growth", "half-life-decay-constant", "rule-of-72"],
+      "tags": ["doubling", "growth", "ln 2", "exponential growth", "rule of 70"]
+    },
+    {
+      "id": "direct-variation",
+      "name": "Direct proportion",
+      "subcategory": "Variation",
+      "level": "school",
+      "equation": "y = k*x",
+      "displayLatex": "y = kx",
+      "variables": [
+        { "symbol": "y", "name": "dependent quantity", "unit": "", "description": "The quantity that changes in proportion to x." },
+        { "symbol": "k", "name": "constant of proportionality", "unit": "", "description": "The fixed ratio y / x." },
+        { "symbol": "x", "name": "independent quantity", "unit": "", "description": "The quantity you change." }
+      ],
+      "explanation": "Two quantities are directly proportional when their ratio is always the same. Double x and y doubles; the graph is a straight line through the origin with gradient k. Find k from one known pair, then use it for any other.",
+      "whenToUse": "Use it for recipes, exchange rates, cost per item, and many physical laws where one quantity is proportional to another.",
+      "assumptions": ["y is zero when x is zero"],
+      "example": {
+        "story": "y is directly proportional to x, and y = 12 when x = 4. Find the constant k.",
+        "given": { "y": 12, "x": 4 },
+        "solveFor": "k",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["12 = k × 4", "k = 12 / 4 = 3"]
+      },
+      "related": ["inverse-variation", "line-slope-intercept"],
+      "tags": ["direct proportion", "proportional", "direct variation", "constant of proportionality", "ratio"]
+    },
+    {
+      "id": "inverse-variation",
+      "name": "Inverse proportion",
+      "subcategory": "Variation",
+      "level": "school",
+      "equation": "y = k / x",
+      "displayLatex": "y = \\frac{k}{x}",
+      "variables": [
+        { "symbol": "y", "name": "dependent quantity", "unit": "", "description": "The quantity that changes inversely with x." },
+        { "symbol": "k", "name": "constant of proportionality", "unit": "", "description": "The fixed product x times y." },
+        { "symbol": "x", "name": "independent quantity", "unit": "", "description": "The quantity you change. It must not be zero." }
+      ],
+      "explanation": "Two quantities are inversely proportional when their product is always the same. Doubling x halves y, and the graph is a hyperbola. The constant k equals any known x times its y.",
+      "whenToUse": "Use it for problems like workers and time, speed and travel time, or pressure and volume at constant temperature.",
+      "assumptions": ["x is not zero"],
+      "example": {
+        "story": "6 painters take 10 days to paint a school, so k = 60 painter-days. How long would 4 painters take?",
+        "given": { "k": 60, "x": 4 },
+        "solveFor": "y",
+        "result": 15,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["k = 6 × 10 = 60", "y = 60 / 4 = 15 days"]
+      },
+      "related": ["direct-variation", "boyles-law"],
+      "tags": ["inverse proportion", "inversely proportional", "inverse variation", "hyperbola", "reciprocal"]
+    },
+    {
+      "id": "distance-between-points",
+      "name": "Distance between two points",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "d = sqrt((x_2 - x_1)^2 + (y_2 - y_1)^2)",
+      "displayLatex": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}",
+      "variables": [
+        { "symbol": "d", "name": "distance", "unit": "", "description": "The straight-line distance between the points.", "min": 0 },
+        { "symbol": "x_2", "name": "x of second point", "unit": "", "description": "x coordinate of the second point." },
+        { "symbol": "x_1", "name": "x of first point", "unit": "", "description": "x coordinate of the first point." },
+        { "symbol": "y_2", "name": "y of second point", "unit": "", "description": "y coordinate of the second point." },
+        { "symbol": "y_1", "name": "y of first point", "unit": "", "description": "y coordinate of the first point." }
+      ],
+      "explanation": "The horizontal and vertical gaps between two points form the two short sides of a right-angled triangle. The distance between the points is the hypotenuse, so Pythagoras' theorem gives it directly. The order of the points does not matter because the gaps are squared.",
+      "whenToUse": "Use it to find lengths of line segments, radii of circles, or to check whether a triangle is isosceles.",
+      "assumptions": ["flat (Cartesian) coordinates with equal scales on both axes"],
+      "example": {
+        "story": "How far apart are the points (1, 2) and (7, 10)?",
+        "given": { "x_2": 7, "x_1": 1, "y_2": 10, "y_1": 2 },
+        "solveFor": "d",
+        "result": 10,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Gaps: 7 - 1 = 6 and 10 - 2 = 8", "d = √(36 + 64) = √100", "d = 10"]
+      },
+      "related": ["pythagoras-theorem", "midpoint", "circle-equation", "distance-3d"],
+      "tags": ["distance formula", "length of line segment", "pythagoras", "coordinates", "euclidean distance"]
+    },
+    {
+      "id": "midpoint",
+      "name": "Midpoint of a line segment",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "x_m = (x_1 + x_2) / 2",
+      "displayLatex": "M = \\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right)",
+      "variables": [
+        { "symbol": "x_m", "name": "midpoint coordinate", "unit": "", "description": "The coordinate of the midpoint." },
+        { "symbol": "x_1", "name": "first endpoint coordinate", "unit": "", "description": "The same coordinate of the first endpoint." },
+        { "symbol": "x_2", "name": "second endpoint coordinate", "unit": "", "description": "The same coordinate of the second endpoint." }
+      ],
+      "explanation": "The midpoint is halfway along a segment, so each of its coordinates is the average of the endpoints' coordinates. Apply the formula once for x and once for y (and once more for z in 3D).",
+      "whenToUse": "Use it to find the centre of a circle from a diameter, or to bisect a line segment.",
+      "assumptions": [],
+      "example": {
+        "story": "A diameter of a circle runs from x = -3 to x = 9 along the x axis. Where is the centre?",
+        "given": { "x_1": -3, "x_2": 9 },
+        "solveFor": "x_m",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["x_m = (-3 + 9) / 2", "x_m = 6 / 2 = 3"]
+      },
+      "related": ["distance-between-points", "circle-equation"],
+      "tags": ["midpoint formula", "halfway point", "average of coordinates", "bisect"]
+    },
+    {
+      "id": "gradient-two-points",
+      "name": "Gradient of a line through two points",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "m = (y_2 - y_1) / (x_2 - x_1)",
+      "displayLatex": "m = \\frac{y_2 - y_1}{x_2 - x_1}",
+      "variables": [
+        { "symbol": "m", "name": "gradient", "unit": "", "description": "The slope: how much y goes up for each step of 1 in x." },
+        { "symbol": "y_2", "name": "y of second point", "unit": "", "description": "y coordinate of the second point." },
+        { "symbol": "y_1", "name": "y of first point", "unit": "", "description": "y coordinate of the first point." },
+        { "symbol": "x_2", "name": "x of second point", "unit": "", "description": "x coordinate of the second point." },
+        { "symbol": "x_1", "name": "x of first point", "unit": "", "description": "x coordinate of the first point." }
+      ],
+      "explanation": "The gradient is rise over run: the change in y divided by the change in x. A positive gradient slopes up to the right, a negative one slopes down, and a vertical line has no gradient because the run is zero.",
+      "whenToUse": "Use it to find the slope of a line, a rate of change from a graph, or as the first step to the equation of a line.",
+      "assumptions": ["x₂ ≠ x₁ (the line is not vertical)"],
+      "example": {
+        "story": "Find the gradient of the line through (2, 3) and (6, 11).",
+        "given": { "y_2": 11, "y_1": 3, "x_2": 6, "x_1": 2 },
+        "solveFor": "m",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Rise: 11 - 3 = 8", "Run: 6 - 2 = 4", "m = 8 / 4 = 2"]
+      },
+      "related": ["line-slope-intercept", "line-point-slope", "perpendicular-gradients", "difference-quotient"],
+      "tags": ["slope", "gradient", "rise over run", "rate of change", "steepness"]
+    },
+    {
+      "id": "line-slope-intercept",
+      "name": "Equation of a straight line (slope-intercept form)",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "y = m*x + c",
+      "displayLatex": "y = mx + c",
+      "variables": [
+        { "symbol": "y", "name": "y coordinate", "unit": "", "description": "The height of the line at x." },
+        { "symbol": "m", "name": "gradient", "unit": "", "description": "The slope of the line." },
+        { "symbol": "x", "name": "x coordinate", "unit": "", "description": "Any position along the horizontal axis." },
+        { "symbol": "c", "name": "y-intercept", "unit": "", "description": "Where the line crosses the y axis (the value of y when x = 0)." }
+      ],
+      "explanation": "Every non-vertical straight line can be written as y = mx + c. Start at height c on the y axis and climb m units for every unit you move right. Many textbooks write y = ax + b or y = mx + b for the same thing.",
+      "whenToUse": "Use it to draw a line from its equation, to read off slope and intercept, or to find where a line reaches a given height.",
+      "assumptions": ["the line is not vertical"],
+      "example": {
+        "story": "On the line y = 2x - 1, at which x does y equal 9?",
+        "given": { "y": 9, "m": 2, "c": -1 },
+        "solveFor": "x",
+        "result": 5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["9 = 2x - 1", "2x = 10", "x = 5"]
+      },
+      "related": ["line-point-slope", "gradient-two-points", "line-intercept-form", "direct-variation"],
+      "tags": ["straight line", "linear function", "y = mx + c", "y = mx + b", "linear equation", "intercept"]
+    },
+    {
+      "id": "line-point-slope",
+      "name": "Equation of a straight line (point-slope form)",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "y - y_1 = m*(x - x_1)",
+      "displayLatex": "y - y_1 = m(x - x_1)",
+      "variables": [
+        { "symbol": "y", "name": "y coordinate", "unit": "", "description": "The height of the line at x." },
+        { "symbol": "y_1", "name": "y of known point", "unit": "", "description": "y coordinate of a point on the line." },
+        { "symbol": "m", "name": "gradient", "unit": "", "description": "The slope of the line." },
+        { "symbol": "x", "name": "x coordinate", "unit": "", "description": "Any position along the horizontal axis." },
+        { "symbol": "x_1", "name": "x of known point", "unit": "", "description": "x coordinate of a point on the line." }
+      ],
+      "explanation": "If a line passes through (x₁, y₁) with gradient m, then for any other point on it the rise y - y₁ is m times the run x - x₁. That is just the gradient formula rearranged. It is the quickest way to write down a line when you know one point and the slope.",
+      "whenToUse": "Use it to find the equation of a tangent or normal, or of any line through a known point with a known slope.",
+      "assumptions": ["the line is not vertical"],
+      "example": {
+        "story": "A line has gradient 3 and passes through (2, 5). What is y when x = 4?",
+        "given": { "y_1": 5, "m": 3, "x": 4, "x_1": 2 },
+        "solveFor": "y",
+        "result": 11,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["y - 5 = 3 × (4 - 2)", "y - 5 = 6", "y = 11"]
+      },
+      "related": ["line-slope-intercept", "gradient-two-points", "linear-approximation"],
+      "tags": ["point slope form", "straight line", "tangent line", "linear equation"]
+    },
+    {
+      "id": "line-intercept-form",
+      "name": "Equation of a straight line (intercept form)",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "x / a + y / b = 1",
+      "displayLatex": "\\frac{x}{a} + \\frac{y}{b} = 1",
+      "variables": [
+        { "symbol": "x", "name": "x coordinate", "unit": "", "description": "Any position along the horizontal axis." },
+        { "symbol": "a", "name": "x-intercept", "unit": "", "description": "Where the line crosses the x axis. Not zero." },
+        { "symbol": "y", "name": "y coordinate", "unit": "", "description": "The height of the line at x." },
+        { "symbol": "b", "name": "y-intercept", "unit": "", "description": "Where the line crosses the y axis. Not zero." }
+      ],
+      "explanation": "Putting y = 0 gives x = a and putting x = 0 gives y = b, so the line passes through (a, 0) and (0, b). This form shows both intercepts at a glance and makes the line easy to sketch.",
+      "whenToUse": "Use it when you know where a line crosses both axes, for example budget lines in economics.",
+      "assumptions": ["the line does not pass through the origin and is not parallel to an axis"],
+      "example": {
+        "story": "A line crosses the axes at (4, 0) and (0, 6). What is y when x = 2?",
+        "given": { "x": 2, "a": 4, "b": 6 },
+        "solveFor": "y",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["2/4 + y/6 = 1", "y/6 = 0.5", "y = 3"]
+      },
+      "related": ["line-slope-intercept", "line-point-slope"],
+      "tags": ["intercept form", "two intercept form", "straight line", "axis intercepts"]
+    },
+    {
+      "id": "circle-equation",
+      "name": "Equation of a circle",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "(x - a)^2 + (y - b)^2 = r^2",
+      "displayLatex": "(x - a)^2 + (y - b)^2 = r^2",
+      "variables": [
+        { "symbol": "x", "name": "x coordinate", "unit": "", "description": "x of a point on the circle." },
+        { "symbol": "a", "name": "x of centre", "unit": "", "description": "x coordinate of the centre." },
+        { "symbol": "y", "name": "y coordinate", "unit": "", "description": "y of a point on the circle." },
+        { "symbol": "b", "name": "y of centre", "unit": "", "description": "y coordinate of the centre." },
+        { "symbol": "r", "name": "radius", "unit": "", "description": "Distance from the centre to the circle.", "positive": true }
+      ],
+      "explanation": "A circle is the set of points at distance r from its centre (a, b). Writing that distance with the distance formula and squaring both sides gives this equation. A point is inside the circle when the left side is less than r².",
+      "whenToUse": "Use it to find the equation of a circle, check whether a point lies on it, or find intersections with lines.",
+      "assumptions": ["Cartesian coordinates"],
+      "example": {
+        "story": "A circle has centre (3, -2) and passes through (6, 2). What is its radius?",
+        "given": { "x": 6, "a": 3, "y": 2, "b": -2 },
+        "solveFor": "r",
+        "result": 5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["(6 - 3)² + (2 - (-2))² = r²", "9 + 16 = 25 = r²", "r = 5"]
+      },
+      "related": ["distance-between-points", "circle-area", "circle-circumference"],
+      "tags": ["circle", "equation of circle", "centre radius form", "center", "conic"]
+    },
+    {
+      "id": "perpendicular-gradients",
+      "name": "Gradients of perpendicular lines",
+      "subcategory": "Coordinate geometry",
+      "level": "school",
+      "equation": "m_1*m_2 = -1",
+      "displayLatex": "m_1 m_2 = -1",
+      "variables": [
+        { "symbol": "m_1", "name": "gradient of first line", "unit": "", "description": "Slope of one line (not zero)." },
+        { "symbol": "m_2", "name": "gradient of second line", "unit": "", "description": "Slope of the line at right angles to it." }
+      ],
+      "explanation": "Rotating a line by 90 degrees turns a run of 1 and a rise of m into a run of -m and a rise of 1, so the new gradient is -1/m. Multiplying the two gradients therefore always gives -1. Parallel lines, by contrast, have equal gradients.",
+      "whenToUse": "Use it to find the equation of a normal to a curve, a perpendicular bisector, or to test whether two lines meet at right angles.",
+      "assumptions": ["neither line is horizontal or vertical"],
+      "example": {
+        "story": "A line has gradient 2/3. What is the gradient of a line perpendicular to it?",
+        "given": { "m_1": 0.6666666666666666 },
+        "solveFor": "m_2",
+        "result": -1.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["m₂ = -1 / m₁", "m₂ = -1 / (2/3) = -3/2 = -1.5"]
+      },
+      "related": ["gradient-two-points", "line-point-slope"],
+      "tags": ["perpendicular", "normal", "negative reciprocal", "right angle", "orthogonal lines"]
+    }
+  ]
+}

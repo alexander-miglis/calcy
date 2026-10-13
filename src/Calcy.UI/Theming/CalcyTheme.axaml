@@ -1,0 +1,266 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:Calcy.UI.Controls"
+        x:Class="Calcy.UI.Theming.CalcyTheme">
+
+  <Styles.Resources>
+    <Thickness x:Key="TextControlBorderThemeThickness">3</Thickness>
+    <Thickness x:Key="TextControlBorderThemeThicknessFocused">3</Thickness>
+
+    <!-- Panel: thick border, hard shadow, coloured header strip with pixel-font title -->
+    <ControlTheme x:Key="{x:Type c:PixelPanel}" TargetType="c:PixelPanel">
+      <!-- Hard drop shadows and the pressed offset draw outside the bounds. -->
+      <Setter Property="ClipToBounds" Value="False" />
+      <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+      <Setter Property="BorderThickness" Value="4" />
+      <Setter Property="HeaderBrush" Value="{DynamicResource Calcy.Head}" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="PART_Root"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  BoxShadow="{DynamicResource Calcy.ShadowLarge}">
+            <DockPanel>
+              <Border DockPanel.Dock="Top"
+                      Background="{TemplateBinding HeaderBrush}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="0,0,0,4"
+                      Padding="12,7"
+                      MinHeight="38"
+                      IsVisible="{TemplateBinding Header, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <DockPanel>
+                  <ContentPresenter DockPanel.Dock="Right" Content="{TemplateBinding HeaderContent}" VerticalAlignment="Center" />
+                  <c:PixelText Text="{TemplateBinding Header}" PixelSize="2" Foreground="{DynamicResource Calcy.Ink}" VerticalAlignment="Center" />
+                </DockPanel>
+              </Border>
+              <ContentPresenter Name="PART_ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Padding="{TemplateBinding Padding}"
+                                Foreground="{TemplateBinding Foreground}" />
+            </DockPanel>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </ControlTheme>
+
+    <!-- Result card -->
+    <ControlTheme x:Key="{x:Type c:Card}" TargetType="c:Card">
+      <!-- Hard drop shadows and the pressed offset draw outside the bounds. -->
+      <Setter Property="ClipToBounds" Value="False" />
+      <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+      <Setter Property="HeaderBrush" Value="{DynamicResource Calcy.Key}" />
+      <Setter Property="Padding" Value="14,10" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="PART_Root"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="3"
+                  BoxShadow="{DynamicResource Calcy.Shadow}">
+            <DockPanel>
+              <Border Name="PART_Header" DockPanel.Dock="Top"
+                      Background="{TemplateBinding HeaderBrush}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="0,0,0,2"
+                      Padding="10,5">
+                <DockPanel>
+                  <c:PixelText DockPanel.Dock="Right" Text="{TemplateBinding Meta}" PixelSize="1.5" LetterSpacing="1" Foreground="{DynamicResource Calcy.Ink}" VerticalAlignment="Center" />
+                  <c:PixelText Text="{TemplateBinding Title}" PixelSize="1.5" LetterSpacing="1" Foreground="{DynamicResource Calcy.Ink}" VerticalAlignment="Center" ClipToBounds="True" Margin="0,0,8,0" />
+                </DockPanel>
+              </Border>
+              <ContentPresenter DockPanel.Dock="Right" Content="{TemplateBinding Actions}" Margin="8" VerticalAlignment="Center"
+                                IsVisible="{TemplateBinding Actions, Converter={x:Static ObjectConverters.IsNotNull}}" />
+              <ContentPresenter Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Padding="{TemplateBinding Padding}"
+                                Foreground="{TemplateBinding Foreground}" />
+            </DockPanel>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:error /template/ Border#PART_Root">
+        <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+      </Style>
+      <Style Selector="^:error /template/ Border#PART_Header">
+        <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+        <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+      </Style>
+    </ControlTheme>
+
+    <!-- 8-bit button -->
+    <ControlTheme x:Key="{x:Type c:PixelButton}" TargetType="c:PixelButton">
+      <!-- Hard drop shadows and the pressed offset draw outside the bounds. -->
+      <Setter Property="ClipToBounds" Value="False" />
+      <Setter Property="Background" Value="{DynamicResource Calcy.Key}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+      <Setter Property="BorderThickness" Value="3" />
+      <Setter Property="Padding" Value="12,6" />
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="MinWidth" Value="36" />
+      <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="PART_Border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  BoxShadow="{DynamicResource Calcy.ShadowSmall}"
+                  Padding="{TemplateBinding Padding}">
+            <ContentPresenter Name="PART_ContentPresenter"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Foreground="{TemplateBinding Foreground}" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:pointerover /template/ Border#PART_Border">
+        <Setter Property="BoxShadow" Value="{DynamicResource Calcy.ShadowHover}" />
+        <Setter Property="RenderTransform" Value="translate(-1px, -1px)" />
+      </Style>
+      <Style Selector="^:pressed /template/ Border#PART_Border">
+        <Setter Property="BoxShadow" Value="{DynamicResource Calcy.ShadowNone}" />
+        <Setter Property="RenderTransform" Value="translate(3px, 3px)" />
+      </Style>
+      <Style Selector="^.primary"><Setter Property="Background" Value="{DynamicResource Calcy.Primary}" /></Style>
+      <Style Selector="^.sel"><Setter Property="Background" Value="{DynamicResource Calcy.Sel}" /></Style>
+      <Style Selector="^.head"><Setter Property="Background" Value="{DynamicResource Calcy.Head}" /></Style>
+      <Style Selector="^.mem"><Setter Property="Background" Value="{DynamicResource Calcy.Mem}" /></Style>
+      <Style Selector="^.ok"><Setter Property="Background" Value="{DynamicResource Calcy.Ok}" /></Style>
+      <Style Selector="^.paper"><Setter Property="Background" Value="{DynamicResource Calcy.Paper}" /></Style>
+      <Style Selector="^.card"><Setter Property="Background" Value="{DynamicResource Calcy.Card}" /></Style>
+      <Style Selector="^.err"><Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" /><Setter Property="Background" Value="{DynamicResource Calcy.Paper}" /></Style>
+      <Style Selector="^.small">
+        <Setter Property="Padding" Value="8,3" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="MinWidth" Value="30" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="BorderThickness" Value="2" />
+      </Style>
+      <Style Selector="^.key">
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="MinHeight" Value="52" />
+        <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+      </Style>
+      <Style Selector="^.flat /template/ Border#PART_Border">
+        <Setter Property="BoxShadow" Value="{DynamicResource Calcy.ShadowNone}" />
+      </Style>
+      <!-- Disabled keys stay crisp on dark grounds: plain key colour, muted label, no shadow (after the colour classes so it wins). -->
+      <Style Selector="^:disabled">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Key}" />
+        <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Muted}" />
+        <Setter Property="Cursor" Value="Arrow" />
+      </Style>
+      <Style Selector="^:disabled /template/ Border#PART_Border">
+        <Setter Property="BoxShadow" Value="{DynamicResource Calcy.ShadowNone}" />
+      </Style>
+    </ControlTheme>
+
+    <!-- 8-bit toggle (tabs, segmented controls, chips) -->
+    <ControlTheme x:Key="{x:Type c:PixelToggle}" TargetType="c:PixelToggle">
+      <!-- Hard drop shadows and the pressed offset draw outside the bounds. -->
+      <Setter Property="ClipToBounds" Value="False" />
+      <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="Padding" Value="10,4" />
+      <Setter Property="MinHeight" Value="34" />
+      <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="PART_Border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  Padding="{TemplateBinding Padding}">
+            <ContentPresenter Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Foreground="{TemplateBinding Foreground}" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:checked"><Setter Property="Background" Value="{DynamicResource Calcy.Sel}" /></Style>
+      <Style Selector="^:pointerover /template/ Border#PART_Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Ink}" />
+      </Style>
+      <Style Selector="^.shadow /template/ Border#PART_Border">
+        <Setter Property="BoxShadow" Value="{DynamicResource Calcy.ShadowSmall}" />
+      </Style>
+      <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.45" /></Style>
+    </ControlTheme>
+  </Styles.Resources>
+
+  <!-- Standard controls in the 8-bit look -->
+  <Style Selector="TextBox">
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="MinHeight" Value="38" />
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="ComboBox">
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="MinHeight" Value="36" />
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+  </Style>
+  <Style Selector="ComboBoxItem">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+  </Style>
+  <Style Selector="CheckBox">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+  </Style>
+  <Style Selector="RadioButton">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+  </Style>
+  <Style Selector="ToolTip">
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+  </Style>
+  <Style Selector="FlyoutPresenter">
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="BorderThickness" Value="4" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="TextBlock.label">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+  <Style Selector="TextBlock.muted">
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+  </Style>
+  <Style Selector="TextBlock.math">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+  </Style>
+  <Style Selector="TextBlock.body">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+</Styles>

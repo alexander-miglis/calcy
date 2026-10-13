@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Simple mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Simple" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 32px; padding: 28px 32px; box-sizing: border-box; justify-content: center; align-items: flex-start">
+
+    <section aria-label="Calculator" style="flex: 0 1 460px; background-color: var(--key); color: var(--ink); border: 4px solid var(--line); box-shadow: 10px 10px 0 0 var(--line); padding: 20px; display: flex; flex-direction: column; gap: 18px">
+      <div style="background-color: var(--lcd); border: 4px solid var(--line); box-shadow: inset 4px 4px 0 0 var(--lcd-shade); padding: 12px 16px; color: var(--lcd-ink); display: flex; flex-direction: column; gap: 4px; font-family: 'VT323', monospace">
+        <div style="display: flex; justify-content: space-between; font-size: 22px; line-height: 1">
+          <span>{{memFlag}}</span>
+          <span>{{expression}}</span>
+        </div>
+        <div aria-live="polite" style="font-size: 72px; line-height: 1; text-align: right; overflow: hidden; white-space: nowrap">{{display}}</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{keys}}" as="k" hint-placeholder-count="27">
+          <button type="button" onClick="{{k.press}}" aria-label="{{k.aria}}" style="font-family: 'Silkscreen', monospace; font-size: 20px; color: var(--ink); min-height: 56px; border: 3px solid {{k.border}}; box-shadow: 4px 4px 0 0 var(--line); cursor: pointer; background-color: {{k.bg}}; grid-column: {{k.col}}">{{k.label}}</button>
+        </sc-for>
+      </div>
+      <div style="font-family: 'Silkscreen', monospace; font-size: 11px; text-align: center">Type on your keyboard too. Enter is =, Esc is C.</div>
+    </section>
+
+    <section aria-label="Tape" style="flex: 1 1 380px; max-width: 560px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 8px 8px 0 0 var(--line); display: flex; flex-direction: column; max-height: 760px">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: var(--head); border-bottom: 4px solid var(--line)">
+        <h2 style="margin: 0; font-family: 'Silkscreen', monospace; font-size: 15px">Tape</h2>
+        <div style="display: flex; gap: 8px">
+          <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--paper); border: 2px solid var(--line); min-height: 36px; padding: 0 10px">Export</button>
+          <button type="button" onClick="{{clearTape}}" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--paper); border: 2px solid var(--line); min-height: 36px; padding: 0 10px">Clear</button>
+        </div>
+      </div>
+      <div style="padding: 14px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto">
+        <sc-for list="{{tape}}" as="t" hint-placeholder-count="6">
+          <article style="border: 3px solid var(--line); background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="display: flex; justify-content: space-between; padding: 4px 10px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">
+              <span>#{{t.n}}</span><span>{{t.time}}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 12px">
+              <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--muted)">{{t.expr}}</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700">= {{t.result}}</span>
+              </div>
+              <div style="display: flex; gap: 6px">
+                <button type="button" onClick="{{t.use}}" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--sel); border: 2px solid var(--line); min-height: 36px; padding: 0 8px">Use</button>
+                <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--key); border: 2px solid var(--line); min-height: 36px; padding: 0 8px">Edit</button>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <div style="padding: 10px 14px; border-top: 3px solid var(--line); font-size: 13px; color: var(--muted)">Edit an old line and every line below it recalculates.</div>
+    </section>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: '1234.5', acc: null, op: null, fresh: true, expr: '1200 + 34.5 =', mem: 0,
+      tape: [
+        { expr: '1200 + 34.5', result: '1,234.5', time: '14:05' },
+        { expr: '86 × 12', result: '1,032', time: '14:03' },
+        { expr: '250 + 15%', result: '287.5', time: '14:01' },
+        { expr: '√2', result: '1.414213562', time: '13:58' },
+        { expr: '1 ÷ 3', result: '0.3333333333', time: '13:57' },
+        { expr: '19.99 × 3', result: '59.97', time: '13:55' }
+      ]
+    };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  fmt(v) {
+    if (!isFinite(v)) return 'Error';
+    let s = Math.abs(v) >= 1e10 || (Math.abs(v) < 1e-4 && v !== 0) ? v.toExponential(6) : String(Number(v.toPrecision(10)));
+    if (s.includes('e')) return s;
+    const [i, f] = s.split('.');
+    const neg = i.startsWith('-');
+    const digits = neg ? i.slice(1) : i;
+    const grouped = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return (neg ? '-' : '') + grouped + (f ? '.' + f : '');
+  }
+  num() { return parseFloat(this.state.display) || 0; }
+  apply(a, op, b) {
+    if (op === '+') return a + b;
+    if (op === '−') return a - b;
+    if (op === '×') return a * b;
+    if (op === '÷') return b === 0 ? NaN : a / b;
+    return b;
+  }
+  stamp() {
+    const d = new Date();
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  press(k) {
+    const s = this.state;
+    if (/^[0-9]$/.test(k)) {
+      this.setState({ display: s.fresh || s.display === '0' ? k : (s.display.length < 14 ? s.display + k : s.display), fresh: false });
+    } else if (k === '.') {
+      if (s.fresh) this.setState({ display: '0.', fresh: false });
+      else if (!s.display.includes('.')) this.setState({ display: s.display + '.' });
+    } else if (['+', '−', '×', '÷'].includes(k)) {
+      const v = this.num();
+      const acc = s.acc !== null && !s.fresh ? this.apply(s.acc, s.op, v) : (s.acc !== null && s.fresh ? s.acc : v);
+      this.setState({ acc, op: k, fresh: true, display: String(acc), expr: this.fmt(acc) + ' ' + k });
+    } else if (k === '=') {
+      if (s.op === null) return;
+      const v = this.num();
+      const r = this.apply(s.acc, s.op, v);
+      const expr = this.fmt(s.acc) + ' ' + s.op + ' ' + this.fmt(v);
+      this.setState({ display: String(r), acc: null, op: null, fresh: true, expr: expr + ' =', tape: [{ expr, result: this.fmt(r), time: this.stamp() }, ...s.tape] });
+    } else if (k === '%') {
+      const v = this.num();
+      if (s.op === '+' || s.op === '−') {
+        const r = this.apply(s.acc, s.op, s.acc * v / 100);
+        const expr = this.fmt(s.acc) + ' ' + s.op + ' ' + this.fmt(v) + '%';
+        this.setState({ display: String(r), acc: null, op: null, fresh: true, expr: expr + ' =', tape: [{ expr, result: this.fmt(r), time: this.stamp() }, ...s.tape] });
+      } else {
+        this.setState({ display: String(v / 100), fresh: true });
+      }
+    } else if (k === '√' || k === 'x²' || k === '1/x') {
+      const v = this.num();
+      const r = k === '√' ? Math.sqrt(v) : k === 'x²' ? v * v : 1 / v;
+      const expr = k === '√' ? '√' + this.fmt(v) : k === 'x²' ? this.fmt(v) + '²' : '1 ÷ ' + this.fmt(v);
+      this.setState({ display: String(r), fresh: true, expr: expr + ' =', tape: [{ expr, result: this.fmt(r), time: this.stamp() }, ...s.tape] });
+    } else if (k === '±') {
+      this.setState({ display: s.display.startsWith('-') ? s.display.slice(1) : '-' + s.display });
+    } else if (k === 'C') {
+      this.setState({ display: '0', acc: null, op: null, fresh: true, expr: '' });
+    } else if (k === '⌫') {
+      this.setState({ display: s.fresh || s.display.length <= 1 ? '0' : s.display.slice(0, -1) });
+    } else if (k === 'MC') this.setState({ mem: 0 });
+    else if (k === 'MR') this.setState({ display: String(s.mem), fresh: true });
+    else if (k === 'M+') this.setState({ mem: s.mem + this.num(), fresh: true });
+    else if (k === 'M−') this.setState({ mem: s.mem - this.num(), fresh: true });
+  }
+  renderVals() {
+    const s = this.state;
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const layout = [
+      ['MC', 'm'], ['MR', 'm'], ['M+', 'm'], ['M−', 'm'],
+      ['%', 'f'], ['√', 'f'], ['x²', 'f'], ['1/x', 'f'],
+      ['C', 'c'], ['⌫', 'f'], ['±', 'f'], ['÷', 'o'],
+      ['7', 'd'], ['8', 'd'], ['9', 'd'], ['×', 'o'],
+      ['4', 'd'], ['5', 'd'], ['6', 'd'], ['−', 'o'],
+      ['1', 'd'], ['2', 'd'], ['3', 'd'], ['+', 'o'],
+      ['0', 'z'], ['.', 'd'], ['=', 'e']
+    ];
+    const bg = { m: 'var(--mem)', f: 'var(--key)', c: 'var(--paper)', o: 'var(--head)', d: 'var(--paper)', z: 'var(--paper)', e: 'var(--primary)' };
+    const aria = { 'M−': 'memory minus', 'M+': 'memory plus', 'MR': 'memory recall', 'MC': 'memory clear', '⌫': 'backspace', '±': 'change sign', '√': 'square root', 'x²': 'square', '1/x': 'reciprocal', '−': 'minus', '×': 'times', '÷': 'divide' };
+    const shown = s.display === 'NaN' ? 'Error' : (s.fresh ? this.fmt(parseFloat(s.display)) : s.display);
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      display: shown,
+      expression: s.expr,
+      memFlag: s.mem !== 0 ? 'M' : ' ',
+      keys: layout.map(([label, kind]) => ({
+        label,
+        aria: aria[label] ?? label,
+        bg: bg[kind],
+        border: kind === 'c' ? 'var(--err)' : 'var(--line)',
+        col: kind === 'z' ? 'span 2' : 'auto',
+        press: () => this.press(label)
+      })),
+      tape: s.tape.map((t, i) => ({ ...t, n: s.tape.length - i, use: () => this.setState({ display: t.result.replace(/,/g, ''), fresh: true }) })),
+      clearTape: () => this.setState({ tape: [] })
+    };
+  }
+}
+</script>
+</body>
+</html>

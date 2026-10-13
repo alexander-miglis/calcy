@@ -1,0 +1,1472 @@
+{
+  "category": "mechanics",
+  "formulas": [
+    {
+      "id": "suvat-v-u-a-t",
+      "name": "SUVAT: velocity after time t",
+      "subcategory": "Kinematics",
+      "level": "school",
+      "equation": "v = u + a*t",
+      "displayLatex": "v = u + at",
+      "variables": [
+        { "symbol": "v", "name": "final velocity", "unit": "m/s", "description": "Velocity at time t." },
+        { "symbol": "u", "name": "initial velocity", "unit": "m/s", "description": "Velocity at t = 0." },
+        { "symbol": "a", "name": "acceleration", "unit": "m/s²", "description": "Constant acceleration (negative if slowing down in the positive direction)." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "Acceleration is the rate of change of velocity. If it is constant, the velocity changes by a every second, so after t seconds it has changed by a t. This is the definition of acceleration rearranged.",
+      "whenToUse": "Use it for constant acceleration problems that do not involve the displacement s.",
+      "assumptions": ["constant acceleration", "straight-line motion"],
+      "example": {
+        "story": "A car speeds up from 5 m/s to 25 m/s in 8 s. What is its acceleration?",
+        "given": { "v": 25, "u": 5, "t": 8 },
+        "solveFor": "a",
+        "result": 2.5,
+        "unit": "m/s²",
+        "tolerance": 1e-9,
+        "steps": ["25 = 5 + a × 8", "a = 20 / 8", "a = 2.5 m/s²"]
+      },
+      "related": ["suvat-s-u-a-t", "suvat-v2-u2", "suvat-s-average", "suvat-s-v-a-t", "newtons-second-law"],
+      "tags": ["suvat", "equations of motion", "kinematics", "constant acceleration", "velocity time"]
+    },
+    {
+      "id": "suvat-s-u-a-t",
+      "name": "SUVAT: displacement from initial velocity",
+      "subcategory": "Kinematics",
+      "level": "school",
+      "equation": "s = u*t + a*t^2 / 2",
+      "displayLatex": "s = ut + \\tfrac{1}{2}at^2",
+      "variables": [
+        { "symbol": "s", "name": "displacement", "unit": "m", "description": "Change in position along the line of motion." },
+        { "symbol": "u", "name": "initial velocity", "unit": "m/s", "description": "Velocity at t = 0." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 },
+        { "symbol": "a", "name": "acceleration", "unit": "m/s²", "description": "Constant acceleration." }
+      ],
+      "explanation": "On a velocity-time graph the displacement is the area under the line. With constant acceleration that area is a rectangle u t plus a triangle ½ × t × a t. The t² term is why falling objects cover more distance every second.",
+      "whenToUse": "Use it when the final velocity v is not known or not needed, for example for falling objects or a car starting from rest.",
+      "assumptions": ["constant acceleration", "straight-line motion", "no air resistance for free fall"],
+      "example": {
+        "story": "A stone is dropped from rest down a well and hits the water after 3.0 s. How deep is the well (g = 9.81 m/s²)?",
+        "given": { "u": 0, "t": 3, "a": 9.81 },
+        "solveFor": "s",
+        "result": 44.145,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["u t = 0", "½ a t² = 0.5 × 9.81 × 9 = 44.145", "s ≈ 44.1 m"]
+      },
+      "related": ["suvat-v-u-a-t", "suvat-v2-u2", "suvat-s-v-a-t", "projectile-time-of-flight"],
+      "tags": ["suvat", "equations of motion", "kinematics", "free fall", "displacement", "constant acceleration"]
+    },
+    {
+      "id": "suvat-v2-u2",
+      "name": "SUVAT: velocity and displacement (no time)",
+      "subcategory": "Kinematics",
+      "level": "school",
+      "equation": "v^2 = u^2 + 2*a*s",
+      "displayLatex": "v^2 = u^2 + 2as",
+      "variables": [
+        { "symbol": "v", "name": "final velocity", "unit": "m/s", "description": "Velocity after moving a displacement s." },
+        { "symbol": "u", "name": "initial velocity", "unit": "m/s", "description": "Starting velocity." },
+        { "symbol": "a", "name": "acceleration", "unit": "m/s²", "description": "Constant acceleration." },
+        { "symbol": "s", "name": "displacement", "unit": "m", "description": "Change in position." }
+      ],
+      "explanation": "Eliminating t between v = u + at and s = ut + ½at² gives this equation. It is the work-energy theorem in disguise: multiply by ½m and it says the change in kinetic energy equals force times distance.",
+      "whenToUse": "Use it when time is not given and not asked for, such as braking distances and the height reached by a ball thrown upwards.",
+      "assumptions": ["constant acceleration", "straight-line motion"],
+      "example": {
+        "story": "A car travelling at 20 m/s brakes with a deceleration of 5 m/s². How far does it travel before stopping?",
+        "given": { "v": 0, "u": 20, "a": -5 },
+        "solveFor": "s",
+        "result": 40,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["0 = 20² + 2 × (-5) × s", "10 s = 400", "s = 40 m"]
+      },
+      "related": ["suvat-v-u-a-t", "suvat-s-u-a-t", "kinetic-energy", "stopping-distance"],
+      "tags": ["suvat", "equations of motion", "kinematics", "braking distance", "timeless equation", "constant acceleration"]
+    },
+    {
+      "id": "suvat-s-average",
+      "name": "SUVAT: displacement from average velocity",
+      "subcategory": "Kinematics",
+      "level": "school",
+      "equation": "s = (u + v) / 2*t",
+      "displayLatex": "s = \\frac{u + v}{2} t",
+      "variables": [
+        { "symbol": "s", "name": "displacement", "unit": "m", "description": "Change in position." },
+        { "symbol": "u", "name": "initial velocity", "unit": "m/s", "description": "Starting velocity." },
+        { "symbol": "v", "name": "final velocity", "unit": "m/s", "description": "Velocity at the end." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "With constant acceleration the velocity changes evenly, so the average velocity is exactly halfway between u and v. Displacement is that average velocity times the time; on a v-t graph it is the area of a trapezium.",
+      "whenToUse": "Use it when the acceleration is not known or not needed.",
+      "assumptions": ["constant acceleration"],
+      "example": {
+        "story": "A train speeds up evenly from 10 m/s to 30 m/s in 20 s. How far does it travel?",
+        "given": { "u": 10, "v": 30, "t": 20 },
+        "solveFor": "s",
+        "result": 400,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["Average velocity: (10 + 30) / 2 = 20 m/s", "s = 20 × 20 = 400 m"]
+      },
+      "related": ["suvat-v-u-a-t", "suvat-s-u-a-t", "trapezoid-area"],
+      "tags": ["suvat", "equations of motion", "kinematics", "average velocity", "constant acceleration"]
+    },
+    {
+      "id": "suvat-s-v-a-t",
+      "name": "SUVAT: displacement from final velocity",
+      "subcategory": "Kinematics",
+      "level": "school",
+      "equation": "s = v*t - a*t^2 / 2",
+      "displayLatex": "s = vt - \\tfrac{1}{2}at^2",
+      "variables": [
+        { "symbol": "s", "name": "displacement", "unit": "m", "description": "Change in position." },
+        { "symbol": "v", "name": "final velocity", "unit": "m/s", "description": "Velocity at the end." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 },
+        { "symbol": "a", "name": "acceleration", "unit": "m/s²", "description": "Constant acceleration." }
+      ],
+      "explanation": "This is the mirror image of s = ut + ½at²: it works backwards from the final velocity. Substituting u = v - at into that equation gives this form.",
+      "whenToUse": "Use it when the initial velocity is unknown and not needed, for example when an object comes to rest.",
+      "assumptions": ["constant acceleration"],
+      "example": {
+        "story": "A car brakes steadily at 4 m/s² and stops after 5 s. How far did it travel while braking?",
+        "given": { "v": 0, "t": 5, "a": -4 },
+        "solveFor": "s",
+        "result": 50,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["s = 0 × 5 - ½ × (-4) × 5²", "s = 0 + 50", "s = 50 m"]
+      },
+      "related": ["suvat-s-u-a-t", "suvat-v-u-a-t"],
+      "tags": ["suvat", "equations of motion", "kinematics", "constant acceleration", "displacement"]
+    },
+    {
+      "id": "projectile-range",
+      "name": "Range of a projectile",
+      "subcategory": "Projectiles",
+      "level": "school",
+      "equation": "R = v^2*sin(2*θ) / g",
+      "displayLatex": "R = \\frac{v^2 \\sin 2\\theta}{g}",
+      "variables": [
+        { "symbol": "R", "name": "range", "unit": "m", "description": "Horizontal distance travelled before landing at launch height.", "min": 0 },
+        { "symbol": "v", "name": "launch speed", "unit": "m/s", "description": "Speed at launch.", "min": 0 },
+        { "symbol": "θ", "name": "launch angle", "unit": "rad", "description": "Angle above the horizontal, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "Free-fall acceleration, 9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true }
+      ],
+      "explanation": "The horizontal velocity v cos θ is constant while gravity brings the projectile back down after a flight time of 2v sin θ / g. Multiplying them and using 2 sin θ cos θ = sin 2θ gives the range. It is largest at 45 degrees, and complementary angles such as 30 and 60 degrees give the same range.",
+      "whenToUse": "Use it for how far a ball, jet of water or long jumper travels when landing at the starting height.",
+      "assumptions": ["no air resistance", "lands at the same height it was launched from", "flat ground and uniform g"],
+      "example": {
+        "story": "A ball is kicked at 20 m/s at 45 degrees. How far away does it land?",
+        "given": { "v": 20, "θ": 0.7853981633974483, "g": 9.81 },
+        "solveFor": "R",
+        "result": 40.774720,
+        "unit": "m",
+        "tolerance": 1e-5,
+        "steps": ["sin 90° = 1", "R = 400 × 1 / 9.81", "R ≈ 40.8 m"]
+      },
+      "related": ["projectile-max-height", "projectile-time-of-flight", "double-angle-sine"],
+      "tags": ["projectile", "range", "projectile motion", "trajectory", "launch angle", "45 degrees"]
+    },
+    {
+      "id": "projectile-max-height",
+      "name": "Maximum height of a projectile",
+      "subcategory": "Projectiles",
+      "level": "school",
+      "equation": "H = v^2*sin(θ)^2 / (2*g)",
+      "displayLatex": "H = \\frac{v^2 \\sin^2\\theta}{2g}",
+      "variables": [
+        { "symbol": "H", "name": "maximum height", "unit": "m", "description": "Highest point above the launch height.", "min": 0 },
+        { "symbol": "v", "name": "launch speed", "unit": "m/s", "description": "Speed at launch.", "min": 0 },
+        { "symbol": "θ", "name": "launch angle", "unit": "rad", "description": "Angle above the horizontal, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "Free-fall acceleration, 9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true }
+      ],
+      "explanation": "Only the vertical part of the velocity, v sin θ, carries the projectile upwards. At the top that vertical velocity is zero, so v² = u² + 2as gives 0 = v² sin²θ - 2gH.",
+      "whenToUse": "Use it for the peak height of a thrown or kicked object.",
+      "assumptions": ["no air resistance", "uniform g"],
+      "example": {
+        "story": "A ball is kicked at 20 m/s at 45 degrees. How high does it go?",
+        "given": { "v": 20, "θ": 0.7853981633974483, "g": 9.81 },
+        "solveFor": "H",
+        "result": 10.193680,
+        "unit": "m",
+        "tolerance": 1e-5,
+        "steps": ["sin² 45° = 0.5", "H = 400 × 0.5 / (2 × 9.81)", "H ≈ 10.2 m"]
+      },
+      "related": ["projectile-range", "projectile-time-of-flight", "suvat-v2-u2"],
+      "tags": ["projectile", "maximum height", "apex", "projectile motion", "trajectory"]
+    },
+    {
+      "id": "projectile-time-of-flight",
+      "name": "Time of flight of a projectile",
+      "subcategory": "Projectiles",
+      "level": "school",
+      "equation": "T = 2*v*sin(θ) / g",
+      "displayLatex": "T = \\frac{2v\\sin\\theta}{g}",
+      "variables": [
+        { "symbol": "T", "name": "time of flight", "unit": "s", "description": "Time until the projectile returns to launch height.", "min": 0 },
+        { "symbol": "v", "name": "launch speed", "unit": "m/s", "description": "Speed at launch.", "min": 0 },
+        { "symbol": "θ", "name": "launch angle", "unit": "rad", "description": "Angle above the horizontal, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "Free-fall acceleration, 9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true }
+      ],
+      "explanation": "Vertically, the projectile starts at v sin θ upwards and gravity reduces this by g every second. It takes v sin θ / g to reach the top and the same time to come down again.",
+      "whenToUse": "Use it to find how long a projectile is in the air, which then gives the range from the horizontal velocity.",
+      "assumptions": ["no air resistance", "lands at launch height"],
+      "example": {
+        "story": "A ball is kicked at 20 m/s at 45 degrees. How long is it in the air?",
+        "given": { "v": 20, "θ": 0.7853981633974483, "g": 9.81 },
+        "solveFor": "T",
+        "result": 2.883208,
+        "unit": "s",
+        "tolerance": 1e-5,
+        "steps": ["Vertical launch speed: 20 × sin 45° ≈ 14.142 m/s", "T = 2 × 14.142 / 9.81", "T ≈ 2.88 s"]
+      },
+      "related": ["projectile-range", "projectile-max-height", "suvat-v-u-a-t"],
+      "tags": ["projectile", "time of flight", "hang time", "projectile motion"]
+    },
+    {
+      "id": "newtons-second-law",
+      "name": "Newton's second law",
+      "subcategory": "Dynamics",
+      "level": "school",
+      "equation": "F = m*a",
+      "displayLatex": "F = ma",
+      "variables": [
+        { "symbol": "F", "name": "resultant force", "unit": "N", "description": "The net force on the object (all forces combined)." },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the object.", "positive": true },
+        { "symbol": "a", "name": "acceleration", "unit": "m/s²", "description": "Acceleration produced, in the direction of the force." }
+      ],
+      "explanation": "A resultant force makes a mass accelerate: double the force and the acceleration doubles, double the mass and it halves. One newton is the force that gives 1 kg an acceleration of 1 m/s². If the forces balance, the acceleration is zero and the object keeps moving at constant velocity (Newton's first law).",
+      "whenToUse": "Use it whenever forces cause motion: cars, rockets, lifts, objects on slopes.",
+      "assumptions": ["F is the resultant (net) force", "constant mass", "speeds much less than light"],
+      "example": {
+        "story": "A resultant force of 3000 N acts on a 1200 kg car. What is its acceleration?",
+        "given": { "F": 3000, "m": 1200 },
+        "solveFor": "a",
+        "result": 2.5,
+        "unit": "m/s²",
+        "tolerance": 1e-9,
+        "steps": ["a = F / m", "a = 3000 / 1200 = 2.5 m/s²"]
+      },
+      "related": ["weight", "momentum", "impulse-momentum", "suvat-v-u-a-t"],
+      "tags": ["newton", "f = ma", "second law", "force", "acceleration", "dynamics"]
+    },
+    {
+      "id": "weight",
+      "name": "Weight",
+      "subcategory": "Dynamics",
+      "level": "school",
+      "equation": "F_g = m*g",
+      "displayLatex": "W = mg",
+      "variables": [
+        { "symbol": "F_g", "name": "weight", "unit": "N", "description": "The gravitational force on the object.", "min": 0 },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Amount of matter, the same everywhere.", "positive": true },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "N/kg", "description": "9.81 N/kg on Earth, 1.62 N/kg on the Moon.", "defaultValue": 9.81, "positive": true }
+      ],
+      "explanation": "Weight is a force, measured in newtons, while mass is measured in kilograms. Weight is mass times the local gravitational field strength, so an astronaut has the same mass on the Moon but only about a sixth of the weight.",
+      "whenToUse": "Use it to turn a mass into the force of gravity on it, the first step in most force diagrams.",
+      "assumptions": ["uniform gravitational field near the surface"],
+      "example": {
+        "story": "An astronaut of mass 65 kg stands on the Moon, where g = 1.62 N/kg. What is her weight?",
+        "given": { "m": 65, "g": 1.62 },
+        "solveFor": "F_g",
+        "result": 105.3,
+        "unit": "N",
+        "tolerance": 1e-9,
+        "steps": ["W = 65 × 1.62", "W = 105.3 N (on Earth it would be about 638 N)"]
+      },
+      "related": ["newtons-second-law", "gravitational-field-strength", "gravitational-potential-energy"],
+      "tags": ["weight", "mg", "gravity", "mass", "gravitational force"]
+    },
+    {
+      "id": "friction",
+      "name": "Friction force",
+      "subcategory": "Dynamics",
+      "level": "school",
+      "equation": "F_f = μ*F_N",
+      "displayLatex": "F_f = \\mu F_N",
+      "variables": [
+        { "symbol": "F_f", "name": "friction force", "unit": "N", "description": "Force opposing sliding (or the maximum static friction).", "min": 0 },
+        { "symbol": "μ", "name": "coefficient of friction", "unit": "", "description": "Depends on the two surfaces; typically 0.1 to 1.", "min": 0 },
+        { "symbol": "F_N", "name": "normal force", "unit": "N", "description": "Force pressing the surfaces together, perpendicular to them.", "min": 0 }
+      ],
+      "explanation": "Friction between dry surfaces is roughly proportional to how hard they are pressed together, and nearly independent of the contact area. The coefficient μ depends on the materials. Static friction can take any value up to μ_s F_N; once sliding, kinetic friction is μ_k F_N.",
+      "whenToUse": "Use it for blocks sliding on surfaces, braking, and the maximum force before something starts to slip.",
+      "assumptions": ["dry surfaces", "μ constant (an empirical model)"],
+      "example": {
+        "story": "A box pressed on the floor with a normal force of 50 N slides with μ = 0.4. What is the friction force?",
+        "given": { "μ": 0.4, "F_N": 50 },
+        "solveFor": "F_f",
+        "result": 20,
+        "unit": "N",
+        "tolerance": 1e-9,
+        "steps": ["F_f = 0.4 × 50", "F_f = 20 N"]
+      },
+      "related": ["newtons-second-law", "incline-force", "weight"],
+      "tags": ["friction", "coefficient of friction", "mu", "normal force", "static friction", "kinetic friction"]
+    },
+    {
+      "id": "incline-force",
+      "name": "Weight component down a slope",
+      "subcategory": "Dynamics",
+      "level": "school",
+      "equation": "F = m*g*sin(θ)",
+      "displayLatex": "F_\\parallel = mg\\sin\\theta",
+      "variables": [
+        { "symbol": "F", "name": "force along the slope", "unit": "N", "description": "Component of weight pulling the object down the slope." },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the object.", "positive": true },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true },
+        { "symbol": "θ", "name": "slope angle", "unit": "rad", "description": "Angle of the slope above the horizontal, in radians.", "min": 0, "max": 1.5707963267948966 }
+      ],
+      "explanation": "On a slope, the weight mg splits into a part along the slope, mg sin θ, and a part pressing into it, mg cos θ. The steeper the slope, the larger the part that pulls the object down it. The normal force equals mg cos θ when nothing else pushes into the slope.",
+      "whenToUse": "Use it for objects on ramps, hills and inclined planes, together with friction and Newton's second law.",
+      "assumptions": ["flat, straight slope", "angle in radians"],
+      "example": {
+        "story": "A 10 kg crate sits on a ramp at 30 degrees. What force pulls it down the ramp?",
+        "given": { "m": 10, "g": 9.81, "θ": 0.5235987755982988 },
+        "solveFor": "F",
+        "result": 49.05,
+        "unit": "N",
+        "tolerance": 1e-9,
+        "steps": ["sin 30° = 0.5", "F = 10 × 9.81 × 0.5", "F = 49.05 N"]
+      },
+      "related": ["weight", "friction", "sine-ratio"],
+      "tags": ["inclined plane", "slope", "ramp", "resolving forces", "component of weight"]
+    },
+    {
+      "id": "drag-equation",
+      "name": "Drag force",
+      "subcategory": "Dynamics",
+      "level": "university",
+      "equation": "F_d = ρ*v^2*C_d*A / 2",
+      "displayLatex": "F_d = \\tfrac{1}{2}\\rho v^2 C_d A",
+      "variables": [
+        { "symbol": "F_d", "name": "drag force", "unit": "N", "description": "Air or fluid resistance opposing the motion.", "min": 0 },
+        { "symbol": "ρ", "name": "fluid density", "unit": "kg/m³", "description": "About 1.2 kg/m³ for air at room temperature.", "defaultValue": 1.2, "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed relative to the fluid." },
+        { "symbol": "C_d", "name": "drag coefficient", "unit": "", "description": "Depends on shape: about 0.3 for a car, 0.47 for a sphere, 1.0 to 1.3 for a person upright.", "positive": true },
+        { "symbol": "A", "name": "frontal area", "unit": "m²", "description": "Cross-section facing the flow.", "positive": true }
+      ],
+      "explanation": "At everyday speeds, drag grows with the square of the speed: going twice as fast means four times the drag. The factor ½ρv² is the dynamic pressure of the oncoming fluid, and C_d A describes how much of it the shape catches. When drag equals weight, a falling object reaches terminal velocity.",
+      "whenToUse": "Use it for air resistance on cars, cyclists, skydivers and balls at moderate to high speeds.",
+      "assumptions": ["turbulent flow (high Reynolds number)", "C_d roughly constant over the speed range"],
+      "example": {
+        "story": "A car with C_d = 0.3 and frontal area 2.2 m² drives at 30 m/s through air of density 1.2 kg/m³. What is the drag force?",
+        "given": { "ρ": 1.2, "v": 30, "C_d": 0.3, "A": 2.2 },
+        "solveFor": "F_d",
+        "result": 356.4,
+        "unit": "N",
+        "tolerance": 1e-9,
+        "steps": ["½ρv² = 0.5 × 1.2 × 900 = 540 Pa", "F_d = 540 × 0.3 × 2.2", "F_d = 356.4 N"]
+      },
+      "related": ["power-force-velocity", "newtons-second-law"],
+      "tags": ["drag", "air resistance", "drag coefficient", "terminal velocity", "aerodynamics"]
+    },
+    {
+      "id": "hookes-law",
+      "name": "Hooke's law",
+      "subcategory": "Materials",
+      "level": "school",
+      "equation": "F = k*x",
+      "displayLatex": "F = kx",
+      "variables": [
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Force stretching or compressing the spring." },
+        { "symbol": "k", "name": "spring constant", "unit": "N/m", "description": "Stiffness: force needed per metre of extension.", "positive": true },
+        { "symbol": "x", "name": "extension", "unit": "m", "description": "Change in length from the natural length." }
+      ],
+      "explanation": "Up to its limit of proportionality, a spring stretches in proportion to the force: double the force, double the extension. The spring constant k measures stiffness. The spring pulls back with an equal force, which is what makes springs oscillate.",
+      "whenToUse": "Use it for springs, elastic bands, newton meters and anything elastic within its proportional range.",
+      "assumptions": ["within the limit of proportionality", "massless spring"],
+      "example": {
+        "story": "A spring with k = 200 N/m holds a 15 N load. How far does it stretch?",
+        "given": { "F": 15, "k": 200 },
+        "solveFor": "x",
+        "result": 0.075,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["x = F / k", "x = 15 / 200 = 0.075 m (7.5 cm)"]
+      },
+      "related": ["elastic-potential-energy", "mass-spring-period", "youngs-modulus"],
+      "tags": ["hooke", "spring", "spring constant", "extension", "elasticity", "stiffness"]
+    },
+    {
+      "id": "youngs-modulus",
+      "name": "Young's modulus",
+      "subcategory": "Materials",
+      "level": "school",
+      "equation": "E = F*L / (A*ΔL)",
+      "displayLatex": "E = \\frac{\\sigma}{\\varepsilon} = \\frac{F L}{A \\Delta L}",
+      "variables": [
+        { "symbol": "E", "name": "Young's modulus", "unit": "Pa", "description": "Stiffness of the material itself, independent of shape.", "positive": true },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Tension or compression force.", "positive": true },
+        { "symbol": "L", "name": "original length", "unit": "m", "description": "Length before loading.", "positive": true },
+        { "symbol": "A", "name": "cross-section area", "unit": "m²", "description": "Area the force acts across.", "positive": true },
+        { "symbol": "ΔL", "name": "extension", "unit": "m", "description": "Change in length.", "positive": true }
+      ],
+      "explanation": "Stress is force per area (F/A) and strain is fractional extension (ΔL/L). Their ratio, Young's modulus, is a property of the material: about 200 GPa for steel, 70 GPa for aluminium and 0.01 to 0.1 GPa for rubber. A thick, short wire stretches less, but its material has the same E.",
+      "whenToUse": "Use it to compare materials, or to predict how much a wire, rod or beam stretches under load.",
+      "assumptions": ["elastic region (before yielding)", "uniform cross-section"],
+      "example": {
+        "story": "A 2 m steel wire with cross-section 1 mm² stretches by 1 mm under a 100 N load. What is Young's modulus?",
+        "given": { "F": 100, "L": 2, "A": 1e-6, "ΔL": 0.001 },
+        "solveFor": "E",
+        "result": 2e11,
+        "unit": "Pa",
+        "tolerance": 1e3,
+        "steps": ["Stress: 100 / 10⁻⁶ = 1 × 10⁸ Pa", "Strain: 0.001 / 2 = 5 × 10⁻⁴", "E = 10⁸ / (5 × 10⁻⁴) = 2 × 10¹¹ Pa"]
+      },
+      "related": ["hookes-law", "pressure"],
+      "tags": ["young modulus", "stress", "strain", "elastic modulus", "stiffness", "tensile"]
+    },
+    {
+      "id": "pressure",
+      "name": "Pressure",
+      "subcategory": "Fluids and pressure",
+      "level": "school",
+      "equation": "p = F / A",
+      "displayLatex": "p = \\frac{F}{A}",
+      "variables": [
+        { "symbol": "p", "name": "pressure", "unit": "Pa", "description": "Force per square metre." },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Force acting at right angles to the surface." },
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "Area the force is spread over.", "positive": true }
+      ],
+      "explanation": "Pressure is how concentrated a force is. The same force on a smaller area gives a bigger pressure, which is why knives are sharp and snowshoes are wide. One pascal is one newton per square metre.",
+      "whenToUse": "Use it for forces on surfaces: feet on the floor, pistons, tyres, and the pressure of fluids.",
+      "assumptions": ["force perpendicular to the surface and evenly spread"],
+      "example": {
+        "story": "A person weighing 600 N stands on shoes with a total area of 0.04 m². What pressure do they exert on the floor?",
+        "given": { "F": 600, "A": 0.04 },
+        "solveFor": "p",
+        "result": 15000,
+        "unit": "Pa",
+        "tolerance": 1e-6,
+        "steps": ["p = 600 / 0.04", "p = 15 000 Pa"]
+      },
+      "related": ["hydrostatic-pressure", "youngs-modulus", "ideal-gas-law"],
+      "tags": ["pressure", "pascal", "force per area", "stress"]
+    },
+    {
+      "id": "density",
+      "name": "Density",
+      "subcategory": "Fluids and pressure",
+      "level": "school",
+      "equation": "ρ = m / V",
+      "displayLatex": "\\rho = \\frac{m}{V}",
+      "variables": [
+        { "symbol": "ρ", "name": "density", "unit": "kg/m³", "description": "Mass per unit volume.", "positive": true },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the object or sample.", "positive": true },
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Volume it occupies.", "positive": true }
+      ],
+      "explanation": "Density tells you how much mass is packed into each cubic metre. It is a property of the material, not of the object: a nail and a ship's hull of steel have the same density. Objects less dense than water float.",
+      "whenToUse": "Use it to identify materials, to convert between mass and volume, and to predict floating and sinking.",
+      "assumptions": ["uniform material"],
+      "example": {
+        "story": "A metal block has a mass of 2.7 kg and a volume of 0.001 m³. What is its density, and what metal could it be?",
+        "given": { "m": 2.7, "V": 0.001 },
+        "solveFor": "ρ",
+        "result": 2700,
+        "unit": "kg/m³",
+        "tolerance": 1e-6,
+        "steps": ["ρ = 2.7 / 0.001", "ρ = 2700 kg/m³, the density of aluminium"]
+      },
+      "related": ["hydrostatic-pressure", "buoyancy", "molar-mass-from-gas-density"],
+      "tags": ["density", "rho", "mass per volume", "specific gravity"]
+    },
+    {
+      "id": "hydrostatic-pressure",
+      "name": "Pressure in a fluid",
+      "subcategory": "Fluids and pressure",
+      "level": "school",
+      "equation": "p = ρ*g*h",
+      "displayLatex": "p = \\rho g h",
+      "variables": [
+        { "symbol": "p", "name": "pressure due to the fluid", "unit": "Pa", "description": "Extra pressure at depth h (add the air pressure on top for the total).", "min": 0 },
+        { "symbol": "ρ", "name": "fluid density", "unit": "kg/m³", "description": "1000 kg/m³ for fresh water.", "defaultValue": 1000, "positive": true },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true },
+        { "symbol": "h", "name": "depth", "unit": "m", "description": "Depth below the surface.", "min": 0 }
+      ],
+      "explanation": "The fluid above any point has weight, and that weight per unit area is the pressure. A column of height h and area A has weight ρ A h g, so dividing by A gives ρ g h. Pressure depends only on depth, not on the shape of the container.",
+      "whenToUse": "Use it for divers, dams, water towers, blood pressure and barometers.",
+      "assumptions": ["incompressible fluid at rest", "uniform g"],
+      "example": {
+        "story": "What is the water pressure on a diver 10 m below the surface of a lake?",
+        "given": { "ρ": 1000, "g": 9.81, "h": 10 },
+        "solveFor": "p",
+        "result": 98100,
+        "unit": "Pa",
+        "tolerance": 1e-6,
+        "steps": ["p = 1000 × 9.81 × 10", "p = 98 100 Pa, almost one extra atmosphere"]
+      },
+      "related": ["pressure", "density", "buoyancy"],
+      "tags": ["hydrostatic pressure", "pressure at depth", "rho g h", "fluid pressure", "water pressure"]
+    },
+    {
+      "id": "buoyancy",
+      "name": "Archimedes' principle (buoyant force)",
+      "subcategory": "Fluids and pressure",
+      "level": "school",
+      "equation": "F_b = ρ*V*g",
+      "displayLatex": "F_b = \\rho V g",
+      "variables": [
+        { "symbol": "F_b", "name": "buoyant force", "unit": "N", "description": "Upward push of the fluid.", "min": 0 },
+        { "symbol": "ρ", "name": "fluid density", "unit": "kg/m³", "description": "Density of the fluid, not of the object.", "defaultValue": 1000, "positive": true },
+        { "symbol": "V", "name": "submerged volume", "unit": "m³", "description": "Volume of fluid pushed aside.", "min": 0 },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true }
+      ],
+      "explanation": "An object in a fluid is pushed up with a force equal to the weight of the fluid it displaces. The pressure on its bottom is greater than on its top, and the difference adds up to ρ V g. If this force is at least the object's weight, it floats.",
+      "whenToUse": "Use it for ships, balloons, hydrometers and finding the volume or density of irregular objects.",
+      "assumptions": ["fluid at rest"],
+      "example": {
+        "story": "A 2 litre (0.002 m³) stone is fully under water. What upward force does the water exert on it?",
+        "given": { "ρ": 1000, "V": 0.002, "g": 9.81 },
+        "solveFor": "F_b",
+        "result": 19.62,
+        "unit": "N",
+        "tolerance": 1e-9,
+        "steps": ["Mass of water displaced: 1000 × 0.002 = 2 kg", "F_b = 2 × 9.81 = 19.62 N"]
+      },
+      "related": ["density", "hydrostatic-pressure", "weight"],
+      "tags": ["archimedes", "buoyancy", "upthrust", "floating", "displacement"]
+    },
+    {
+      "id": "work-done",
+      "name": "Work done by a force",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "W = F*s*cos(θ)",
+      "displayLatex": "W = Fs\\cos\\theta",
+      "variables": [
+        { "symbol": "W", "name": "work done", "unit": "J", "description": "Energy transferred by the force." },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Size of the force.", "min": 0 },
+        { "symbol": "s", "name": "displacement", "unit": "m", "description": "Distance moved.", "min": 0 },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle between force and displacement, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "A force does work when it moves something. Only the part of the force along the motion counts, which is F cos θ. A force at right angles to the motion, such as the normal force on a level floor, does no work. One joule is one newton acting over one metre.",
+      "whenToUse": "Use it to find the energy transferred when pushing, pulling or lifting, especially at an angle.",
+      "assumptions": ["constant force", "straight-line displacement"],
+      "example": {
+        "story": "A child pulls a sled 20 m with a force of 50 N along a rope at 30 degrees to the ground. How much work is done?",
+        "given": { "F": 50, "s": 20, "θ": 0.5235987755982988 },
+        "solveFor": "W",
+        "result": 866.02540,
+        "unit": "J",
+        "tolerance": 1e-5,
+        "steps": ["cos 30° ≈ 0.866025", "W = 50 × 20 × 0.866025", "W ≈ 866 J"]
+      },
+      "related": ["kinetic-energy", "power-work-time", "dot-product-angle"],
+      "tags": ["work", "work done", "joule", "force times distance", "energy transfer"]
+    },
+    {
+      "id": "kinetic-energy",
+      "name": "Kinetic energy",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "E_k = m*v^2 / 2",
+      "displayLatex": "E_k = \\tfrac{1}{2}mv^2",
+      "variables": [
+        { "symbol": "E_k", "name": "kinetic energy", "unit": "J", "description": "Energy due to motion.", "min": 0 },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the moving object.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed of the object." }
+      ],
+      "explanation": "Kinetic energy is the work needed to bring a mass from rest up to speed v. Because it depends on v², doubling the speed quadruples the energy, which is why a car at 60 km/h needs four times the braking distance of one at 30 km/h.",
+      "whenToUse": "Use it in energy conservation problems, collisions, braking and anything moving.",
+      "assumptions": ["speeds much less than light"],
+      "example": {
+        "story": "What is the kinetic energy of a 1500 kg car travelling at 20 m/s (72 km/h)?",
+        "given": { "m": 1500, "v": 20 },
+        "solveFor": "E_k",
+        "result": 300000,
+        "unit": "J",
+        "tolerance": 1e-6,
+        "steps": ["v² = 400", "E_k = ½ × 1500 × 400", "E_k = 300 000 J (300 kJ)"]
+      },
+      "related": ["gravitational-potential-energy", "work-done", "momentum", "relativistic-energy"],
+      "tags": ["kinetic energy", "ke", "half m v squared", "energy of motion", "movement energy"]
+    },
+    {
+      "id": "gravitational-potential-energy",
+      "name": "Gravitational potential energy (near a surface)",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "E_p = m*g*h",
+      "displayLatex": "E_p = mgh",
+      "variables": [
+        { "symbol": "E_p", "name": "potential energy gained", "unit": "J", "description": "Energy stored by lifting the object." },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass lifted.", "positive": true },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height gained." }
+      ],
+      "explanation": "Lifting a mass against its weight mg through a height h takes work mg × h, and that energy is stored as gravitational potential energy. It is released again as kinetic energy when the object falls. Only changes in height matter.",
+      "whenToUse": "Use it for lifting, falling, roller coasters, hydroelectric dams and pendulums near the Earth's surface.",
+      "assumptions": ["uniform g (heights small compared with the Earth's radius)"],
+      "example": {
+        "story": "A 2 kg book is lifted onto a shelf 1.5 m higher. How much potential energy does it gain?",
+        "given": { "m": 2, "g": 9.81, "h": 1.5 },
+        "solveFor": "E_p",
+        "result": 29.43,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["E_p = 2 × 9.81 × 1.5", "E_p = 29.43 J"]
+      },
+      "related": ["kinetic-energy", "gravitational-potential-energy-general", "weight"],
+      "tags": ["potential energy", "gpe", "mgh", "gravitational energy", "height energy"]
+    },
+    {
+      "id": "elastic-potential-energy",
+      "name": "Elastic potential energy",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "E_e = k*x^2 / 2",
+      "displayLatex": "E_e = \\tfrac{1}{2}kx^2",
+      "variables": [
+        { "symbol": "E_e", "name": "elastic energy", "unit": "J", "description": "Energy stored in the stretched or compressed spring.", "min": 0 },
+        { "symbol": "k", "name": "spring constant", "unit": "N/m", "description": "Stiffness of the spring.", "positive": true },
+        { "symbol": "x", "name": "extension", "unit": "m", "description": "Stretch or compression from natural length." }
+      ],
+      "explanation": "The force needed to stretch a spring grows from 0 to kx, so the average force is ½kx. Work done is average force times distance, ½kx × x = ½kx². It is the area under the force-extension graph.",
+      "whenToUse": "Use it for catapults, trampolines, bows, springs in toys and oscillators.",
+      "assumptions": ["within the limit of proportionality (Hooke's law holds)"],
+      "example": {
+        "story": "A spring with k = 200 N/m is compressed by 5 cm. How much energy does it store?",
+        "given": { "k": 200, "x": 0.05 },
+        "solveFor": "E_e",
+        "result": 0.25,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["x² = 0.0025", "E = ½ × 200 × 0.0025 = 0.25 J"]
+      },
+      "related": ["hookes-law", "kinetic-energy", "mass-spring-period"],
+      "tags": ["elastic energy", "spring energy", "half k x squared", "strain energy"]
+    },
+    {
+      "id": "power-work-time",
+      "name": "Power",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "P = W / t",
+      "displayLatex": "P = \\frac{W}{t}",
+      "variables": [
+        { "symbol": "P", "name": "power", "unit": "W", "description": "Rate of doing work or transferring energy." },
+        { "symbol": "W", "name": "work or energy", "unit": "J", "description": "Energy transferred." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time taken.", "positive": true }
+      ],
+      "explanation": "Power is how fast energy is transferred. One watt is one joule per second. Two lifts that raise the same load the same height do the same work, but the faster one has more power.",
+      "whenToUse": "Use it for engines, motors, people climbing stairs, and electrical appliances.",
+      "assumptions": ["average power over the time interval"],
+      "example": {
+        "story": "A lift raises 600 kg through 20 m (117 720 J of work) in 30 s. What is its power output?",
+        "given": { "W": 117720, "t": 30 },
+        "solveFor": "P",
+        "result": 3924,
+        "unit": "W",
+        "tolerance": 1e-6,
+        "steps": ["W = 600 × 9.81 × 20 = 117 720 J", "P = 117 720 / 30 = 3924 W"]
+      },
+      "related": ["power-force-velocity", "efficiency", "electrical-energy", "work-done"],
+      "tags": ["power", "watt", "rate of work", "energy per second"]
+    },
+    {
+      "id": "power-force-velocity",
+      "name": "Power from force and velocity",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "P = F*v",
+      "displayLatex": "P = Fv",
+      "variables": [
+        { "symbol": "P", "name": "power", "unit": "W", "description": "Rate at which the force does work." },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Force in the direction of motion." },
+        { "symbol": "v", "name": "velocity", "unit": "m/s", "description": "Speed of the object." }
+      ],
+      "explanation": "Work is force times distance, and power is work per second, so power is force times distance per second, which is velocity. At top speed a car's engine power exactly balances the power lost to drag and friction.",
+      "whenToUse": "Use it for vehicles at steady speed, the power needed against drag, and conveyor belts.",
+      "assumptions": ["force parallel to velocity"],
+      "example": {
+        "story": "A car moves at a steady 30 m/s against 500 N of resistive forces. What power must the engine deliver?",
+        "given": { "F": 500, "v": 30 },
+        "solveFor": "P",
+        "result": 15000,
+        "unit": "W",
+        "tolerance": 1e-6,
+        "steps": ["P = 500 × 30", "P = 15 000 W (15 kW)"]
+      },
+      "related": ["power-work-time", "drag-equation"],
+      "tags": ["power", "force times velocity", "engine power", "watt"]
+    },
+    {
+      "id": "efficiency",
+      "name": "Efficiency",
+      "subcategory": "Energy and work",
+      "level": "school",
+      "equation": "η = P_out / P_in",
+      "displayLatex": "\\eta = \\frac{\\text{useful output}}{\\text{total input}}",
+      "variables": [
+        { "symbol": "η", "name": "efficiency", "unit": "", "description": "Fraction of input energy or power that is useful (multiply by 100 for %).", "min": 0, "max": 1 },
+        { "symbol": "P_out", "name": "useful output", "unit": "W", "description": "Useful power (or energy) out.", "min": 0 },
+        { "symbol": "P_in", "name": "total input", "unit": "W", "description": "Total power (or energy) in.", "positive": true }
+      ],
+      "explanation": "No machine turns all its input energy into useful output; the rest is wasted, usually as heat. Efficiency is the useful fraction, always between 0 and 1. The same ratio works with energies or powers, as long as both are the same kind.",
+      "whenToUse": "Use it for motors, power stations, light bulbs and any energy conversion.",
+      "assumptions": ["input and output measured over the same time"],
+      "example": {
+        "story": "A motor takes 750 W of electrical power and delivers 600 W of mechanical power. What is its efficiency?",
+        "given": { "P_out": 600, "P_in": 750 },
+        "solveFor": "η",
+        "result": 0.8,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["η = 600 / 750", "η = 0.8, or 80 %"]
+      },
+      "related": ["power-work-time", "carnot-efficiency", "heat-engine-efficiency"],
+      "tags": ["efficiency", "eta", "useful energy", "wasted energy", "percentage efficiency"]
+    },
+    {
+      "id": "momentum",
+      "name": "Momentum",
+      "subcategory": "Momentum",
+      "level": "school",
+      "equation": "p = m*v",
+      "displayLatex": "p = mv",
+      "variables": [
+        { "symbol": "p", "name": "momentum", "unit": "kg·m/s", "description": "Mass in motion, a vector in the direction of v." },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the object.", "positive": true },
+        { "symbol": "v", "name": "velocity", "unit": "m/s", "description": "Velocity (with direction sign)." }
+      ],
+      "explanation": "Momentum combines how much is moving with how fast. It is conserved in collisions and explosions when no outside force acts. Newton's second law can be written as force equals rate of change of momentum.",
+      "whenToUse": "Use it for collisions, recoil, rockets and anything where impacts matter.",
+      "assumptions": ["speeds much less than light"],
+      "example": {
+        "story": "A 0.16 kg cricket ball is bowled at 40 m/s. What is its momentum?",
+        "given": { "m": 0.16, "v": 40 },
+        "solveFor": "p",
+        "result": 6.4,
+        "unit": "kg·m/s",
+        "tolerance": 1e-9,
+        "steps": ["p = 0.16 × 40", "p = 6.4 kg·m/s"]
+      },
+      "related": ["impulse-momentum", "conservation-of-momentum", "de-broglie-wavelength", "kinetic-energy"],
+      "tags": ["momentum", "mv", "linear momentum", "quantity of motion"]
+    },
+    {
+      "id": "impulse",
+      "name": "Impulse",
+      "subcategory": "Momentum",
+      "level": "school",
+      "equation": "J = F*Δt",
+      "displayLatex": "J = F\\Delta t",
+      "variables": [
+        { "symbol": "J", "name": "impulse", "unit": "N·s", "description": "Force times the time it acts; equals the change in momentum." },
+        { "symbol": "F", "name": "average force", "unit": "N", "description": "Average force during the contact." },
+        { "symbol": "Δt", "name": "contact time", "unit": "s", "description": "How long the force acts.", "min": 0 }
+      ],
+      "explanation": "Impulse is the total push a force gives: force multiplied by how long it lasts. It equals the change of momentum it causes. Crumple zones, airbags and bending your knees on landing all increase Δt, so the same change of momentum needs a smaller force.",
+      "whenToUse": "Use it for impacts and collisions, and to read the area under a force-time graph.",
+      "assumptions": ["F is the average force over Δt"],
+      "example": {
+        "story": "A foot pushes a ball with an average force of 1125 N for 0.01 s. What impulse does the ball receive?",
+        "given": { "F": 1125, "Δt": 0.01 },
+        "solveFor": "J",
+        "result": 11.25,
+        "unit": "N·s",
+        "tolerance": 1e-9,
+        "steps": ["J = 1125 × 0.01", "J = 11.25 N·s"]
+      },
+      "related": ["impulse-momentum", "momentum"],
+      "tags": ["impulse", "force time", "change in momentum", "collision", "crumple zone"]
+    },
+    {
+      "id": "impulse-momentum",
+      "name": "Impulse-momentum theorem",
+      "subcategory": "Momentum",
+      "level": "school",
+      "equation": "F*Δt = m*(v - u)",
+      "displayLatex": "F\\Delta t = mv - mu",
+      "variables": [
+        { "symbol": "F", "name": "average force", "unit": "N", "description": "Resultant force during the interaction." },
+        { "symbol": "Δt", "name": "time", "unit": "s", "description": "Duration of the force.", "positive": true },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the object.", "positive": true },
+        { "symbol": "v", "name": "final velocity", "unit": "m/s", "description": "Velocity after." },
+        { "symbol": "u", "name": "initial velocity", "unit": "m/s", "description": "Velocity before." }
+      ],
+      "explanation": "Combining F = ma with a = (v - u)/Δt shows that force times time equals the change in momentum. It is the most general form of Newton's second law: force is the rate of change of momentum.",
+      "whenToUse": "Use it to find the average force in a short impact when you know the speeds before and after.",
+      "assumptions": ["constant mass", "F is the average resultant force"],
+      "example": {
+        "story": "A 0.45 kg football at rest is kicked to 25 m/s. The foot is in contact for 0.01 s. What is the average force?",
+        "given": { "Δt": 0.01, "m": 0.45, "v": 25, "u": 0 },
+        "solveFor": "F",
+        "result": 1125,
+        "unit": "N",
+        "tolerance": 1e-6,
+        "steps": ["Change in momentum: 0.45 × (25 - 0) = 11.25 kg·m/s", "F = 11.25 / 0.01", "F = 1125 N"]
+      },
+      "related": ["impulse", "momentum", "newtons-second-law"],
+      "tags": ["impulse momentum", "change in momentum", "average force", "collision"]
+    },
+    {
+      "id": "conservation-of-momentum",
+      "name": "Conservation of momentum (two bodies)",
+      "subcategory": "Momentum",
+      "level": "school",
+      "equation": "m_1*u_1 + m_2*u_2 = m_1*v_1 + m_2*v_2",
+      "displayLatex": "m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2",
+      "variables": [
+        { "symbol": "m_1", "name": "first mass", "unit": "kg", "description": "Mass of the first body.", "positive": true },
+        { "symbol": "u_1", "name": "first initial velocity", "unit": "m/s", "description": "Velocity of body 1 before." },
+        { "symbol": "m_2", "name": "second mass", "unit": "kg", "description": "Mass of the second body.", "positive": true },
+        { "symbol": "u_2", "name": "second initial velocity", "unit": "m/s", "description": "Velocity of body 2 before." },
+        { "symbol": "v_1", "name": "first final velocity", "unit": "m/s", "description": "Velocity of body 1 after." },
+        { "symbol": "v_2", "name": "second final velocity", "unit": "m/s", "description": "Velocity of body 2 after." }
+      ],
+      "explanation": "When two bodies interact, Newton's third law says they push each other with equal and opposite forces for the same time. Their changes in momentum are therefore equal and opposite, so the total momentum stays the same. Velocities are signed: choose a positive direction.",
+      "whenToUse": "Use it for any collision, explosion or recoil where outside forces are negligible during the interaction.",
+      "assumptions": ["no external resultant force", "motion along one line"],
+      "example": {
+        "story": "A 2 kg trolley at 3 m/s hits a 1 kg trolley at rest. Afterwards the 2 kg trolley moves at 1 m/s. How fast does the 1 kg trolley move?",
+        "given": { "m_1": 2, "u_1": 3, "m_2": 1, "u_2": 0, "v_1": 1 },
+        "solveFor": "v_2",
+        "result": 4,
+        "unit": "m/s",
+        "tolerance": 1e-9,
+        "steps": ["Momentum before: 2 × 3 + 0 = 6 kg·m/s", "Momentum after: 2 × 1 + 1 × v₂", "v₂ = 6 - 2 = 4 m/s"]
+      },
+      "related": ["perfectly-inelastic-collision", "momentum", "impulse-momentum"],
+      "tags": ["conservation of momentum", "collision", "explosion", "recoil", "elastic collision"]
+    },
+    {
+      "id": "perfectly-inelastic-collision",
+      "name": "Perfectly inelastic collision",
+      "subcategory": "Momentum",
+      "level": "school",
+      "equation": "v = (m_1*u_1 + m_2*u_2) / (m_1 + m_2)",
+      "displayLatex": "v = \\frac{m_1u_1 + m_2u_2}{m_1 + m_2}",
+      "variables": [
+        { "symbol": "v", "name": "common final velocity", "unit": "m/s", "description": "Velocity of the joined bodies afterwards." },
+        { "symbol": "m_1", "name": "first mass", "unit": "kg", "description": "Mass of the first body.", "positive": true },
+        { "symbol": "u_1", "name": "first initial velocity", "unit": "m/s", "description": "Velocity of body 1 before." },
+        { "symbol": "m_2", "name": "second mass", "unit": "kg", "description": "Mass of the second body.", "positive": true },
+        { "symbol": "u_2", "name": "second initial velocity", "unit": "m/s", "description": "Velocity of body 2 before." }
+      ],
+      "explanation": "When two bodies stick together, they share one final velocity. Momentum is conserved, so the total momentum divided by the total mass gives that velocity. Kinetic energy is not conserved: some becomes heat, sound and deformation.",
+      "whenToUse": "Use it for crashes where vehicles lock together, a bullet embedding in a block, or coupling railway wagons.",
+      "assumptions": ["bodies stick together", "no external resultant force"],
+      "example": {
+        "story": "A 1000 kg car at 20 m/s runs into a stationary 1500 kg car and they move off together. What is their speed just after the crash?",
+        "given": { "m_1": 1000, "u_1": 20, "m_2": 1500, "u_2": 0 },
+        "solveFor": "v",
+        "result": 8,
+        "unit": "m/s",
+        "tolerance": 1e-9,
+        "steps": ["Total momentum: 1000 × 20 = 20 000 kg·m/s", "Total mass: 2500 kg", "v = 20 000 / 2500 = 8 m/s"]
+      },
+      "related": ["conservation-of-momentum", "kinetic-energy"],
+      "tags": ["inelastic collision", "sticking together", "coalesce", "common velocity", "momentum"]
+    },
+    {
+      "id": "centre-of-mass-two-bodies",
+      "name": "Centre of mass of two bodies",
+      "subcategory": "Momentum",
+      "level": "school",
+      "equation": "x_c = (m_1*x_1 + m_2*x_2) / (m_1 + m_2)",
+      "displayLatex": "x_{cm} = \\frac{m_1x_1 + m_2x_2}{m_1 + m_2}",
+      "variables": [
+        { "symbol": "x_c", "name": "centre of mass", "unit": "m", "description": "Position of the balance point." },
+        { "symbol": "m_1", "name": "first mass", "unit": "kg", "description": "Mass of the first body.", "positive": true },
+        { "symbol": "x_1", "name": "first position", "unit": "m", "description": "Position of the first body." },
+        { "symbol": "m_2", "name": "second mass", "unit": "kg", "description": "Mass of the second body.", "positive": true },
+        { "symbol": "x_2", "name": "second position", "unit": "m", "description": "Position of the second body." }
+      ],
+      "explanation": "The centre of mass is the mass-weighted average position. It lies closer to the heavier body. Two bodies in orbit both circle their common centre of mass, called the barycentre.",
+      "whenToUse": "Use it for balance problems, stability, and the motion of systems such as binary stars or the Earth and Moon.",
+      "assumptions": ["point masses or bodies whose own centres are known"],
+      "example": {
+        "story": "The Earth (5.9722 × 10²⁴ kg) and Moon (7.342 × 10²² kg) are 3.844 × 10⁸ m apart. How far from Earth's centre is their barycentre?",
+        "given": { "m_1": 5.9722e24, "x_1": 0, "m_2": 7.342e22, "x_2": 3.844e8 },
+        "solveFor": "x_c",
+        "result": 4668300,
+        "unit": "m",
+        "tolerance": 1000,
+        "steps": ["m₂ x₂ = 7.342 × 10²² × 3.844 × 10⁸ ≈ 2.822 × 10³¹", "Total mass ≈ 6.0456 × 10²⁴ kg", "x ≈ 4.67 × 10⁶ m, inside the Earth (radius 6.37 × 10⁶ m)"]
+      },
+      "related": ["principle-of-moments", "weighted-mean"],
+      "tags": ["centre of mass", "center of mass", "barycentre", "barycenter", "balance point"]
+    },
+    {
+      "id": "centripetal-acceleration",
+      "name": "Centripetal acceleration",
+      "subcategory": "Circular motion",
+      "level": "school",
+      "equation": "a_c = v^2 / r",
+      "displayLatex": "a_c = \\frac{v^2}{r}",
+      "variables": [
+        { "symbol": "a_c", "name": "centripetal acceleration", "unit": "m/s²", "description": "Acceleration towards the centre of the circle.", "min": 0 },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed along the circle." },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circular path.", "positive": true }
+      ],
+      "explanation": "Moving in a circle at constant speed is still acceleration, because the direction of the velocity keeps changing. The acceleration points to the centre and grows with the square of the speed. A tighter turn (smaller r) needs a bigger acceleration.",
+      "whenToUse": "Use it for cars on bends, satellites, centrifuges and anything going round.",
+      "assumptions": ["uniform circular motion"],
+      "example": {
+        "story": "A car drives round a bend of radius 50 m at 15 m/s. What is its centripetal acceleration?",
+        "given": { "v": 15, "r": 50 },
+        "solveFor": "a_c",
+        "result": 4.5,
+        "unit": "m/s²",
+        "tolerance": 1e-9,
+        "steps": ["v² = 225", "a = 225 / 50 = 4.5 m/s²"]
+      },
+      "related": ["centripetal-force", "centripetal-acceleration-angular", "linear-angular-speed"],
+      "tags": ["centripetal acceleration", "circular motion", "v squared over r", "radial acceleration"]
+    },
+    {
+      "id": "centripetal-acceleration-angular",
+      "name": "Centripetal acceleration (angular form)",
+      "subcategory": "Circular motion",
+      "level": "school",
+      "equation": "a_c = ω^2*r",
+      "displayLatex": "a_c = \\omega^2 r",
+      "variables": [
+        { "symbol": "a_c", "name": "centripetal acceleration", "unit": "m/s²", "description": "Acceleration towards the centre.", "min": 0 },
+        { "symbol": "ω", "name": "angular velocity", "unit": "rad/s", "description": "Angle turned per second." },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circle.", "positive": true }
+      ],
+      "explanation": "Substituting v = ωr into v²/r gives ω²r. For a spinning object, every point has the same ω, so the acceleration is largest at the rim. This is how a centrifuge separates samples.",
+      "whenToUse": "Use it when the rotation rate is known rather than the speed, as for spinning wheels, centrifuges and planets.",
+      "assumptions": ["uniform circular motion", "ω in rad/s"],
+      "example": {
+        "story": "A point is 0.5 m from the centre of a platform spinning at 2 rad/s. What is its centripetal acceleration?",
+        "given": { "ω": 2, "r": 0.5 },
+        "solveFor": "a_c",
+        "result": 2,
+        "unit": "m/s²",
+        "tolerance": 1e-9,
+        "steps": ["a = 2² × 0.5", "a = 2 m/s²"]
+      },
+      "related": ["centripetal-acceleration", "angular-velocity-period", "linear-angular-speed"],
+      "tags": ["centripetal acceleration", "angular velocity", "omega squared r", "centrifuge", "circular motion"]
+    },
+    {
+      "id": "centripetal-force",
+      "name": "Centripetal force",
+      "subcategory": "Circular motion",
+      "level": "school",
+      "equation": "F_c = m*v^2 / r",
+      "displayLatex": "F_c = \\frac{mv^2}{r}",
+      "variables": [
+        { "symbol": "F_c", "name": "centripetal force", "unit": "N", "description": "Resultant force towards the centre needed for circular motion.", "min": 0 },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass moving in the circle.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed along the circle." },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circle.", "positive": true }
+      ],
+      "explanation": "Newton's second law applied to centripetal acceleration gives the resultant inward force needed to keep an object on a circle. It is not a new kind of force: tension, friction, gravity or a normal force provides it. If it disappears, the object flies off along a tangent.",
+      "whenToUse": "Use it to find the tension in a whirled string, the friction needed on a bend, or the gravity holding a satellite in orbit.",
+      "assumptions": ["uniform circular motion"],
+      "example": {
+        "story": "A 0.5 kg ball on a 1.2 m string is whirled in a horizontal circle at 4 m/s. What tension is needed?",
+        "given": { "m": 0.5, "v": 4, "r": 1.2 },
+        "solveFor": "F_c",
+        "result": 6.6666667,
+        "unit": "N",
+        "tolerance": 1e-7,
+        "steps": ["m v² = 0.5 × 16 = 8", "F = 8 / 1.2 ≈ 6.67 N"]
+      },
+      "related": ["centripetal-acceleration", "newtons-second-law", "orbital-speed"],
+      "tags": ["centripetal force", "circular motion", "mv squared over r", "centre seeking force"]
+    },
+    {
+      "id": "angular-velocity-period",
+      "name": "Angular velocity from period",
+      "subcategory": "Circular motion",
+      "level": "school",
+      "equation": "ω = 2*pi / T",
+      "displayLatex": "\\omega = \\frac{2\\pi}{T}",
+      "variables": [
+        { "symbol": "ω", "name": "angular velocity", "unit": "rad/s", "description": "Angle turned per second.", "positive": true },
+        { "symbol": "T", "name": "period", "unit": "s", "description": "Time for one complete turn.", "positive": true }
+      ],
+      "explanation": "One full turn is 2π radians, and it takes one period T. Dividing gives the angle turned per second. Angular velocity is the same for every point on a rigid rotating object.",
+      "whenToUse": "Use it to convert a rotation period into ω for circular motion and oscillation formulas.",
+      "assumptions": ["steady rotation"],
+      "example": {
+        "story": "The Earth turns once relative to the stars every 86 164 s. What is its angular velocity?",
+        "given": { "T": 86164 },
+        "solveFor": "ω",
+        "result": 7.2921e-5,
+        "unit": "rad/s",
+        "tolerance": 1e-9,
+        "steps": ["ω = 2π / 86 164", "ω ≈ 7.29 × 10⁻⁵ rad/s"]
+      },
+      "related": ["angular-frequency", "linear-angular-speed", "frequency-period"],
+      "tags": ["angular velocity", "omega", "period", "rotation rate", "radians per second"]
+    },
+    {
+      "id": "angular-frequency",
+      "name": "Angular frequency",
+      "subcategory": "Oscillations",
+      "level": "school",
+      "equation": "ω = 2*pi*f",
+      "displayLatex": "\\omega = 2\\pi f",
+      "variables": [
+        { "symbol": "ω", "name": "angular frequency", "unit": "rad/s", "description": "Phase angle advanced per second." },
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "Cycles per second." }
+      ],
+      "explanation": "Each cycle of a rotation or oscillation corresponds to 2π radians of phase. So f cycles per second is 2πf radians per second. Formulas for oscillations and AC circuits are usually neater in ω.",
+      "whenToUse": "Use it to convert frequency into angular frequency for simple harmonic motion, waves and AC circuits.",
+      "assumptions": [],
+      "example": {
+        "story": "Mains electricity in Europe alternates at 50 Hz. What is its angular frequency?",
+        "given": { "f": 50 },
+        "solveFor": "ω",
+        "result": 314.15927,
+        "unit": "rad/s",
+        "tolerance": 1e-5,
+        "steps": ["ω = 2π × 50", "ω = 100π ≈ 314.16 rad/s"]
+      },
+      "related": ["angular-velocity-period", "frequency-period", "inductive-reactance"],
+      "tags": ["angular frequency", "omega", "2 pi f", "radians per second"]
+    },
+    {
+      "id": "linear-angular-speed",
+      "name": "Speed from angular velocity",
+      "subcategory": "Circular motion",
+      "level": "school",
+      "equation": "v = ω*r",
+      "displayLatex": "v = \\omega r",
+      "variables": [
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed along the circle." },
+        { "symbol": "ω", "name": "angular velocity", "unit": "rad/s", "description": "Angle turned per second." },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Distance from the axis.", "min": 0 }
+      ],
+      "explanation": "In one second the object turns through ω radians, and an angle of ω radians on a circle of radius r is an arc of length ωr. So points further from the axis move faster even though they turn at the same rate.",
+      "whenToUse": "Use it to connect rotation rate with speed: wheels, gears, records, the Earth's surface.",
+      "assumptions": ["ω in rad/s"],
+      "example": {
+        "story": "A wheel of radius 0.3 m turns at 10 rad/s. How fast does a point on its rim move?",
+        "given": { "ω": 10, "r": 0.3 },
+        "solveFor": "v",
+        "result": 3,
+        "unit": "m/s",
+        "tolerance": 1e-9,
+        "steps": ["v = 10 × 0.3", "v = 3 m/s"]
+      },
+      "related": ["arc-length", "angular-velocity-period", "centripetal-acceleration"],
+      "tags": ["linear speed", "tangential speed", "omega r", "rolling", "circular motion"]
+    },
+    {
+      "id": "pendulum-period",
+      "name": "Period of a simple pendulum",
+      "subcategory": "Oscillations",
+      "level": "school",
+      "equation": "T = 2*pi*sqrt(L / g)",
+      "displayLatex": "T = 2\\pi\\sqrt{\\frac{L}{g}}",
+      "variables": [
+        { "symbol": "T", "name": "period", "unit": "s", "description": "Time for one complete swing (there and back).", "positive": true },
+        { "symbol": "L", "name": "length", "unit": "m", "description": "Distance from the pivot to the centre of the bob.", "positive": true },
+        { "symbol": "g", "name": "gravitational field strength", "unit": "m/s²", "description": "9.81 m/s² near Earth's surface.", "defaultValue": 9.81, "positive": true }
+      ],
+      "explanation": "For small swings, the restoring force on a pendulum is proportional to its displacement, so it moves in simple harmonic motion. The period depends only on the length and on g, not on the mass or (for small swings) on the amplitude. That is why pendulums were used in clocks.",
+      "whenToUse": "Use it for pendulum clocks, swings, measuring g in the lab, or a crane's swinging load.",
+      "assumptions": ["small angles only (below about 15 degrees)", "light string and a point-like bob", "no air resistance"],
+      "example": {
+        "story": "What is the period of a 1.0 m pendulum on Earth?",
+        "given": { "L": 1, "g": 9.81 },
+        "solveFor": "T",
+        "result": 2.006067,
+        "unit": "s",
+        "tolerance": 1e-6,
+        "steps": ["√(1 / 9.81) ≈ 0.319275", "T = 2π × 0.319275", "T ≈ 2.006 s"]
+      },
+      "related": ["mass-spring-period", "frequency-period", "maclaurin-sine"],
+      "tags": ["pendulum", "simple pendulum", "period", "oscillation", "shm", "clock"]
+    },
+    {
+      "id": "mass-spring-period",
+      "name": "Period of a mass on a spring",
+      "subcategory": "Oscillations",
+      "level": "school",
+      "equation": "T = 2*pi*sqrt(m / k)",
+      "displayLatex": "T = 2\\pi\\sqrt{\\frac{m}{k}}",
+      "variables": [
+        { "symbol": "T", "name": "period", "unit": "s", "description": "Time for one complete oscillation.", "positive": true },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Oscillating mass.", "positive": true },
+        { "symbol": "k", "name": "spring constant", "unit": "N/m", "description": "Stiffness of the spring.", "positive": true }
+      ],
+      "explanation": "Hooke's law gives a restoring force -kx, so a = -(k/m)x: simple harmonic motion with ω = √(k/m). A heavier mass oscillates more slowly and a stiffer spring faster. Unlike a pendulum, the period does not depend on g.",
+      "whenToUse": "Use it for springs, car suspensions, vibrating molecules and any system with a linear restoring force.",
+      "assumptions": ["Hooke's law holds", "spring mass negligible", "no damping"],
+      "example": {
+        "story": "A 0.5 kg mass hangs on a spring with k = 20 N/m. What is its period of oscillation?",
+        "given": { "m": 0.5, "k": 20 },
+        "solveFor": "T",
+        "result": 0.993459,
+        "unit": "s",
+        "tolerance": 1e-6,
+        "steps": ["√(0.5 / 20) = √0.025 ≈ 0.158114", "T = 2π × 0.158114 ≈ 0.993 s"]
+      },
+      "related": ["pendulum-period", "hookes-law", "shm-displacement"],
+      "tags": ["mass spring", "oscillation", "period", "shm", "spring constant", "harmonic oscillator"]
+    },
+    {
+      "id": "shm-displacement",
+      "name": "Simple harmonic motion: displacement",
+      "subcategory": "Oscillations",
+      "level": "school",
+      "equation": "x = A*cos(ω*t)",
+      "displayLatex": "x = A\\cos(\\omega t)",
+      "variables": [
+        { "symbol": "x", "name": "displacement", "unit": "m", "description": "Distance from the equilibrium position." },
+        { "symbol": "A", "name": "amplitude", "unit": "m", "description": "Maximum displacement.", "min": 0 },
+        { "symbol": "ω", "name": "angular frequency", "unit": "rad/s", "description": "2π times the frequency." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time since release from x = A." }
+      ],
+      "explanation": "An object in simple harmonic motion moves back and forth like the shadow of a point going round a circle. Released from rest at x = A, its displacement follows a cosine curve. Velocity and acceleration are also sinusoidal, with the acceleration always pointing back towards equilibrium.",
+      "whenToUse": "Use it to find where an oscillating mass, pendulum or vibrating object is at a given time.",
+      "assumptions": ["undamped SHM", "starts at maximum displacement (use sine if it starts at equilibrium)"],
+      "example": {
+        "story": "A mass oscillates with amplitude 0.1 m at 1 Hz (ω = 2π rad/s), released from x = A at t = 0. Where is it at t = 0.125 s?",
+        "given": { "A": 0.1, "ω": 6.283185307179586, "t": 0.125 },
+        "solveFor": "x",
+        "result": 0.07071068,
+        "unit": "m",
+        "tolerance": 1e-8,
+        "steps": ["ωt = 2π × 0.125 = π/4", "cos(π/4) ≈ 0.707107", "x ≈ 0.0707 m"]
+      },
+      "related": ["shm-max-speed", "mass-spring-period", "derivative-sine"],
+      "tags": ["simple harmonic motion", "shm", "oscillation", "displacement", "amplitude", "cosine"]
+    },
+    {
+      "id": "shm-max-speed",
+      "name": "Simple harmonic motion: maximum speed",
+      "subcategory": "Oscillations",
+      "level": "school",
+      "equation": "v_m = ω*A",
+      "displayLatex": "v_{\\max} = \\omega A",
+      "variables": [
+        { "symbol": "v_m", "name": "maximum speed", "unit": "m/s", "description": "Speed when passing through equilibrium.", "min": 0 },
+        { "symbol": "ω", "name": "angular frequency", "unit": "rad/s", "description": "2π times the frequency.", "min": 0 },
+        { "symbol": "A", "name": "amplitude", "unit": "m", "description": "Maximum displacement.", "min": 0 }
+      ],
+      "explanation": "Differentiating x = A cos ωt gives v = -Aω sin ωt, whose largest size is Aω. The object moves fastest as it passes the middle and stops momentarily at the ends. The maximum acceleration is ω²A, at the ends.",
+      "whenToUse": "Use it for the top speed of oscillating systems, from tuning forks to earthquake-shaken buildings.",
+      "assumptions": ["undamped SHM"],
+      "example": {
+        "story": "A mass on a spring oscillates with ω = 4 rad/s and amplitude 5 cm. What is its maximum speed?",
+        "given": { "ω": 4, "A": 0.05 },
+        "solveFor": "v_m",
+        "result": 0.2,
+        "unit": "m/s",
+        "tolerance": 1e-9,
+        "steps": ["v_max = 4 × 0.05", "v_max = 0.2 m/s"]
+      },
+      "related": ["shm-displacement", "kinetic-energy"],
+      "tags": ["shm", "maximum speed", "simple harmonic motion", "omega a", "oscillation"]
+    },
+    {
+      "id": "moment-of-force",
+      "name": "Moment of a force",
+      "subcategory": "Statics and rotation",
+      "level": "school",
+      "equation": "M = F*d",
+      "displayLatex": "M = Fd",
+      "variables": [
+        { "symbol": "M", "name": "moment", "unit": "N·m", "description": "Turning effect of the force about the pivot." },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "The applied force." },
+        { "symbol": "d", "name": "perpendicular distance", "unit": "m", "description": "Shortest distance from the pivot to the line of the force.", "min": 0 }
+      ],
+      "explanation": "The turning effect of a force depends on its size and how far from the pivot it acts, measured at right angles to the force. That is why a long spanner makes a stubborn nut easier to turn, and why door handles are far from the hinges.",
+      "whenToUse": "Use it for levers, spanners, seesaws, cranes and beams.",
+      "assumptions": ["d measured perpendicular to the line of action"],
+      "example": {
+        "story": "A force of 40 N is applied at the end of a 0.25 m spanner, at right angles to it. What is the moment about the nut?",
+        "given": { "F": 40, "d": 0.25 },
+        "solveFor": "M",
+        "result": 10,
+        "unit": "N·m",
+        "tolerance": 1e-9,
+        "steps": ["M = 40 × 0.25", "M = 10 N·m"]
+      },
+      "related": ["principle-of-moments", "torque"],
+      "tags": ["moment", "turning effect", "lever", "torque", "spanner"]
+    },
+    {
+      "id": "principle-of-moments",
+      "name": "Principle of moments",
+      "subcategory": "Statics and rotation",
+      "level": "school",
+      "equation": "F_1*d_1 = F_2*d_2",
+      "displayLatex": "F_1 d_1 = F_2 d_2",
+      "variables": [
+        { "symbol": "F_1", "name": "first force", "unit": "N", "description": "Force on one side of the pivot." },
+        { "symbol": "d_1", "name": "first distance", "unit": "m", "description": "Perpendicular distance of F₁ from the pivot.", "min": 0 },
+        { "symbol": "F_2", "name": "second force", "unit": "N", "description": "Force on the other side." },
+        { "symbol": "d_2", "name": "second distance", "unit": "m", "description": "Perpendicular distance of F₂ from the pivot.", "min": 0 }
+      ],
+      "explanation": "An object balances when the clockwise moments about any point equal the anticlockwise moments. With one force on each side of a pivot, that means force times distance is the same on both sides. A small force far from the pivot can balance a large force close to it.",
+      "whenToUse": "Use it for seesaws, balances, levers, wheelbarrows and beams in equilibrium.",
+      "assumptions": ["the object is in equilibrium", "forces perpendicular to the beam"],
+      "example": {
+        "story": "On a seesaw, a child weighing 300 N sits 2 m from the pivot. Where must a child weighing 400 N sit to balance?",
+        "given": { "F_1": 300, "d_1": 2, "F_2": 400 },
+        "solveFor": "d_2",
+        "result": 1.5,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["300 × 2 = 400 × d₂", "d₂ = 600 / 400 = 1.5 m"]
+      },
+      "related": ["moment-of-force", "torque", "centre-of-mass-two-bodies"],
+      "tags": ["principle of moments", "balance", "seesaw", "lever", "equilibrium", "law of the lever"]
+    },
+    {
+      "id": "torque",
+      "name": "Torque",
+      "subcategory": "Statics and rotation",
+      "level": "school",
+      "equation": "τ = r*F*sin(θ)",
+      "displayLatex": "\\tau = rF\\sin\\theta",
+      "variables": [
+        { "symbol": "τ", "name": "torque", "unit": "N·m", "description": "Turning effect about the axis." },
+        { "symbol": "r", "name": "lever arm length", "unit": "m", "description": "Distance from the axis to where the force acts.", "min": 0 },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Size of the force.", "min": 0 },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle between the lever arm and the force, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "Only the part of the force perpendicular to the lever arm, F sin θ, turns the object. Pushing straight along the arm (θ = 0) does nothing; pushing at right angles gives the full rF. Torque is the cross product r × F.",
+      "whenToUse": "Use it for spanners, pedals, door handles and engines when the force is not at right angles.",
+      "assumptions": ["angle in radians"],
+      "example": {
+        "story": "A 50 N force pulls at 60 degrees to a 0.3 m wrench. What torque does it produce?",
+        "given": { "r": 0.3, "F": 50, "θ": 1.0471975511965976 },
+        "solveFor": "τ",
+        "result": 12.990381,
+        "unit": "N·m",
+        "tolerance": 1e-6,
+        "steps": ["sin 60° ≈ 0.866025", "τ = 0.3 × 50 × 0.866025", "τ ≈ 13.0 N·m"]
+      },
+      "related": ["moment-of-force", "cross-product-magnitude", "angular-momentum"],
+      "tags": ["torque", "moment", "turning force", "tau", "lever arm"]
+    },
+    {
+      "id": "rotational-kinetic-energy",
+      "name": "Rotational kinetic energy",
+      "subcategory": "Statics and rotation",
+      "level": "university",
+      "equation": "E_r = I*ω^2 / 2",
+      "displayLatex": "E_r = \\tfrac{1}{2}I\\omega^2",
+      "variables": [
+        { "symbol": "E_r", "name": "rotational kinetic energy", "unit": "J", "description": "Energy stored in the spinning.", "min": 0 },
+        { "symbol": "I", "name": "moment of inertia", "unit": "kg·m²", "description": "Resistance to changes in rotation; depends on mass and how far it is from the axis.", "positive": true },
+        { "symbol": "ω", "name": "angular velocity", "unit": "rad/s", "description": "Rotation rate." }
+      ],
+      "explanation": "Every bit of a spinning object moves with speed ωr, so its kinetic energy is ½ m (ωr)². Adding over the whole object gives ½ I ω², where I = Σ m r². It is the rotational version of ½ m v².",
+      "whenToUse": "Use it for flywheels, rolling objects, spinning tops and turbines.",
+      "assumptions": ["rigid body", "fixed axis"],
+      "example": {
+        "story": "A flywheel with moment of inertia 0.5 kg·m² spins at 10 rad/s. How much energy does it store?",
+        "given": { "I": 0.5, "ω": 10 },
+        "solveFor": "E_r",
+        "result": 25,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["ω² = 100", "E = ½ × 0.5 × 100 = 25 J"]
+      },
+      "related": ["kinetic-energy", "angular-momentum"],
+      "tags": ["rotational energy", "moment of inertia", "flywheel", "spinning", "angular kinetic energy"]
+    },
+    {
+      "id": "angular-momentum",
+      "name": "Angular momentum",
+      "subcategory": "Statics and rotation",
+      "level": "university",
+      "equation": "L = I*ω",
+      "displayLatex": "L = I\\omega",
+      "variables": [
+        { "symbol": "L", "name": "angular momentum", "unit": "kg·m²/s", "description": "Amount of rotational motion." },
+        { "symbol": "I", "name": "moment of inertia", "unit": "kg·m²", "description": "Rotational inertia about the axis.", "positive": true },
+        { "symbol": "ω", "name": "angular velocity", "unit": "rad/s", "description": "Rotation rate." }
+      ],
+      "explanation": "Angular momentum is the rotational version of linear momentum. With no outside torque it is conserved, so a skater who pulls in their arms (smaller I) spins faster (larger ω). The same law explains why collapsing stars spin up into fast pulsars.",
+      "whenToUse": "Use it for spinning skaters, divers, planets, gyroscopes and collisions involving rotation.",
+      "assumptions": ["rigid body rotating about a fixed axis"],
+      "example": {
+        "story": "A wheel with moment of inertia 2 kg·m² spins at 3 rad/s. What is its angular momentum?",
+        "given": { "I": 2, "ω": 3 },
+        "solveFor": "L",
+        "result": 6,
+        "unit": "kg·m²/s",
+        "tolerance": 1e-9,
+        "steps": ["L = 2 × 3", "L = 6 kg·m²/s"]
+      },
+      "related": ["rotational-kinetic-energy", "torque", "momentum"],
+      "tags": ["angular momentum", "conservation of angular momentum", "spin", "moment of inertia"]
+    },
+    {
+      "id": "newtons-law-of-gravitation",
+      "name": "Newton's law of gravitation",
+      "subcategory": "Gravitation",
+      "level": "school",
+      "equation": "F = G*m_1*m_2 / r^2",
+      "displayLatex": "F = \\frac{G m_1 m_2}{r^2}",
+      "variables": [
+        { "symbol": "F", "name": "gravitational force", "unit": "N", "description": "Attraction between the two masses.", "min": 0 },
+        { "symbol": "m_1", "name": "first mass", "unit": "kg", "description": "Mass of the first body.", "positive": true },
+        { "symbol": "m_2", "name": "second mass", "unit": "kg", "description": "Mass of the second body.", "positive": true },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance between the centres.", "positive": true }
+      ],
+      "constants": ["gravitational-constant"],
+      "explanation": "Every mass attracts every other mass with a force proportional to both masses and inversely proportional to the square of their separation. Double the distance and the force drops to a quarter. G is tiny, so gravity is only noticeable when at least one mass is huge.",
+      "whenToUse": "Use it for forces between planets, moons, stars and satellites.",
+      "assumptions": ["point masses or spherically symmetric bodies", "speeds and fields where general relativity is not needed"],
+      "example": {
+        "story": "The Earth (5.9722 × 10²⁴ kg) and Moon (7.342 × 10²² kg) are 3.844 × 10⁸ m apart. How strongly do they attract each other?",
+        "given": { "m_1": 5.9722e24, "m_2": 7.342e22, "r": 3.844e8 },
+        "solveFor": "F",
+        "result": 1.98056e20,
+        "unit": "N",
+        "tolerance": 1e16,
+        "steps": ["G m₁ m₂ ≈ 6.6743 × 10⁻¹¹ × 5.9722 × 10²⁴ × 7.342 × 10²² ≈ 2.9265 × 10³⁷", "r² ≈ 1.4776 × 10¹⁷ m²", "F ≈ 1.98 × 10²⁰ N"]
+      },
+      "related": ["gravitational-field-strength", "orbital-speed", "coulombs-law", "keplers-third-law"],
+      "tags": ["gravitation", "universal gravitation", "inverse square law", "big g", "gravity force", "newton gravity"]
+    },
+    {
+      "id": "gravitational-field-strength",
+      "name": "Gravitational field strength of a planet",
+      "subcategory": "Gravitation",
+      "level": "school",
+      "equation": "g = G*M / r^2",
+      "displayLatex": "g = \\frac{GM}{r^2}",
+      "variables": [
+        { "symbol": "g", "name": "field strength", "unit": "N/kg", "description": "Gravitational force per kilogram (equal to the free-fall acceleration).", "min": 0 },
+        { "symbol": "M", "name": "mass of the planet", "unit": "kg", "description": "Mass creating the field.", "positive": true },
+        { "symbol": "r", "name": "distance from centre", "unit": "m", "description": "Distance from the planet's centre (its radius at the surface).", "positive": true }
+      ],
+      "constants": ["gravitational-constant"],
+      "explanation": "Dividing Newton's law of gravitation by the small mass m gives the force per kilogram, the field strength. At the Earth's surface it is about 9.8 N/kg. It falls with the square of the distance from the centre.",
+      "whenToUse": "Use it to find g on other planets or at different heights above the Earth.",
+      "assumptions": ["spherically symmetric planet", "outside the planet's surface", "ignores the planet's rotation"],
+      "example": {
+        "story": "Calculate g at the Earth's surface from its mass 5.9722 × 10²⁴ kg and radius 6.371 × 10⁶ m.",
+        "given": { "M": 5.9722e24, "r": 6371000 },
+        "solveFor": "g",
+        "result": 9.8203,
+        "unit": "N/kg",
+        "tolerance": 0.0005,
+        "steps": ["G M ≈ 3.986 × 10¹⁴ m³/s²", "r² ≈ 4.059 × 10¹³ m²", "g ≈ 9.82 N/kg (rotation lowers the measured value slightly)"]
+      },
+      "related": ["weight", "newtons-law-of-gravitation", "escape-velocity"],
+      "tags": ["gravitational field", "little g", "gravity on planets", "field strength", "acceleration due to gravity"]
+    },
+    {
+      "id": "orbital-speed",
+      "name": "Orbital speed (circular orbit)",
+      "subcategory": "Gravitation",
+      "level": "school",
+      "equation": "v = sqrt(G*M / r)",
+      "displayLatex": "v = \\sqrt{\\frac{GM}{r}}",
+      "variables": [
+        { "symbol": "v", "name": "orbital speed", "unit": "m/s", "description": "Speed needed for a circular orbit.", "min": 0 },
+        { "symbol": "M", "name": "central mass", "unit": "kg", "description": "Mass of the body being orbited.", "positive": true },
+        { "symbol": "r", "name": "orbit radius", "unit": "m", "description": "Distance from the centre of the central body.", "positive": true }
+      ],
+      "constants": ["gravitational-constant"],
+      "explanation": "In a circular orbit gravity provides exactly the centripetal force: GMm/r² = mv²/r. The satellite's own mass cancels, leaving v = √(GM/r). Higher orbits are slower.",
+      "whenToUse": "Use it for satellites, space stations, moons and planets in near-circular orbits.",
+      "assumptions": ["circular orbit", "satellite mass much smaller than M"],
+      "example": {
+        "story": "The International Space Station orbits about 408 km above the Earth, at r = 6.779 × 10⁶ m. How fast does it travel?",
+        "given": { "M": 5.9722e24, "r": 6779000 },
+        "solveFor": "v",
+        "result": 7668.1,
+        "unit": "m/s",
+        "tolerance": 0.5,
+        "steps": ["G M / r ≈ 3.986 × 10¹⁴ / 6.779 × 10⁶ ≈ 5.880 × 10⁷", "v ≈ 7668 m/s (about 27 600 km/h)"]
+      },
+      "related": ["keplers-third-law", "escape-velocity", "centripetal-force"],
+      "tags": ["orbital speed", "orbital velocity", "satellite", "circular orbit", "space station"]
+    },
+    {
+      "id": "escape-velocity",
+      "name": "Escape velocity",
+      "subcategory": "Gravitation",
+      "level": "school",
+      "equation": "v_e = sqrt(2*G*M / r)",
+      "displayLatex": "v_e = \\sqrt{\\frac{2GM}{r}}",
+      "variables": [
+        { "symbol": "v_e", "name": "escape velocity", "unit": "m/s", "description": "Minimum launch speed to escape the gravity completely.", "min": 0 },
+        { "symbol": "M", "name": "mass of the body", "unit": "kg", "description": "Mass of the planet or star.", "positive": true },
+        { "symbol": "r", "name": "starting distance", "unit": "m", "description": "Distance from the centre at launch.", "positive": true }
+      ],
+      "constants": ["gravitational-constant"],
+      "explanation": "To escape, an object's kinetic energy must at least equal the energy needed to climb out of the gravitational well, GMm/r. Setting ½mv² = GMm/r gives the escape velocity, √2 times the orbital speed at the same radius.",
+      "whenToUse": "Use it for rockets, whether planets keep their atmospheres, and black holes (where it reaches c).",
+      "assumptions": ["no air resistance", "ignores the planet's rotation"],
+      "example": {
+        "story": "What is the escape velocity from the surface of the Earth?",
+        "given": { "M": 5.9722e24, "r": 6371000 },
+        "solveFor": "v_e",
+        "result": 11186.2,
+        "unit": "m/s",
+        "tolerance": 0.5,
+        "steps": ["2 G M / r ≈ 2 × 3.986 × 10¹⁴ / 6.371 × 10⁶ ≈ 1.2513 × 10⁸", "v ≈ 11 186 m/s (about 11.2 km/s)"]
+      },
+      "related": ["orbital-speed", "gravitational-potential-energy-general", "gravitational-field-strength"],
+      "tags": ["escape velocity", "escape speed", "rocket", "black hole", "gravity"]
+    },
+    {
+      "id": "keplers-third-law",
+      "name": "Kepler's third law",
+      "subcategory": "Gravitation",
+      "level": "school",
+      "equation": "T^2 = 4*pi^2*r^3 / (G*M)",
+      "displayLatex": "T^2 = \\frac{4\\pi^2}{GM} r^3",
+      "variables": [
+        { "symbol": "T", "name": "orbital period", "unit": "s", "description": "Time for one orbit.", "positive": true },
+        { "symbol": "r", "name": "orbit radius", "unit": "m", "description": "Radius (or semi-major axis) of the orbit.", "positive": true },
+        { "symbol": "M", "name": "central mass", "unit": "kg", "description": "Mass of the body being orbited.", "positive": true }
+      ],
+      "constants": ["gravitational-constant"],
+      "explanation": "The square of the orbital period is proportional to the cube of the orbit's size. Kepler found this from planetary data; Newton derived it by combining the orbital speed with v = 2πr/T. It also lets astronomers weigh stars and planets from their satellites' orbits.",
+      "whenToUse": "Use it to find the period or height of an orbit, such as a geostationary satellite, or the mass of a planet with a moon.",
+      "assumptions": ["circular orbit (or r = semi-major axis for an ellipse)", "orbiting mass much smaller than M"],
+      "example": {
+        "story": "A geostationary satellite orbits once per sidereal day, 86 164 s. What is the radius of its orbit?",
+        "given": { "T": 86164, "M": 5.9722e24 },
+        "solveFor": "r",
+        "result": 42164000,
+        "unit": "m",
+        "tolerance": 2000,
+        "steps": ["r³ = G M T² / (4π²)", "r³ ≈ 3.986 × 10¹⁴ × 7.424 × 10⁹ / 39.478 ≈ 7.496 × 10²²", "r ≈ 4.216 × 10⁷ m (about 35 800 km above the surface)"]
+      },
+      "related": ["orbital-speed", "newtons-law-of-gravitation", "angular-velocity-period"],
+      "tags": ["kepler", "third law", "orbital period", "geostationary", "harmonic law", "planetary motion"]
+    },
+    {
+      "id": "gravitational-potential-energy-general",
+      "name": "Gravitational potential energy (general)",
+      "subcategory": "Gravitation",
+      "level": "university",
+      "equation": "E_p = -G*M*m / r",
+      "displayLatex": "E_p = -\\frac{GMm}{r}",
+      "variables": [
+        { "symbol": "E_p", "name": "potential energy", "unit": "J", "description": "Energy relative to being infinitely far away (always negative)." },
+        { "symbol": "M", "name": "central mass", "unit": "kg", "description": "Mass of the planet or star.", "positive": true },
+        { "symbol": "m", "name": "object mass", "unit": "kg", "description": "Mass of the object.", "positive": true },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance between the centres.", "positive": true }
+      ],
+      "constants": ["gravitational-constant"],
+      "explanation": "Far from a planet, gravity is not uniform, so mgh no longer works. Choosing zero energy at infinite distance, the potential energy at distance r is -GMm/r. It is negative because work must be done to pull the object away; mgh is the approximation of the change near the surface.",
+      "whenToUse": "Use it for satellites, escape velocity and any situation where the height change is comparable to the planet's radius.",
+      "assumptions": ["zero at infinity", "spherically symmetric central body"],
+      "example": {
+        "story": "What is the gravitational potential energy of a 1000 kg satellite orbiting 7.0 × 10⁶ m from the Earth's centre?",
+        "given": { "M": 5.9722e24, "m": 1000, "r": 7000000 },
+        "solveFor": "E_p",
+        "result": -5.69432e10,
+        "unit": "J",
+        "tolerance": 1e6,
+        "steps": ["G M ≈ 3.986 × 10¹⁴", "E_p = -3.986 × 10¹⁴ × 1000 / 7 × 10⁶", "E_p ≈ -5.69 × 10¹⁰ J"]
+      },
+      "related": ["gravitational-potential-energy", "escape-velocity"],
+      "tags": ["gravitational potential energy", "negative energy", "gravitational potential", "satellite energy"]
+    }
+  ]
+}

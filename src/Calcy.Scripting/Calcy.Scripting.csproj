@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.Scripting</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.Python\Calcy.Python.csproj" />
+    <ProjectReference Include="..\Calcy.Engine\Calcy.Engine.csproj" />
+    <ProjectReference Include="..\Calcy.Graphing\Calcy.Graphing.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The compatibility modules are written in Python and run inside the sandboxed interpreter. -->
+    <EmbeddedResource Include="Python\*.py" LogicalName="Calcy.Scripting.Python.%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Calcy.Scripting.Tests" />
+  </ItemGroup>
+</Project>

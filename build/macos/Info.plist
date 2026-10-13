@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>
+  <string>Calcy</string>
+  <key>CFBundleDisplayName</key>
+  <string>Calcy</string>
+  <key>CFBundleIdentifier</key>
+  <string>app.calcy.desktop</string>
+  <key>CFBundleExecutable</key>
+  <string>Calcy</string>
+  <key>CFBundleIconFile</key>
+  <string>calcy.icns</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>$(SHORT_VERSION)</string>
+  <key>CFBundleVersion</key>
+  <string>$(BUILD_VERSION)</string>
+  <key>CFBundleGetInfoString</key>
+  <string>Calcy $(VERSION)</string>
+  <key>LSApplicationCategoryType</key>
+  <string>public.app-category.education</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>12.0</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+  <key>NSHumanReadableCopyright</key>
+  <string>Copyright (c) 2026 Alexander Miglis. MIT License.</string>
+</dict>
+</plist>

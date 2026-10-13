@@ -1,0 +1,61 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Calcy.Modes.Matrix.Views.MatrixStyles">
+
+  <Styles.Resources>
+    <!-- A row in the matrix library: big name on the left, size on the right -->
+    <ControlTheme x:Key="MatrixLibraryRow" TargetType="Button">
+      <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+      <Setter Property="BorderThickness" Value="0,0,0,3" />
+      <Setter Property="Padding" Value="14,4" />
+      <Setter Property="MinHeight" Value="52" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Panel>
+            <Border Name="PART_Back"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}">
+              <ContentPresenter Name="PART_ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Foreground="{TemplateBinding Foreground}" />
+            </Border>
+            <Border Name="PART_Focus" BorderBrush="{DynamicResource Calcy.Ink}" BorderThickness="2" Margin="3,3,3,6" IsVisible="False" />
+          </Panel>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:pointerover /template/ Border#PART_Back">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+      </Style>
+      <Style Selector="^.selected /template/ Border#PART_Back">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+      </Style>
+      <Style Selector="^:focus-visible /template/ Border#PART_Focus">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+    </ControlTheme>
+  </Styles.Resources>
+
+  <!-- Editor cells: maths font, error border when a cell does not parse -->
+  <Style Selector="TextBox.matrix-cell">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+  </Style>
+  <Style Selector="TextBox.matrix-cell.err /template/ Border#PART_BorderElement">
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+  <Style Selector="TextBox.matrix-cell.err:focus /template/ Border#PART_BorderElement">
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+  <Style Selector="TextBox.expression">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+  </Style>
+</Styles>

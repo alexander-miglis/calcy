@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy top bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} position: relative; z-index: 40; font-family: 'Pixelify Sans', monospace; color: var(--bar-ink)">
+  <div style="min-height: 64px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 16px; background-color: var(--bar); border-bottom: 4px solid var(--bar-accent)">
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+      <a href="Main.dc.html" aria-label="Calcy home" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--bar-ink)">
+        <svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path style="fill: var(--primary)" fill-rule="evenodd" d="M2 1h12v14H2z M4 3h8v3H4z M4 8h2v2H4z M7 8h2v2H7z M10 8h2v2h-2z M4 11h2v2H4z M7 11h2v2H7z M10 11h2v2h-2z"/><path style="fill: var(--lcd)" d="M4 3h8v3H4z"/></svg>
+        <span style="font-size: 28px; font-weight: 700; letter-spacing: 1px; text-shadow: 3px 3px 0 var(--bar-accent)">CALCY</span>
+      </a>
+      <button type="button" onClick="{{toggleModes}}" aria-haspopup="true" aria-expanded="{{modesExpanded}}" style="font-family: 'Silkscreen', monospace; font-size: 14px; color: var(--ink); background-color: var(--sel); border: 3px solid var(--bar-ink); box-shadow: 4px 4px 0 0 var(--bar-accent); padding: 8px 14px; min-height: 44px; display: flex; align-items: center; gap: 10px; cursor: pointer">
+        <span>Mode: {{mode}}</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 5h2v2H3z M5 7h2v2H5z M7 9h2v2H7z M9 7h2v2H9z M11 5h2v2h-2z"/></svg>
+      </button>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+      <button type="button" aria-label="Angle mode: radians" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--head); border: 2px solid var(--bar-ink); padding: 6px 10px; min-height: 36px">RAD</button>
+      <button type="button" aria-label="Results as fractions" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--mem); border: 2px solid var(--bar-ink); padding: 6px 10px; min-height: 36px">FRAC</button>
+      <button type="button" aria-label="Number format" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--key); border: 2px solid var(--bar-ink); padding: 6px 10px; min-height: 36px">FLOAT 10</button>
+      <button type="button" onClick="{{toggleColours}}" aria-haspopup="true" aria-expanded="{{coloursExpanded}}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 10px; font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--bar-ink); background-color: var(--bar); border: 2px solid var(--bar-ink); cursor: pointer">
+        <svg width="20" height="20" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path style="fill: var(--sel)" d="M2 2h5v5H2z"/><path style="fill: var(--head)" d="M9 2h5v5H9z"/><path style="fill: var(--primary)" d="M2 9h5v5H2z"/><path style="fill: var(--mem)" d="M9 9h5v5H9z"/></svg>
+        Colours
+      </button>
+      <a href="Settings.dc.html" aria-label="Settings" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; box-sizing: border-box; color: var(--bar-ink); border: 2px solid var(--bar-ink)">
+        <svg width="24" height="24" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M6 1h4v2h2v2h2v6h-2v2h-2v2H6v-2H4v-2H2V5h2V3h2z M6 6h4v4H6z"/></svg>
+      </a>
+      <button type="button" aria-label="Help" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--bar-ink); background-color: var(--bar); border: 2px solid var(--bar-ink)">
+        <svg width="24" height="24" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M5 2h6v2H5z M3 4h2v2H3z M11 4h2v3h-2z M9 7h2v2H9z M7 9h2v2H7z M7 12h2v2H7z"/></svg>
+      </button>
+    </div>
+  </div>
+  <sc-if value="{{modesOpen}}" hint-placeholder-val="{{ true }}">
+    <div role="menu" aria-label="Modes" style="position: absolute; left: 16px; top: 72px; z-index: 50; width: 440px; max-width: calc(100% - 32px); background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 8px 8px 0 0 var(--line)">
+      <div style="padding: 8px 12px; background-color: var(--head); border-bottom: 3px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 12px">Pick a mode. Your cards and variables come with you.</div>
+      <sc-for list="{{modes}}" as="m" hint-placeholder-count="11">
+        <a href="{{m.href}}" role="menuitem" style="display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 12px; min-height: 44px; box-sizing: border-box; text-decoration: none; color: var(--ink); border-bottom: 2px solid var(--key); background-color: {{m.bg}}">
+          <span style="width: 14px; height: 14px; border: 2px solid var(--line); background-color: {{m.dot}}"></span>
+          <span style="display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 18px; font-weight: 600">{{m.label}}</span>
+            <span style="font-size: 13px; color: var(--muted)">{{m.desc}}</span>
+          </span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted)">{{m.key}}</span>
+        </a>
+      </sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{coloursOpen}}" hint-placeholder-val="{{ false }}">
+    <div role="menu" aria-label="Colour schemes" style="position: absolute; right: 16px; top: 72px; z-index: 50; width: 360px; max-width: calc(100% - 32px); background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 8px 8px 0 0 var(--line)">
+      <div style="padding: 8px 12px; background-color: var(--head); border-bottom: 3px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 12px">Colour scheme (applies everywhere)</div>
+      <sc-for list="{{schemeItems}}" as="s" hint-placeholder-count="8">
+        <button type="button" role="menuitemradio" aria-checked="{{s.pressed}}" onClick="{{s.pick}}" style="display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; padding: 8px 12px; min-height: 48px; border: 0; border-bottom: 2px solid var(--key); cursor: pointer; text-align: left; color: var(--ink); background-color: {{s.bg}}">
+          <span style="display: flex; border: 2px solid var(--line)">
+            <span style="width: 16px; height: 22px; background-color: {{s.c1}}"></span>
+            <span style="width: 16px; height: 22px; background-color: {{s.c2}}"></span>
+            <span style="width: 16px; height: 22px; background-color: {{s.c3}}"></span>
+            <span style="width: 16px; height: 22px; background-color: {{s.c4}}"></span>
+            <span style="width: 16px; height: 22px; background-color: {{s.c5}}"></span>
+            <span style="width: 16px; height: 22px; background-color: {{s.c6}}"></span>
+          </span>
+          <span style="font-size: 17px; font-weight: 600">{{s.name}}</span>
+          <span style="font-family: 'Silkscreen', monospace; font-size: 10px">{{s.mark}}</span>
+        </button>
+      </sc-for>
+      <a href="Settings.dc.html" style="display: block; padding: 10px 12px; font-size: 14px; color: var(--ink)">More in Settings</a>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","default":"Advanced","options":["Simple","Advanced","Graphing","Programmer","Statistics","Matrix","Solver","Finance","Convert","Notebook","Code"]},"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"onScheme":{"editor":null},"previewOpen":{"editor":"boolean","default":true},"$preview":{"width":1360,"height":460}}'>
+class Component extends DCLogic {
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  renderVals() {
+    const mode = this.props.mode ?? 'Advanced';
+    const menu = this.state.menu !== undefined ? this.state.menu : ((this.props.previewOpen ?? true) ? 'modes' : null);
+    const sc = this.props.scheme ?? this.state.scheme ?? this.storedScheme() ?? 'nes';
+    const pickScheme = (id) => {
+      try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {}
+      if (typeof this.props.onScheme === 'function') this.props.onScheme(id);
+      this.setState({ scheme: id, menu: null });
+    };
+    const list = [
+      ['Simple', 'Everyday sums, memory keys, tape', 'Ctrl+1', 'lcd'],
+      ['Advanced', 'Scientific and CAS with result cards', 'Ctrl+2', 'sel'],
+      ['Graphing', 'Plot, trace, roots, areas, sliders', 'Ctrl+3', 'g2'],
+      ['Programmer', 'Hex, binary, bits, word sizes', 'Ctrl+4', 'ok'],
+      ['Statistics', 'Data, regressions, tests, distributions', 'Ctrl+5', 'mem'],
+      ['Matrix', 'Edit matrices, det, inverse, eigen', 'Ctrl+6', 'head'],
+      ['Solver', 'Polynomials, systems, any equation', 'Ctrl+7', 'primary'],
+      ['Finance', 'Loans, savings, cash flows', 'Ctrl+8', 'g5'],
+      ['Convert', 'Units and dates', 'Ctrl+9', 'key'],
+      ['Notebook', 'Text, maths and graphs in one document', 'Ctrl+0', 'g4'],
+      ['Code', 'Sandboxed Python', 'Ctrl+E', 'g1']
+    ];
+    return {
+      vars: this.schemeVars(sc),
+      mode,
+      modesOpen: menu === 'modes',
+      coloursOpen: menu === 'colours',
+      modesExpanded: menu === 'modes' ? 'true' : 'false',
+      coloursExpanded: menu === 'colours' ? 'true' : 'false',
+      toggleModes: () => this.setState({ menu: menu === 'modes' ? null : 'modes' }),
+      toggleColours: () => this.setState({ menu: menu === 'colours' ? null : 'colours' }),
+      modes: list.map(([label, desc, key, dot]) => ({
+        label, desc, key,
+        dot: 'var(--' + dot + ')',
+        href: label + '.dc.html',
+        bg: label === mode ? 'var(--sel)' : 'var(--paper)'
+      })),
+      schemeItems: Object.entries(this.schemeList()).map(([id, [name, vals]]) => {
+        const v = vals.split(' ');
+        return {
+          id, name,
+          c1: v[0], c2: v[6], c3: v[11], c4: v[12], c5: v[13], c6: v[24],
+          mark: id === sc ? 'Selected' : '',
+          pressed: id === sc ? 'true' : 'false',
+          bg: id === sc ? 'var(--sel)' : 'var(--paper)',
+          pick: () => pickScheme(id)
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

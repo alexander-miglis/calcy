@@ -1,0 +1,708 @@
+{
+  "category": "thermodynamics",
+  "formulas": [
+    {
+      "id": "specific-heat-capacity",
+      "name": "Specific heat capacity (heating)",
+      "subcategory": "Heat",
+      "level": "school",
+      "equation": "Q = m*c*ΔT",
+      "displayLatex": "Q = mc\\Delta T",
+      "variables": [
+        { "symbol": "Q", "name": "heat energy", "unit": "J", "description": "Energy supplied (negative if the substance cools)." },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass being heated.", "positive": true },
+        { "symbol": "c", "name": "specific heat capacity", "unit": "J/(kg·K)", "description": "Energy to warm 1 kg by 1 K: 4186 for water, about 900 for aluminium.", "positive": true },
+        { "symbol": "ΔT", "name": "temperature change", "unit": "K", "description": "Rise in temperature (a change of 1 K equals a change of 1 °C)." }
+      ],
+      "explanation": "The energy needed to warm something is proportional to its mass and to the temperature rise. The specific heat capacity says how much energy each kilogram needs per degree. Water's value is unusually high, which is why seas warm slowly and water is a good coolant.",
+      "whenToUse": "Use it whenever something heats up or cools down without changing state: kettles, radiators, calorimetry experiments.",
+      "assumptions": ["no change of state", "c constant over the temperature range", "no heat lost to the surroundings"],
+      "example": {
+        "story": "How much energy does it take to heat 2 kg of water from 20 °C to 100 °C?",
+        "given": { "m": 2, "c": 4186, "ΔT": 80 },
+        "solveFor": "Q",
+        "result": 669760,
+        "unit": "J",
+        "tolerance": 1e-6,
+        "steps": ["ΔT = 100 - 20 = 80 K", "Q = 2 × 4186 × 80", "Q = 669 760 J (about 670 kJ)"]
+      },
+      "related": ["latent-heat", "enthalpy-from-calorimetry", "electrical-energy"],
+      "tags": ["specific heat", "shc", "heat capacity", "q = mc delta t", "heating", "calorimetry"]
+    },
+    {
+      "id": "latent-heat",
+      "name": "Latent heat (change of state)",
+      "subcategory": "Heat",
+      "level": "school",
+      "equation": "Q = m*L",
+      "displayLatex": "Q = mL",
+      "variables": [
+        { "symbol": "Q", "name": "heat energy", "unit": "J", "description": "Energy to change the state of the whole mass." },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass that melts, freezes, boils or condenses.", "positive": true },
+        { "symbol": "L", "name": "specific latent heat", "unit": "J/kg", "description": "334 000 J/kg to melt ice, 2.26 × 10⁶ J/kg to boil water.", "positive": true }
+      ],
+      "explanation": "While a substance melts or boils, its temperature stays constant even though energy keeps flowing in. That energy breaks the bonds between particles instead of making them move faster. The specific latent heat is the energy needed per kilogram.",
+      "whenToUse": "Use it for melting ice, boiling water, steam burns and refrigeration.",
+      "assumptions": ["at the melting or boiling point", "the temperature does not change during the process"],
+      "example": {
+        "story": "How much energy is needed to melt 0.5 kg of ice at 0 °C?",
+        "given": { "m": 0.5, "L": 334000 },
+        "solveFor": "Q",
+        "result": 167000,
+        "unit": "J",
+        "tolerance": 1e-6,
+        "steps": ["Q = 0.5 × 334 000", "Q = 167 000 J"]
+      },
+      "related": ["specific-heat-capacity", "entropy-change"],
+      "tags": ["latent heat", "melting", "boiling", "fusion", "vaporisation", "vaporization", "change of state"]
+    },
+    {
+      "id": "ideal-gas-law",
+      "name": "Ideal gas law",
+      "subcategory": "Gas laws",
+      "level": "school",
+      "equation": "p*V = n*R*T",
+      "displayLatex": "pV = nRT",
+      "variables": [
+        { "symbol": "p", "name": "pressure", "unit": "Pa", "description": "Gas pressure.", "positive": true },
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Volume of the gas.", "positive": true },
+        { "symbol": "n", "name": "amount of gas", "unit": "mol", "description": "Number of moles.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature in kelvin.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "For a gas whose molecules are far apart and hardly interact, pressure, volume, amount and temperature are linked by one simple law. It combines Boyle's, Charles's and Gay-Lussac's laws. Temperatures must be in kelvin, because the law is about absolute temperature.",
+      "whenToUse": "Use it for any gas at moderate pressure and temperature: balloons, tyres, chemistry calculations, weather.",
+      "assumptions": ["ideal gas (low pressure, high temperature compared with condensation)", "T in kelvin, V in m³, p in Pa"],
+      "example": {
+        "story": "What volume does 1 mol of an ideal gas occupy at 0 °C (273.15 K) and 101 325 Pa?",
+        "given": { "p": 101325, "n": 1, "T": 273.15 },
+        "solveFor": "V",
+        "result": 0.02241397,
+        "unit": "m³",
+        "tolerance": 1e-8,
+        "steps": ["V = n R T / p", "V = 1 × 8.314 × 273.15 / 101 325", "V ≈ 0.0224 m³ (22.4 litres)"]
+      },
+      "related": ["ideal-gas-law-molecules", "boyles-law", "combined-gas-law", "molar-volume-stp", "molar-mass-from-gas-density"],
+      "tags": ["ideal gas law", "ideal gas", "pv = nrt", "gas equation", "universal gas law", "perfect gas"]
+    },
+    {
+      "id": "ideal-gas-law-molecules",
+      "name": "Ideal gas law (number of molecules)",
+      "subcategory": "Gas laws",
+      "level": "school",
+      "equation": "p*V = N*k_B*T",
+      "displayLatex": "pV = Nk_BT",
+      "variables": [
+        { "symbol": "p", "name": "pressure", "unit": "Pa", "description": "Gas pressure.", "positive": true },
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Volume of the gas.", "positive": true },
+        { "symbol": "N", "name": "number of molecules", "unit": "", "description": "Number of gas particles.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true }
+      ],
+      "constants": ["boltzmann-constant"],
+      "explanation": "This is the ideal gas law counting molecules instead of moles. Since N = n N_A and R = N_A k_B, it is exactly the same law. It shows that pressure comes from molecules: each contributes the same amount, whatever gas it is.",
+      "whenToUse": "Use it in kinetic theory and whenever you count individual particles.",
+      "assumptions": ["ideal gas", "T in kelvin"],
+      "example": {
+        "story": "A 1 litre container holds 10²² gas molecules at 300 K. What is the pressure?",
+        "given": { "V": 0.001, "N": 1e22, "T": 300 },
+        "solveFor": "p",
+        "result": 41419.47,
+        "unit": "Pa",
+        "tolerance": 0.01,
+        "steps": ["N k_B T = 10²² × 1.381 × 10⁻²³ × 300 ≈ 41.42 J", "p = 41.42 / 0.001", "p ≈ 41 400 Pa"]
+      },
+      "related": ["ideal-gas-law", "mean-kinetic-energy-molecules"],
+      "tags": ["ideal gas", "boltzmann", "kinetic theory", "molecules", "pv = nkt"]
+    },
+    {
+      "id": "boyles-law",
+      "name": "Boyle's law",
+      "subcategory": "Gas laws",
+      "level": "school",
+      "equation": "p_1*V_1 = p_2*V_2",
+      "displayLatex": "p_1V_1 = p_2V_2",
+      "variables": [
+        { "symbol": "p_1", "name": "initial pressure", "unit": "Pa", "description": "Pressure before.", "positive": true },
+        { "symbol": "V_1", "name": "initial volume", "unit": "m³", "description": "Volume before.", "positive": true },
+        { "symbol": "p_2", "name": "final pressure", "unit": "Pa", "description": "Pressure after.", "positive": true },
+        { "symbol": "V_2", "name": "final volume", "unit": "m³", "description": "Volume after.", "positive": true }
+      ],
+      "explanation": "At constant temperature, squeezing a gas into half the volume doubles its pressure: pressure and volume are inversely proportional. The molecules hit the walls more often because they have less room.",
+      "whenToUse": "Use it for bicycle pumps, syringes, diving and bubbles rising in water, when the temperature stays the same.",
+      "assumptions": ["constant temperature", "fixed amount of ideal gas"],
+      "example": {
+        "story": "6 litres of air at 100 kPa is slowly compressed to 2 litres at constant temperature. What is the new pressure?",
+        "given": { "p_1": 100000, "V_1": 0.006, "V_2": 0.002 },
+        "solveFor": "p_2",
+        "result": 300000,
+        "unit": "Pa",
+        "tolerance": 1e-6,
+        "steps": ["p₂ = p₁ V₁ / V₂", "p₂ = 100 000 × 0.006 / 0.002", "p₂ = 300 000 Pa"]
+      },
+      "related": ["charles-law", "gay-lussac-law", "combined-gas-law", "inverse-variation"],
+      "tags": ["boyle", "boyles law", "pressure volume", "isothermal", "gas law"]
+    },
+    {
+      "id": "charles-law",
+      "name": "Charles's law",
+      "subcategory": "Gas laws",
+      "level": "school",
+      "equation": "V_1 / T_1 = V_2 / T_2",
+      "displayLatex": "\\frac{V_1}{T_1} = \\frac{V_2}{T_2}",
+      "variables": [
+        { "symbol": "V_1", "name": "initial volume", "unit": "m³", "description": "Volume before.", "positive": true },
+        { "symbol": "T_1", "name": "initial temperature", "unit": "K", "description": "Absolute temperature before.", "positive": true },
+        { "symbol": "V_2", "name": "final volume", "unit": "m³", "description": "Volume after.", "positive": true },
+        { "symbol": "T_2", "name": "final temperature", "unit": "K", "description": "Absolute temperature after.", "positive": true }
+      ],
+      "explanation": "At constant pressure, a gas expands in proportion to its absolute temperature. Extrapolating the straight line of volume against temperature back to zero volume gives absolute zero, -273.15 °C. Always use kelvin.",
+      "whenToUse": "Use it for hot air balloons, balloons in a freezer and gases heated at constant pressure.",
+      "assumptions": ["constant pressure", "fixed amount of ideal gas", "temperatures in kelvin"],
+      "example": {
+        "story": "2 litres of gas at 300 K is heated to 450 K at constant pressure. What is its new volume?",
+        "given": { "V_1": 0.002, "T_1": 300, "T_2": 450 },
+        "solveFor": "V_2",
+        "result": 0.003,
+        "unit": "m³",
+        "tolerance": 1e-12,
+        "steps": ["V₂ = V₁ T₂ / T₁", "V₂ = 0.002 × 450 / 300", "V₂ = 0.003 m³ (3 litres)"]
+      },
+      "related": ["boyles-law", "gay-lussac-law", "combined-gas-law"],
+      "tags": ["charles", "charles law", "volume temperature", "isobaric", "gas law"]
+    },
+    {
+      "id": "gay-lussac-law",
+      "name": "Gay-Lussac's law (pressure law)",
+      "subcategory": "Gas laws",
+      "level": "school",
+      "equation": "p_1 / T_1 = p_2 / T_2",
+      "displayLatex": "\\frac{p_1}{T_1} = \\frac{p_2}{T_2}",
+      "variables": [
+        { "symbol": "p_1", "name": "initial pressure", "unit": "Pa", "description": "Pressure before.", "positive": true },
+        { "symbol": "T_1", "name": "initial temperature", "unit": "K", "description": "Absolute temperature before.", "positive": true },
+        { "symbol": "p_2", "name": "final pressure", "unit": "Pa", "description": "Pressure after.", "positive": true },
+        { "symbol": "T_2", "name": "final temperature", "unit": "K", "description": "Absolute temperature after.", "positive": true }
+      ],
+      "explanation": "In a rigid container, heating a gas makes its molecules move faster and hit the walls harder and more often. The pressure rises in proportion to the absolute temperature.",
+      "whenToUse": "Use it for tyres heating up on a drive, pressure cookers and aerosol cans near heat.",
+      "assumptions": ["constant volume", "fixed amount of ideal gas", "temperatures in kelvin"],
+      "example": {
+        "story": "A tyre is at 2.0 × 10⁵ Pa at 288 K (15 °C). After a long drive it is at 318 K. What is the new pressure?",
+        "given": { "p_1": 200000, "T_1": 288, "T_2": 318 },
+        "solveFor": "p_2",
+        "result": 220833.33,
+        "unit": "Pa",
+        "tolerance": 0.01,
+        "steps": ["p₂ = p₁ T₂ / T₁", "p₂ = 200 000 × 318 / 288", "p₂ ≈ 2.21 × 10⁵ Pa"]
+      },
+      "related": ["boyles-law", "charles-law", "combined-gas-law"],
+      "tags": ["gay lussac", "pressure law", "amontons law", "isochoric", "gas law"]
+    },
+    {
+      "id": "combined-gas-law",
+      "name": "Combined gas law",
+      "subcategory": "Gas laws",
+      "level": "school",
+      "equation": "p_1*V_1 / T_1 = p_2*V_2 / T_2",
+      "displayLatex": "\\frac{p_1V_1}{T_1} = \\frac{p_2V_2}{T_2}",
+      "variables": [
+        { "symbol": "p_1", "name": "initial pressure", "unit": "Pa", "description": "Pressure before.", "positive": true },
+        { "symbol": "V_1", "name": "initial volume", "unit": "m³", "description": "Volume before.", "positive": true },
+        { "symbol": "T_1", "name": "initial temperature", "unit": "K", "description": "Absolute temperature before.", "positive": true },
+        { "symbol": "p_2", "name": "final pressure", "unit": "Pa", "description": "Pressure after.", "positive": true },
+        { "symbol": "V_2", "name": "final volume", "unit": "m³", "description": "Volume after.", "positive": true },
+        { "symbol": "T_2", "name": "final temperature", "unit": "K", "description": "Absolute temperature after.", "positive": true }
+      ],
+      "explanation": "For a fixed amount of gas, pV/T stays constant (it equals nR). This combines the three classic gas laws into one, so you can handle pressure, volume and temperature all changing at once.",
+      "whenToUse": "Use it when a fixed amount of gas changes state, such as a weather balloon rising through the atmosphere.",
+      "assumptions": ["fixed amount of ideal gas", "temperatures in kelvin"],
+      "example": {
+        "story": "A balloon holds 0.01 m³ of helium at 101 325 Pa and 293 K. It rises to where the pressure is 50 000 Pa and the temperature 250 K. What is its new volume?",
+        "given": { "p_1": 101325, "V_1": 0.01, "T_1": 293, "p_2": 50000, "T_2": 250 },
+        "solveFor": "V_2",
+        "result": 0.01729096,
+        "unit": "m³",
+        "tolerance": 1e-8,
+        "steps": ["V₂ = p₁ V₁ T₂ / (T₁ p₂)", "V₂ = 101 325 × 0.01 × 250 / (293 × 50 000)", "V₂ ≈ 0.0173 m³"]
+      },
+      "related": ["ideal-gas-law", "boyles-law", "charles-law", "gay-lussac-law"],
+      "tags": ["combined gas law", "general gas equation", "pv over t", "gas law"]
+    },
+    {
+      "id": "linear-thermal-expansion",
+      "name": "Linear thermal expansion",
+      "subcategory": "Thermal expansion",
+      "level": "school",
+      "equation": "ΔL = α*L_0*ΔT",
+      "displayLatex": "\\Delta L = \\alpha L_0 \\Delta T",
+      "variables": [
+        { "symbol": "ΔL", "name": "change in length", "unit": "m", "description": "How much longer the object gets." },
+        { "symbol": "α", "name": "linear expansion coefficient", "unit": "K⁻¹", "description": "1.2 × 10⁻⁵ K⁻¹ for steel, 2.3 × 10⁻⁵ K⁻¹ for aluminium." },
+        { "symbol": "L_0", "name": "original length", "unit": "m", "description": "Length before heating.", "positive": true },
+        { "symbol": "ΔT", "name": "temperature change", "unit": "K", "description": "Rise in temperature." }
+      ],
+      "explanation": "Most solids expand slightly when heated, because their atoms vibrate more and push each other apart. The extra length is proportional to the original length and the temperature rise. Bridges and railways have expansion gaps for this reason.",
+      "whenToUse": "Use it for expansion joints, bimetallic strips, pipes and power lines.",
+      "assumptions": ["small temperature changes", "α constant"],
+      "example": {
+        "story": "A 25 m steel rail warms up by 30 K on a sunny day (α = 1.2 × 10⁻⁵ K⁻¹). How much longer does it get?",
+        "given": { "α": 1.2e-5, "L_0": 25, "ΔT": 30 },
+        "solveFor": "ΔL",
+        "result": 0.009,
+        "unit": "m",
+        "tolerance": 1e-12,
+        "steps": ["ΔL = 1.2 × 10⁻⁵ × 25 × 30", "ΔL = 0.009 m (9 mm)"]
+      },
+      "related": ["volume-thermal-expansion"],
+      "tags": ["thermal expansion", "linear expansion", "coefficient of expansion", "expansion joint"]
+    },
+    {
+      "id": "volume-thermal-expansion",
+      "name": "Volume thermal expansion",
+      "subcategory": "Thermal expansion",
+      "level": "school",
+      "equation": "ΔV = β*V_0*ΔT",
+      "displayLatex": "\\Delta V = \\beta V_0 \\Delta T",
+      "variables": [
+        { "symbol": "ΔV", "name": "change in volume", "unit": "m³", "description": "How much the volume grows." },
+        { "symbol": "β", "name": "volume expansion coefficient", "unit": "K⁻¹", "description": "About 2.1 × 10⁻⁴ K⁻¹ for water near 20 °C; about 3α for solids." },
+        { "symbol": "V_0", "name": "original volume", "unit": "m³", "description": "Volume before heating.", "positive": true },
+        { "symbol": "ΔT", "name": "temperature change", "unit": "K", "description": "Rise in temperature." }
+      ],
+      "explanation": "Liquids and solids also grow in volume when heated, in proportion to their volume and the temperature rise. For a solid, β is about three times the linear coefficient, because it expands in three directions. Rising sea levels are partly due to the expansion of warming water.",
+      "whenToUse": "Use it for liquid thermometers, fuel tanks, central heating expansion vessels and sea level estimates.",
+      "assumptions": ["small temperature changes", "β constant (not true for water near 4 °C)"],
+      "example": {
+        "story": "1 m³ of water warms by 10 K. By how much does its volume increase (β = 2.1 × 10⁻⁴ K⁻¹)?",
+        "given": { "β": 0.00021, "V_0": 1, "ΔT": 10 },
+        "solveFor": "ΔV",
+        "result": 0.0021,
+        "unit": "m³",
+        "tolerance": 1e-12,
+        "steps": ["ΔV = 2.1 × 10⁻⁴ × 1 × 10", "ΔV = 0.0021 m³ (2.1 litres)"]
+      },
+      "related": ["linear-thermal-expansion"],
+      "tags": ["volume expansion", "thermal expansion", "cubic expansion", "liquid expansion"]
+    },
+    {
+      "id": "stefan-boltzmann-law",
+      "name": "Stefan-Boltzmann law",
+      "subcategory": "Radiation",
+      "level": "school",
+      "equation": "P = ε*σ_SB*A*T^4",
+      "displayLatex": "P = \\varepsilon\\sigma A T^4",
+      "variables": [
+        { "symbol": "P", "name": "radiated power", "unit": "W", "description": "Total power emitted as thermal radiation.", "min": 0 },
+        { "symbol": "ε", "name": "emissivity", "unit": "", "description": "1 for a perfect black body, less for real surfaces.", "defaultValue": 1, "min": 0, "max": 1 },
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Area of the radiating surface.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute surface temperature.", "positive": true }
+      ],
+      "constants": ["stefan-boltzmann-constant"],
+      "explanation": "Every object radiates energy, and the power rises with the fourth power of its absolute temperature: double the temperature and it radiates 16 times as much. The emissivity ε says how close the surface is to a perfect emitter. Astronomers use it to find the sizes of stars from their brightness and temperature.",
+      "whenToUse": "Use it for stars, heaters, the Earth's energy balance and thermal imaging.",
+      "assumptions": ["T in kelvin", "net power also needs the radiation absorbed from the surroundings"],
+      "example": {
+        "story": "The Sun has a surface area of about 6.0821 × 10¹⁸ m² and a surface temperature of 5772 K. Treating it as a black body, what power does it radiate?",
+        "given": { "ε": 1, "A": 6.0821e18, "T": 5772 },
+        "solveFor": "P",
+        "result": 3.828e26,
+        "unit": "W",
+        "tolerance": 1e23,
+        "steps": ["T⁴ = 5772⁴ ≈ 1.110 × 10¹⁵ K⁴", "σ A ≈ 5.670 × 10⁻⁸ × 6.082 × 10¹⁸ ≈ 3.449 × 10¹¹", "P ≈ 3.83 × 10²⁶ W, the Sun's luminosity"]
+      },
+      "related": ["wiens-law", "sphere-surface-area", "inverse-square-intensity"],
+      "tags": ["stefan boltzmann", "black body radiation", "thermal radiation", "luminosity", "t to the fourth"]
+    },
+    {
+      "id": "wiens-law",
+      "name": "Wien's displacement law",
+      "subcategory": "Radiation",
+      "level": "school",
+      "equation": "λ_max = b_W / T",
+      "displayLatex": "\\lambda_{\\max} = \\frac{b}{T}",
+      "variables": [
+        { "symbol": "λ_max", "name": "peak wavelength", "unit": "m", "description": "Wavelength where the black body spectrum is brightest.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true }
+      ],
+      "constants": ["wien-displacement-constant"],
+      "explanation": "Hotter objects glow at shorter wavelengths: a heated poker goes from red to orange to white. The peak wavelength is inversely proportional to the absolute temperature. The Sun peaks in the visible range, while the Earth peaks in the infrared at about 10 µm.",
+      "whenToUse": "Use it to estimate the temperature of stars from their colour, or the wavelength infrared cameras must detect.",
+      "assumptions": ["black body radiation", "T in kelvin"],
+      "example": {
+        "story": "At what wavelength is the Sun (5772 K) brightest?",
+        "given": { "T": 5772 },
+        "solveFor": "λ_max",
+        "result": 5.020395e-7,
+        "unit": "m",
+        "tolerance": 1e-12,
+        "steps": ["λ = 2.898 × 10⁻³ / 5772", "λ ≈ 5.02 × 10⁻⁷ m (502 nm, blue-green light)"]
+      },
+      "related": ["stefan-boltzmann-law", "photon-energy-wavelength"],
+      "tags": ["wien", "peak wavelength", "black body", "colour temperature", "color temperature"]
+    },
+    {
+      "id": "carnot-efficiency",
+      "name": "Carnot efficiency",
+      "subcategory": "Heat engines",
+      "level": "school",
+      "equation": "η = 1 - T_c / T_h",
+      "displayLatex": "\\eta_{\\max} = 1 - \\frac{T_c}{T_h}",
+      "variables": [
+        { "symbol": "η", "name": "maximum efficiency", "unit": "", "description": "Largest possible fraction of heat turned into work.", "min": 0, "max": 1 },
+        { "symbol": "T_c", "name": "cold reservoir temperature", "unit": "K", "description": "Absolute temperature where waste heat is dumped.", "positive": true },
+        { "symbol": "T_h", "name": "hot reservoir temperature", "unit": "K", "description": "Absolute temperature of the heat source.", "positive": true }
+      ],
+      "explanation": "The second law of thermodynamics limits every heat engine: some heat must always be dumped into a colder place. The best possible engine, the Carnot engine, has this efficiency, which depends only on the two temperatures in kelvin. Real engines always do worse.",
+      "whenToUse": "Use it to find the upper limit for power stations, car engines, and heat pumps working in reverse.",
+      "assumptions": ["reversible (ideal) engine", "temperatures in kelvin"],
+      "example": {
+        "story": "A power station's steam is at 600 K and its cooling water at 300 K. What is the maximum possible efficiency?",
+        "given": { "T_c": 300, "T_h": 600 },
+        "solveFor": "η",
+        "result": 0.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["η = 1 - 300 / 600", "η = 0.5, so at most 50 %"]
+      },
+      "related": ["heat-engine-efficiency", "efficiency", "entropy-change"],
+      "tags": ["carnot", "heat engine", "second law", "maximum efficiency", "thermodynamics"]
+    },
+    {
+      "id": "heat-engine-efficiency",
+      "name": "Heat engine efficiency",
+      "subcategory": "Heat engines",
+      "level": "school",
+      "equation": "η = W / Q_h",
+      "displayLatex": "\\eta = \\frac{W}{Q_h}",
+      "variables": [
+        { "symbol": "η", "name": "efficiency", "unit": "", "description": "Fraction of input heat turned into work.", "min": 0, "max": 1 },
+        { "symbol": "W", "name": "work output", "unit": "J", "description": "Useful work done per cycle.", "min": 0 },
+        { "symbol": "Q_h", "name": "heat input", "unit": "J", "description": "Heat taken from the hot reservoir per cycle.", "positive": true }
+      ],
+      "explanation": "A heat engine takes heat from a hot source, turns part of it into work and rejects the rest. Its efficiency is the work out divided by the heat in. By energy conservation the rejected heat is Q_h - W.",
+      "whenToUse": "Use it for car engines, steam turbines and any cyclic engine.",
+      "assumptions": ["per cycle quantities"],
+      "example": {
+        "story": "An engine takes in 1200 J of heat per cycle and does 300 J of work. What is its efficiency?",
+        "given": { "W": 300, "Q_h": 1200 },
+        "solveFor": "η",
+        "result": 0.25,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["η = 300 / 1200", "η = 0.25 (25 %), and 900 J is rejected as waste heat"]
+      },
+      "related": ["carnot-efficiency", "first-law-of-thermodynamics", "efficiency"],
+      "tags": ["heat engine", "efficiency", "thermal efficiency", "work", "heat"]
+    },
+    {
+      "id": "first-law-of-thermodynamics",
+      "name": "First law of thermodynamics",
+      "subcategory": "Heat engines",
+      "level": "school",
+      "equation": "ΔU = Q - W",
+      "displayLatex": "\\Delta U = Q - W",
+      "variables": [
+        { "symbol": "ΔU", "name": "change in internal energy", "unit": "J", "description": "Increase in the energy stored in the system." },
+        { "symbol": "Q", "name": "heat added", "unit": "J", "description": "Heat supplied to the system (negative if heat leaves)." },
+        { "symbol": "W", "name": "work done by the system", "unit": "J", "description": "Work done by the system on its surroundings." }
+      ],
+      "explanation": "Energy is conserved: heat put into a system either raises its internal energy or is used by the system to do work. If a gas is heated and expands, the expansion work comes out of the heat it received.",
+      "whenToUse": "Use it for gases in cylinders, engines, refrigerators and any energy balance with heat and work.",
+      "assumptions": [],
+      "source": "Sign convention: W is the work done by the system. Many chemistry and engineering texts use W done on the system and write ΔU = Q + W.",
+      "example": {
+        "story": "A gas absorbs 500 J of heat and does 200 J of work pushing a piston. What is its change in internal energy?",
+        "given": { "Q": 500, "W": 200 },
+        "solveFor": "ΔU",
+        "result": 300,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["ΔU = 500 - 200", "ΔU = 300 J"]
+      },
+      "related": ["work-at-constant-pressure", "heat-engine-efficiency", "isothermal-work"],
+      "tags": ["first law", "conservation of energy", "internal energy", "heat and work", "thermodynamics"]
+    },
+    {
+      "id": "work-at-constant-pressure",
+      "name": "Work done by a gas at constant pressure",
+      "subcategory": "Heat engines",
+      "level": "school",
+      "equation": "W = p*ΔV",
+      "displayLatex": "W = p\\Delta V",
+      "variables": [
+        { "symbol": "W", "name": "work done by the gas", "unit": "J", "description": "Positive when the gas expands." },
+        { "symbol": "p", "name": "pressure", "unit": "Pa", "description": "Constant pressure of the gas.", "positive": true },
+        { "symbol": "ΔV", "name": "change in volume", "unit": "m³", "description": "Increase in volume." }
+      ],
+      "explanation": "A gas pushing a piston of area A with pressure p exerts a force pA. Moving the piston a distance d does work pAd, and Ad is the change in volume. It is the area under a horizontal line on a p-V diagram.",
+      "whenToUse": "Use it for gases expanding or being compressed at constant pressure, as in many engine cycle stages.",
+      "assumptions": ["constant pressure (isobaric process)"],
+      "example": {
+        "story": "A gas at 1.0 × 10⁵ Pa expands by 0.002 m³ at constant pressure. How much work does it do?",
+        "given": { "p": 100000, "ΔV": 0.002 },
+        "solveFor": "W",
+        "result": 200,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["W = 100 000 × 0.002", "W = 200 J"]
+      },
+      "related": ["first-law-of-thermodynamics", "isothermal-work"],
+      "tags": ["work done by gas", "p delta v", "isobaric", "pv diagram", "expansion work"]
+    },
+    {
+      "id": "isothermal-work",
+      "name": "Work done in isothermal expansion",
+      "subcategory": "Heat engines",
+      "level": "university",
+      "equation": "W = n*R*T*ln(V_2 / V_1)",
+      "displayLatex": "W = nRT\\ln\\frac{V_2}{V_1}",
+      "variables": [
+        { "symbol": "W", "name": "work done by the gas", "unit": "J", "description": "Positive for expansion." },
+        { "symbol": "n", "name": "amount of gas", "unit": "mol", "description": "Number of moles.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Constant absolute temperature.", "positive": true },
+        { "symbol": "V_2", "name": "final volume", "unit": "m³", "description": "Volume after.", "positive": true },
+        { "symbol": "V_1", "name": "initial volume", "unit": "m³", "description": "Volume before.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "At constant temperature the pressure falls as the gas expands (p = nRT/V), so the work is the integral of p dV, which gives a logarithm. Because the internal energy of an ideal gas depends only on temperature, all the heat absorbed is turned into this work.",
+      "whenToUse": "Use it for slow expansions in contact with a heat bath, and the isothermal stages of the Carnot cycle.",
+      "assumptions": ["ideal gas", "reversible process at constant temperature"],
+      "example": {
+        "story": "1 mol of ideal gas at 300 K expands slowly from 1 litre to 2 litres at constant temperature. How much work does it do?",
+        "given": { "n": 1, "T": 300, "V_2": 0.002, "V_1": 0.001 },
+        "solveFor": "W",
+        "result": 1728.944,
+        "unit": "J",
+        "tolerance": 0.001,
+        "steps": ["n R T ≈ 8.314 × 300 ≈ 2494.3 J", "ln(2) ≈ 0.693147", "W ≈ 2494.3 × 0.693147 ≈ 1729 J"]
+      },
+      "related": ["work-at-constant-pressure", "integral-reciprocal", "adiabatic-process"],
+      "tags": ["isothermal", "isothermal expansion", "work", "ideal gas", "nrt ln"]
+    },
+    {
+      "id": "adiabatic-process",
+      "name": "Adiabatic process (ideal gas)",
+      "subcategory": "Gas laws",
+      "level": "university",
+      "equation": "p_1*V_1^γ = p_2*V_2^γ",
+      "displayLatex": "p_1 V_1^\\gamma = p_2 V_2^\\gamma",
+      "variables": [
+        { "symbol": "p_1", "name": "initial pressure", "unit": "Pa", "description": "Pressure before.", "positive": true },
+        { "symbol": "V_1", "name": "initial volume", "unit": "m³", "description": "Volume before.", "positive": true },
+        { "symbol": "γ", "name": "heat capacity ratio", "unit": "", "description": "c_p / c_v: 1.4 for air, 1.67 for helium.", "defaultValue": 1.4, "min": 1 },
+        { "symbol": "p_2", "name": "final pressure", "unit": "Pa", "description": "Pressure after.", "positive": true },
+        { "symbol": "V_2", "name": "final volume", "unit": "m³", "description": "Volume after.", "positive": true }
+      ],
+      "explanation": "In an adiabatic process no heat enters or leaves, so compressing the gas heats it up and the pressure rises faster than in Boyle's law. For an ideal gas p V^γ stays constant. This is why a bicycle pump gets hot and diesel engines can ignite fuel without a spark.",
+      "whenToUse": "Use it for rapid compressions and expansions: engines, sound waves, rising air in weather systems.",
+      "assumptions": ["ideal gas", "reversible and no heat exchange"],
+      "example": {
+        "story": "Air (γ = 1.4) at 1.0 × 10⁵ Pa is quickly compressed from 1 litre to 0.5 litres without heat exchange. What is the final pressure?",
+        "given": { "p_1": 100000, "V_1": 0.001, "γ": 1.4, "V_2": 0.0005 },
+        "solveFor": "p_2",
+        "result": 263901.58,
+        "unit": "Pa",
+        "tolerance": 0.01,
+        "steps": ["p₂ = p₁ (V₁ / V₂)^γ", "(V₁ / V₂)^γ = 2^1.4 ≈ 2.639", "p₂ ≈ 2.64 × 10⁵ Pa, more than Boyle's law would give"]
+      },
+      "related": ["boyles-law", "isothermal-work", "ideal-gas-law"],
+      "tags": ["adiabatic", "isentropic", "gamma", "pv gamma", "compression"]
+    },
+    {
+      "id": "thermal-conduction",
+      "name": "Thermal conduction (Fourier's law)",
+      "subcategory": "Heat transfer",
+      "level": "school",
+      "equation": "P = k*A*ΔT / d",
+      "displayLatex": "P = \\frac{kA\\Delta T}{d}",
+      "variables": [
+        { "symbol": "P", "name": "rate of heat flow", "unit": "W", "description": "Heat conducted per second." },
+        { "symbol": "k", "name": "thermal conductivity", "unit": "W/(m·K)", "description": "About 400 for copper, 0.8 for glass, 0.04 for insulation foam.", "positive": true },
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "Area the heat flows through.", "positive": true },
+        { "symbol": "ΔT", "name": "temperature difference", "unit": "K", "description": "Difference between the two faces." },
+        { "symbol": "d", "name": "thickness", "unit": "m", "description": "Thickness of the material.", "positive": true }
+      ],
+      "explanation": "Heat flows from hot to cold through a material at a rate proportional to the area and the temperature difference, and inversely proportional to the thickness. Materials with low conductivity, like foam and wool, trap still air and make good insulators.",
+      "whenToUse": "Use it for heat loss through windows and walls, cooking pans and insulation design.",
+      "assumptions": ["steady state", "uniform slab", "k constant"],
+      "example": {
+        "story": "A single glass window 2 m² in area and 4 mm thick separates a 20 K temperature difference (k = 0.8 W/(m·K)). How much heat flows through?",
+        "given": { "k": 0.8, "A": 2, "ΔT": 20, "d": 0.004 },
+        "solveFor": "P",
+        "result": 8000,
+        "unit": "W",
+        "tolerance": 1e-6,
+        "steps": ["P = 0.8 × 2 × 20 / 0.004", "P = 8000 W, far too much: in reality air films on the glass reduce it a lot"]
+      },
+      "related": ["thermal-resistance", "u-value-heat-loss"],
+      "tags": ["conduction", "fourier law", "thermal conductivity", "heat transfer", "insulation"]
+    },
+    {
+      "id": "thermal-resistance",
+      "name": "Thermal resistance of a layer",
+      "subcategory": "Heat transfer",
+      "level": "university",
+      "equation": "R_th = d / (k*A)",
+      "displayLatex": "R_{th} = \\frac{d}{kA}",
+      "variables": [
+        { "symbol": "R_th", "name": "thermal resistance", "unit": "K/W", "description": "Temperature difference needed per watt of heat flow.", "positive": true },
+        { "symbol": "d", "name": "thickness", "unit": "m", "description": "Thickness of the layer.", "positive": true },
+        { "symbol": "k", "name": "thermal conductivity", "unit": "W/(m·K)", "description": "Conductivity of the material.", "positive": true },
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "Area of the layer.", "positive": true }
+      ],
+      "explanation": "Fourier's law can be written like Ohm's law: heat flow = ΔT / R_th. Thicker layers and poorer conductors have more thermal resistance. Layers in series simply add their resistances, which makes multi-layer walls easy to analyse.",
+      "whenToUse": "Use it for walls, heat sinks for electronics and layered insulation.",
+      "assumptions": ["steady one-dimensional heat flow"],
+      "example": {
+        "story": "A 10 cm layer of insulation (k = 0.04 W/(m·K)) covers 10 m² of loft. What is its thermal resistance?",
+        "given": { "d": 0.1, "k": 0.04, "A": 10 },
+        "solveFor": "R_th",
+        "result": 0.25,
+        "unit": "K/W",
+        "tolerance": 1e-9,
+        "steps": ["R = 0.1 / (0.04 × 10)", "R = 0.25 K/W"]
+      },
+      "related": ["thermal-conduction", "u-value-heat-loss", "ohms-law"],
+      "tags": ["thermal resistance", "r value", "insulation", "heat sink", "conduction"]
+    },
+    {
+      "id": "u-value-heat-loss",
+      "name": "Heat loss through a building element (U-value)",
+      "subcategory": "Heat transfer",
+      "level": "school",
+      "equation": "P = U*A*ΔT",
+      "displayLatex": "P = UA\\Delta T",
+      "variables": [
+        { "symbol": "P", "name": "heat loss", "unit": "W", "description": "Heat lost per second." },
+        { "symbol": "U", "name": "U-value", "unit": "W/(m²·K)", "description": "Heat loss per square metre per kelvin: about 1.2 to 2.8 for double glazing, 0.15 to 0.3 for an insulated wall.", "positive": true },
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "Area of the wall, window or roof.", "positive": true },
+        { "symbol": "ΔT", "name": "temperature difference", "unit": "K", "description": "Inside minus outside temperature." }
+      ],
+      "explanation": "Builders describe insulation with a U-value, which combines conduction, convection and radiation through a whole element into one number. Lower is better. The heat loss is then U times area times the temperature difference.",
+      "whenToUse": "Use it to estimate heating needs, compare windows and walls, or size a heat pump.",
+      "assumptions": ["steady conditions", "U includes surface effects"],
+      "example": {
+        "story": "A 15 m² double glazed window has U = 1.8 W/(m²·K). Inside is 21 °C and outside 3 °C. What is the heat loss?",
+        "given": { "U": 1.8, "A": 15, "ΔT": 18 },
+        "solveFor": "P",
+        "result": 486,
+        "unit": "W",
+        "tolerance": 1e-9,
+        "steps": ["ΔT = 21 - 3 = 18 K", "P = 1.8 × 15 × 18", "P = 486 W"]
+      },
+      "related": ["thermal-conduction", "thermal-resistance"],
+      "tags": ["u value", "heat loss", "building insulation", "thermal transmittance", "double glazing"]
+    },
+    {
+      "id": "newtons-law-of-cooling",
+      "name": "Newton's law of cooling",
+      "subcategory": "Heat transfer",
+      "level": "school",
+      "equation": "T = T_a + (T_0 - T_a)*e^(-k*t)",
+      "displayLatex": "T = T_a + (T_0 - T_a)e^{-kt}",
+      "variables": [
+        { "symbol": "T", "name": "temperature at time t", "unit": "K", "description": "Temperature of the object at time t." },
+        { "symbol": "T_a", "name": "ambient temperature", "unit": "K", "description": "Temperature of the surroundings." },
+        { "symbol": "T_0", "name": "initial temperature", "unit": "K", "description": "Temperature at t = 0." },
+        { "symbol": "k", "name": "cooling constant", "unit": "s⁻¹", "description": "How fast the object cools; depends on its size, surface and surroundings.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "An object cools at a rate proportional to how much hotter it is than its surroundings. So the temperature difference decays exponentially: it shrinks by the same fraction in each equal time interval. Because only differences matter, the formula works in °C as well as in kelvin.",
+      "whenToUse": "Use it for cooling drinks, forensic time-of-death estimates and warming of food taken out of a fridge.",
+      "assumptions": ["constant ambient temperature", "small temperature differences (convection dominated)", "uniform temperature in the object"],
+      "example": {
+        "story": "Tea at 363.15 K (90 °C) is left in a room at 293.15 K (20 °C). With k = 0.001 s⁻¹, what is its temperature after 10 minutes?",
+        "given": { "T_a": 293.15, "T_0": 363.15, "k": 0.001, "t": 600 },
+        "solveFor": "T",
+        "result": 331.56681,
+        "unit": "K",
+        "tolerance": 1e-5,
+        "steps": ["Initial difference: 70 K", "e^(-0.6) ≈ 0.548812", "T ≈ 293.15 + 70 × 0.548812 ≈ 331.57 K (about 58.4 °C)"]
+      },
+      "related": ["continuous-exponential-growth", "capacitor-discharge"],
+      "tags": ["newton cooling", "cooling", "exponential decay", "temperature difference", "time of death"]
+    },
+    {
+      "id": "mean-kinetic-energy-molecules",
+      "name": "Mean kinetic energy of gas molecules",
+      "subcategory": "Kinetic theory",
+      "level": "school",
+      "equation": "E_k = 3*k_B*T / 2",
+      "displayLatex": "\\bar E_k = \\tfrac{3}{2}k_B T",
+      "variables": [
+        { "symbol": "E_k", "name": "mean kinetic energy", "unit": "J", "description": "Average translational kinetic energy of one molecule.", "min": 0 },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true }
+      ],
+      "constants": ["boltzmann-constant"],
+      "explanation": "Temperature is a measure of the average kinetic energy of the particles. Each molecule of an ideal gas has on average 3/2 k_B T of translational kinetic energy, whatever its mass. At absolute zero this energy would be zero.",
+      "whenToUse": "Use it to connect temperature with molecular motion in kinetic theory.",
+      "assumptions": ["ideal gas", "translational motion only"],
+      "example": {
+        "story": "What is the average kinetic energy of an air molecule at 300 K?",
+        "given": { "T": 300 },
+        "solveFor": "E_k",
+        "result": 6.2129205e-21,
+        "unit": "J",
+        "tolerance": 1e-27,
+        "steps": ["E = 1.5 × 1.380649 × 10⁻²³ × 300", "E ≈ 6.21 × 10⁻²¹ J"]
+      },
+      "related": ["rms-speed-of-gas", "ideal-gas-law-molecules"],
+      "tags": ["kinetic theory", "average kinetic energy", "temperature", "molecules", "three halves kt"]
+    },
+    {
+      "id": "rms-speed-of-gas",
+      "name": "RMS speed of gas molecules",
+      "subcategory": "Kinetic theory",
+      "level": "university",
+      "equation": "v_rms = sqrt(3*R*T / M)",
+      "displayLatex": "v_{rms} = \\sqrt{\\frac{3RT}{M}}",
+      "variables": [
+        { "symbol": "v_rms", "name": "rms speed", "unit": "m/s", "description": "Root mean square speed of the molecules.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true },
+        { "symbol": "M", "name": "molar mass", "unit": "kg/mol", "description": "Mass of one mole of the gas, in kg (0.028 for nitrogen).", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "Setting ½ m v² = 3/2 k_B T for one molecule and multiplying top and bottom by the Avogadro constant gives this formula. Lighter molecules move faster at the same temperature, which is why hydrogen escapes from Earth's atmosphere. Typical air molecules travel at about 500 m/s.",
+      "whenToUse": "Use it to estimate molecular speeds, effusion rates and the speed of sound in gases.",
+      "assumptions": ["ideal gas", "molar mass in kg/mol"],
+      "example": {
+        "story": "What is the rms speed of nitrogen molecules (M = 0.028 kg/mol) at 300 K?",
+        "given": { "T": 300, "M": 0.028 },
+        "solveFor": "v_rms",
+        "result": 516.963,
+        "unit": "m/s",
+        "tolerance": 0.001,
+        "steps": ["3 R T ≈ 3 × 8.314 × 300 ≈ 7483", "7483 / 0.028 ≈ 267 251", "v ≈ √267 251 ≈ 517 m/s"]
+      },
+      "related": ["mean-kinetic-energy-molecules", "speed-of-sound-in-air"],
+      "tags": ["rms speed", "molecular speed", "kinetic theory", "root mean square", "gas molecules"]
+    },
+    {
+      "id": "entropy-change",
+      "name": "Entropy change at constant temperature",
+      "subcategory": "Heat engines",
+      "level": "university",
+      "equation": "ΔS = Q / T",
+      "displayLatex": "\\Delta S = \\frac{Q}{T}",
+      "variables": [
+        { "symbol": "ΔS", "name": "entropy change", "unit": "J/K", "description": "Change in entropy of the system." },
+        { "symbol": "Q", "name": "heat absorbed", "unit": "J", "description": "Heat added reversibly." },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Constant absolute temperature.", "positive": true }
+      ],
+      "explanation": "Entropy measures how spread out energy is among the possible arrangements of a system. Adding heat at temperature T increases it by Q/T, so the same heat raises the entropy of a cold object more than a hot one. The second law says the total entropy of an isolated system never decreases.",
+      "whenToUse": "Use it for phase changes, heat flowing between reservoirs and the second law of thermodynamics.",
+      "assumptions": ["reversible heat transfer", "constant temperature (for example during melting)"],
+      "example": {
+        "story": "1 kg of ice melts at 273.15 K, absorbing 334 000 J. What is its entropy change?",
+        "given": { "Q": 334000, "T": 273.15 },
+        "solveFor": "ΔS",
+        "result": 1222.7714,
+        "unit": "J/K",
+        "tolerance": 1e-4,
+        "steps": ["ΔS = 334 000 / 273.15", "ΔS ≈ 1223 J/K"]
+      },
+      "related": ["latent-heat", "carnot-efficiency", "gibbs-free-energy"],
+      "tags": ["entropy", "second law", "disorder", "q over t", "thermodynamics"]
+    }
+  ]
+}

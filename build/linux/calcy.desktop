@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.5
+Name=Calcy
+GenericName=Graphing calculator
+Comment=8-bit graphing calculator with exact maths, algebra, statistics and Python
+Exec=calcy %F
+Icon=calcy
+Terminal=false
+Categories=Education;Science;Math;Utility;
+Keywords=calculator;math;maths;graph;algebra;statistics;
+StartupWMClass=Calcy

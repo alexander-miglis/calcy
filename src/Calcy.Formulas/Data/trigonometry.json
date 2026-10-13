@@ -1,0 +1,532 @@
+{
+  "category": "trigonometry",
+  "formulas": [
+    {
+      "id": "pythagoras-theorem",
+      "name": "Pythagoras' theorem",
+      "subcategory": "Right-angled triangles",
+      "level": "school",
+      "equation": "c^2 = a^2 + b^2",
+      "displayLatex": "c^2 = a^2 + b^2",
+      "variables": [
+        { "symbol": "c", "name": "hypotenuse", "unit": "m", "description": "The longest side, opposite the right angle.", "positive": true },
+        { "symbol": "a", "name": "first leg", "unit": "m", "description": "One of the two shorter sides.", "positive": true },
+        { "symbol": "b", "name": "second leg", "unit": "m", "description": "The other shorter side.", "positive": true }
+      ],
+      "explanation": "In a right-angled triangle, the square on the hypotenuse equals the sum of the squares on the other two sides. One proof: four copies of the triangle fit inside a square of side a + b, leaving a tilted square of side c in the middle. Comparing areas gives (a + b)² = 4 × ½ab + c², which simplifies to c² = a² + b².",
+      "whenToUse": "Use it whenever a right angle is involved and you know two sides: ladders, diagonals, distances on a map, screen sizes.",
+      "assumptions": ["the triangle has a right angle between a and b"],
+      "example": {
+        "story": "A 5 m ladder leans against a wall with its foot 1.5 m from the wall. How high up the wall does it reach?",
+        "given": { "c": 5, "a": 1.5 },
+        "solveFor": "b",
+        "result": 4.769696,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["5² = 1.5² + b²", "b² = 25 - 2.25 = 22.75", "b = √22.75 ≈ 4.77 m"]
+      },
+      "related": ["distance-between-points", "sine-ratio", "cosine-rule", "cuboid-space-diagonal"],
+      "tags": ["pythagoras", "pythagorean theorem", "right triangle", "hypotenuse", "a2 + b2 = c2", "right angled triangle"]
+    },
+    {
+      "id": "sine-ratio",
+      "name": "Sine in a right-angled triangle (SOH)",
+      "subcategory": "Right-angled triangles",
+      "level": "school",
+      "equation": "sin(θ) = O / H",
+      "displayLatex": "\\sin\\theta = \\frac{\\text{opposite}}{\\text{hypotenuse}}",
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "One of the acute angles, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "O", "name": "opposite side", "unit": "m", "description": "The side facing the angle θ.", "positive": true },
+        { "symbol": "H", "name": "hypotenuse", "unit": "m", "description": "The longest side, opposite the right angle.", "positive": true }
+      ],
+      "explanation": "All right-angled triangles with the same angle θ are scaled copies of each other, so the ratio opposite over hypotenuse depends only on θ. That ratio is called the sine of θ. SOH CAH TOA is the usual way to remember which ratio is which.",
+      "whenToUse": "Use it when the problem involves the side opposite an angle and the hypotenuse, such as the height reached by a ramp or a kite string.",
+      "assumptions": ["right-angled triangle", "θ in radians (multiply degrees by π/180)"],
+      "example": {
+        "story": "A ramp 4 m long rises at 30 degrees (π/6 rad) to the ground. How high does it climb?",
+        "given": { "θ": 0.5235987755982988, "H": 4 },
+        "solveFor": "O",
+        "result": 2,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["sin 30° = 0.5", "O = 4 × 0.5", "O = 2 m"]
+      },
+      "related": ["cosine-ratio", "tangent-ratio", "pythagoras-theorem", "sine-rule"],
+      "tags": ["soh cah toa", "sine", "sin", "trigonometric ratio", "opposite", "hypotenuse", "right triangle"]
+    },
+    {
+      "id": "cosine-ratio",
+      "name": "Cosine in a right-angled triangle (CAH)",
+      "subcategory": "Right-angled triangles",
+      "level": "school",
+      "equation": "cos(θ) = A / H",
+      "displayLatex": "\\cos\\theta = \\frac{\\text{adjacent}}{\\text{hypotenuse}}",
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "One of the acute angles, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "A", "name": "adjacent side", "unit": "m", "description": "The side next to θ that is not the hypotenuse.", "positive": true },
+        { "symbol": "H", "name": "hypotenuse", "unit": "m", "description": "The longest side, opposite the right angle.", "positive": true }
+      ],
+      "explanation": "The cosine of an angle is the ratio of the adjacent side to the hypotenuse. Like the sine, it depends only on the angle, not on the size of the triangle. To find an angle from two sides, use the inverse function acos (cos⁻¹).",
+      "whenToUse": "Use it when the problem involves the side next to an angle and the hypotenuse, for example the horizontal distance covered by a slope.",
+      "assumptions": ["right-angled triangle", "θ in radians"],
+      "example": {
+        "story": "A 6 m rope is tied to the top of a pole and pegged to the ground 3 m from its base. What angle does the rope make with the ground?",
+        "given": { "A": 3, "H": 6 },
+        "solveFor": "θ",
+        "result": 1.0471976,
+        "unit": "rad",
+        "tolerance": 1e-6,
+        "steps": ["cos θ = 3 / 6 = 0.5", "θ = acos(0.5)", "θ ≈ 1.0472 rad (60°)"]
+      },
+      "related": ["sine-ratio", "tangent-ratio", "cosine-rule"],
+      "tags": ["soh cah toa", "cosine", "cos", "trigonometric ratio", "adjacent", "hypotenuse", "right triangle"]
+    },
+    {
+      "id": "tangent-ratio",
+      "name": "Tangent in a right-angled triangle (TOA)",
+      "subcategory": "Right-angled triangles",
+      "level": "school",
+      "equation": "tan(θ) = O / A",
+      "displayLatex": "\\tan\\theta = \\frac{\\text{opposite}}{\\text{adjacent}}",
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "One of the acute angles, in radians.", "min": 0, "max": 1.5707963267948966 },
+        { "symbol": "O", "name": "opposite side", "unit": "m", "description": "The side facing the angle θ.", "positive": true },
+        { "symbol": "A", "name": "adjacent side", "unit": "m", "description": "The side next to θ that is not the hypotenuse.", "positive": true }
+      ],
+      "explanation": "The tangent is the ratio of the opposite side to the adjacent side, so it does not need the hypotenuse at all. It is also the gradient of a line at angle θ to the horizontal. This makes it ideal for heights measured from a distance.",
+      "whenToUse": "Use it for angles of elevation and depression, slopes and gradients, whenever the hypotenuse is not involved.",
+      "assumptions": ["right-angled triangle", "θ in radians"],
+      "example": {
+        "story": "Standing 20 m from a tree, you look up to its top at an angle of 35 degrees (0.6109 rad). How tall is the tree above your eye level?",
+        "given": { "θ": 0.6108652381980153, "A": 20 },
+        "solveFor": "O",
+        "result": 14.004151,
+        "unit": "m",
+        "tolerance": 1e-5,
+        "steps": ["tan 35° ≈ 0.70021", "O = 20 × 0.70021", "O ≈ 14.0 m"]
+      },
+      "related": ["sine-ratio", "cosine-ratio", "tan-identity", "vector-direction-angle"],
+      "tags": ["soh cah toa", "tangent", "tan", "angle of elevation", "trigonometric ratio", "gradient", "right triangle"]
+    },
+    {
+      "id": "triangle-angle-sum",
+      "name": "Angle sum of a triangle",
+      "subcategory": "Any triangle",
+      "level": "school",
+      "equation": "α + β + γ = 180",
+      "displayLatex": "\\alpha + \\beta + \\gamma = 180^\\circ",
+      "variables": [
+        { "symbol": "α", "name": "first angle", "unit": "°", "description": "One interior angle, in degrees.", "positive": true },
+        { "symbol": "β", "name": "second angle", "unit": "°", "description": "Another interior angle, in degrees.", "positive": true },
+        { "symbol": "γ", "name": "third angle", "unit": "°", "description": "The remaining interior angle, in degrees.", "positive": true }
+      ],
+      "explanation": "Draw a line through one corner parallel to the opposite side. The two alternate angles it makes equal the other two angles of the triangle, and together with the third angle they form a straight line, 180 degrees. In radians the sum is π.",
+      "whenToUse": "Use it to find the third angle of a triangle before applying the sine or cosine rule.",
+      "assumptions": ["flat (Euclidean) geometry; on a sphere the sum is larger"],
+      "example": {
+        "story": "Two angles of a triangle are 50 and 60 degrees. What is the third?",
+        "given": { "α": 50, "β": 60 },
+        "solveFor": "γ",
+        "result": 70,
+        "unit": "°",
+        "tolerance": 1e-9,
+        "steps": ["γ = 180 - 50 - 60", "γ = 70°"]
+      },
+      "related": ["sine-rule", "polygon-interior-angle-sum"],
+      "tags": ["angles in a triangle", "angle sum", "180 degrees", "triangle"]
+    },
+    {
+      "id": "sine-rule",
+      "name": "Sine rule",
+      "subcategory": "Any triangle",
+      "level": "school",
+      "equation": "a / sin(α) = b / sin(β)",
+      "displayLatex": "\\frac{a}{\\sin\\alpha} = \\frac{b}{\\sin\\beta} = \\frac{c}{\\sin\\gamma}",
+      "variables": [
+        { "symbol": "a", "name": "side a", "unit": "m", "description": "The side opposite angle α.", "positive": true },
+        { "symbol": "α", "name": "angle α", "unit": "rad", "description": "The angle opposite side a, in radians.", "min": 0, "max": 3.141592653589793 },
+        { "symbol": "b", "name": "side b", "unit": "m", "description": "The side opposite angle β.", "positive": true },
+        { "symbol": "β", "name": "angle β", "unit": "rad", "description": "The angle opposite side b, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "In any triangle, each side divided by the sine of its opposite angle gives the same number (the diameter of the circumscribed circle). Drop a perpendicular height h: it equals b sin α and also a sin β, and setting them equal gives the rule. When finding an angle, beware the ambiguous case: an obtuse angle with the same sine may also fit.",
+      "whenToUse": "Use it for a triangle without a right angle when you know a side and its opposite angle plus one more side or angle.",
+      "assumptions": ["angles in radians", "the ambiguous case can give two triangles when solving for an angle"],
+      "example": {
+        "story": "In a triangle, side a = 10 m is opposite a 45 degree angle. How long is side b, opposite a 60 degree angle?",
+        "given": { "a": 10, "α": 0.7853981633974483, "β": 1.0471975511965976 },
+        "solveFor": "b",
+        "result": 12.247449,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["b = a sin β / sin α", "b = 10 × 0.866025 / 0.707107", "b ≈ 12.25 m"]
+      },
+      "related": ["cosine-rule", "triangle-area-sine", "triangle-angle-sum", "sine-ratio"],
+      "tags": ["sine rule", "law of sines", "sine law", "oblique triangle", "non right triangle"]
+    },
+    {
+      "id": "cosine-rule",
+      "name": "Cosine rule",
+      "subcategory": "Any triangle",
+      "level": "school",
+      "equation": "c^2 = a^2 + b^2 - 2*a*b*cos(γ)",
+      "displayLatex": "c^2 = a^2 + b^2 - 2ab\\cos\\gamma",
+      "variables": [
+        { "symbol": "c", "name": "side c", "unit": "m", "description": "The side opposite angle γ.", "positive": true },
+        { "symbol": "a", "name": "side a", "unit": "m", "description": "One side next to γ.", "positive": true },
+        { "symbol": "b", "name": "side b", "unit": "m", "description": "The other side next to γ.", "positive": true },
+        { "symbol": "γ", "name": "angle γ", "unit": "rad", "description": "The angle between sides a and b, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "The cosine rule is Pythagoras' theorem with a correction for angles that are not 90 degrees. When γ is a right angle, cos γ = 0 and it becomes c² = a² + b². An obtuse angle has a negative cosine, which makes c longer, as you would expect.",
+      "whenToUse": "Use it when you know two sides and the angle between them, or all three sides (solve for the angle).",
+      "assumptions": ["angle in radians"],
+      "example": {
+        "story": "Two straight paths of 7 m and 9 m leave a point at 60 degrees to each other. How far apart are their ends?",
+        "given": { "a": 7, "b": 9, "γ": 1.0471975511965976 },
+        "solveFor": "c",
+        "result": 8.185353,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["c² = 49 + 81 - 2 × 7 × 9 × 0.5", "c² = 130 - 63 = 67", "c = √67 ≈ 8.19 m"]
+      },
+      "related": ["sine-rule", "pythagoras-theorem", "herons-formula", "triangle-area-sine"],
+      "tags": ["cosine rule", "law of cosines", "cosine law", "oblique triangle", "two sides and included angle"]
+    },
+    {
+      "id": "triangle-area-sine",
+      "name": "Area of a triangle from two sides and the included angle",
+      "subcategory": "Any triangle",
+      "level": "school",
+      "equation": "A = a*b*sin(γ) / 2",
+      "displayLatex": "A = \\tfrac{1}{2} a b \\sin\\gamma",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "Area of the triangle.", "positive": true },
+        { "symbol": "a", "name": "side a", "unit": "m", "description": "One side.", "positive": true },
+        { "symbol": "b", "name": "side b", "unit": "m", "description": "Another side.", "positive": true },
+        { "symbol": "γ", "name": "included angle", "unit": "rad", "description": "The angle between sides a and b, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "Take side a as the base. The perpendicular height from the opposite corner is b sin γ, so ½ × base × height becomes ½ab sin γ. The angle must be the one between the two known sides.",
+      "whenToUse": "Use it when you know two sides and the angle between them but not the height.",
+      "assumptions": ["γ is the angle between a and b", "angle in radians"],
+      "example": {
+        "story": "A triangular plot has sides of 8 m and 11 m with a 30 degree angle between them. What is its area?",
+        "given": { "a": 8, "b": 11, "γ": 0.5235987755982988 },
+        "solveFor": "A",
+        "result": 22,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["sin 30° = 0.5", "A = ½ × 8 × 11 × 0.5", "A = 22 m²"]
+      },
+      "related": ["triangle-area", "herons-formula", "cosine-rule", "cross-product-magnitude"],
+      "tags": ["half ab sin c", "area of triangle", "sine area formula", "included angle"]
+    },
+    {
+      "id": "pythagorean-identity",
+      "name": "Pythagorean identity",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "sin(θ)^2 + cos(θ)^2 = 1",
+      "displayLatex": "\\sin^2\\theta + \\cos^2\\theta = 1",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Any angle, in radians." }
+      ],
+      "explanation": "On the unit circle, the point at angle θ has coordinates (cos θ, sin θ). Its distance from the origin is 1, so by Pythagoras cos²θ + sin²θ = 1 for every angle. Dividing by cos²θ gives the related identity 1 + tan²θ = sec²θ.",
+      "whenToUse": "Use it to find cos θ from sin θ (or the other way round), and to simplify trigonometric expressions.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the identity for θ = 0.7 rad.",
+        "given": { "θ": 0.7 },
+        "result": 1,
+        "unit": "",
+        "tolerance": 1e-12,
+        "steps": ["sin 0.7 ≈ 0.644218, squared ≈ 0.415016", "cos 0.7 ≈ 0.764842, squared ≈ 0.584984", "Sum = 1"]
+      },
+      "related": ["tan-identity", "double-angle-cosine", "pythagoras-theorem"],
+      "tags": ["pythagorean identity", "sin squared plus cos squared", "trig identity", "unit circle"]
+    },
+    {
+      "id": "tan-identity",
+      "name": "Tangent as sine over cosine",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "tan(θ) = sin(θ) / cos(θ)",
+      "displayLatex": "\\tan\\theta = \\frac{\\sin\\theta}{\\cos\\theta}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Any angle where cos θ is not zero, in radians." }
+      ],
+      "explanation": "In a right-angled triangle, opposite/adjacent equals (opposite/hypotenuse) divided by (adjacent/hypotenuse), which is sin θ / cos θ. This definition works for every angle, and shows that tan θ is undefined where cos θ = 0, at 90 degrees, 270 degrees and so on.",
+      "whenToUse": "Use it to rewrite tan in terms of sin and cos when simplifying or solving equations.",
+      "assumptions": ["cos θ ≠ 0"],
+      "example": {
+        "story": "Check the identity for θ = 1 rad.",
+        "given": { "θ": 1 },
+        "result": 1.5574077,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["sin 1 ≈ 0.841471 and cos 1 ≈ 0.540302", "0.841471 / 0.540302 ≈ 1.557408 = tan 1"]
+      },
+      "related": ["pythagorean-identity", "tangent-ratio", "double-angle-tangent"],
+      "tags": ["tan", "tangent", "sin over cos", "trig identity", "quotient identity"]
+    },
+    {
+      "id": "double-angle-sine",
+      "name": "Double angle formula for sine",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "sin(2*θ) = 2*sin(θ)*cos(θ)",
+      "displayLatex": "\\sin 2\\theta = 2\\sin\\theta\\cos\\theta",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Any angle, in radians." }
+      ],
+      "explanation": "Put β = α = θ in the compound angle formula sin(α + β) = sin α cos β + cos α sin β. The two terms are equal, giving 2 sin θ cos θ.",
+      "whenToUse": "Use it to simplify products sin θ cos θ, to solve equations like sin 2x = sin x, and in projectile range calculations.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the identity for θ = 0.5 rad.",
+        "given": { "θ": 0.5 },
+        "result": 0.84147098,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["sin 0.5 ≈ 0.479426 and cos 0.5 ≈ 0.877583", "2 × 0.479426 × 0.877583 ≈ 0.841471 = sin 1"]
+      },
+      "related": ["double-angle-cosine", "compound-angle-sine", "projectile-range"],
+      "tags": ["double angle", "sin 2x", "trig identity", "multiple angle"]
+    },
+    {
+      "id": "double-angle-cosine",
+      "name": "Double angle formula for cosine",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "cos(2*θ) = cos(θ)^2 - sin(θ)^2",
+      "displayLatex": "\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = 2\\cos^2\\theta - 1 = 1 - 2\\sin^2\\theta",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Any angle, in radians." }
+      ],
+      "explanation": "Put α = β = θ in cos(α + β) = cos α cos β - sin α sin β. Using sin²θ + cos²θ = 1 you can write the result in two more forms, 2cos²θ - 1 and 1 - 2sin²θ, which are handy for integrating sin² and cos².",
+      "whenToUse": "Use it to remove squares of sine or cosine, and to solve equations mixing cos 2x with sin x or cos x.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the identity for θ = 0.5 rad.",
+        "given": { "θ": 0.5 },
+        "result": 0.54030231,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["cos² 0.5 ≈ 0.770151 and sin² 0.5 ≈ 0.229849", "0.770151 - 0.229849 ≈ 0.540302 = cos 1"]
+      },
+      "related": ["double-angle-sine", "power-reduction-sine", "pythagorean-identity", "compound-angle-cosine"],
+      "tags": ["double angle", "cos 2x", "trig identity", "multiple angle"]
+    },
+    {
+      "id": "double-angle-tangent",
+      "name": "Double angle formula for tangent",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "tan(2*θ) = 2*tan(θ) / (1 - tan(θ)^2)",
+      "displayLatex": "\\tan 2\\theta = \\frac{2\\tan\\theta}{1 - \\tan^2\\theta}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "An angle where both sides are defined, in radians." }
+      ],
+      "explanation": "Divide sin 2θ = 2 sin θ cos θ by cos 2θ = cos²θ - sin²θ, then divide the top and bottom by cos²θ. Each sin/cos becomes a tan.",
+      "whenToUse": "Use it to simplify or solve equations involving tan 2x when tan x is known.",
+      "assumptions": ["tan θ ≠ ±1 and cos θ ≠ 0"],
+      "example": {
+        "story": "Check the identity for θ = 0.3 rad.",
+        "given": { "θ": 0.3 },
+        "result": 0.68413681,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["tan 0.3 ≈ 0.309336", "2 × 0.309336 / (1 - 0.095689) ≈ 0.684137 = tan 0.6"]
+      },
+      "related": ["double-angle-sine", "tan-identity", "compound-angle-tangent"],
+      "tags": ["double angle", "tan 2x", "trig identity"]
+    },
+    {
+      "id": "compound-angle-sine",
+      "name": "Sine of a sum of angles",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "sin(α + β) = sin(α)*cos(β) + cos(α)*sin(β)",
+      "displayLatex": "\\sin(\\alpha + \\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "α", "name": "first angle", "unit": "rad", "description": "Any angle, in radians." },
+        { "symbol": "β", "name": "second angle", "unit": "rad", "description": "Any angle, in radians. Replace β by -β for sin(α - β)." }
+      ],
+      "explanation": "The sine of a sum is not the sum of the sines. This addition formula can be proved by rotating a point on the unit circle twice, or from the area of a triangle split into two right-angled pieces. Replacing β by -β gives sin(α - β) = sin α cos β - cos α sin β.",
+      "whenToUse": "Use it to find exact values like sin 75° = sin(45° + 30°), and to combine a sin x + b cos x into a single wave.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the formula for α = 0.5 rad and β = 0.3 rad.",
+        "given": { "α": 0.5, "β": 0.3 },
+        "result": 0.71735609,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["sin 0.5 cos 0.3 ≈ 0.479426 × 0.955336 ≈ 0.458013", "cos 0.5 sin 0.3 ≈ 0.877583 × 0.295520 ≈ 0.259343", "Sum ≈ 0.717356 = sin 0.8"]
+      },
+      "related": ["compound-angle-cosine", "compound-angle-tangent", "double-angle-sine"],
+      "tags": ["compound angle", "addition formula", "sum formula", "sin(a+b)", "angle sum identity"]
+    },
+    {
+      "id": "compound-angle-cosine",
+      "name": "Cosine of a sum of angles",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "cos(α + β) = cos(α)*cos(β) - sin(α)*sin(β)",
+      "displayLatex": "\\cos(\\alpha + \\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "α", "name": "first angle", "unit": "rad", "description": "Any angle, in radians." },
+        { "symbol": "β", "name": "second angle", "unit": "rad", "description": "Any angle, in radians. Replace β by -β for cos(α - β)." }
+      ],
+      "explanation": "The cosine of a sum combines the products of cosines and sines with a minus sign. For a difference the sign flips: cos(α - β) = cos α cos β + sin α sin β. Setting α = β gives the double angle formula for cosine.",
+      "whenToUse": "Use it for exact values like cos 15° = cos(45° - 30°), and when expanding or simplifying trigonometric expressions.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the formula for α = 0.5 rad and β = 0.3 rad.",
+        "given": { "α": 0.5, "β": 0.3 },
+        "result": 0.69670671,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["cos 0.5 cos 0.3 ≈ 0.877583 × 0.955336 ≈ 0.838387", "sin 0.5 sin 0.3 ≈ 0.479426 × 0.295520 ≈ 0.141680", "Difference ≈ 0.696707 = cos 0.8"]
+      },
+      "related": ["compound-angle-sine", "double-angle-cosine"],
+      "tags": ["compound angle", "addition formula", "cos(a+b)", "angle sum identity"]
+    },
+    {
+      "id": "compound-angle-tangent",
+      "name": "Tangent of a sum of angles",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "tan(α + β) = (tan(α) + tan(β)) / (1 - tan(α)*tan(β))",
+      "displayLatex": "\\tan(\\alpha + \\beta) = \\frac{\\tan\\alpha + \\tan\\beta}{1 - \\tan\\alpha\\tan\\beta}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "α", "name": "first angle", "unit": "rad", "description": "An angle in radians where tan is defined." },
+        { "symbol": "β", "name": "second angle", "unit": "rad", "description": "An angle in radians where tan is defined." }
+      ],
+      "explanation": "Divide the sine sum formula by the cosine sum formula and then divide every term by cos α cos β. It is useful for the angle between two lines, because each line's gradient is the tangent of its angle.",
+      "whenToUse": "Use it to add angles given by their tangents, such as the angle between two lines with known gradients.",
+      "assumptions": ["tan α tan β ≠ 1"],
+      "example": {
+        "story": "Check the formula for α = 0.5 rad and β = 0.3 rad.",
+        "given": { "α": 0.5, "β": 0.3 },
+        "result": 1.02963856,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["tan 0.5 ≈ 0.546302 and tan 0.3 ≈ 0.309336", "(0.546302 + 0.309336) / (1 - 0.168991) ≈ 1.029639 = tan 0.8"]
+      },
+      "related": ["compound-angle-sine", "double-angle-tangent", "tan-identity"],
+      "tags": ["compound angle", "addition formula", "tan(a+b)", "angle between lines"]
+    },
+    {
+      "id": "power-reduction-sine",
+      "name": "Power reduction formula for sine squared",
+      "subcategory": "Identities",
+      "level": "school",
+      "equation": "sin(θ)^2 = (1 - cos(2*θ)) / 2",
+      "displayLatex": "\\sin^2\\theta = \\frac{1 - \\cos 2\\theta}{2}",
+      "isIdentity": true,
+      "variables": [
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Any angle, in radians." }
+      ],
+      "explanation": "Rearranging cos 2θ = 1 - 2 sin²θ expresses a square of sine as a plain cosine of the double angle. The same trick gives cos²θ = (1 + cos 2θ)/2. These forms are what you need to integrate sin² and cos².",
+      "whenToUse": "Use it to integrate sin²x, to find the average of sin² over a cycle (it is ½), or in AC power calculations.",
+      "assumptions": [],
+      "example": {
+        "story": "Check the identity for θ = 0.4 rad.",
+        "given": { "θ": 0.4 },
+        "result": 0.15164665,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["sin 0.4 ≈ 0.389418, squared ≈ 0.151647", "cos 0.8 ≈ 0.696707, and (1 - 0.696707)/2 ≈ 0.151647"]
+      },
+      "related": ["double-angle-cosine", "pythagorean-identity", "rms-voltage"],
+      "tags": ["power reduction", "half angle", "sin squared", "linearisation", "trig identity"]
+    },
+    {
+      "id": "degrees-to-radians",
+      "name": "Degrees to radians",
+      "subcategory": "Angle measure",
+      "level": "school",
+      "equation": "θ_r = θ_d*pi / 180",
+      "displayLatex": "\\theta_{\\text{rad}} = \\theta_{\\text{deg}} \\times \\frac{\\pi}{180}",
+      "variables": [
+        { "symbol": "θ_r", "name": "angle in radians", "unit": "rad", "description": "The angle measured in radians." },
+        { "symbol": "θ_d", "name": "angle in degrees", "unit": "°", "description": "The angle measured in degrees." }
+      ],
+      "explanation": "A full turn is 360 degrees or 2π radians, so 180 degrees equals π radians. Multiply by π/180 to go from degrees to radians and by 180/π to go back. One radian is about 57.3 degrees.",
+      "whenToUse": "Use it before applying formulas that need radians, such as arc length, angular velocity and calculus with trig functions.",
+      "assumptions": [],
+      "example": {
+        "story": "Convert 135 degrees to radians.",
+        "given": { "θ_d": 135 },
+        "solveFor": "θ_r",
+        "result": 2.3561945,
+        "unit": "rad",
+        "tolerance": 1e-7,
+        "steps": ["θ = 135 × π / 180", "θ = 3π/4 ≈ 2.356 rad"]
+      },
+      "related": ["arc-length", "angular-velocity-period"],
+      "tags": ["degrees", "radians", "angle conversion", "convert angle", "rad", "deg"]
+    },
+    {
+      "id": "polar-to-cartesian-x",
+      "name": "Polar to Cartesian (x coordinate)",
+      "subcategory": "Coordinates",
+      "level": "school",
+      "equation": "x = r*cos(θ)",
+      "displayLatex": "x = r\\cos\\theta",
+      "variables": [
+        { "symbol": "x", "name": "x coordinate", "unit": "m", "description": "Horizontal position." },
+        { "symbol": "r", "name": "distance from origin", "unit": "m", "description": "The polar radius.", "min": 0 },
+        { "symbol": "θ", "name": "polar angle", "unit": "rad", "description": "Angle measured anticlockwise from the positive x axis." }
+      ],
+      "explanation": "A point at distance r and angle θ from the origin forms a right-angled triangle with the x axis. The horizontal side of that triangle is r cos θ. The same idea splits forces and velocities into horizontal components.",
+      "whenToUse": "Use it to convert polar coordinates to Cartesian ones, or to find the horizontal component of a vector.",
+      "assumptions": ["angle in radians measured from the positive x axis"],
+      "example": {
+        "story": "A point lies 4 m from the origin at an angle of 30 degrees (π/6). What is its x coordinate?",
+        "given": { "r": 4, "θ": 0.5235987755982988 },
+        "solveFor": "x",
+        "result": 3.4641016,
+        "unit": "m",
+        "tolerance": 1e-7,
+        "steps": ["cos 30° = √3/2 ≈ 0.866025", "x = 4 × 0.866025 ≈ 3.464 m"]
+      },
+      "related": ["polar-to-cartesian-y", "vector-magnitude-2d", "vector-direction-angle"],
+      "tags": ["polar coordinates", "cartesian", "convert coordinates", "horizontal component", "resolve vector"]
+    },
+    {
+      "id": "polar-to-cartesian-y",
+      "name": "Polar to Cartesian (y coordinate)",
+      "subcategory": "Coordinates",
+      "level": "school",
+      "equation": "y = r*sin(θ)",
+      "displayLatex": "y = r\\sin\\theta",
+      "variables": [
+        { "symbol": "y", "name": "y coordinate", "unit": "m", "description": "Vertical position." },
+        { "symbol": "r", "name": "distance from origin", "unit": "m", "description": "The polar radius.", "min": 0 },
+        { "symbol": "θ", "name": "polar angle", "unit": "rad", "description": "Angle measured anticlockwise from the positive x axis." }
+      ],
+      "explanation": "The vertical side of the triangle formed by the point, the origin and the x axis is r sin θ. Together with x = r cos θ this converts polar coordinates to Cartesian, and by Pythagoras x² + y² = r².",
+      "whenToUse": "Use it to convert polar coordinates, or to find the vertical component of a force or velocity.",
+      "assumptions": ["angle in radians measured from the positive x axis"],
+      "example": {
+        "story": "A point lies 4 m from the origin at an angle of 30 degrees (π/6). What is its y coordinate?",
+        "given": { "r": 4, "θ": 0.5235987755982988 },
+        "solveFor": "y",
+        "result": 2,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["sin 30° = 0.5", "y = 4 × 0.5 = 2 m"]
+      },
+      "related": ["polar-to-cartesian-x", "vector-magnitude-2d"],
+      "tags": ["polar coordinates", "cartesian", "convert coordinates", "vertical component", "resolve vector"]
+    }
+  ]
+}

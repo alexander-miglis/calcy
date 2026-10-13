@@ -1,0 +1,752 @@
+{
+  "category": "calculus",
+  "formulas": [
+    {
+      "id": "power-rule-derivative",
+      "name": "Power rule for derivatives",
+      "subcategory": "Differentiation",
+      "level": "school",
+      "equation": "m = n*x^(n - 1)",
+      "displayLatex": "\\frac{d}{dx} x^n = n x^{n-1}",
+      "variables": [
+        { "symbol": "m", "name": "gradient of xⁿ", "unit": "", "description": "The derivative of xⁿ at the point x: the slope of the tangent there." },
+        { "symbol": "n", "name": "exponent", "unit": "", "description": "Any real power (whole, negative or fractional)." },
+        { "symbol": "x", "name": "point", "unit": "", "description": "Where the gradient is taken." }
+      ],
+      "explanation": "To differentiate a power of x, bring the power down in front and reduce the power by one. It works for every real exponent: x² gives 2x, 1/x = x⁻¹ gives -x⁻², and √x = x^(1/2) gives 1/(2√x). Combined with the rules for sums and constant multiples it differentiates every polynomial.",
+      "whenToUse": "Use it to differentiate polynomials and powers of x, for gradients of curves, tangents, and maxima and minima.",
+      "assumptions": ["x > 0 when n is not a whole number"],
+      "example": {
+        "story": "What is the gradient of the curve y = x³ at x = 2?",
+        "given": { "n": 3, "x": 2 },
+        "solveFor": "m",
+        "result": 12,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["dy/dx = 3x²", "At x = 2: 3 × 2² = 12"]
+      },
+      "related": ["product-rule", "chain-rule", "integral-power", "difference-quotient"],
+      "tags": ["power rule", "differentiation", "derivative", "dy/dx", "gradient function", "differentiate x^n"]
+    },
+    {
+      "id": "product-rule",
+      "name": "Product rule",
+      "subcategory": "Differentiation",
+      "level": "school",
+      "equation": "y_x = u_x*v + u*v_x",
+      "displayLatex": "\\frac{d}{dx}(uv) = u'v + uv'",
+      "variables": [
+        { "symbol": "y_x", "name": "derivative of the product", "unit": "", "description": "d(uv)/dx at the point." },
+        { "symbol": "u_x", "name": "derivative of u", "unit": "", "description": "du/dx at the point." },
+        { "symbol": "v", "name": "value of v", "unit": "", "description": "The second factor at the point." },
+        { "symbol": "u", "name": "value of u", "unit": "", "description": "The first factor at the point." },
+        { "symbol": "v_x", "name": "derivative of v", "unit": "", "description": "dv/dx at the point." }
+      ],
+      "explanation": "The derivative of a product is not the product of the derivatives. If u changes a little, the product changes by (change in u) × v; if v changes, by u × (change in v). Adding both effects gives u'v + uv'. Here the rule is written with numbers: the values and derivatives of u and v at one point.",
+      "whenToUse": "Use it to differentiate a product of two functions, such as x² sin x or x eˣ.",
+      "assumptions": ["u and v are differentiable at the point"],
+      "example": {
+        "story": "Find the gradient of y = x² ln x at x = 2. Here u = x² gives u = 4 and u' = 4; v = ln x gives v ≈ 0.693147 and v' = 0.5.",
+        "given": { "u_x": 4, "v": 0.6931471805599453, "u": 4, "v_x": 0.5 },
+        "solveFor": "y_x",
+        "result": 4.7725887,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["u'v = 4 × 0.693147 ≈ 2.772589", "uv' = 4 × 0.5 = 2", "dy/dx ≈ 4.7726"]
+      },
+      "related": ["quotient-rule", "chain-rule", "power-rule-derivative"],
+      "tags": ["product rule", "differentiation", "derivative of product", "uv", "leibniz rule"]
+    },
+    {
+      "id": "quotient-rule",
+      "name": "Quotient rule",
+      "subcategory": "Differentiation",
+      "level": "school",
+      "equation": "y_x = (u_x*v - u*v_x) / v^2",
+      "displayLatex": "\\frac{d}{dx}\\left(\\frac{u}{v}\\right) = \\frac{u'v - uv'}{v^2}",
+      "variables": [
+        { "symbol": "y_x", "name": "derivative of the quotient", "unit": "", "description": "d(u/v)/dx at the point." },
+        { "symbol": "u_x", "name": "derivative of u", "unit": "", "description": "du/dx at the point." },
+        { "symbol": "v", "name": "value of v", "unit": "", "description": "The denominator at the point (not zero)." },
+        { "symbol": "u", "name": "value of u", "unit": "", "description": "The numerator at the point." },
+        { "symbol": "v_x", "name": "derivative of v", "unit": "", "description": "dv/dx at the point." }
+      ],
+      "explanation": "Write u/v as u × v⁻¹ and use the product and chain rules: the result simplifies to (u'v - uv')/v². The order in the numerator matters because of the minus sign; a common memory aid is low d-high minus high d-low, over low squared.",
+      "whenToUse": "Use it to differentiate a fraction of two functions, such as tan x = sin x / cos x or (x + 1)/(x - 1).",
+      "assumptions": ["v ≠ 0 at the point"],
+      "example": {
+        "story": "Find the gradient of y = x / (x + 1) at x = 1. Here u = 1, u' = 1, v = 2 and v' = 1.",
+        "given": { "u_x": 1, "v": 2, "u": 1, "v_x": 1 },
+        "solveFor": "y_x",
+        "result": 0.25,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["u'v - uv' = 1 × 2 - 1 × 1 = 1", "v² = 4", "dy/dx = 1/4 = 0.25"]
+      },
+      "related": ["product-rule", "chain-rule"],
+      "tags": ["quotient rule", "differentiation", "derivative of fraction", "u over v"]
+    },
+    {
+      "id": "chain-rule",
+      "name": "Chain rule",
+      "subcategory": "Differentiation",
+      "level": "school",
+      "equation": "y_x = y_u*u_x",
+      "displayLatex": "\\frac{dy}{dx} = \\frac{dy}{du} \\cdot \\frac{du}{dx}",
+      "variables": [
+        { "symbol": "y_x", "name": "dy/dx", "unit": "", "description": "Rate of change of y with respect to x." },
+        { "symbol": "y_u", "name": "dy/du", "unit": "", "description": "Rate of change of the outer function with respect to its input u." },
+        { "symbol": "u_x", "name": "du/dx", "unit": "", "description": "Rate of change of the inner function u with respect to x." }
+      ],
+      "explanation": "For a function inside a function, y = f(u) with u = g(x), the rates of change multiply. If u changes 3 times as fast as x, and y changes 2 times as fast as u, then y changes 6 times as fast as x. In practice: differentiate the outside, keep the inside, then multiply by the derivative of the inside.",
+      "whenToUse": "Use it whenever one function is nested inside another: sin(3x), (2x + 1)⁵, e^(x²), √(1 + x²).",
+      "assumptions": ["both functions are differentiable"],
+      "example": {
+        "story": "Find the gradient of y = sin(3x) at x = 0.2. Here u = 3x = 0.6, so dy/du = cos 0.6 ≈ 0.825336 and du/dx = 3.",
+        "given": { "y_u": 0.8253356149096783, "u_x": 3 },
+        "solveFor": "y_x",
+        "result": 2.4760068,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["dy/du = cos(0.6) ≈ 0.825336", "du/dx = 3", "dy/dx ≈ 0.825336 × 3 ≈ 2.476"]
+      },
+      "related": ["product-rule", "quotient-rule", "derivative-exponential", "derivative-sine"],
+      "tags": ["chain rule", "function of a function", "composite function", "differentiation", "inner function"]
+    },
+    {
+      "id": "derivative-exponential",
+      "name": "Derivative of an exponential",
+      "subcategory": "Differentiation",
+      "level": "school",
+      "equation": "m = k*e^(k*x)",
+      "displayLatex": "\\frac{d}{dx} e^{kx} = k e^{kx}",
+      "variables": [
+        { "symbol": "m", "name": "gradient", "unit": "", "description": "The derivative of e^(kx) at x." },
+        { "symbol": "k", "name": "constant", "unit": "", "description": "The multiplier of x in the exponent." },
+        { "symbol": "x", "name": "point", "unit": "", "description": "Where the gradient is taken." }
+      ],
+      "explanation": "eˣ is the special function that is its own derivative: its slope at every point equals its height. With the chain rule, e^(kx) has derivative k e^(kx). This is why exponential growth means the growth rate is proportional to the amount.",
+      "whenToUse": "Use it for growth and decay models, and whenever e appears with x in the exponent.",
+      "assumptions": [],
+      "example": {
+        "story": "Find the gradient of y = e^(0.5x) at x = 2.",
+        "given": { "k": 0.5, "x": 2 },
+        "solveFor": "m",
+        "result": 1.3591409,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["dy/dx = 0.5 e^(0.5x)", "At x = 2: 0.5 × e¹ ≈ 1.359"]
+      },
+      "related": ["chain-rule", "integral-exponential", "continuous-exponential-growth"],
+      "tags": ["derivative of e^x", "exponential", "differentiation", "e^kx"]
+    },
+    {
+      "id": "derivative-sine",
+      "name": "Derivative of a sine",
+      "subcategory": "Differentiation",
+      "level": "school",
+      "equation": "m = k*cos(k*x)",
+      "displayLatex": "\\frac{d}{dx} \\sin(kx) = k\\cos(kx)",
+      "variables": [
+        { "symbol": "m", "name": "gradient", "unit": "", "description": "The derivative of sin(kx) at x." },
+        { "symbol": "k", "name": "constant", "unit": "", "description": "The multiplier of x inside the sine." },
+        { "symbol": "x", "name": "point", "unit": "", "description": "Where the gradient is taken, in radians." }
+      ],
+      "explanation": "The slope of the sine curve at any point is the cosine at that point, as long as x is in radians. A factor k inside stretches the wave horizontally and, by the chain rule, multiplies the slope by k. Similarly cos(kx) has derivative -k sin(kx).",
+      "whenToUse": "Use it for oscillations, waves and alternating currents, for example to get velocity from a sinusoidal displacement.",
+      "assumptions": ["x in radians"],
+      "example": {
+        "story": "Find the gradient of y = sin(2x) at x = 0.5.",
+        "given": { "k": 2, "x": 0.5 },
+        "solveFor": "m",
+        "result": 1.0806046,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["dy/dx = 2 cos(2x)", "At x = 0.5: 2 cos 1 ≈ 2 × 0.540302 ≈ 1.0806"]
+      },
+      "related": ["chain-rule", "integral-cosine", "shm-displacement"],
+      "tags": ["derivative of sin", "trig derivative", "differentiation", "cos"]
+    },
+    {
+      "id": "fundamental-theorem-of-calculus",
+      "name": "Fundamental theorem of calculus",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "I = F_b - F_a",
+      "displayLatex": "\\int_a^b f(x)\\,dx = F(b) - F(a), \\quad F' = f",
+      "variables": [
+        { "symbol": "I", "name": "definite integral", "unit": "", "description": "The signed area under f between a and b." },
+        { "symbol": "F_b", "name": "antiderivative at b", "unit": "", "description": "F(b), where F is any function with F' = f." },
+        { "symbol": "F_a", "name": "antiderivative at a", "unit": "", "description": "F(a), with the same F." }
+      ],
+      "explanation": "Integration and differentiation undo each other. To find the area under f from a to b, find any antiderivative F (a function whose derivative is f) and subtract its values at the ends. The constant of integration cancels, so any antiderivative works.",
+      "whenToUse": "Use it to evaluate every definite integral that has a known antiderivative: areas, distances from velocities, work from forces.",
+      "assumptions": ["f is continuous on [a, b]"],
+      "example": {
+        "story": "Evaluate the integral of 2x from 1 to 3, using the antiderivative F(x) = x².",
+        "given": { "F_b": 9, "F_a": 1 },
+        "solveFor": "I",
+        "result": 8,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["F(3) = 9 and F(1) = 1", "I = 9 - 1 = 8"]
+      },
+      "related": ["integral-power", "mean-value-of-function", "area-between-curves"],
+      "tags": ["fundamental theorem", "ftc", "definite integral", "antiderivative", "newton leibniz", "integration"]
+    },
+    {
+      "id": "integral-power",
+      "name": "Definite integral of a power",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "I = (b^(n + 1) - a^(n + 1)) / (n + 1)",
+      "displayLatex": "\\int_a^b x^n\\,dx = \\frac{b^{n+1} - a^{n+1}}{n+1}, \\quad n \\neq -1",
+      "variables": [
+        { "symbol": "I", "name": "integral", "unit": "", "description": "Area under y = xⁿ from a to b." },
+        { "symbol": "b", "name": "upper limit", "unit": "", "description": "Right end of the interval." },
+        { "symbol": "n", "name": "exponent", "unit": "", "description": "The power of x, any real number except -1." },
+        { "symbol": "a", "name": "lower limit", "unit": "", "description": "Left end of the interval." }
+      ],
+      "explanation": "The antiderivative of xⁿ is x^(n+1)/(n+1): raise the power by one and divide by the new power. That is the power rule run backwards. Evaluating it at b and a gives the definite integral. The case n = -1 is special and gives a logarithm instead.",
+      "whenToUse": "Use it to integrate polynomials term by term and to find areas under power curves.",
+      "assumptions": ["n ≠ -1", "a, b > 0 if n is not a whole number"],
+      "example": {
+        "story": "Find the area under y = x³ between x = 0 and x = 2.",
+        "given": { "b": 2, "n": 3, "a": 0 },
+        "solveFor": "I",
+        "result": 4,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Antiderivative: x⁴/4", "I = 2⁴/4 - 0 = 16/4", "I = 4"]
+      },
+      "related": ["power-rule-derivative", "fundamental-theorem-of-calculus", "integral-reciprocal"],
+      "tags": ["integral of x^n", "power rule integration", "integrate polynomial", "standard integral", "area under curve"]
+    },
+    {
+      "id": "integral-exponential",
+      "name": "Definite integral of an exponential",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "I = (e^(k*b) - e^(k*a)) / k",
+      "displayLatex": "\\int_a^b e^{kx}\\,dx = \\frac{e^{kb} - e^{ka}}{k}",
+      "variables": [
+        { "symbol": "I", "name": "integral", "unit": "", "description": "Area under y = e^(kx) from a to b." },
+        { "symbol": "k", "name": "constant", "unit": "", "description": "The multiplier in the exponent (not zero)." },
+        { "symbol": "b", "name": "upper limit", "unit": "", "description": "Right end of the interval." },
+        { "symbol": "a", "name": "lower limit", "unit": "", "description": "Left end of the interval." }
+      ],
+      "explanation": "Because e^(kx) differentiates to k e^(kx), its antiderivative is e^(kx)/k. Evaluate at both limits and subtract.",
+      "whenToUse": "Use it for total growth over a time interval, charge flowing in an RC circuit, or areas under exponential curves.",
+      "assumptions": ["k ≠ 0"],
+      "example": {
+        "story": "Find the integral of e^(2x) from x = 0 to x = 1.",
+        "given": { "k": 2, "b": 1, "a": 0 },
+        "solveFor": "I",
+        "result": 3.194528,
+        "unit": "",
+        "tolerance": 1e-6,
+        "steps": ["Antiderivative: e^(2x)/2", "I = (e² - e⁰)/2 = (7.389056 - 1)/2", "I ≈ 3.1945"]
+      },
+      "related": ["derivative-exponential", "fundamental-theorem-of-calculus"],
+      "tags": ["integral of e^x", "exponential integral", "standard integral", "integration"]
+    },
+    {
+      "id": "integral-reciprocal",
+      "name": "Definite integral of 1/x",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "I = ln(b / a)",
+      "displayLatex": "\\int_a^b \\frac{1}{x}\\,dx = \\ln\\frac{b}{a}",
+      "variables": [
+        { "symbol": "I", "name": "integral", "unit": "", "description": "Area under y = 1/x from a to b." },
+        { "symbol": "b", "name": "upper limit", "unit": "", "description": "Right end of the interval.", "positive": true },
+        { "symbol": "a", "name": "lower limit", "unit": "", "description": "Left end of the interval.", "positive": true }
+      ],
+      "explanation": "The power rule for integrals fails for x⁻¹ because it would divide by zero. Instead, the antiderivative of 1/x is ln x, so the area from a to b is ln b - ln a = ln(b/a). The area depends only on the ratio b/a.",
+      "whenToUse": "Use it for integrals of 1/x, isothermal gas work, and the time constants of first-order processes.",
+      "assumptions": ["a and b have the same sign (here both positive)"],
+      "example": {
+        "story": "Find the area under y = 1/x between x = 2 and x = 8.",
+        "given": { "b": 8, "a": 2 },
+        "solveFor": "I",
+        "result": 1.3862944,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["I = ln 8 - ln 2 = ln(8/2)", "I = ln 4 ≈ 1.386"]
+      },
+      "related": ["integral-power", "isothermal-work", "logarithm-definition"],
+      "tags": ["integral of 1/x", "natural logarithm", "ln", "standard integral", "hyperbola area"]
+    },
+    {
+      "id": "integral-sine",
+      "name": "Definite integral of a sine",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "I = (cos(k*a) - cos(k*b)) / k",
+      "displayLatex": "\\int_a^b \\sin(kx)\\,dx = \\frac{\\cos(ka) - \\cos(kb)}{k}",
+      "variables": [
+        { "symbol": "I", "name": "integral", "unit": "", "description": "Signed area under y = sin(kx) from a to b." },
+        { "symbol": "k", "name": "constant", "unit": "", "description": "The multiplier of x (not zero)." },
+        { "symbol": "a", "name": "lower limit", "unit": "", "description": "Left end, in radians." },
+        { "symbol": "b", "name": "upper limit", "unit": "", "description": "Right end, in radians." }
+      ],
+      "explanation": "The antiderivative of sin(kx) is -cos(kx)/k, because the derivative of cos is -sin. Evaluating from a to b gives (cos ka - cos kb)/k. Over a full period the positive and negative areas cancel to zero.",
+      "whenToUse": "Use it for areas under sine curves and for averages of oscillating quantities.",
+      "assumptions": ["x in radians", "k ≠ 0"],
+      "example": {
+        "story": "Find the area under one arch of y = sin x, from 0 to π.",
+        "given": { "k": 1, "a": 0, "b": 3.141592653589793 },
+        "solveFor": "I",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Antiderivative: -cos x", "I = -cos π + cos 0 = 1 + 1", "I = 2"]
+      },
+      "related": ["integral-cosine", "derivative-sine"],
+      "tags": ["integral of sin", "trig integral", "standard integral", "area under sine"]
+    },
+    {
+      "id": "integral-cosine",
+      "name": "Definite integral of a cosine",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "I = (sin(k*b) - sin(k*a)) / k",
+      "displayLatex": "\\int_a^b \\cos(kx)\\,dx = \\frac{\\sin(kb) - \\sin(ka)}{k}",
+      "variables": [
+        { "symbol": "I", "name": "integral", "unit": "", "description": "Signed area under y = cos(kx) from a to b." },
+        { "symbol": "k", "name": "constant", "unit": "", "description": "The multiplier of x (not zero)." },
+        { "symbol": "b", "name": "upper limit", "unit": "", "description": "Right end, in radians." },
+        { "symbol": "a", "name": "lower limit", "unit": "", "description": "Left end, in radians." }
+      ],
+      "explanation": "The antiderivative of cos(kx) is sin(kx)/k, since sin differentiates to cos and the chain rule brings out a factor k. Subtract the values at the two limits.",
+      "whenToUse": "Use it for areas under cosine curves and in Fourier and wave problems.",
+      "assumptions": ["x in radians", "k ≠ 0"],
+      "example": {
+        "story": "Find the integral of cos(2x) from 0 to π/4.",
+        "given": { "k": 2, "b": 0.7853981633974483, "a": 0 },
+        "solveFor": "I",
+        "result": 0.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Antiderivative: sin(2x)/2", "I = (sin(π/2) - sin 0)/2 = (1 - 0)/2", "I = 0.5"]
+      },
+      "related": ["integral-sine", "derivative-sine"],
+      "tags": ["integral of cos", "trig integral", "standard integral", "area under cosine"]
+    },
+    {
+      "id": "mean-value-of-function",
+      "name": "Mean value of a function",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "f_m = I / (b - a)",
+      "displayLatex": "\\bar f = \\frac{1}{b - a}\\int_a^b f(x)\\,dx",
+      "variables": [
+        { "symbol": "f_m", "name": "mean value", "unit": "", "description": "The average height of f over the interval." },
+        { "symbol": "I", "name": "integral of f", "unit": "", "description": "The definite integral of f from a to b." },
+        { "symbol": "b", "name": "upper limit", "unit": "", "description": "Right end of the interval." },
+        { "symbol": "a", "name": "lower limit", "unit": "", "description": "Left end of the interval." }
+      ],
+      "explanation": "The mean value is the height of the rectangle on [a, b] that has the same area as the region under f. So it is the integral divided by the width of the interval. It is the continuous version of adding up values and dividing by how many there are.",
+      "whenToUse": "Use it for average temperature over a day, average velocity from a velocity graph, or average power in a circuit.",
+      "assumptions": ["b > a", "f is integrable on [a, b]"],
+      "example": {
+        "story": "Find the mean value of f(x) = x² on [0, 3]. The integral is 9.",
+        "given": { "I": 9, "b": 3, "a": 0 },
+        "solveFor": "f_m",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Integral of x² from 0 to 3: 27/3 = 9", "Mean = 9 / (3 - 0) = 3"]
+      },
+      "related": ["fundamental-theorem-of-calculus", "mean"],
+      "tags": ["mean value", "average value of function", "integral average", "rms"]
+    },
+    {
+      "id": "area-between-curves",
+      "name": "Area between two curves",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "A = I_f - I_g",
+      "displayLatex": "A = \\int_a^b \\left(f(x) - g(x)\\right)dx = \\int_a^b f\\,dx - \\int_a^b g\\,dx",
+      "variables": [
+        { "symbol": "A", "name": "enclosed area", "unit": "", "description": "Area between the curves from a to b." },
+        { "symbol": "I_f", "name": "integral of the upper curve", "unit": "", "description": "Integral of f (the curve on top) from a to b." },
+        { "symbol": "I_g", "name": "integral of the lower curve", "unit": "", "description": "Integral of g (the curve below) from a to b." }
+      ],
+      "explanation": "The area between two curves is the area under the top one minus the area under the bottom one. Equivalently, integrate the vertical gap f(x) - g(x). The limits are usually the x values where the curves meet.",
+      "whenToUse": "Use it for regions bounded by two graphs, such as between a line and a parabola.",
+      "assumptions": ["f(x) ≥ g(x) on [a, b]; otherwise split the interval where they cross"],
+      "example": {
+        "story": "Find the area enclosed between y = x and y = x² from x = 0 to x = 1, where they meet.",
+        "given": { "I_f": 0.5, "I_g": 0.3333333333333333 },
+        "solveFor": "A",
+        "result": 0.16666667,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["Integral of x from 0 to 1: ½", "Integral of x² from 0 to 1: ⅓", "A = ½ - ⅓ = ⅙ ≈ 0.1667"]
+      },
+      "related": ["fundamental-theorem-of-calculus", "integral-power", "volume-of-revolution"],
+      "tags": ["area between curves", "enclosed area", "region between graphs", "integration"]
+    },
+    {
+      "id": "volume-of-revolution",
+      "name": "Volume of revolution (disc method)",
+      "subcategory": "Integration",
+      "level": "school",
+      "equation": "V = pi*I",
+      "displayLatex": "V = \\pi \\int_a^b y^2\\,dx",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Volume of the solid made by spinning the curve around the x axis.", "positive": true },
+        { "symbol": "I", "name": "integral of y²", "unit": "m³", "description": "The integral of y² from a to b.", "positive": true }
+      ],
+      "explanation": "Spinning a curve y = f(x) around the x axis makes a solid whose slices are thin discs of radius y and thickness dx. Each disc has volume πy² dx, and adding them up with an integral gives π times the integral of y².",
+      "whenToUse": "Use it for the volume of vases, bowls, nose cones and any shape with circular cross-sections around an axis.",
+      "assumptions": ["rotation about the x axis", "for rotation about the y axis use x² and dy instead"],
+      "example": {
+        "story": "The curve y = √x from x = 0 to x = 4 (in metres) is spun around the x axis to make a bowl shape. The integral of y² = x from 0 to 4 is 8 m³.",
+        "given": { "I": 8 },
+        "solveFor": "V",
+        "result": 25.132741,
+        "unit": "m³",
+        "tolerance": 1e-6,
+        "steps": ["y² = x, and the integral of x from 0 to 4 is 8", "V = π × 8 = 8π", "V ≈ 25.13 m³"]
+      },
+      "related": ["area-between-curves", "sphere-volume", "cone-volume", "spherical-cap-volume"],
+      "tags": ["volume of revolution", "solid of revolution", "disc method", "disk method", "rotation"]
+    },
+    {
+      "id": "arc-length-element",
+      "name": "Arc length of a curve (element)",
+      "subcategory": "Integration",
+      "level": "university",
+      "equation": "Δs = Δx*sqrt(1 + m^2)",
+      "displayLatex": "L = \\int_a^b \\sqrt{1 + \\left(\\frac{dy}{dx}\\right)^2}\\,dx, \\qquad \\Delta s \\approx \\Delta x\\sqrt{1 + m^2}",
+      "variables": [
+        { "symbol": "Δs", "name": "length of a short piece", "unit": "m", "description": "Length of the curve over a small step Δx.", "positive": true },
+        { "symbol": "Δx", "name": "horizontal step", "unit": "m", "description": "A small horizontal distance.", "positive": true },
+        { "symbol": "m", "name": "gradient", "unit": "", "description": "The slope dy/dx of the curve over that step." }
+      ],
+      "explanation": "Over a small step Δx, a curve with slope m rises by mΔx, so the little piece of curve is a hypotenuse of length √(Δx² + (mΔx)²) = Δx √(1 + m²). Adding up all such pieces, and letting the steps shrink, gives the arc length integral L = ∫√(1 + y'²) dx.",
+      "whenToUse": "Use it to estimate the length of a curve piece by piece, or as the starting point for setting up an arc length integral.",
+      "assumptions": ["Δx small enough that the slope is nearly constant over the step"],
+      "example": {
+        "story": "Over a step of 0.1 m, a curve has slope 2. How long is that piece of curve?",
+        "given": { "Δx": 0.1, "m": 2 },
+        "solveFor": "Δs",
+        "result": 0.2236068,
+        "unit": "m",
+        "tolerance": 1e-7,
+        "steps": ["1 + m² = 5", "Δs = 0.1 × √5 ≈ 0.2236 m"]
+      },
+      "related": ["distance-between-points", "pythagoras-theorem", "arc-length"],
+      "tags": ["arc length", "curve length", "length of a curve", "rectification", "integration"]
+    },
+    {
+      "id": "taylor-second-order",
+      "name": "Second-order Taylor approximation",
+      "subcategory": "Series and approximation",
+      "level": "university",
+      "equation": "P = f_0 + f_1*h + f_2*h^2 / 2",
+      "displayLatex": "f(a + h) \\approx f(a) + f'(a)h + \\frac{f''(a)}{2}h^2",
+      "variables": [
+        { "symbol": "P", "name": "approximation", "unit": "", "description": "Estimated value of f(a + h)." },
+        { "symbol": "f_0", "name": "f(a)", "unit": "", "description": "Value of the function at the known point a." },
+        { "symbol": "f_1", "name": "f'(a)", "unit": "", "description": "First derivative at a." },
+        { "symbol": "h", "name": "step", "unit": "", "description": "Distance x - a from the known point." },
+        { "symbol": "f_2", "name": "f''(a)", "unit": "", "description": "Second derivative at a." }
+      ],
+      "explanation": "Near a point a, a smooth function looks like its tangent line, and adding a curvature term makes the match better. The quadratic P matches the function's value, slope and curvature at a. The error shrinks like h³ for small steps.",
+      "whenToUse": "Use it to estimate function values near a known point, and in physics to approximate potentials near equilibrium.",
+      "assumptions": ["f is twice differentiable", "h is small"],
+      "example": {
+        "story": "Estimate √4.1 using f(x) = √x at a = 4: f(4) = 2, f'(4) = 1/4 and f''(4) = -1/32.",
+        "given": { "f_0": 2, "f_1": 0.25, "h": 0.1, "f_2": -0.03125 },
+        "solveFor": "P",
+        "result": 2.02484375,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Linear part: 2 + 0.25 × 0.1 = 2.025", "Curvature: -0.03125 × 0.01 / 2 = -0.00015625", "P = 2.02484375 (true value 2.0248457)"]
+      },
+      "related": ["linear-approximation", "taylor-series-term", "maclaurin-exponential"],
+      "tags": ["taylor", "quadratic approximation", "taylor polynomial", "second order", "approximation"]
+    },
+    {
+      "id": "taylor-series-term",
+      "name": "Taylor series term",
+      "subcategory": "Series and approximation",
+      "level": "university",
+      "equation": "t = f_n*h^n / n!",
+      "displayLatex": "f(a + h) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!} h^n",
+      "variables": [
+        { "symbol": "t", "name": "nth term", "unit": "", "description": "The term of order n in the Taylor series." },
+        { "symbol": "f_n", "name": "nth derivative at a", "unit": "", "description": "The n-th derivative of f at the expansion point a." },
+        { "symbol": "h", "name": "step", "unit": "", "description": "Distance x - a from the expansion point." },
+        { "symbol": "n", "name": "order", "unit": "", "description": "Which term (0, 1, 2, ...).", "integer": true, "min": 0 }
+      ],
+      "explanation": "A Taylor series rebuilds a smooth function from its derivatives at one point. The n-th term is the n-th derivative times hⁿ divided by n!. The factorial makes the terms shrink quickly, which is why a few terms often give an excellent approximation. Expanding about a = 0 gives a Maclaurin series.",
+      "whenToUse": "Use it to approximate functions by polynomials, to estimate errors, and to see which terms matter for small h.",
+      "assumptions": ["f is infinitely differentiable near a", "the series converges for this h"],
+      "example": {
+        "story": "In the series for eˣ about 0 every derivative is 1. What is the n = 4 term for x = 1?",
+        "given": { "f_n": 1, "h": 1, "n": 4 },
+        "solveFor": "t",
+        "result": 0.041666667,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["4! = 24", "t = 1 × 1⁴ / 24 ≈ 0.041667"]
+      },
+      "related": ["taylor-second-order", "maclaurin-exponential", "maclaurin-sine"],
+      "tags": ["taylor series", "maclaurin series", "power series", "factorial", "series expansion"]
+    },
+    {
+      "id": "linear-approximation",
+      "name": "Linear approximation (tangent line)",
+      "subcategory": "Series and approximation",
+      "level": "school",
+      "equation": "L = f_0 + f_1*(x - a)",
+      "displayLatex": "f(x) \\approx f(a) + f'(a)(x - a)",
+      "variables": [
+        { "symbol": "L", "name": "approximation", "unit": "", "description": "Estimated value of f(x)." },
+        { "symbol": "f_0", "name": "f(a)", "unit": "", "description": "Value at the known point a." },
+        { "symbol": "f_1", "name": "f'(a)", "unit": "", "description": "Gradient at a." },
+        { "symbol": "x", "name": "new point", "unit": "", "description": "Where the estimate is wanted." },
+        { "symbol": "a", "name": "known point", "unit": "", "description": "Where f and f' are known." }
+      ],
+      "explanation": "Close to a point, a smooth curve is almost straight, so its tangent line gives a good estimate. Start at f(a) and move along the tangent with slope f'(a). The closer x is to a, the better the estimate.",
+      "whenToUse": "Use it for quick estimates, error propagation, and small-change problems such as how much a volume changes when a radius grows slightly.",
+      "assumptions": ["f is differentiable at a", "x is close to a"],
+      "example": {
+        "story": "Estimate ln 1.1 using the tangent to ln x at a = 1, where ln 1 = 0 and the gradient is 1.",
+        "given": { "f_0": 0, "f_1": 1, "x": 1.1, "a": 1 },
+        "solveFor": "L",
+        "result": 0.1,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["L = 0 + 1 × (1.1 - 1)", "L = 0.1 (true value 0.0953)"]
+      },
+      "related": ["taylor-second-order", "newton-method-step", "line-point-slope"],
+      "tags": ["linearisation", "linearization", "tangent line approximation", "small changes", "differentials"]
+    },
+    {
+      "id": "maclaurin-exponential",
+      "name": "Maclaurin series for eˣ (cubic)",
+      "subcategory": "Series and approximation",
+      "level": "school",
+      "equation": "P = 1 + x + x^2 / 2 + x^3 / 6",
+      "displayLatex": "e^x \\approx 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!}",
+      "variables": [
+        { "symbol": "P", "name": "approximation of eˣ", "unit": "", "description": "Value of the cubic Taylor polynomial." },
+        { "symbol": "x", "name": "argument", "unit": "", "description": "The exponent, best for small |x|." }
+      ],
+      "explanation": "Every derivative of eˣ is eˣ, which equals 1 at x = 0. So the Maclaurin series is 1 + x + x²/2! + x³/3! + ..., and the first four terms already give a good approximation for small x. Adding more terms makes it exact in the limit for every x.",
+      "whenToUse": "Use it to approximate eˣ for small x, or to understand why e^x ≈ 1 + x when x is tiny.",
+      "assumptions": ["|x| small for good accuracy with only four terms"],
+      "example": {
+        "story": "Estimate e^0.5 with the cubic Maclaurin polynomial.",
+        "given": { "x": 0.5 },
+        "solveFor": "P",
+        "result": 1.6458333,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["1 + 0.5 + 0.125 + 0.0208333", "P ≈ 1.6458 (true value 1.6487)"]
+      },
+      "related": ["taylor-series-term", "maclaurin-sine", "continuous-growth-limit"],
+      "tags": ["maclaurin", "taylor series", "exponential series", "e^x", "power series"]
+    },
+    {
+      "id": "maclaurin-sine",
+      "name": "Maclaurin series for sin x (fifth order)",
+      "subcategory": "Series and approximation",
+      "level": "school",
+      "equation": "P = x - x^3 / 6 + x^5 / 120",
+      "displayLatex": "\\sin x \\approx x - \\frac{x^3}{3!} + \\frac{x^5}{5!}",
+      "variables": [
+        { "symbol": "P", "name": "approximation of sin x", "unit": "", "description": "Value of the fifth-order polynomial." },
+        { "symbol": "x", "name": "angle", "unit": "rad", "description": "The angle in radians, best for small |x|." }
+      ],
+      "explanation": "The derivatives of sin x at 0 cycle through 0, 1, 0, -1, so only odd powers appear, with alternating signs. Keeping just the first term gives the small-angle approximation sin x ≈ x used for pendulums. Calculators use refinements of this idea.",
+      "whenToUse": "Use it to approximate sin x for small angles, or to justify the small-angle approximation in physics.",
+      "assumptions": ["x in radians", "|x| small for good accuracy"],
+      "example": {
+        "story": "Estimate sin 0.5 with the fifth-order Maclaurin polynomial.",
+        "given": { "x": 0.5 },
+        "solveFor": "P",
+        "result": 0.47942708,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["0.5 - 0.125/6 + 0.03125/120", "= 0.5 - 0.0208333 + 0.0002604", "P ≈ 0.479427 (true value 0.479426)"]
+      },
+      "related": ["maclaurin-exponential", "taylor-series-term", "pendulum-period"],
+      "tags": ["maclaurin", "sine series", "small angle approximation", "taylor series", "power series"]
+    },
+    {
+      "id": "newton-method-step",
+      "name": "Newton-Raphson step",
+      "subcategory": "Numerical methods",
+      "level": "school",
+      "equation": "x_1 = x_0 - f_0 / f_1",
+      "displayLatex": "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
+      "variables": [
+        { "symbol": "x_1", "name": "improved estimate", "unit": "", "description": "The next approximation of the root." },
+        { "symbol": "x_0", "name": "current estimate", "unit": "", "description": "The current approximation of the root." },
+        { "symbol": "f_0", "name": "f(x₀)", "unit": "", "description": "Function value at the current estimate." },
+        { "symbol": "f_1", "name": "f'(x₀)", "unit": "", "description": "Derivative at the current estimate (not zero)." }
+      ],
+      "explanation": "Newton's method finds where f(x) = 0 by following the tangent line at the current guess down to the x axis. The tangent hits zero at x₀ - f(x₀)/f'(x₀), which becomes the next guess. Near a simple root the number of correct digits roughly doubles with every step.",
+      "whenToUse": "Use it to solve equations that have no algebraic solution, or to compute square roots and other values to high precision.",
+      "assumptions": ["f'(x₀) ≠ 0", "the starting guess is close enough to the root"],
+      "example": {
+        "story": "Improve the guess 1.5 for √2 using f(x) = x² - 2: f(1.5) = 0.25 and f'(1.5) = 3.",
+        "given": { "x_0": 1.5, "f_0": 0.25, "f_1": 3 },
+        "solveFor": "x_1",
+        "result": 1.4166667,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["x₁ = 1.5 - 0.25 / 3", "x₁ ≈ 1.416667 (√2 ≈ 1.414214)"]
+      },
+      "related": ["linear-approximation", "difference-quotient"],
+      "tags": ["newton raphson", "newtons method", "root finding", "iteration", "numerical method"]
+    },
+    {
+      "id": "continuous-growth-limit",
+      "name": "Limit of compounding (e to the rt)",
+      "subcategory": "Limits",
+      "level": "school",
+      "equation": "F = e^(r*t)",
+      "displayLatex": "\\lim_{n \\to \\infty}\\left(1 + \\frac{r}{n}\\right)^{nt} = e^{rt}",
+      "variables": [
+        { "symbol": "F", "name": "growth factor", "unit": "", "description": "How many times bigger the amount becomes." },
+        { "symbol": "r", "name": "rate", "unit": "", "description": "Nominal rate per period, as a decimal." },
+        { "symbol": "t", "name": "number of periods", "unit": "", "description": "How many periods pass." }
+      ],
+      "explanation": "Compounding n times per period multiplies by (1 + r/n)^(nt). As n grows the factor increases but approaches a limit: e^(rt). This limit is one way to define the number e = lim (1 + 1/n)ⁿ ≈ 2.71828.",
+      "whenToUse": "Use it to see the upper bound of frequent compounding and as the link between discrete and continuous growth.",
+      "assumptions": ["compounding infinitely often (the limit)"],
+      "example": {
+        "story": "What growth factor does a 5 % rate give over 10 periods with continuous compounding?",
+        "given": { "r": 0.05, "t": 10 },
+        "solveFor": "F",
+        "result": 1.6487213,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["r t = 0.05 × 10 = 0.5", "F = e^0.5 ≈ 1.6487", "Compare: yearly compounding gives 1.05¹⁰ ≈ 1.6289"]
+      },
+      "related": ["compound-interest-continuous", "compound-interest", "maclaurin-exponential"],
+      "tags": ["limit", "e", "continuous compounding", "compound interest limit", "euler number"]
+    },
+    {
+      "id": "trapezium-rule",
+      "name": "Trapezium rule",
+      "subcategory": "Numerical methods",
+      "level": "school",
+      "equation": "I = h / 2*(y_0 + 2*S + y_n)",
+      "displayLatex": "\\int_a^b y\\,dx \\approx \\frac{h}{2}\\left[y_0 + 2(y_1 + \\dots + y_{n-1}) + y_n\\right]",
+      "variables": [
+        { "symbol": "I", "name": "estimated integral", "unit": "", "description": "Approximate area under the curve." },
+        { "symbol": "h", "name": "strip width", "unit": "", "description": "Width of each strip, (b - a)/n.", "positive": true },
+        { "symbol": "y_0", "name": "first ordinate", "unit": "", "description": "y value at x = a." },
+        { "symbol": "S", "name": "sum of middle ordinates", "unit": "", "description": "y₁ + y₂ + ... + yₙ₋₁." },
+        { "symbol": "y_n", "name": "last ordinate", "unit": "", "description": "y value at x = b." }
+      ],
+      "explanation": "Split the area into n vertical strips of width h and replace the curve on each strip by a straight line, making trapeziums. Each inner y value is shared by two trapeziums, so it counts twice. The rule overestimates for curves that bend upwards and underestimates for curves that bend downwards.",
+      "whenToUse": "Use it to estimate integrals from data tables or functions that cannot be integrated exactly.",
+      "assumptions": ["equally spaced x values", "more strips give better accuracy"],
+      "example": {
+        "story": "Estimate the integral of x² from 0 to 1 with two strips (h = 0.5): y₀ = 0, y₁ = 0.25, y₂ = 1.",
+        "given": { "h": 0.5, "y_0": 0, "S": 0.25, "y_n": 1 },
+        "solveFor": "I",
+        "result": 0.375,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["y₀ + 2S + yₙ = 0 + 0.5 + 1 = 1.5", "I ≈ 0.5 / 2 × 1.5 = 0.375 (exact value ⅓)"]
+      },
+      "related": ["simpsons-rule", "trapezoid-area", "fundamental-theorem-of-calculus"],
+      "tags": ["trapezium rule", "trapezoidal rule", "numerical integration", "area estimate", "ordinates"]
+    },
+    {
+      "id": "simpsons-rule",
+      "name": "Simpson's rule (two strips)",
+      "subcategory": "Numerical methods",
+      "level": "school",
+      "equation": "I = h / 3*(y_0 + 4*y_1 + y_2)",
+      "displayLatex": "\\int_a^b y\\,dx \\approx \\frac{h}{3}\\left(y_0 + 4y_1 + y_2\\right)",
+      "variables": [
+        { "symbol": "I", "name": "estimated integral", "unit": "", "description": "Approximate area under the curve." },
+        { "symbol": "h", "name": "strip width", "unit": "", "description": "Half the interval width, (b - a)/2.", "positive": true },
+        { "symbol": "y_0", "name": "left ordinate", "unit": "", "description": "y at x = a." },
+        { "symbol": "y_1", "name": "middle ordinate", "unit": "", "description": "y at the midpoint." },
+        { "symbol": "y_2", "name": "right ordinate", "unit": "", "description": "y at x = b." }
+      ],
+      "explanation": "Simpson's rule fits a parabola through three equally spaced points and integrates it exactly. The weights 1, 4, 1 give the middle point most influence. It is exact for cubics and much more accurate than the trapezium rule for smooth functions. For more strips, repeat the pattern 1, 4, 2, 4, ..., 2, 4, 1.",
+      "whenToUse": "Use it for accurate numerical integration of smooth functions or evenly spaced data.",
+      "assumptions": ["equally spaced points", "an even number of strips when extended"],
+      "example": {
+        "story": "Estimate the integral of x³ from 0 to 2 with h = 1: y₀ = 0, y₁ = 1, y₂ = 8.",
+        "given": { "h": 1, "y_0": 0, "y_1": 1, "y_2": 8 },
+        "solveFor": "I",
+        "result": 4,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["y₀ + 4y₁ + y₂ = 0 + 4 + 8 = 12", "I ≈ 1/3 × 12 = 4 (exact, because the curve is a cubic)"]
+      },
+      "related": ["trapezium-rule", "integral-power"],
+      "tags": ["simpsons rule", "simpson", "numerical integration", "parabola", "quadrature"]
+    },
+    {
+      "id": "difference-quotient",
+      "name": "Difference quotient (forward difference)",
+      "subcategory": "Numerical methods",
+      "level": "school",
+      "equation": "m = (f_h - f_0) / h",
+      "displayLatex": "f'(x) \\approx \\frac{f(x + h) - f(x)}{h}",
+      "variables": [
+        { "symbol": "m", "name": "estimated gradient", "unit": "", "description": "Approximate derivative at x." },
+        { "symbol": "f_h", "name": "f(x + h)", "unit": "", "description": "Function value a small step to the right." },
+        { "symbol": "f_0", "name": "f(x)", "unit": "", "description": "Function value at x." },
+        { "symbol": "h", "name": "step", "unit": "", "description": "A small non-zero step." }
+      ],
+      "explanation": "The derivative is defined as the limit of this quotient as h shrinks to zero: the gradient of a chord that slowly turns into the tangent. With a small but finite h it gives a numerical estimate whose error is roughly proportional to h.",
+      "whenToUse": "Use it to estimate a derivative from data, or to understand differentiation from first principles.",
+      "assumptions": ["h small but not so small that rounding errors dominate"],
+      "example": {
+        "story": "Estimate the gradient of x² at x = 3 with h = 0.01: f(3.01) = 9.0601 and f(3) = 9.",
+        "given": { "f_h": 9.0601, "f_0": 9, "h": 0.01 },
+        "solveFor": "m",
+        "result": 6.01,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Change in f: 9.0601 - 9 = 0.0601", "m ≈ 0.0601 / 0.01 = 6.01 (exact gradient 6)"]
+      },
+      "related": ["central-difference", "gradient-two-points", "power-rule-derivative"],
+      "tags": ["first principles", "difference quotient", "numerical derivative", "limit definition", "secant", "chord"]
+    },
+    {
+      "id": "central-difference",
+      "name": "Central difference",
+      "subcategory": "Numerical methods",
+      "level": "university",
+      "equation": "m = (f_p - f_m) / (2*h)",
+      "displayLatex": "f'(x) \\approx \\frac{f(x + h) - f(x - h)}{2h}",
+      "variables": [
+        { "symbol": "m", "name": "estimated gradient", "unit": "", "description": "Approximate derivative at x." },
+        { "symbol": "f_p", "name": "f(x + h)", "unit": "", "description": "Function value a step to the right." },
+        { "symbol": "f_m", "name": "f(x - h)", "unit": "", "description": "Function value a step to the left." },
+        { "symbol": "h", "name": "step", "unit": "", "description": "A small non-zero step." }
+      ],
+      "explanation": "Using points on both sides of x makes the chord symmetric about x, so the leading error terms cancel. The error is roughly proportional to h² instead of h, which makes it much more accurate than the forward difference for the same step. For a quadratic it is exact.",
+      "whenToUse": "Use it for numerical derivatives from evenly spaced data, such as velocity from position measurements.",
+      "assumptions": ["values available on both sides of x"],
+      "example": {
+        "story": "Estimate the gradient of x² at x = 3 with h = 0.01: f(3.01) = 9.0601 and f(2.99) = 8.9401.",
+        "given": { "f_p": 9.0601, "f_m": 8.9401, "h": 0.01 },
+        "solveFor": "m",
+        "result": 6,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["f(x + h) - f(x - h) = 0.12", "m ≈ 0.12 / 0.02 = 6 (exact)"]
+      },
+      "related": ["difference-quotient", "newton-method-step"],
+      "tags": ["central difference", "numerical derivative", "finite difference", "symmetric difference"]
+    }
+  ]
+}

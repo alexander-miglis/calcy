@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Solver mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Solver" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+    <section aria-label="Solver" style="flex: 999 1 640px; min-width: 0; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <div role="tablist" aria-label="Solver type" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 10px; background-color: var(--key); border-bottom: 4px solid var(--line)">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 40px; padding: 0 12px; border: 2px solid var(--line); box-shadow: 2px 2px 0 0 var(--line); cursor: pointer; background-color: {{t.bg}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{isPoly}}" hint-placeholder-val="{{ true }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Degree</span>
+            <sc-for list="{{degrees}}" as="d" hint-placeholder-count="5">
+              <button type="button" onClick="{{d.pick}}" aria-pressed="{{d.pressed}}" style="font-family: 'Silkscreen', monospace; font-size: 13px; color: var(--ink); width: 44px; min-height: 40px; border: 2px solid var(--line); cursor: pointer; background-color: {{d.bg}}">{{d.label}}</button>
+            </sc-for>
+            <span style="font-size: 13px; color: var(--muted)">any degree in the app</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 20px">
+            <sc-for list="{{coefs}}" as="c" hint-placeholder-count="3">
+              <span style="display: inline-flex; align-items: center; gap: 4px">
+                <input type="text" aria-label="{{c.aria}}" value="{{c.v}}" onChange="{{c.set}}" style="width: 64px; min-height: 44px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 6px; font-family: 'JetBrains Mono', monospace; font-size: 18px; text-align: center; background-color: var(--card); color: var(--ink)">
+                <span>{{c.term}}</span>
+              </span>
+            </sc-for>
+            <span>= 0</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px">
+            <svg viewBox="0 0 420 240" role="img" aria-label="Graph of the polynomial with its real roots" style="flex: 1 1 360px; max-width: 460px; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+              <line x1="0" y1="120" x2="420" y2="120" style="stroke: var(--ink); stroke-width: 2"></line>
+              <line x1="210" y1="0" x2="210" y2="240" style="stroke: var(--ink); stroke-width: 2"></line>
+              <polyline points="{{curve}}" fill="none" style="stroke: var(--g1); stroke-width: 3"></polyline>
+              <sc-for list="{{rootDots}}" as="r" hint-placeholder-count="2"><rect x="{{r.x}}" y="113" width="14" height="14" style="fill: var(--sel); stroke: var(--line); stroke-width: 2"></rect></sc-for>
+            </svg>
+            <div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Roots</span>
+              <sc-for list="{{roots}}" as="r" hint-placeholder-count="2">
+                <div style="border: 3px solid var(--line); background-color: var(--card); padding: 8px 10px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700">{{r.name}} = {{r.exact}}</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted)">{{r.approx}}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isSys}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 12px">3 equations, 3 unknowns</span>
+          <sc-for list="{{sysRows}}" as="row" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 20px">
+              <sc-for list="{{row.cells}}" as="c" hint-placeholder-count="4">
+                <span style="display: inline-flex; align-items: center; gap: 4px">
+                  <input type="text" aria-label="{{c.aria}}" value="{{c.v}}" onChange="{{c.set}}" style="width: 60px; min-height: 44px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 6px; font-family: 'JetBrains Mono', monospace; font-size: 18px; text-align: center; background-color: var(--card); color: var(--ink)">
+                  <span>{{c.after}}</span>
+                </span>
+              </sc-for>
+            </div>
+          </sc-for>
+          <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">{{sysAnswer}}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isAny}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+            <span style="flex: 1; min-height: 48px; border: 3px solid var(--line); background-color: var(--card); display: flex; align-items: center; padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 20px">cos(x) = x / 3</span>
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">solve for</span>
+            <span style="border: 3px solid var(--line); background-color: var(--sel); padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 18px">x</span>
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">in</span>
+            <span style="border: 3px solid var(--line); background-color: var(--card); padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 18px">[−10, 10]</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">x ≈ −2.938</div>
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">x ≈ −1.831</div>
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">x ≈ 1.170</div>
+          </div>
+          <div style="font-size: 14px; color: var(--muted)">All solutions in the range are listed, found by scanning and refining. Each check shows left − right ≈ 0.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isIneq}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+          <span style="min-height: 48px; border: 3px solid var(--line); background-color: var(--card); display: flex; align-items: center; padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 20px">x² − x − 6 &lt; 0</span>
+          <svg viewBox="0 0 640 90" role="img" aria-label="Number line with the solution from minus 2 to 3" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+            <line x1="20" y1="45" x2="620" y2="45" style="stroke: var(--ink); stroke-width: 3"></line>
+            <rect x="200" y="36" width="250" height="18" style="fill: var(--sel); stroke: var(--line); stroke-width: 2"></rect>
+            <rect x="192" y="37" width="16" height="16" style="fill: var(--card); stroke: var(--line); stroke-width: 3"></rect>
+            <rect x="442" y="37" width="16" height="16" style="fill: var(--card); stroke: var(--line); stroke-width: 3"></rect>
+            <text x="200" y="80" font-family="Silkscreen, monospace" font-size="13" text-anchor="middle" style="fill: var(--ink)">−2</text>
+            <text x="450" y="80" font-family="Silkscreen, monospace" font-size="13" text-anchor="middle" style="fill: var(--ink)">3</text>
+          </svg>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700">−2 &lt; x &lt; 3</div>
+          <div style="font-size: 14px; color: var(--muted)">Open squares: the end points are not included.</div>
+        </div>
+      </sc-if>
+    </section>
+
+    <aside aria-label="Solver cards" style="flex: 1 1 280px; max-width: 340px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--primary); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Cards</h2>
+      <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+          <article style="border: 3px solid var(--line); background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="padding: 4px 8px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">{{c.title}}</div>
+            <div style="padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 15px; white-space: pre-line">{{c.text}}</div>
+          </article>
+        </sc-for>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'Polynomial', deg: 2, coefs: ['1', '-5', '3', '0', '0', '0', '0'], sys: [['2', '1', '-1', '8'], ['-3', '-1', '2', '-11'], ['-2', '1', '2', '-3']] };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; }
+  frac(n, d) { if (d < 0) { n = -n; d = -d; } const g = this.gcd(n, d) || 1; n /= g; d /= g; return d === 1 ? String(n) : n + '/' + d; }
+  quadExact(a, b, c) {
+    if (![a, b, c].every(Number.isInteger) || a === 0) return null;
+    const D = b * b - 4 * a * c;
+    const sq = Math.round(Math.sqrt(Math.abs(D)));
+    if (D >= 0 && sq * sq === D) return [this.frac(-b - sq, 2 * a), this.frac(-b + sq, 2 * a)];
+    let k = 1, m = Math.abs(D);
+    for (let f = 2; f * f <= m; f++) while (m % (f * f) === 0) { m /= f * f; k *= f; }
+    let p = -b, q = 2 * a;
+    const g = this.gcd(this.gcd(p, k), q) || 1;
+    p /= g; k /= g; q /= g;
+    if (q < 0) { p = -p; q = -q; }
+    const rad = (k === 1 ? '' : k) + '√' + m + (D < 0 ? ' i' : '');
+    const open = q === 1 || p === 0 ? '' : '(';
+    const close = q === 1 ? '' : (p === 0 ? '' : ')') + '/' + q;
+    const top = p === 0 ? '' : p + ' ';
+    return [open + top + '− ' + rad + close, open + top + '+ ' + rad + close].map(t => t.trim());
+  }
+  roots(c) {
+    while (c.length > 1 && c[0] === 0) c = c.slice(1);
+    const n = c.length - 1;
+    if (n < 1) return [];
+    const lead = c[0]; const a = c.map(v => v / lead);
+    let z = Array.from({ length: n }, (_, k) => ({ re: Math.cos(2 * Math.PI * k / n + 0.4) * 1.5, im: Math.sin(2 * Math.PI * k / n + 0.4) * 1.5 }));
+    const ev = w => a.reduce((acc, v) => ({ re: acc.re * w.re - acc.im * w.im + v, im: acc.re * w.im + acc.im * w.re }), { re: 0, im: 0 });
+    for (let it = 0; it < 500; it++) {
+      z = z.map((w, i) => {
+        let d = { re: 1, im: 0 };
+        z.forEach((u, j) => { if (i !== j) { const dr = w.re - u.re, di = w.im - u.im; d = { re: d.re * dr - d.im * di, im: d.re * di + d.im * dr }; } });
+        const p = ev(w); const dd = d.re * d.re + d.im * d.im || 1e-30;
+        return { re: w.re - (p.re * d.re + p.im * d.im) / dd, im: w.im - (p.im * d.re - p.re * d.im) / dd };
+      });
+    }
+    return z.sort((p, q) => p.re - q.re);
+  }
+  show(z) {
+    const r = Number(z.re.toFixed(6)), i = Number(z.im.toFixed(6));
+    if (Math.abs(z.im) < 1e-9) return String(r);
+    return r + (i < 0 ? ' − ' : ' + ') + Math.abs(i) + 'i';
+  }
+  renderVals() {
+    const s = this.state;
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const n = s.deg;
+    const c = s.coefs.slice(0, n + 1).map(v => parseFloat(v) || 0);
+    const rs = this.roots(c);
+    const exact = n === 2 ? this.quadExact(c[0], c[1], c[2]) : null;
+    const f = x => c.reduce((acc, v) => acc * x + v, 0);
+    const realRoots = rs.filter(z => Math.abs(z.im) < 1e-9).map(z => z.re);
+    const span = Math.max(4, ...realRoots.map(r => Math.abs(r) * 1.4));
+    let ymax = 1; for (let i = 0; i <= 80; i++) ymax = Math.max(ymax, Math.abs(f(-span + 2 * span * i / 80)));
+    ymax = Math.min(ymax, 60);
+    const px = x => 210 + x / span * 200, py = y => 120 - y / ymax * 110;
+    const curve = []; for (let i = 0; i <= 200; i++) { const x = -span + 2 * span * i / 200; curve.push(px(x).toFixed(1) + ',' + Math.max(-500, Math.min(740, py(f(x)))).toFixed(1)); }
+    const sup = '⁰¹²³⁴⁵⁶';
+    const setCoef = i => e => { const arr = [...s.coefs]; arr[i] = e.target.value; this.setState({ coefs: arr }); };
+    const S = s.sys.map(r => r.map(v => parseFloat(v) || 0));
+    const det3 = m => m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+    const A = S.map(r => r.slice(0, 3)), B = S.map(r => r[3]);
+    const D = det3(A);
+    let sysAnswer;
+    if (Math.abs(D) < 1e-12) sysAnswer = 'No unique solution (the equations depend on each other).';
+    else {
+      const sol = [0, 1, 2].map(j => det3(A.map((r, i) => r.map((v, k) => k === j ? B[i] : v))) / D);
+      const nice = v => Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : String(Number(v.toFixed(6)));
+      sysAnswer = 'x = ' + nice(sol[0]) + ',  y = ' + nice(sol[1]) + ',  z = ' + nice(sol[2]);
+    }
+    const setSys = (i, j) => e => { const m = s.sys.map(r => [...r]); m[i][j] = e.target.value; this.setState({ sys: m }); };
+    const names = ['x', 'y', 'z'];
+    const tabs = ['Polynomial', 'System', 'Any equation', 'Inequality'];
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      tabs: tabs.map(t => ({ label: t, selected: t === s.tab ? 'true' : 'false', bg: t === s.tab ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ tab: t }) })),
+      isPoly: s.tab === 'Polynomial', isSys: s.tab === 'System', isAny: s.tab === 'Any equation', isIneq: s.tab === 'Inequality',
+      degrees: [2, 3, 4, 5, 6].map(d => ({ label: String(d), pressed: d === n ? 'true' : 'false', bg: d === n ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ deg: d }) })),
+      coefs: c.map((_, i) => { const k = n - i; return { v: s.coefs[i], set: setCoef(i), aria: 'coefficient of x to the power ' + k, term: k === 0 ? '' : k === 1 ? 'x +' : 'x' + sup[k] + ' +' }; }),
+      curve: curve.join(' '),
+      rootDots: realRoots.map(r => ({ x: (px(r) - 7).toFixed(1) })),
+      roots: rs.map((z, i) => ({ name: 'x' + '₁₂₃₄₅₆'[i], exact: exact ? exact[i] : this.show(z), approx: exact ? '≈ ' + this.show(z) : (Math.abs(z.im) < 1e-9 ? 'real' : 'complex') })),
+      sysRows: s.sys.map((r, i) => ({ cells: r.map((v, j) => ({ v, set: setSys(i, j), aria: 'equation ' + (i + 1) + (j < 3 ? ' coefficient of ' + names[j] : ' right side'), after: j < 2 ? names[j] + ' +' : j === 2 ? 'z =' : '' })) })),
+      sysAnswer,
+      cards: [
+        { title: '#3  polynomial', text: 'x² − 5x + 3 = 0\nx = (5 ± √13)/2' },
+        { title: '#2  system 3 × 3', text: 'x = 2, y = 3, z = −1' },
+        { title: '#1  inequality', text: 'x² − x − 6 < 0\n−2 < x < 3' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

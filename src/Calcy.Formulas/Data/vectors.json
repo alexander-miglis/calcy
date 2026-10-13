@@ -1,0 +1,463 @@
+{
+  "category": "vectors",
+  "formulas": [
+    {
+      "id": "vector-magnitude-2d",
+      "name": "Magnitude of a 2D vector",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "v = sqrt(v_x^2 + v_y^2)",
+      "displayLatex": "|\\vec v| = \\sqrt{v_x^2 + v_y^2}",
+      "variables": [
+        { "symbol": "v", "name": "magnitude", "unit": "", "description": "The length of the vector.", "min": 0 },
+        { "symbol": "v_x", "name": "x component", "unit": "", "description": "The horizontal component." },
+        { "symbol": "v_y", "name": "y component", "unit": "", "description": "The vertical component." }
+      ],
+      "explanation": "A vector's components are the two short sides of a right-angled triangle, and the vector itself is the hypotenuse. Pythagoras gives its length. The magnitude is never negative, whatever the signs of the components.",
+      "whenToUse": "Use it to find the size of a displacement, velocity or force from its components.",
+      "assumptions": ["perpendicular x and y axes"],
+      "example": {
+        "story": "A boat moves 3 units east and 4 units north. How far is it from where it started?",
+        "given": { "v_x": 3, "v_y": 4 },
+        "solveFor": "v",
+        "result": 5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["v = √(3² + 4²)", "v = √25 = 5"]
+      },
+      "related": ["vector-magnitude-3d", "vector-direction-angle", "pythagoras-theorem", "unit-vector-component"],
+      "tags": ["magnitude", "length of vector", "norm", "modulus", "resultant", "size of vector"]
+    },
+    {
+      "id": "vector-magnitude-3d",
+      "name": "Magnitude of a 3D vector",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "v = sqrt(v_x^2 + v_y^2 + v_z^2)",
+      "displayLatex": "|\\vec v| = \\sqrt{v_x^2 + v_y^2 + v_z^2}",
+      "variables": [
+        { "symbol": "v", "name": "magnitude", "unit": "", "description": "The length of the vector.", "min": 0 },
+        { "symbol": "v_x", "name": "x component", "unit": "", "description": "Component along x." },
+        { "symbol": "v_y", "name": "y component", "unit": "", "description": "Component along y." },
+        { "symbol": "v_z", "name": "z component", "unit": "", "description": "Component along z." }
+      ],
+      "explanation": "In three dimensions, apply Pythagoras twice: first in the xy plane, then with the z component. The result is the square root of the sum of all three squared components.",
+      "whenToUse": "Use it for the length of any 3D vector, such as a displacement in space or a force with three components.",
+      "assumptions": ["perpendicular x, y and z axes"],
+      "example": {
+        "story": "Find the length of the vector (2, 3, 6).",
+        "given": { "v_x": 2, "v_y": 3, "v_z": 6 },
+        "solveFor": "v",
+        "result": 7,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["v² = 4 + 9 + 36 = 49", "v = 7"]
+      },
+      "related": ["vector-magnitude-2d", "distance-3d", "cuboid-space-diagonal"],
+      "tags": ["magnitude", "length of vector", "norm", "3d vector", "modulus"]
+    },
+    {
+      "id": "dot-product-components",
+      "name": "Dot product from components",
+      "subcategory": "Products",
+      "level": "school",
+      "equation": "p = a_x*b_x + a_y*b_y + a_z*b_z",
+      "displayLatex": "\\vec a \\cdot \\vec b = a_x b_x + a_y b_y + a_z b_z",
+      "variables": [
+        { "symbol": "p", "name": "dot product", "unit": "", "description": "The scalar product a · b." },
+        { "symbol": "a_x", "name": "a, x component", "unit": "", "description": "x component of vector a." },
+        { "symbol": "b_x", "name": "b, x component", "unit": "", "description": "x component of vector b." },
+        { "symbol": "a_y", "name": "a, y component", "unit": "", "description": "y component of vector a." },
+        { "symbol": "b_y", "name": "b, y component", "unit": "", "description": "y component of vector b." },
+        { "symbol": "a_z", "name": "a, z component", "unit": "", "description": "z component of vector a (0 for 2D vectors)." },
+        { "symbol": "b_z", "name": "b, z component", "unit": "", "description": "z component of vector b (0 for 2D vectors)." }
+      ],
+      "explanation": "The dot product multiplies matching components and adds the results, giving a single number. It measures how much two vectors point the same way: positive for less than 90 degrees apart, zero for perpendicular, negative for more than 90 degrees. For 2D vectors set the z components to zero.",
+      "whenToUse": "Use it to test for perpendicular vectors, find angles, compute work (force · displacement), and project one vector onto another.",
+      "assumptions": ["components in the same perpendicular axes"],
+      "example": {
+        "story": "Find a · b for a = (1, 2, 3) and b = (4, -5, 6).",
+        "given": { "a_x": 1, "b_x": 4, "a_y": 2, "b_y": -5, "a_z": 3, "b_z": 6 },
+        "solveFor": "p",
+        "result": 12,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["1 × 4 + 2 × (-5) + 3 × 6", "= 4 - 10 + 18 = 12"]
+      },
+      "related": ["dot-product-angle", "angle-between-vectors", "scalar-projection", "work-done"],
+      "tags": ["dot product", "scalar product", "inner product", "components"]
+    },
+    {
+      "id": "dot-product-angle",
+      "name": "Dot product from magnitudes and angle",
+      "subcategory": "Products",
+      "level": "school",
+      "equation": "p = a*b*cos(θ)",
+      "displayLatex": "\\vec a \\cdot \\vec b = |\\vec a||\\vec b|\\cos\\theta",
+      "variables": [
+        { "symbol": "p", "name": "dot product", "unit": "", "description": "The scalar product a · b." },
+        { "symbol": "a", "name": "magnitude of a", "unit": "", "description": "Length of vector a.", "min": 0 },
+        { "symbol": "b", "name": "magnitude of b", "unit": "", "description": "Length of vector b.", "min": 0 },
+        { "symbol": "θ", "name": "angle between", "unit": "rad", "description": "The angle between the two vectors, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "Geometrically, the dot product is the length of one vector times the length of the other times the cosine of the angle between them. It equals |a| times the part of b that lies along a. This is the same number as the component formula, which is what lets you find angles from components.",
+      "whenToUse": "Use it when you know the lengths and the angle, for example work done by a force at an angle to the motion.",
+      "assumptions": ["angle in radians, between 0 and π"],
+      "example": {
+        "story": "Two vectors of length 3 and 5 make an angle of 60 degrees (π/3). What is their dot product?",
+        "given": { "a": 3, "b": 5, "θ": 1.0471975511965976 },
+        "solveFor": "p",
+        "result": 7.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["cos 60° = 0.5", "p = 3 × 5 × 0.5 = 7.5"]
+      },
+      "related": ["dot-product-components", "angle-between-vectors", "work-done"],
+      "tags": ["dot product", "scalar product", "angle", "cosine"]
+    },
+    {
+      "id": "angle-between-vectors",
+      "name": "Angle between two vectors",
+      "subcategory": "Products",
+      "level": "school",
+      "equation": "cos(θ) = p / (a*b)",
+      "displayLatex": "\\cos\\theta = \\frac{\\vec a \\cdot \\vec b}{|\\vec a||\\vec b|}",
+      "variables": [
+        { "symbol": "θ", "name": "angle between", "unit": "rad", "description": "The angle between the vectors, in radians.", "min": 0, "max": 3.141592653589793 },
+        { "symbol": "p", "name": "dot product", "unit": "", "description": "a · b, usually from components." },
+        { "symbol": "a", "name": "magnitude of a", "unit": "", "description": "Length of vector a.", "positive": true },
+        { "symbol": "b", "name": "magnitude of b", "unit": "", "description": "Length of vector b.", "positive": true }
+      ],
+      "explanation": "Combining the two forms of the dot product gives the cosine of the angle between any two vectors. Compute a · b from components, divide by the product of the lengths, and take acos. It works in any number of dimensions.",
+      "whenToUse": "Use it to find the angle between lines, forces, bonds in a molecule, or edges of a 3D shape.",
+      "assumptions": ["neither vector is the zero vector"],
+      "example": {
+        "story": "Find the angle between a = (1, 2, 3) and b = (4, -5, 6). Their dot product is 12, |a| = √14 and |b| = √77.",
+        "given": { "p": 12, "a": 3.7416573867739413, "b": 8.774964387392123 },
+        "solveFor": "θ",
+        "result": 1.19664,
+        "unit": "rad",
+        "tolerance": 0.0001,
+        "steps": ["|a||b| = √1078 ≈ 32.833", "cos θ = 12 / 32.833 ≈ 0.36549", "θ ≈ 1.1966 rad (about 68.6°)"]
+      },
+      "related": ["dot-product-components", "dot-product-angle", "cosine-rule"],
+      "tags": ["angle between vectors", "dot product", "cos theta", "perpendicular", "orthogonal"]
+    },
+    {
+      "id": "cross-product-magnitude",
+      "name": "Magnitude of the cross product",
+      "subcategory": "Products",
+      "level": "university",
+      "equation": "c = a*b*sin(θ)",
+      "displayLatex": "|\\vec a \\times \\vec b| = |\\vec a||\\vec b|\\sin\\theta",
+      "variables": [
+        { "symbol": "c", "name": "cross product magnitude", "unit": "", "description": "Length of a × b.", "min": 0 },
+        { "symbol": "a", "name": "magnitude of a", "unit": "", "description": "Length of vector a.", "min": 0 },
+        { "symbol": "b", "name": "magnitude of b", "unit": "", "description": "Length of vector b.", "min": 0 },
+        { "symbol": "θ", "name": "angle between", "unit": "rad", "description": "Angle between the vectors, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "The cross product of two 3D vectors is a vector perpendicular to both, with direction given by the right-hand rule. Its length equals the area of the parallelogram the two vectors span, which is |a||b| sin θ. Parallel vectors have a zero cross product.",
+      "whenToUse": "Use it for areas of parallelograms and triangles in 3D, torque (r × F), and magnetic forces (q v × B).",
+      "assumptions": ["3D vectors", "angle in radians"],
+      "example": {
+        "story": "Vectors of length 2 and 3 make an angle of 30 degrees. What is the area of the parallelogram they span?",
+        "given": { "a": 2, "b": 3, "θ": 0.5235987755982988 },
+        "solveFor": "c",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["sin 30° = 0.5", "c = 2 × 3 × 0.5 = 3"]
+      },
+      "related": ["cross-product-z", "triangle-area-sine", "torque", "force-on-moving-charge"],
+      "tags": ["cross product", "vector product", "parallelogram area", "right hand rule"]
+    },
+    {
+      "id": "cross-product-z",
+      "name": "Cross product component",
+      "subcategory": "Products",
+      "level": "university",
+      "equation": "c_z = a_x*b_y - a_y*b_x",
+      "displayLatex": "(\\vec a \\times \\vec b)_z = a_x b_y - a_y b_x",
+      "variables": [
+        { "symbol": "c_z", "name": "z component of a × b", "unit": "", "description": "The component of the cross product along z." },
+        { "symbol": "a_x", "name": "a, x component", "unit": "", "description": "x component of a." },
+        { "symbol": "b_y", "name": "b, y component", "unit": "", "description": "y component of b." },
+        { "symbol": "a_y", "name": "a, y component", "unit": "", "description": "y component of a." },
+        { "symbol": "b_x", "name": "b, x component", "unit": "", "description": "x component of b." }
+      ],
+      "explanation": "Each component of a × b uses the other two components of a and b. The z component is a_x b_y - a_y b_x; the x and y components follow the cyclic pattern: c_x = a_y b_z - a_z b_y and c_y = a_z b_x - a_x b_z. For two vectors in the xy plane, c_z is the signed area of their parallelogram: positive if b is anticlockwise from a.",
+      "whenToUse": "Use it to compute cross products from components, or to tell whether a turn is clockwise or anticlockwise in 2D.",
+      "assumptions": ["right-handed axes"],
+      "example": {
+        "story": "Find the z component of a × b for a = (3, 1, 0) and b = (2, 4, 0).",
+        "given": { "a_x": 3, "b_y": 4, "a_y": 1, "b_x": 2 },
+        "solveFor": "c_z",
+        "result": 10,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["c_z = 3 × 4 - 1 × 2", "c_z = 12 - 2 = 10"]
+      },
+      "related": ["cross-product-magnitude", "determinant-2x2"],
+      "tags": ["cross product", "vector product", "components", "determinant", "orientation"]
+    },
+    {
+      "id": "determinant-2x2",
+      "name": "Determinant of a 2x2 matrix",
+      "subcategory": "Matrices",
+      "level": "school",
+      "equation": "D = a*d - b*c",
+      "displayLatex": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+      "variables": [
+        { "symbol": "D", "name": "determinant", "unit": "", "description": "The determinant of the matrix." },
+        { "symbol": "a", "name": "top-left entry", "unit": "", "description": "Row 1, column 1." },
+        { "symbol": "d", "name": "bottom-right entry", "unit": "", "description": "Row 2, column 2." },
+        { "symbol": "b", "name": "top-right entry", "unit": "", "description": "Row 1, column 2." },
+        { "symbol": "c", "name": "bottom-left entry", "unit": "", "description": "Row 2, column 1." }
+      ],
+      "explanation": "The determinant is the factor by which the matrix scales areas, with a negative sign if it flips orientation. It is the product of the main diagonal minus the product of the other diagonal. A determinant of zero means the matrix squashes the plane onto a line and has no inverse.",
+      "whenToUse": "Use it to check whether a matrix is invertible, to solve 2x2 linear systems (Cramer's rule), or to find area scale factors.",
+      "assumptions": [],
+      "example": {
+        "story": "Find the determinant of the matrix with rows (3, 8) and (4, 6).",
+        "given": { "a": 3, "d": 6, "b": 8, "c": 4 },
+        "solveFor": "D",
+        "result": -14,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["ad = 3 × 6 = 18", "bc = 8 × 4 = 32", "D = 18 - 32 = -14"]
+      },
+      "related": ["inverse-2x2", "determinant-3x3", "eigenvalues-2x2"],
+      "tags": ["determinant", "det", "2x2 matrix", "matrix", "area scale factor", "singular"]
+    },
+    {
+      "id": "determinant-3x3",
+      "name": "Determinant of a 3x3 matrix",
+      "subcategory": "Matrices",
+      "level": "university",
+      "equation": "D = a_11*(a_22*a_33 - a_23*a_32) - a_12*(a_21*a_33 - a_23*a_31) + a_13*(a_21*a_32 - a_22*a_31)",
+      "displayLatex": "\\det A = a_{11}(a_{22}a_{33} - a_{23}a_{32}) - a_{12}(a_{21}a_{33} - a_{23}a_{31}) + a_{13}(a_{21}a_{32} - a_{22}a_{31})",
+      "variables": [
+        { "symbol": "D", "name": "determinant", "unit": "", "description": "The determinant of the 3x3 matrix." },
+        { "symbol": "a_11", "name": "row 1, column 1", "unit": "", "description": "Entry in row 1, column 1." },
+        { "symbol": "a_22", "name": "row 2, column 2", "unit": "", "description": "Entry in row 2, column 2." },
+        { "symbol": "a_33", "name": "row 3, column 3", "unit": "", "description": "Entry in row 3, column 3." },
+        { "symbol": "a_23", "name": "row 2, column 3", "unit": "", "description": "Entry in row 2, column 3." },
+        { "symbol": "a_32", "name": "row 3, column 2", "unit": "", "description": "Entry in row 3, column 2." },
+        { "symbol": "a_12", "name": "row 1, column 2", "unit": "", "description": "Entry in row 1, column 2." },
+        { "symbol": "a_21", "name": "row 2, column 1", "unit": "", "description": "Entry in row 2, column 1." },
+        { "symbol": "a_31", "name": "row 3, column 1", "unit": "", "description": "Entry in row 3, column 1." },
+        { "symbol": "a_13", "name": "row 1, column 3", "unit": "", "description": "Entry in row 1, column 3." }
+      ],
+      "explanation": "Expand along the first row: each entry multiplies the 2x2 determinant left when you cross out its row and column, with signs alternating +, -, +. The result is the volume scale factor of the matrix. A zero determinant means the three rows (or columns) lie in one plane.",
+      "whenToUse": "Use it to test whether a 3x3 system has a unique solution, for volumes of parallelepipeds, and in the scalar triple product.",
+      "assumptions": [],
+      "example": {
+        "story": "Find the determinant of the matrix with rows (2, -3, 1), (2, 0, -1) and (1, 4, 5).",
+        "given": { "a_11": 2, "a_22": 0, "a_33": 5, "a_23": -1, "a_32": 4, "a_12": -3, "a_21": 2, "a_31": 1, "a_13": 1 },
+        "solveFor": "D",
+        "result": 49,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["2 × (0 × 5 - (-1) × 4) = 2 × 4 = 8", "-(-3) × (2 × 5 - (-1) × 1) = 3 × 11 = 33", "1 × (2 × 4 - 0 × 1) = 8", "D = 8 + 33 + 8 = 49"]
+      },
+      "related": ["determinant-2x2", "cross-product-z"],
+      "tags": ["determinant", "3x3 matrix", "cofactor expansion", "laplace expansion", "sarrus", "volume"]
+    },
+    {
+      "id": "inverse-2x2",
+      "name": "Inverse of a 2x2 matrix",
+      "subcategory": "Matrices",
+      "level": "school",
+      "equation": "w = d / (a*d - b*c)",
+      "displayLatex": "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}",
+      "variables": [
+        { "symbol": "w", "name": "top-left entry of the inverse", "unit": "", "description": "The entry in row 1, column 1 of the inverse matrix." },
+        { "symbol": "d", "name": "bottom-right entry", "unit": "", "description": "Row 2, column 2 of the original matrix." },
+        { "symbol": "a", "name": "top-left entry", "unit": "", "description": "Row 1, column 1 of the original matrix." },
+        { "symbol": "b", "name": "top-right entry", "unit": "", "description": "Row 1, column 2 of the original matrix." },
+        { "symbol": "c", "name": "bottom-left entry", "unit": "", "description": "Row 2, column 1 of the original matrix." }
+      ],
+      "explanation": "To invert a 2x2 matrix, swap the two diagonal entries, change the sign of the other two, and divide everything by the determinant ad - bc. The equation gives the top-left entry d/(ad - bc); the others are -b/(ad - bc), -c/(ad - bc) and a/(ad - bc). Multiplying the matrix by its inverse gives the identity matrix.",
+      "whenToUse": "Use it to solve a pair of simultaneous linear equations written as a matrix equation, or to undo a 2D transformation.",
+      "assumptions": ["ad - bc ≠ 0 (otherwise there is no inverse)"],
+      "example": {
+        "story": "Find the top-left entry of the inverse of the matrix with rows (4, 7) and (2, 6).",
+        "given": { "d": 6, "a": 4, "b": 7, "c": 2 },
+        "solveFor": "w",
+        "result": 0.6,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Determinant: 4 × 6 - 7 × 2 = 10", "Top-left of the inverse: 6 / 10 = 0.6", "Full inverse: (0.6, -0.7; -0.2, 0.4)"]
+      },
+      "related": ["determinant-2x2", "eigenvalues-2x2"],
+      "tags": ["matrix inverse", "inverse matrix", "2x2 matrix", "adjugate", "simultaneous equations"]
+    },
+    {
+      "id": "scalar-projection",
+      "name": "Scalar projection of one vector onto another",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "s = p / b",
+      "displayLatex": "\\text{comp}_{\\vec b}\\,\\vec a = \\frac{\\vec a \\cdot \\vec b}{|\\vec b|}",
+      "variables": [
+        { "symbol": "s", "name": "scalar projection", "unit": "", "description": "Signed length of the shadow of a on the direction of b." },
+        { "symbol": "p", "name": "dot product", "unit": "", "description": "a · b." },
+        { "symbol": "b", "name": "magnitude of b", "unit": "", "description": "Length of the vector projected onto.", "positive": true }
+      ],
+      "explanation": "The scalar projection is how far vector a reaches along the direction of b, like the length of its shadow when light shines perpendicular to b. It equals |a| cos θ, which is a · b divided by |b|. Multiplying it by the unit vector b/|b| gives the vector projection.",
+      "whenToUse": "Use it to find the component of a force along a slope, or the part of a velocity in a given direction.",
+      "assumptions": ["b is not the zero vector"],
+      "example": {
+        "story": "How far does a = (2, 3) reach along the direction of b = (4, 0)? Here a · b = 8 and |b| = 4.",
+        "given": { "p": 8, "b": 4 },
+        "solveFor": "s",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["a · b = 2 × 4 + 3 × 0 = 8", "s = 8 / 4 = 2"]
+      },
+      "related": ["dot-product-components", "dot-product-angle", "unit-vector-component"],
+      "tags": ["projection", "scalar projection", "vector projection", "component along", "shadow"]
+    },
+    {
+      "id": "unit-vector-component",
+      "name": "Unit vector",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "u_x = v_x / v",
+      "displayLatex": "\\hat v = \\frac{\\vec v}{|\\vec v|}",
+      "variables": [
+        { "symbol": "u_x", "name": "unit vector component", "unit": "", "description": "One component of the unit vector in the direction of v." },
+        { "symbol": "v_x", "name": "vector component", "unit": "", "description": "The matching component of v." },
+        { "symbol": "v", "name": "magnitude", "unit": "", "description": "Length of v.", "positive": true }
+      ],
+      "explanation": "A unit vector has length 1 and shows only a direction. Dividing every component of v by its length shrinks or stretches it to length 1 without turning it. Apply the equation to each component in turn.",
+      "whenToUse": "Use it to describe a direction on its own, for example the direction of a force, or before projecting onto a direction.",
+      "assumptions": ["v is not the zero vector"],
+      "example": {
+        "story": "Find the x component of the unit vector in the direction of (3, 4), which has length 5.",
+        "given": { "v_x": 3, "v": 5 },
+        "solveFor": "u_x",
+        "result": 0.6,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["u_x = 3 / 5 = 0.6", "Likewise u_y = 4 / 5 = 0.8, and 0.6² + 0.8² = 1"]
+      },
+      "related": ["vector-magnitude-2d", "scalar-projection"],
+      "tags": ["unit vector", "normalise", "normalize", "direction vector", "hat"]
+    },
+    {
+      "id": "vector-direction-angle",
+      "name": "Direction angle of a 2D vector",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "tan(θ) = v_y / v_x",
+      "displayLatex": "\\tan\\theta = \\frac{v_y}{v_x}",
+      "variables": [
+        { "symbol": "θ", "name": "direction angle", "unit": "rad", "description": "Angle from the positive x axis, in radians." },
+        { "symbol": "v_y", "name": "y component", "unit": "", "description": "Vertical component." },
+        { "symbol": "v_x", "name": "x component", "unit": "", "description": "Horizontal component (not zero)." }
+      ],
+      "explanation": "The components form a right-angled triangle with the vector, so the tangent of its angle to the x axis is v_y over v_x. Calculators return an angle between -90 and 90 degrees, so check the quadrant: if v_x is negative, add 180 degrees (π).",
+      "whenToUse": "Use it to give the direction of a velocity, force or displacement from its components, for example a bearing.",
+      "assumptions": ["check the quadrant from the signs of the components"],
+      "example": {
+        "story": "A velocity has components (2, 2). What angle does it make with the x axis?",
+        "given": { "v_y": 2, "v_x": 2 },
+        "solveFor": "θ",
+        "result": 0.7853982,
+        "unit": "rad",
+        "tolerance": 1e-7,
+        "steps": ["tan θ = 2 / 2 = 1", "θ = atan(1) = π/4 ≈ 0.785 rad (45°)"]
+      },
+      "related": ["vector-magnitude-2d", "tangent-ratio", "polar-to-cartesian-x"],
+      "tags": ["direction", "angle of vector", "bearing", "atan2", "argument"]
+    },
+    {
+      "id": "distance-3d",
+      "name": "Distance between two points in 3D",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "d = sqrt((x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2)",
+      "displayLatex": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}",
+      "variables": [
+        { "symbol": "d", "name": "distance", "unit": "", "description": "Straight-line distance between the points.", "min": 0 },
+        { "symbol": "x_2", "name": "x of second point", "unit": "", "description": "x coordinate of the second point." },
+        { "symbol": "x_1", "name": "x of first point", "unit": "", "description": "x coordinate of the first point." },
+        { "symbol": "y_2", "name": "y of second point", "unit": "", "description": "y coordinate of the second point." },
+        { "symbol": "y_1", "name": "y of first point", "unit": "", "description": "y coordinate of the first point." },
+        { "symbol": "z_2", "name": "z of second point", "unit": "", "description": "z coordinate of the second point." },
+        { "symbol": "z_1", "name": "z of first point", "unit": "", "description": "z coordinate of the first point." }
+      ],
+      "explanation": "The distance between two points is the magnitude of the vector from one to the other. Subtract matching coordinates, square, add and take the square root, just like the 2D formula with an extra term.",
+      "whenToUse": "Use it for distances in 3D geometry, between atoms in a molecule, or between positions in space.",
+      "assumptions": ["Cartesian coordinates"],
+      "example": {
+        "story": "How far apart are the points (1, 2, 3) and (4, 6, 15)?",
+        "given": { "x_2": 4, "x_1": 1, "y_2": 6, "y_1": 2, "z_2": 15, "z_1": 3 },
+        "solveFor": "d",
+        "result": 13,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Differences: 3, 4 and 12", "d = √(9 + 16 + 144) = √169", "d = 13"]
+      },
+      "related": ["distance-between-points", "vector-magnitude-3d", "cuboid-space-diagonal"],
+      "tags": ["distance", "3d distance", "euclidean distance", "points in space"]
+    },
+    {
+      "id": "resultant-of-two-vectors",
+      "name": "Resultant of two vectors at an angle",
+      "subcategory": "Vectors",
+      "level": "school",
+      "equation": "F_R = sqrt(F_1^2 + F_2^2 + 2*F_1*F_2*cos(θ))",
+      "displayLatex": "F_R = \\sqrt{F_1^2 + F_2^2 + 2F_1F_2\\cos\\theta}",
+      "variables": [
+        { "symbol": "F_R", "name": "resultant", "unit": "N", "description": "Size of the combined (sum) vector.", "min": 0 },
+        { "symbol": "F_1", "name": "first vector", "unit": "N", "description": "Size of the first force or vector.", "min": 0 },
+        { "symbol": "F_2", "name": "second vector", "unit": "N", "description": "Size of the second force or vector.", "min": 0 },
+        { "symbol": "θ", "name": "angle between", "unit": "rad", "description": "Angle between the two vectors when placed tail to tail, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "Adding two vectors tip to tail forms a triangle, and the cosine rule gives the length of the third side. With θ measured between the vectors placed tail to tail, the sign in front of the cosine term is plus. At θ = 0 the sizes simply add; at θ = π they subtract.",
+      "whenToUse": "Use it to combine two forces or velocities acting at an angle, such as a boat crossing a current.",
+      "assumptions": ["θ is the angle between the vectors placed tail to tail"],
+      "example": {
+        "story": "Two ropes pull a crate with forces of 3 N and 4 N at 60 degrees to each other. What is the size of the resultant force?",
+        "given": { "F_1": 3, "F_2": 4, "θ": 1.0471975511965976 },
+        "solveFor": "F_R",
+        "result": 6.0827625,
+        "unit": "N",
+        "tolerance": 1e-7,
+        "steps": ["F_R² = 9 + 16 + 2 × 3 × 4 × 0.5", "F_R² = 37", "F_R = √37 ≈ 6.08 N"]
+      },
+      "related": ["cosine-rule", "vector-magnitude-2d", "newtons-second-law"],
+      "tags": ["resultant", "parallelogram law", "adding vectors", "resultant force", "vector sum"]
+    },
+    {
+      "id": "eigenvalues-2x2",
+      "name": "Eigenvalues of a 2x2 matrix",
+      "subcategory": "Matrices",
+      "level": "university",
+      "equation": "λ^2 - T*λ + D = 0",
+      "displayLatex": "\\lambda^2 - (\\operatorname{tr} A)\\lambda + \\det A = 0",
+      "variables": [
+        { "symbol": "λ", "name": "eigenvalue", "unit": "", "description": "A number with A v = λ v for some non-zero vector v." },
+        { "symbol": "T", "name": "trace", "unit": "", "description": "Sum of the diagonal entries, a + d." },
+        { "symbol": "D", "name": "determinant", "unit": "", "description": "ad - bc." }
+      ],
+      "explanation": "An eigenvector is only stretched by the matrix, not turned, and the stretch factor is its eigenvalue. The condition det(A - λI) = 0 for a 2x2 matrix becomes this quadratic, the characteristic equation. Its two roots add up to the trace and multiply to the determinant.",
+      "whenToUse": "Use it to find the eigenvalues of a 2x2 matrix in systems of differential equations, vibrations, Markov chains or principal axes.",
+      "assumptions": ["complex eigenvalues appear when T² < 4D"],
+      "example": {
+        "story": "Find an eigenvalue of the matrix with rows (2, 1) and (1, 2). Its trace is 4 and its determinant is 3.",
+        "given": { "T": 4, "D": 3 },
+        "solveFor": "λ",
+        "result": 3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["λ² - 4λ + 3 = 0", "(λ - 3)(λ - 1) = 0", "λ = 3 or λ = 1"]
+      },
+      "related": ["determinant-2x2", "inverse-2x2", "quadratic-formula-plus"],
+      "tags": ["eigenvalue", "characteristic equation", "characteristic polynomial", "trace", "eigenvector", "linear algebra"]
+    }
+  ]
+}

@@ -1,0 +1,414 @@
+{
+  "category": "everyday",
+  "formulas": [
+    {
+      "id": "speed-distance-time",
+      "name": "Speed, distance and time",
+      "subcategory": "Travel",
+      "level": "school",
+      "equation": "v = d / t",
+      "displayLatex": "v = \\frac{d}{t}",
+      "variables": [
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Average speed.", "min": 0 },
+        { "symbol": "d", "name": "distance", "unit": "m", "description": "Distance travelled.", "min": 0 },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time taken.", "positive": true }
+      ],
+      "explanation": "Speed is distance covered per unit of time. The same relation, rearranged, gives the distance (speed times time) or the journey time (distance divided by speed). Keep the units consistent: metres with seconds, or kilometres with hours.",
+      "whenToUse": "Use it for journey planning, running pace, and any motion at a steady or average speed.",
+      "assumptions": ["average speed over the whole journey"],
+      "example": {
+        "story": "A car covers 150 km (150 000 m) in 2 hours (7200 s). What is its average speed?",
+        "given": { "d": 150000, "t": 7200 },
+        "solveFor": "v",
+        "result": 20.833333,
+        "unit": "m/s",
+        "tolerance": 1e-6,
+        "steps": ["v = 150 000 / 7200", "v ≈ 20.8 m/s, which is 75 km/h"]
+      },
+      "related": ["average-speed-two-legs", "speed-unit-conversion", "suvat-s-average"],
+      "tags": ["speed", "distance", "time", "sdt triangle", "velocity", "journey"]
+    },
+    {
+      "id": "average-speed-two-legs",
+      "name": "Average speed over two stages",
+      "subcategory": "Travel",
+      "level": "school",
+      "equation": "v_a = (d_1 + d_2) / (t_1 + t_2)",
+      "displayLatex": "\\bar v = \\frac{d_1 + d_2}{t_1 + t_2}",
+      "variables": [
+        { "symbol": "v_a", "name": "average speed", "unit": "m/s", "description": "Total distance over total time.", "min": 0 },
+        { "symbol": "d_1", "name": "first distance", "unit": "m", "description": "Distance of the first stage.", "min": 0 },
+        { "symbol": "d_2", "name": "second distance", "unit": "m", "description": "Distance of the second stage.", "min": 0 },
+        { "symbol": "t_1", "name": "first time", "unit": "s", "description": "Time for the first stage.", "min": 0 },
+        { "symbol": "t_2", "name": "second time", "unit": "s", "description": "Time for the second stage.", "min": 0 }
+      ],
+      "explanation": "Average speed is always total distance divided by total time. It is generally not the average of the two speeds, because you spend longer at the slower speed. Driving there at 40 km/h and back at 60 km/h averages 48 km/h, not 50.",
+      "whenToUse": "Use it for journeys with several stages at different speeds.",
+      "assumptions": [],
+      "example": {
+        "story": "A cyclist rides 60 km in 1 hour, then 40 km in half an hour. What is her average speed?",
+        "given": { "d_1": 60000, "d_2": 40000, "t_1": 3600, "t_2": 1800 },
+        "solveFor": "v_a",
+        "result": 18.518519,
+        "unit": "m/s",
+        "tolerance": 1e-6,
+        "steps": ["Total distance: 100 000 m", "Total time: 5400 s", "v ≈ 18.5 m/s (about 66.7 km/h)"]
+      },
+      "related": ["speed-distance-time", "weighted-mean"],
+      "tags": ["average speed", "mean speed", "journey stages", "harmonic mean"]
+    },
+    {
+      "id": "speed-unit-conversion",
+      "name": "Kilometres per hour to metres per second",
+      "subcategory": "Unit conversions",
+      "level": "school",
+      "equation": "v = v_k / 3.6",
+      "displayLatex": "v\\,[\\text{m/s}] = \\frac{v\\,[\\text{km/h}]}{3.6}",
+      "variables": [
+        { "symbol": "v", "name": "speed in m/s", "unit": "m/s", "description": "Speed in metres per second." },
+        { "symbol": "v_k", "name": "speed in km/h", "unit": "km/h", "description": "Speed in kilometres per hour." }
+      ],
+      "explanation": "One kilometre per hour is 1000 m in 3600 s, which is 1/3.6 m/s. So divide km/h by 3.6 to get m/s, and multiply by 3.6 to go back. For miles per hour, 1 mph is about 0.447 m/s.",
+      "whenToUse": "Use it before putting road speeds into physics formulas, which need m/s.",
+      "assumptions": [],
+      "example": {
+        "story": "A car drives at 90 km/h. What is that in m/s?",
+        "given": { "v_k": 90 },
+        "solveFor": "v",
+        "result": 25,
+        "unit": "m/s",
+        "tolerance": 1e-9,
+        "steps": ["v = 90 / 3.6", "v = 25 m/s"]
+      },
+      "related": ["speed-distance-time", "stopping-distance"],
+      "tags": ["km/h to m/s", "unit conversion", "speed conversion", "kph", "kmh"]
+    },
+    {
+      "id": "stopping-distance",
+      "name": "Stopping distance of a vehicle",
+      "subcategory": "Travel",
+      "level": "school",
+      "equation": "d = v*t_r + v^2 / (2*a)",
+      "displayLatex": "d = v t_r + \\frac{v^2}{2a}",
+      "variables": [
+        { "symbol": "d", "name": "stopping distance", "unit": "m", "description": "Thinking distance plus braking distance.", "min": 0 },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed when the hazard appears.", "min": 0 },
+        { "symbol": "t_r", "name": "reaction time", "unit": "s", "description": "Time before the brakes are applied (about 0.7 s, longer when tired or distracted).", "defaultValue": 0.67, "min": 0 },
+        { "symbol": "a", "name": "braking deceleration", "unit": "m/s²", "description": "Size of the deceleration (about 6.7 m/s² on a dry road).", "positive": true }
+      ],
+      "explanation": "The car first travels at full speed during the driver's reaction time (thinking distance), then slows to a stop (braking distance, from v² = 2as). Braking distance grows with the square of the speed, so doubling the speed roughly quadruples it.",
+      "whenToUse": "Use it for road safety, safe following distances and speed limit discussions.",
+      "assumptions": ["constant deceleration", "straight, level road"],
+      "example": {
+        "story": "A car travels at 13.4 m/s (30 mph). The driver reacts in 0.67 s and brakes at 6.67 m/s². What is the stopping distance?",
+        "given": { "v": 13.4, "t_r": 0.67, "a": 6.67 },
+        "solveFor": "d",
+        "result": 22.43827,
+        "unit": "m",
+        "tolerance": 1e-5,
+        "steps": ["Thinking: 13.4 × 0.67 ≈ 8.98 m", "Braking: 13.4² / (2 × 6.67) ≈ 13.46 m", "Total ≈ 22.4 m"]
+      },
+      "related": ["suvat-v2-u2", "speed-unit-conversion", "kinetic-energy"],
+      "tags": ["stopping distance", "braking distance", "thinking distance", "reaction time", "road safety"]
+    },
+    {
+      "id": "fuel-consumption",
+      "name": "Fuel consumption (litres per 100 km)",
+      "subcategory": "Travel",
+      "level": "school",
+      "equation": "F = 100*V / d",
+      "displayLatex": "F = \\frac{100\\,V}{d}",
+      "variables": [
+        { "symbol": "F", "name": "fuel consumption", "unit": "L/100 km", "description": "Litres used per 100 km.", "min": 0 },
+        { "symbol": "V", "name": "fuel used", "unit": "L", "description": "Litres of fuel used.", "min": 0 },
+        { "symbol": "d", "name": "distance", "unit": "km", "description": "Distance driven in kilometres.", "positive": true }
+      ],
+      "explanation": "Fuel consumption in Europe is quoted as litres per 100 km: lower is better. Divide the fuel used by the distance and scale to 100 km. In the US, miles per gallon is used instead, where higher is better.",
+      "whenToUse": "Use it to compare cars, check your own driving efficiency or estimate fuel costs.",
+      "assumptions": ["everyday units: litres and kilometres"],
+      "example": {
+        "story": "A car uses 42 litres of fuel to drive 600 km. What is its fuel consumption?",
+        "given": { "V": 42, "d": 600 },
+        "solveFor": "F",
+        "result": 7,
+        "unit": "L/100 km",
+        "tolerance": 1e-9,
+        "steps": ["F = 100 × 42 / 600", "F = 7 L/100 km"]
+      },
+      "related": ["fuel-cost", "speed-distance-time"],
+      "tags": ["fuel consumption", "fuel economy", "litres per 100 km", "l/100km", "mpg"]
+    },
+    {
+      "id": "fuel-cost",
+      "name": "Fuel cost of a trip",
+      "subcategory": "Travel",
+      "level": "school",
+      "equation": "C = d*F / 100*p",
+      "displayLatex": "C = \\frac{d \\times F}{100} \\times p",
+      "variables": [
+        { "symbol": "C", "name": "fuel cost", "unit": "", "description": "Cost of the fuel, in currency units.", "min": 0 },
+        { "symbol": "d", "name": "distance", "unit": "km", "description": "Trip distance in kilometres.", "min": 0 },
+        { "symbol": "F", "name": "fuel consumption", "unit": "L/100 km", "description": "Litres used per 100 km.", "min": 0 },
+        { "symbol": "p", "name": "fuel price", "unit": "", "description": "Price per litre.", "min": 0 }
+      ],
+      "explanation": "The fuel needed is the distance divided by 100 times the consumption per 100 km. Multiplying by the price per litre gives the cost. Splitting it between passengers is then a simple division.",
+      "whenToUse": "Use it to budget for road trips or compare driving with other transport.",
+      "assumptions": ["average consumption over the trip"],
+      "example": {
+        "story": "A 350 km trip in a car using 6.5 L/100 km, with fuel at 1.85 per litre. What does the fuel cost?",
+        "given": { "d": 350, "F": 6.5, "p": 1.85 },
+        "solveFor": "C",
+        "result": 42.0875,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Fuel: 350 × 6.5 / 100 = 22.75 L", "Cost: 22.75 × 1.85 ≈ 42.09"]
+      },
+      "related": ["fuel-consumption", "electricity-cost"],
+      "tags": ["fuel cost", "petrol cost", "gas cost", "trip cost", "road trip"]
+    },
+    {
+      "id": "electricity-cost",
+      "name": "Cost of running an appliance",
+      "subcategory": "Home",
+      "level": "school",
+      "equation": "C = P*t*p",
+      "displayLatex": "C = P\\,[\\text{kW}] \\times t\\,[\\text{h}] \\times \\text{price per kWh}",
+      "variables": [
+        { "symbol": "C", "name": "cost", "unit": "", "description": "Cost in currency units.", "min": 0 },
+        { "symbol": "P", "name": "power", "unit": "kW", "description": "Power of the appliance in kilowatts.", "min": 0 },
+        { "symbol": "t", "name": "time", "unit": "h", "description": "Running time in hours.", "min": 0 },
+        { "symbol": "p", "name": "price per kWh", "unit": "", "description": "Electricity price per kilowatt-hour.", "min": 0 }
+      ],
+      "explanation": "Energy companies charge per kilowatt-hour, the energy used by a 1 kW appliance in one hour. Multiply the power in kW by the hours of use to get kWh, then by the price.",
+      "whenToUse": "Use it to compare appliances, estimate bills or see what standby power costs over a year.",
+      "assumptions": ["everyday units: kW, hours, price per kWh", "constant power while running"],
+      "example": {
+        "story": "A 2 kW heater runs for 3 hours with electricity at 0.30 per kWh. What does it cost?",
+        "given": { "P": 2, "t": 3, "p": 0.3 },
+        "solveFor": "C",
+        "result": 1.8,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Energy: 2 × 3 = 6 kWh", "Cost: 6 × 0.30 = 1.80"]
+      },
+      "related": ["electrical-energy", "fuel-cost"],
+      "tags": ["electricity cost", "kwh", "energy bill", "running cost", "appliance"]
+    },
+    {
+      "id": "body-mass-index",
+      "name": "Body mass index (BMI)",
+      "subcategory": "Health",
+      "level": "school",
+      "equation": "B = m / h^2",
+      "displayLatex": "\\text{BMI} = \\frac{m}{h^2}",
+      "variables": [
+        { "symbol": "B", "name": "body mass index", "unit": "kg/m²", "description": "Mass divided by height squared.", "positive": true },
+        { "symbol": "m", "name": "body mass", "unit": "kg", "description": "Body mass in kilograms.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height in metres.", "positive": true }
+      ],
+      "explanation": "BMI compares body mass with height. Dividing by height squared makes tall and short adults roughly comparable. For adults, 18.5 to 25 is the usual healthy range, but BMI does not distinguish muscle from fat and does not apply directly to children.",
+      "whenToUse": "Use it as a rough screening number for adults, not as a diagnosis.",
+      "assumptions": ["adults", "a population-level indicator; it ignores body composition"],
+      "example": {
+        "story": "A person has a mass of 70 kg and a height of 1.75 m. What is their BMI?",
+        "given": { "m": 70, "h": 1.75 },
+        "solveFor": "B",
+        "result": 22.857143,
+        "unit": "kg/m²",
+        "tolerance": 1e-6,
+        "steps": ["h² = 3.0625 m²", "BMI = 70 / 3.0625 ≈ 22.9"]
+      },
+      "related": ["density"],
+      "tags": ["bmi", "body mass index", "health", "weight", "quetelet index"]
+    },
+    {
+      "id": "celsius-to-fahrenheit",
+      "name": "Celsius to Fahrenheit",
+      "subcategory": "Unit conversions",
+      "level": "school",
+      "equation": "T_F = T_C*9 / 5 + 32",
+      "displayLatex": "T_F = \\frac{9}{5}T_C + 32",
+      "variables": [
+        { "symbol": "T_F", "name": "temperature in Fahrenheit", "unit": "°F", "description": "Temperature in degrees Fahrenheit." },
+        { "symbol": "T_C", "name": "temperature in Celsius", "unit": "°C", "description": "Temperature in degrees Celsius." }
+      ],
+      "explanation": "Water freezes at 0 °C = 32 °F and boils at 100 °C = 212 °F, so 100 Celsius degrees span 180 Fahrenheit degrees: each °C is 1.8 °F. Multiply by 9/5 and add 32; to go back, subtract 32 and multiply by 5/9. The scales agree at -40.",
+      "whenToUse": "Use it for weather forecasts, recipes and thermometers in different countries.",
+      "assumptions": [],
+      "example": {
+        "story": "Normal body temperature is about 37 °C. What is that in °F?",
+        "given": { "T_C": 37 },
+        "solveFor": "T_F",
+        "result": 98.6,
+        "unit": "°F",
+        "tolerance": 1e-9,
+        "steps": ["37 × 9/5 = 66.6", "66.6 + 32 = 98.6 °F"]
+      },
+      "related": ["celsius-to-kelvin"],
+      "tags": ["celsius", "fahrenheit", "temperature conversion", "convert temperature", "centigrade"]
+    },
+    {
+      "id": "celsius-to-kelvin",
+      "name": "Celsius to kelvin",
+      "subcategory": "Unit conversions",
+      "level": "school",
+      "equation": "T = T_C + 273.15",
+      "displayLatex": "T\\,[\\text{K}] = \\theta\\,[^\\circ\\text{C}] + 273.15",
+      "variables": [
+        { "symbol": "T", "name": "absolute temperature", "unit": "K", "description": "Temperature in kelvin.", "min": 0 },
+        { "symbol": "T_C", "name": "Celsius temperature", "unit": "°C", "description": "Temperature in degrees Celsius.", "min": -273.15 }
+      ],
+      "explanation": "The kelvin scale starts at absolute zero, the lowest possible temperature, -273.15 °C. A step of one kelvin is the same size as one degree Celsius, so converting only means adding 273.15. Physics and chemistry formulas need kelvin.",
+      "whenToUse": "Use it before every gas law, radiation or thermodynamics formula.",
+      "assumptions": [],
+      "example": {
+        "story": "What is -40 °C in kelvin?",
+        "given": { "T_C": -40 },
+        "solveFor": "T",
+        "result": 233.15,
+        "unit": "K",
+        "tolerance": 1e-9,
+        "steps": ["T = -40 + 273.15", "T = 233.15 K"]
+      },
+      "related": ["celsius-to-fahrenheit", "ideal-gas-law"],
+      "tags": ["kelvin", "celsius", "absolute temperature", "absolute zero", "temperature conversion"]
+    },
+    {
+      "id": "unit-price",
+      "name": "Unit price",
+      "subcategory": "Shopping",
+      "level": "school",
+      "equation": "u = p / q",
+      "displayLatex": "\\text{unit price} = \\frac{\\text{price}}{\\text{quantity}}",
+      "variables": [
+        { "symbol": "u", "name": "unit price", "unit": "", "description": "Price per kilogram, litre or item.", "min": 0 },
+        { "symbol": "p", "name": "price", "unit": "", "description": "Price of the pack.", "min": 0 },
+        { "symbol": "q", "name": "quantity", "unit": "", "description": "Amount in the pack (kg, litres or items).", "positive": true }
+      ],
+      "explanation": "To compare packs of different sizes, divide each price by the amount it contains. The lowest unit price is the best value, although a bigger pack is only a bargain if you use it all.",
+      "whenToUse": "Use it to compare prices in the shop or online.",
+      "assumptions": ["quantities in the same unit for both packs"],
+      "example": {
+        "story": "A 750 g box of cereal costs 2.49. What is the price per kilogram?",
+        "given": { "p": 2.49, "q": 0.75 },
+        "solveFor": "u",
+        "result": 3.32,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["750 g = 0.75 kg", "u = 2.49 / 0.75 = 3.32 per kg"]
+      },
+      "related": ["sale-price-discount", "direct-variation"],
+      "tags": ["unit price", "price per kg", "best value", "shopping", "comparison"]
+    },
+    {
+      "id": "sale-price-discount",
+      "name": "Sale price after a discount",
+      "subcategory": "Shopping",
+      "level": "school",
+      "equation": "S = P*(1 - d / 100)",
+      "displayLatex": "S = P\\left(1 - \\frac{d}{100}\\right)",
+      "variables": [
+        { "symbol": "S", "name": "sale price", "unit": "", "description": "Price after the discount.", "min": 0 },
+        { "symbol": "P", "name": "original price", "unit": "", "description": "Price before the discount.", "min": 0 },
+        { "symbol": "d", "name": "discount", "unit": "%", "description": "Discount in percent.", "min": 0, "max": 100 }
+      ],
+      "explanation": "A discount of d % means you pay (100 - d) % of the original price. Two discounts in a row multiply: 20 % off and then another 10 % off is 28 % off in total, not 30 %.",
+      "whenToUse": "Use it in sales, coupons and price comparisons.",
+      "assumptions": [],
+      "example": {
+        "story": "A jacket costing 80 is reduced by 25 %. What is the sale price?",
+        "given": { "P": 80, "d": 25 },
+        "solveFor": "S",
+        "result": 60,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Multiplier: 1 - 0.25 = 0.75", "S = 80 × 0.75 = 60"]
+      },
+      "related": ["percentage-multiplier", "unit-price"],
+      "tags": ["discount", "sale price", "percent off", "reduction", "shopping"]
+    },
+    {
+      "id": "bill-split-with-tip",
+      "name": "Splitting a bill with a tip",
+      "subcategory": "Shopping",
+      "level": "school",
+      "equation": "E = B*(1 + t / 100) / n",
+      "displayLatex": "\\text{each} = \\frac{B(1 + t/100)}{n}",
+      "variables": [
+        { "symbol": "E", "name": "amount each", "unit": "", "description": "What each person pays.", "min": 0 },
+        { "symbol": "B", "name": "bill", "unit": "", "description": "Bill before the tip.", "min": 0 },
+        { "symbol": "t", "name": "tip", "unit": "%", "description": "Tip as a percentage of the bill.", "min": 0 },
+        { "symbol": "n", "name": "number of people", "unit": "", "description": "How many share the bill.", "positive": true, "integer": true }
+      ],
+      "explanation": "Add the tip by multiplying the bill by 1 + t/100, then divide equally among the people. Working out the total first and dividing once avoids rounding differences.",
+      "whenToUse": "Use it at restaurants and for sharing group costs.",
+      "assumptions": ["the bill is shared equally"],
+      "example": {
+        "story": "Four friends share a bill of 84 and add a 15 % tip. How much does each pay?",
+        "given": { "B": 84, "t": 15, "n": 4 },
+        "solveFor": "E",
+        "result": 24.15,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Total with tip: 84 × 1.15 = 96.60", "Each: 96.60 / 4 = 24.15"]
+      },
+      "related": ["percentage-multiplier", "sale-price-discount"],
+      "tags": ["tip", "gratuity", "split bill", "restaurant", "sharing"]
+    },
+    {
+      "id": "map-scale",
+      "name": "Map scale",
+      "subcategory": "Unit conversions",
+      "level": "school",
+      "equation": "D = d*k",
+      "displayLatex": "D = d \\times k \\quad (\\text{scale } 1 : k)",
+      "variables": [
+        { "symbol": "D", "name": "real distance", "unit": "m", "description": "Distance on the ground.", "min": 0 },
+        { "symbol": "d", "name": "map distance", "unit": "m", "description": "Distance measured on the map.", "min": 0 },
+        { "symbol": "k", "name": "scale factor", "unit": "", "description": "The k in a scale of 1 : k.", "positive": true }
+      ],
+      "explanation": "A map scale of 1 : k means one unit on the map is k of the same units in reality. Multiply map distances by k to get real distances and divide to go the other way. Areas scale by k², not k.",
+      "whenToUse": "Use it for maps, plans, architectural drawings and models.",
+      "assumptions": ["map and real distance in the same unit"],
+      "example": {
+        "story": "On a 1 : 25 000 walking map, two villages are 4 cm (0.04 m) apart. How far apart are they really?",
+        "given": { "d": 0.04, "k": 25000 },
+        "solveFor": "D",
+        "result": 1000,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["D = 0.04 × 25 000", "D = 1000 m (1 km)"]
+      },
+      "related": ["direct-variation", "recipe-scaling"],
+      "tags": ["map scale", "scale drawing", "ratio", "scale factor", "plans"]
+    },
+    {
+      "id": "recipe-scaling",
+      "name": "Scaling a recipe",
+      "subcategory": "Home",
+      "level": "school",
+      "equation": "a_2 = a_1*s_2 / s_1",
+      "displayLatex": "a_2 = a_1 \\times \\frac{s_2}{s_1}",
+      "variables": [
+        { "symbol": "a_2", "name": "new amount", "unit": "", "description": "Amount of the ingredient for the new number of servings." },
+        { "symbol": "a_1", "name": "original amount", "unit": "", "description": "Amount in the original recipe." },
+        { "symbol": "s_2", "name": "new servings", "unit": "", "description": "Number of servings you want.", "positive": true },
+        { "symbol": "s_1", "name": "original servings", "unit": "", "description": "Number of servings the recipe makes.", "positive": true }
+      ],
+      "explanation": "Ingredients are directly proportional to the number of servings. Multiply every amount by the same ratio of new to old servings. Baking times and pan sizes do not always scale the same way, so take care with large changes.",
+      "whenToUse": "Use it to cook for more or fewer people, or to mix any recipe-like proportions such as paint or concrete.",
+      "assumptions": ["all ingredients scale in proportion"],
+      "example": {
+        "story": "A recipe for 4 people uses 300 g of flour. How much flour is needed for 6 people?",
+        "given": { "a_1": 300, "s_2": 6, "s_1": 4 },
+        "solveFor": "a_2",
+        "result": 450,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Scale factor: 6 / 4 = 1.5", "a₂ = 300 × 1.5 = 450 g"]
+      },
+      "related": ["direct-variation", "map-scale"],
+      "tags": ["recipe", "scaling", "proportion", "servings", "cooking", "ratio"]
+    }
+  ]
+}

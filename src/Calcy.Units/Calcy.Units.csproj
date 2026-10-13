@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Calcy.Units</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calcy.Core\Calcy.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Calcy.Modes.Convert" />
+    <InternalsVisibleTo Include="Calcy.Modes.Convert.Tests" />
+    <InternalsVisibleTo Include="Calcy.Mcp" />
+  </ItemGroup>
+</Project>

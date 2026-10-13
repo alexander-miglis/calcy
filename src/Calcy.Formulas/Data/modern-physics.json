@@ -1,0 +1,581 @@
+{
+  "category": "modern-physics",
+  "formulas": [
+    {
+      "id": "mass-energy-equivalence",
+      "name": "Mass-energy equivalence",
+      "subcategory": "Relativity",
+      "level": "school",
+      "equation": "E = m*c^2",
+      "displayLatex": "E = mc^2",
+      "variables": [
+        { "symbol": "E", "name": "rest energy", "unit": "J", "description": "Energy equivalent to the mass.", "min": 0 },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Rest mass.", "min": 0 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "Einstein showed that mass is a form of energy: a mass m at rest contains energy mc². Because c² is enormous, a tiny amount of mass corresponds to a huge amount of energy. Nuclear reactions release energy because the products have slightly less mass than the reactants.",
+      "whenToUse": "Use it for nuclear fission and fusion, particle physics, and the energy of the Sun.",
+      "assumptions": ["m is the rest mass (for moving objects use the relativistic energy)"],
+      "example": {
+        "story": "How much energy is equivalent to 1 gram of mass?",
+        "given": { "m": 0.001 },
+        "solveFor": "E",
+        "result": 8.9875518e13,
+        "unit": "J",
+        "tolerance": 1e7,
+        "steps": ["c² ≈ 8.988 × 10¹⁶ m²/s²", "E = 0.001 × 8.988 × 10¹⁶", "E ≈ 9.0 × 10¹³ J, about the energy of a 20 kiloton explosion"]
+      },
+      "related": ["binding-energy", "relativistic-energy", "energy-momentum-relation"],
+      "tags": ["e = mc2", "einstein", "mass energy", "rest energy", "nuclear energy", "relativity"]
+    },
+    {
+      "id": "radioactive-decay",
+      "name": "Radioactive decay law",
+      "subcategory": "Radioactivity",
+      "level": "school",
+      "equation": "N = N_0*e^(-λ*t)",
+      "displayLatex": "N = N_0 e^{-\\lambda t}",
+      "variables": [
+        { "symbol": "N", "name": "nuclei remaining", "unit": "", "description": "Number of undecayed nuclei at time t.", "min": 0 },
+        { "symbol": "N_0", "name": "initial nuclei", "unit": "", "description": "Number of nuclei at t = 0.", "positive": true },
+        { "symbol": "λ", "name": "decay constant", "unit": "s⁻¹", "description": "Probability per second that a nucleus decays.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "Each nucleus has the same small chance of decaying each second, independent of the others and of its age. So the number that decay is proportional to the number left, which gives exponential decay. The same law describes activity and mass of a radioactive sample.",
+      "whenToUse": "Use it for radioactive sources, carbon dating, medical tracers and nuclear waste.",
+      "assumptions": ["large number of nuclei (the law is statistical)", "no new nuclei being produced"],
+      "example": {
+        "story": "A sample has 1 000 000 radioactive nuclei with decay constant 0.1 s⁻¹. How many remain after 10 s?",
+        "given": { "N_0": 1000000, "λ": 0.1, "t": 10 },
+        "solveFor": "N",
+        "result": 367879.44,
+        "unit": "",
+        "tolerance": 0.01,
+        "steps": ["λ t = 0.1 × 10 = 1", "N = 10⁶ × e⁻¹", "N ≈ 367 879 nuclei"]
+      },
+      "related": ["half-life-decay-constant", "half-life-remaining", "activity", "capacitor-discharge", "poisson-probability"],
+      "tags": ["radioactive decay", "exponential decay", "decay constant", "nuclear decay", "radioactivity"]
+    },
+    {
+      "id": "half-life-decay-constant",
+      "name": "Half-life and decay constant",
+      "subcategory": "Radioactivity",
+      "level": "school",
+      "equation": "t_half = ln(2) / λ",
+      "displayLatex": "t_{1/2} = \\frac{\\ln 2}{\\lambda}",
+      "variables": [
+        { "symbol": "t_half", "name": "half-life", "unit": "s", "description": "Time for half the nuclei to decay.", "positive": true },
+        { "symbol": "λ", "name": "decay constant", "unit": "s⁻¹", "description": "Probability per second of decay.", "positive": true }
+      ],
+      "explanation": "The half-life is the time after which half of the nuclei remain. Setting N = N₀/2 in N = N₀e^(-λt) gives e^(-λt) = ½, so t = ln 2 / λ. A short half-life means a large decay constant and a very active source.",
+      "whenToUse": "Use it to convert between half-life and decay constant, for example in dating and medical physics.",
+      "assumptions": [],
+      "example": {
+        "story": "Iodine-131 used in medicine has a half-life of 8.02 days (692 928 s). What is its decay constant?",
+        "given": { "t_half": 692928 },
+        "solveFor": "λ",
+        "result": 1.0003163e-6,
+        "unit": "s⁻¹",
+        "tolerance": 1e-12,
+        "steps": ["λ = ln 2 / t½", "λ = 0.693147 / 692 928", "λ ≈ 1.0 × 10⁻⁶ s⁻¹"]
+      },
+      "related": ["radioactive-decay", "half-life-remaining", "first-order-half-life", "doubling-time"],
+      "tags": ["half life", "half-life", "decay constant", "ln 2", "radioactivity"]
+    },
+    {
+      "id": "half-life-remaining",
+      "name": "Amount remaining after a number of half-lives",
+      "subcategory": "Radioactivity",
+      "level": "school",
+      "equation": "N = N_0*0.5^(t / t_half)",
+      "displayLatex": "N = N_0\\left(\\tfrac{1}{2}\\right)^{t/t_{1/2}}",
+      "variables": [
+        { "symbol": "N", "name": "amount remaining", "unit": "", "description": "Nuclei, mass or activity left (same unit as N₀).", "min": 0 },
+        { "symbol": "N_0", "name": "initial amount", "unit": "", "description": "Starting nuclei, mass or activity.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed (any unit, the same as the half-life).", "min": 0 },
+        { "symbol": "t_half", "name": "half-life", "unit": "s", "description": "Half-life of the isotope.", "positive": true }
+      ],
+      "explanation": "Every half-life the amount halves, so after t/t½ half-lives it has been multiplied by ½ that many times. This form is equivalent to the exponential decay law and is often easier to use with half-lives given in years.",
+      "whenToUse": "Use it for decay problems stated in half-lives, such as how much of a sample is left after some years.",
+      "assumptions": ["t and t½ in the same unit"],
+      "example": {
+        "story": "A sample contains 80 g of an isotope with a half-life of 5 years. How much is left after 15 years?",
+        "given": { "N_0": 80, "t": 15, "t_half": 5 },
+        "solveFor": "N",
+        "result": 10,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["15 / 5 = 3 half-lives", "N = 80 × ½³ = 80 / 8", "N = 10 g"]
+      },
+      "related": ["radioactive-decay", "half-life-decay-constant"],
+      "tags": ["half life", "half-life", "remaining", "carbon dating", "radioactive decay"]
+    },
+    {
+      "id": "activity",
+      "name": "Activity of a radioactive source",
+      "subcategory": "Radioactivity",
+      "level": "school",
+      "equation": "A = λ*N",
+      "displayLatex": "A = \\lambda N",
+      "variables": [
+        { "symbol": "A", "name": "activity", "unit": "Bq", "description": "Decays per second (1 becquerel = 1 decay per second).", "min": 0 },
+        { "symbol": "λ", "name": "decay constant", "unit": "s⁻¹", "description": "Probability per second of decay.", "positive": true },
+        { "symbol": "N", "name": "number of nuclei", "unit": "", "description": "Number of undecayed nuclei.", "min": 0 }
+      ],
+      "explanation": "If each nucleus decays with probability λ per second, then N nuclei produce on average λN decays per second. Activity therefore falls with the same half-life as the number of nuclei.",
+      "whenToUse": "Use it to find how active a source is, or how many radioactive atoms it contains.",
+      "assumptions": ["large number of nuclei"],
+      "example": {
+        "story": "A source contains 5 × 10¹² nuclei with λ = 1.0 × 10⁻⁶ s⁻¹. What is its activity?",
+        "given": { "λ": 1e-6, "N": 5e12 },
+        "solveFor": "A",
+        "result": 5000000,
+        "unit": "Bq",
+        "tolerance": 1e-3,
+        "steps": ["A = 10⁻⁶ × 5 × 10¹²", "A = 5 × 10⁶ Bq"]
+      },
+      "related": ["radioactive-decay", "half-life-decay-constant"],
+      "tags": ["activity", "becquerel", "bq", "decay rate", "count rate"]
+    },
+    {
+      "id": "photoelectric-equation",
+      "name": "Photoelectric equation",
+      "subcategory": "Quantum physics",
+      "level": "school",
+      "equation": "E_k = h*f - φ",
+      "displayLatex": "E_{k,\\max} = hf - \\phi",
+      "variables": [
+        { "symbol": "E_k", "name": "maximum kinetic energy", "unit": "J", "description": "Kinetic energy of the fastest emitted electrons." },
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "Frequency of the incoming light.", "positive": true },
+        { "symbol": "φ", "name": "work function", "unit": "J", "description": "Minimum energy to free an electron from the metal (2.28 eV for sodium).", "positive": true }
+      ],
+      "constants": ["planck-constant"],
+      "explanation": "Light knocks electrons out of a metal one photon at a time. Each photon gives its energy hf to a single electron; part of it (the work function φ) is needed to escape, and the rest is kinetic energy. Brighter light gives more electrons, but only higher frequency gives faster ones, which convinced Einstein that light comes in quanta.",
+      "whenToUse": "Use it for photocells, solar panels, photomultipliers and the photoelectric effect experiment.",
+      "assumptions": ["one photon frees at most one electron", "if hf < φ no electrons are emitted"],
+      "example": {
+        "story": "Ultraviolet light of frequency 1.0 × 10¹⁵ Hz shines on sodium (φ = 2.28 eV = 3.653 × 10⁻¹⁹ J). What is the maximum kinetic energy of the electrons?",
+        "given": { "f": 1e15, "φ": 3.6529627255e-19 },
+        "solveFor": "E_k",
+        "result": 2.9731074e-19,
+        "unit": "J",
+        "tolerance": 1e-25,
+        "steps": ["Photon energy: h f ≈ 6.626 × 10⁻¹⁹ J", "E_k = 6.626 × 10⁻¹⁹ - 3.653 × 10⁻¹⁹", "E_k ≈ 2.97 × 10⁻¹⁹ J (about 1.86 eV)"]
+      },
+      "related": ["threshold-frequency", "photon-energy-frequency"],
+      "tags": ["photoelectric effect", "einstein", "work function", "photoelectron", "quantum"]
+    },
+    {
+      "id": "threshold-frequency",
+      "name": "Threshold frequency",
+      "subcategory": "Quantum physics",
+      "level": "school",
+      "equation": "f_0 = φ / h",
+      "displayLatex": "f_0 = \\frac{\\phi}{h}",
+      "variables": [
+        { "symbol": "f_0", "name": "threshold frequency", "unit": "Hz", "description": "Lowest frequency that can release electrons.", "positive": true },
+        { "symbol": "φ", "name": "work function", "unit": "J", "description": "Minimum energy to free an electron.", "positive": true }
+      ],
+      "constants": ["planck-constant"],
+      "explanation": "Below the threshold frequency a photon does not have enough energy to free an electron, however bright the light. At exactly f₀ the photon energy equals the work function and the electrons escape with zero kinetic energy.",
+      "whenToUse": "Use it to find which colours of light can cause photoemission from a given metal.",
+      "assumptions": [],
+      "example": {
+        "story": "What is the threshold frequency for sodium, with a work function of 3.653 × 10⁻¹⁹ J?",
+        "given": { "φ": 3.6529627255e-19 },
+        "solveFor": "f_0",
+        "result": 5.5130155e14,
+        "unit": "Hz",
+        "tolerance": 1e8,
+        "steps": ["f₀ = 3.653 × 10⁻¹⁹ / 6.626 × 10⁻³⁴", "f₀ ≈ 5.51 × 10¹⁴ Hz, green light"]
+      },
+      "related": ["photoelectric-equation", "photon-energy-frequency"],
+      "tags": ["threshold frequency", "cut off frequency", "work function", "photoelectric effect"]
+    },
+    {
+      "id": "photon-transition",
+      "name": "Photon emitted in an energy level transition",
+      "subcategory": "Atomic physics",
+      "level": "school",
+      "equation": "h*f = E_u - E_l",
+      "displayLatex": "hf = E_{upper} - E_{lower}",
+      "variables": [
+        { "symbol": "f", "name": "photon frequency", "unit": "Hz", "description": "Frequency of the emitted (or absorbed) light.", "positive": true },
+        { "symbol": "E_u", "name": "upper level energy", "unit": "J", "description": "Energy of the higher level (often negative)." },
+        { "symbol": "E_l", "name": "lower level energy", "unit": "J", "description": "Energy of the lower level." }
+      ],
+      "constants": ["planck-constant"],
+      "explanation": "Electrons in atoms can only have certain energies. When an electron drops to a lower level, the atom emits one photon carrying exactly the energy difference. This is why each element has its own pattern of sharp spectral lines.",
+      "whenToUse": "Use it for emission and absorption spectra, lasers, LEDs and fluorescent lights.",
+      "assumptions": [],
+      "example": {
+        "story": "An electron drops from a level at -2.42 × 10⁻¹⁹ J to one at -5.45 × 10⁻¹⁹ J. What is the frequency of the emitted photon?",
+        "given": { "E_u": -2.42e-19, "E_l": -5.45e-19 },
+        "solveFor": "f",
+        "result": 4.57285e14,
+        "unit": "Hz",
+        "tolerance": 1e9,
+        "steps": ["Energy difference: 3.03 × 10⁻¹⁹ J", "f = 3.03 × 10⁻¹⁹ / 6.626 × 10⁻³⁴", "f ≈ 4.57 × 10¹⁴ Hz (red light, the hydrogen alpha line)"]
+      },
+      "related": ["bohr-energy-levels", "rydberg-formula", "photon-energy-frequency"],
+      "tags": ["energy levels", "spectral lines", "emission spectrum", "transition", "photon emission"]
+    },
+    {
+      "id": "bohr-energy-levels",
+      "name": "Energy levels of hydrogen (Bohr model)",
+      "subcategory": "Atomic physics",
+      "level": "school",
+      "equation": "E_n = -h*c*R_inf / n^2",
+      "displayLatex": "E_n = -\\frac{hcR_\\infty}{n^2} \\approx -\\frac{13.6\\ \\text{eV}}{n^2}",
+      "variables": [
+        { "symbol": "E_n", "name": "energy of level n", "unit": "J", "description": "Energy of the electron in level n (zero means just free)." },
+        { "symbol": "n", "name": "principal quantum number", "unit": "", "description": "Level number: 1 for the ground state, 2, 3, ...", "positive": true, "integer": true }
+      ],
+      "constants": ["planck-constant", "speed-of-light", "rydberg-constant"],
+      "explanation": "In Bohr's model the electron in hydrogen can only occupy levels with energy -13.6 eV / n². The energies are negative because the electron is bound: 13.6 eV is needed to remove it from the ground state. The levels crowd together as n grows.",
+      "whenToUse": "Use it for hydrogen spectra, ionisation energy and the photon energies of transitions.",
+      "assumptions": ["hydrogen (one electron)", "infinitely heavy nucleus (the reduced-mass correction is about 0.05 %)"],
+      "example": {
+        "story": "What is the energy of the n = 2 level of hydrogen?",
+        "given": { "n": 2 },
+        "solveFor": "E_n",
+        "result": -5.4496809e-19,
+        "unit": "J",
+        "tolerance": 1e-25,
+        "steps": ["h c R∞ ≈ 2.180 × 10⁻¹⁸ J (13.6 eV)", "E₂ = -2.180 × 10⁻¹⁸ / 4", "E₂ ≈ -5.45 × 10⁻¹⁹ J (-3.4 eV)"]
+      },
+      "related": ["rydberg-formula", "photon-transition"],
+      "tags": ["bohr model", "energy levels", "hydrogen atom", "13.6 ev", "quantum number"]
+    },
+    {
+      "id": "rydberg-formula",
+      "name": "Rydberg formula",
+      "subcategory": "Atomic physics",
+      "level": "university",
+      "equation": "1 / λ = R_inf*(1 / n_1^2 - 1 / n_2^2)",
+      "displayLatex": "\\frac{1}{\\lambda} = R_\\infty\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right)",
+      "variables": [
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the spectral line.", "positive": true },
+        { "symbol": "n_1", "name": "lower level", "unit": "", "description": "Level the electron falls to (2 for the Balmer series).", "positive": true, "integer": true },
+        { "symbol": "n_2", "name": "upper level", "unit": "", "description": "Level the electron falls from (larger than n₁).", "positive": true, "integer": true }
+      ],
+      "constants": ["rydberg-constant"],
+      "explanation": "Dividing the energy difference between two Bohr levels by hc gives the wavenumber of the emitted light. Rydberg found this pattern in hydrogen's spectrum before quantum theory explained it. Falling to n₁ = 1 gives ultraviolet lines (Lyman), to n₁ = 2 visible lines (Balmer).",
+      "whenToUse": "Use it to predict or identify hydrogen spectral lines.",
+      "assumptions": ["hydrogen-like atom", "infinite nuclear mass, so hydrogen's real lines are about 0.05 % longer"],
+      "example": {
+        "story": "What is the wavelength of the red Balmer line, from n = 3 to n = 2?",
+        "given": { "n_1": 2, "n_2": 3 },
+        "solveFor": "λ",
+        "result": 6.561123e-7,
+        "unit": "m",
+        "tolerance": 1e-12,
+        "steps": ["1/4 - 1/9 = 5/36", "1/λ = 10 973 732 × 5/36 ≈ 1 524 130 m⁻¹", "λ ≈ 656.1 nm; the reduced-mass correction gives 656.5 nm in vacuum (656.3 nm in air)"]
+      },
+      "related": ["bohr-energy-levels", "photon-energy-wavelength", "photon-transition"],
+      "tags": ["rydberg", "hydrogen spectrum", "balmer series", "lyman series", "spectral lines"]
+    },
+    {
+      "id": "lorentz-factor",
+      "name": "Lorentz factor",
+      "subcategory": "Relativity",
+      "level": "university",
+      "equation": "γ = 1 / sqrt(1 - v^2 / c^2)",
+      "displayLatex": "\\gamma = \\frac{1}{\\sqrt{1 - v^2/c^2}}",
+      "variables": [
+        { "symbol": "γ", "name": "Lorentz factor", "unit": "", "description": "How strongly relativity changes time, length and energy (1 at rest).", "min": 1 },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed relative to the observer (less than c).", "min": 0, "max": 299792458 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "The Lorentz factor appears in every formula of special relativity. It is almost exactly 1 at everyday speeds and grows without limit as v approaches the speed of light. At 87 % of c it is 2, so moving clocks run at half speed.",
+      "whenToUse": "Use it for time dilation, length contraction, and relativistic energy and momentum.",
+      "assumptions": ["special relativity (no gravity, constant velocity)"],
+      "example": {
+        "story": "What is the Lorentz factor for a spacecraft moving at 0.8c (2.398 × 10⁸ m/s)?",
+        "given": { "v": 239833966.4 },
+        "solveFor": "γ",
+        "result": 1.6666667,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["v²/c² = 0.64", "√(1 - 0.64) = 0.6", "γ = 1 / 0.6 ≈ 1.667"]
+      },
+      "related": ["time-dilation", "length-contraction", "relativistic-energy"],
+      "tags": ["lorentz factor", "gamma", "special relativity", "einstein", "relativistic"]
+    },
+    {
+      "id": "time-dilation",
+      "name": "Time dilation",
+      "subcategory": "Relativity",
+      "level": "university",
+      "equation": "t = t_0 / sqrt(1 - v^2 / c^2)",
+      "displayLatex": "t = \\frac{t_0}{\\sqrt{1 - v^2/c^2}} = \\gamma t_0",
+      "variables": [
+        { "symbol": "t", "name": "dilated time", "unit": "s", "description": "Time interval measured by the observer who sees the clock moving.", "positive": true },
+        { "symbol": "t_0", "name": "proper time", "unit": "s", "description": "Time interval measured by a clock moving with the event.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Relative speed (less than c).", "min": 0, "max": 299792458 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "A moving clock runs slow compared with clocks at rest. Light bouncing between mirrors in a moving clock travels a longer, diagonal path, and since light's speed is the same for everyone, each tick takes longer. Muons from cosmic rays reach the ground only because their decay is slowed this way.",
+      "whenToUse": "Use it for fast particles, GPS satellite clock corrections and the twin paradox.",
+      "assumptions": ["special relativity", "constant velocity"],
+      "example": {
+        "story": "Muons live 2.2 µs at rest. How long do they live, as measured from the ground, when moving at 0.99c?",
+        "given": { "t_0": 2.2e-6, "v": 296794533.42 },
+        "solveFor": "t",
+        "result": 1.5595387e-5,
+        "unit": "s",
+        "tolerance": 1e-11,
+        "steps": ["1 - 0.99² = 0.0199", "√0.0199 ≈ 0.141067", "t ≈ 2.2 µs / 0.141067 ≈ 15.6 µs"]
+      },
+      "related": ["lorentz-factor", "length-contraction"],
+      "tags": ["time dilation", "special relativity", "moving clocks", "muon", "twin paradox"]
+    },
+    {
+      "id": "length-contraction",
+      "name": "Length contraction",
+      "subcategory": "Relativity",
+      "level": "university",
+      "equation": "L = L_0*sqrt(1 - v^2 / c^2)",
+      "displayLatex": "L = L_0\\sqrt{1 - v^2/c^2} = \\frac{L_0}{\\gamma}",
+      "variables": [
+        { "symbol": "L", "name": "contracted length", "unit": "m", "description": "Length measured by an observer who sees the object moving.", "positive": true },
+        { "symbol": "L_0", "name": "proper length", "unit": "m", "description": "Length measured at rest relative to the object.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Relative speed (less than c).", "min": 0, "max": 299792458 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "A moving object is shorter along its direction of motion, as measured by an observer it passes. The effect is the partner of time dilation and keeps the speed of light the same for all observers. Lengths across the motion are not affected.",
+      "whenToUse": "Use it for fast-moving objects and particles, and for the muon's view of the atmosphere.",
+      "assumptions": ["special relativity", "only the length along the motion contracts"],
+      "example": {
+        "story": "A 100 m spaceship passes a space station at 0.6c (1.799 × 10⁸ m/s). How long does it look to the station?",
+        "given": { "L_0": 100, "v": 179875474.8 },
+        "solveFor": "L",
+        "result": 80,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["v²/c² = 0.36", "√(1 - 0.36) = 0.8", "L = 100 × 0.8 = 80 m"]
+      },
+      "related": ["time-dilation", "lorentz-factor"],
+      "tags": ["length contraction", "lorentz contraction", "special relativity", "fitzgerald"]
+    },
+    {
+      "id": "relativistic-energy",
+      "name": "Total relativistic energy",
+      "subcategory": "Relativity",
+      "level": "university",
+      "equation": "E = m*c^2 / sqrt(1 - v^2 / c^2)",
+      "displayLatex": "E = \\gamma mc^2",
+      "variables": [
+        { "symbol": "E", "name": "total energy", "unit": "J", "description": "Rest energy plus kinetic energy.", "positive": true },
+        { "symbol": "m", "name": "rest mass", "unit": "kg", "description": "Mass measured at rest.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed (less than c).", "min": 0, "max": 299792458 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "The total energy of a moving particle is its rest energy mc² multiplied by the Lorentz factor. The kinetic energy is (γ - 1)mc², which reduces to ½mv² at low speed. Because γ grows without limit near c, no massive particle can reach the speed of light.",
+      "whenToUse": "Use it for particle accelerators, cosmic rays and electrons in high-voltage devices.",
+      "assumptions": ["special relativity"],
+      "example": {
+        "story": "What is the total energy of an electron (9.109 × 10⁻³¹ kg) moving at 0.6c?",
+        "given": { "m": 9.1093837015e-31, "v": 179875474.8 },
+        "solveFor": "E",
+        "result": 1.0233882e-13,
+        "unit": "J",
+        "tolerance": 1e-19,
+        "steps": ["Rest energy m c² ≈ 8.187 × 10⁻¹⁴ J", "γ = 1 / 0.8 = 1.25", "E ≈ 1.023 × 10⁻¹³ J"]
+      },
+      "related": ["mass-energy-equivalence", "lorentz-factor", "energy-momentum-relation", "kinetic-energy"],
+      "tags": ["relativistic energy", "gamma mc2", "total energy", "special relativity"]
+    },
+    {
+      "id": "relativistic-momentum",
+      "name": "Relativistic momentum",
+      "subcategory": "Relativity",
+      "level": "university",
+      "equation": "p = m*v / sqrt(1 - v^2 / c^2)",
+      "displayLatex": "p = \\gamma mv",
+      "variables": [
+        { "symbol": "p", "name": "momentum", "unit": "kg·m/s", "description": "Relativistic momentum.", "min": 0 },
+        { "symbol": "m", "name": "rest mass", "unit": "kg", "description": "Mass measured at rest.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed (less than c).", "min": 0, "max": 299792458 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "At high speeds the ordinary momentum mv is not conserved in collisions; γmv is. It agrees with mv at everyday speeds and grows without limit as v approaches c.",
+      "whenToUse": "Use it for fast particles in accelerators and magnetic spectrometers, and in the energy-momentum relation.",
+      "assumptions": ["special relativity"],
+      "example": {
+        "story": "What is the momentum of an electron moving at 0.6c?",
+        "given": { "m": 9.1093837015e-31, "v": 179875474.8 },
+        "solveFor": "p",
+        "result": 2.0481927e-22,
+        "unit": "kg·m/s",
+        "tolerance": 1e-28,
+        "steps": ["m v ≈ 9.109 × 10⁻³¹ × 1.799 × 10⁸ ≈ 1.639 × 10⁻²²", "γ = 1.25", "p ≈ 2.05 × 10⁻²² kg·m/s"]
+      },
+      "related": ["momentum", "relativistic-energy", "energy-momentum-relation"],
+      "tags": ["relativistic momentum", "gamma m v", "special relativity", "momentum"]
+    },
+    {
+      "id": "energy-momentum-relation",
+      "name": "Energy-momentum relation",
+      "subcategory": "Relativity",
+      "level": "university",
+      "equation": "E^2 = (p*c)^2 + (m*c^2)^2",
+      "displayLatex": "E^2 = (pc)^2 + (mc^2)^2",
+      "variables": [
+        { "symbol": "E", "name": "total energy", "unit": "J", "description": "Total energy of the particle.", "positive": true },
+        { "symbol": "p", "name": "momentum", "unit": "kg·m/s", "description": "Momentum of the particle." },
+        { "symbol": "m", "name": "rest mass", "unit": "kg", "description": "Rest mass (zero for a photon).", "min": 0 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "Energy, momentum and mass of any particle are linked like the sides of a right-angled triangle. For a particle at rest it gives E = mc²; for a massless photon E = pc. Particle physicists use it to find masses from measured energies and momenta.",
+      "whenToUse": "Use it whenever you know two of energy, momentum and mass, from photons to particle collisions.",
+      "assumptions": ["special relativity"],
+      "example": {
+        "story": "An electron (9.109 × 10⁻³¹ kg) has momentum 5.0 × 10⁻²² kg·m/s. What is its total energy?",
+        "given": { "p": 5e-22, "m": 9.1093837015e-31 },
+        "solveFor": "E",
+        "result": 1.707974e-13,
+        "unit": "J",
+        "tolerance": 1e-18,
+        "steps": ["p c ≈ 1.499 × 10⁻¹³ J", "m c² ≈ 8.187 × 10⁻¹⁴ J", "E = √((1.499 × 10⁻¹³)² + (8.187 × 10⁻¹⁴)²) ≈ 1.708 × 10⁻¹³ J"]
+      },
+      "related": ["relativistic-energy", "mass-energy-equivalence", "photon-momentum"],
+      "tags": ["energy momentum relation", "dispersion relation", "invariant mass", "special relativity"]
+    },
+    {
+      "id": "photon-momentum",
+      "name": "Momentum of a photon",
+      "subcategory": "Quantum physics",
+      "level": "university",
+      "equation": "p = h / λ",
+      "displayLatex": "p = \\frac{h}{\\lambda} = \\frac{E}{c}",
+      "variables": [
+        { "symbol": "p", "name": "momentum", "unit": "kg·m/s", "description": "Momentum carried by one photon.", "positive": true },
+        { "symbol": "λ", "name": "wavelength", "unit": "m", "description": "Wavelength of the light.", "positive": true }
+      ],
+      "constants": ["planck-constant"],
+      "explanation": "Even though photons have no mass, they carry momentum, which is why light exerts a tiny pressure. A photon's momentum is its energy divided by c, or h over its wavelength. Solar sails use this push.",
+      "whenToUse": "Use it for radiation pressure, solar sails, optical tweezers and Compton scattering.",
+      "assumptions": [],
+      "example": {
+        "story": "What momentum does a 500 nm photon carry?",
+        "given": { "λ": 5e-7 },
+        "solveFor": "p",
+        "result": 1.325214e-27,
+        "unit": "kg·m/s",
+        "tolerance": 1e-33,
+        "steps": ["p = 6.626 × 10⁻³⁴ / 5 × 10⁻⁷", "p ≈ 1.33 × 10⁻²⁷ kg·m/s"]
+      },
+      "related": ["de-broglie-wavelength", "energy-momentum-relation", "compton-scattering"],
+      "tags": ["photon momentum", "radiation pressure", "solar sail", "light momentum"]
+    },
+    {
+      "id": "compton-scattering",
+      "name": "Compton scattering",
+      "subcategory": "Quantum physics",
+      "level": "university",
+      "equation": "Δλ = h / (m_e*c)*(1 - cos(θ))",
+      "displayLatex": "\\Delta\\lambda = \\frac{h}{m_e c}(1 - \\cos\\theta)",
+      "variables": [
+        { "symbol": "Δλ", "name": "wavelength shift", "unit": "m", "description": "Increase in the photon's wavelength.", "min": 0 },
+        { "symbol": "θ", "name": "scattering angle", "unit": "rad", "description": "Angle the photon is deflected through, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "constants": ["planck-constant", "electron-mass", "speed-of-light"],
+      "explanation": "When an X-ray photon bounces off a free electron, it gives the electron some energy and comes away with a longer wavelength. Treating the collision like billiard balls with photon momentum h/λ gives this shift. Compton's 1923 experiment showed that photons carry momentum.",
+      "whenToUse": "Use it for X-ray and gamma-ray scattering, medical imaging and radiation shielding.",
+      "assumptions": ["the electron is free and initially at rest"],
+      "example": {
+        "story": "An X-ray photon is scattered through 90 degrees by a free electron. By how much does its wavelength increase?",
+        "given": { "θ": 1.5707963267948966 },
+        "solveFor": "Δλ",
+        "result": 2.4263102e-12,
+        "unit": "m",
+        "tolerance": 1e-18,
+        "steps": ["cos 90° = 0", "Δλ = h / (m_e c) ≈ 6.626 × 10⁻³⁴ / 2.731 × 10⁻²²", "Δλ ≈ 2.43 × 10⁻¹² m (the Compton wavelength)"]
+      },
+      "related": ["photon-momentum", "photon-energy-wavelength"],
+      "tags": ["compton", "compton effect", "x ray scattering", "photon electron collision"]
+    },
+    {
+      "id": "heisenberg-uncertainty",
+      "name": "Heisenberg uncertainty principle (minimum)",
+      "subcategory": "Quantum physics",
+      "level": "university",
+      "equation": "Δx*Δp = h_bar / 2",
+      "displayLatex": "\\Delta x\\,\\Delta p \\geq \\frac{\\hbar}{2}",
+      "variables": [
+        { "symbol": "Δx", "name": "position uncertainty", "unit": "m", "description": "Spread in position (standard deviation).", "positive": true },
+        { "symbol": "Δp", "name": "momentum uncertainty", "unit": "kg·m/s", "description": "Spread in momentum (standard deviation).", "positive": true }
+      ],
+      "constants": ["reduced-planck-constant"],
+      "explanation": "Quantum mechanics forbids knowing both the position and the momentum of a particle exactly. The product of their uncertainties is at least ħ/2; the equation here gives that smallest possible value. It is not a flaw of instruments but a property of nature, and it explains why electrons do not fall into the nucleus.",
+      "whenToUse": "Use it to estimate minimum momenta or energies of confined particles, such as an electron in an atom.",
+      "assumptions": ["the equality gives the minimum; real states usually exceed it"],
+      "example": {
+        "story": "An electron is confined to a region 1.0 × 10⁻¹⁰ m wide, about the size of an atom. What is the smallest possible uncertainty in its momentum?",
+        "given": { "Δx": 1e-10 },
+        "solveFor": "Δp",
+        "result": 5.2728591e-25,
+        "unit": "kg·m/s",
+        "tolerance": 1e-31,
+        "steps": ["Δp = ħ / (2 Δx)", "Δp = 1.0546 × 10⁻³⁴ / (2 × 10⁻¹⁰)", "Δp ≈ 5.27 × 10⁻²⁵ kg·m/s"]
+      },
+      "related": ["de-broglie-wavelength", "photon-momentum"],
+      "tags": ["heisenberg", "uncertainty principle", "hbar", "quantum mechanics", "indeterminacy"]
+    },
+    {
+      "id": "nuclear-radius",
+      "name": "Nuclear radius",
+      "subcategory": "Nuclear physics",
+      "level": "university",
+      "equation": "r = r_0*root(A, 3)",
+      "displayLatex": "r = r_0 A^{1/3}",
+      "variables": [
+        { "symbol": "r", "name": "nuclear radius", "unit": "m", "description": "Approximate radius of the nucleus.", "positive": true },
+        { "symbol": "r_0", "name": "radius constant", "unit": "m", "description": "About 1.2 × 10⁻¹⁵ m (1.2 fm), from scattering experiments.", "defaultValue": 1.2e-15, "positive": true },
+        { "symbol": "A", "name": "mass number", "unit": "", "description": "Number of protons plus neutrons.", "positive": true, "integer": true }
+      ],
+      "explanation": "Nucleons pack together at roughly constant density, so the volume of a nucleus is proportional to the number of nucleons A. Radius goes as the cube root of volume, hence A^(1/3). All nuclei have about the same enormous density, around 2 × 10¹⁷ kg/m³.",
+      "whenToUse": "Use it to estimate nuclear sizes and densities, or closest approach in scattering experiments.",
+      "assumptions": ["empirical model", "r₀ between 1.2 and 1.25 fm depending on the experiment"],
+      "example": {
+        "story": "Estimate the radius of an aluminium-27 nucleus.",
+        "given": { "r_0": 1.2e-15, "A": 27 },
+        "solveFor": "r",
+        "result": 3.6e-15,
+        "unit": "m",
+        "tolerance": 1e-21,
+        "steps": ["∛27 = 3", "r = 1.2 × 10⁻¹⁵ × 3", "r = 3.6 × 10⁻¹⁵ m (3.6 fm)"]
+      },
+      "related": ["binding-energy"],
+      "tags": ["nuclear radius", "nucleus size", "femtometre", "mass number", "nuclear density"]
+    },
+    {
+      "id": "binding-energy",
+      "name": "Nuclear binding energy from mass defect",
+      "subcategory": "Nuclear physics",
+      "level": "school",
+      "equation": "E_b = Δm*c^2",
+      "displayLatex": "E_b = \\Delta m\\,c^2",
+      "variables": [
+        { "symbol": "E_b", "name": "binding energy", "unit": "J", "description": "Energy needed to separate the nucleus into its nucleons.", "min": 0 },
+        { "symbol": "Δm", "name": "mass defect", "unit": "kg", "description": "Mass of the separate nucleons minus the mass of the nucleus.", "min": 0 }
+      ],
+      "constants": ["speed-of-light"],
+      "explanation": "A nucleus weighs less than the protons and neutrons that make it up. The missing mass, the mass defect, is the binding energy divided by c². Nuclei near iron have the most binding energy per nucleon, which is why both fusion of light nuclei and fission of heavy ones release energy.",
+      "whenToUse": "Use it to find binding energies and the energy released in nuclear reactions.",
+      "assumptions": [],
+      "example": {
+        "story": "A helium-4 nucleus has a mass defect of 5.0442 × 10⁻²⁹ kg. What is its binding energy?",
+        "given": { "Δm": 5.0442e-29 },
+        "solveFor": "E_b",
+        "result": 4.533501e-12,
+        "unit": "J",
+        "tolerance": 1e-17,
+        "steps": ["E = 5.0442 × 10⁻²⁹ × (2.998 × 10⁸)²", "E ≈ 4.53 × 10⁻¹² J (about 28.3 MeV)"]
+      },
+      "related": ["mass-energy-equivalence", "nuclear-radius"],
+      "tags": ["binding energy", "mass defect", "nuclear energy", "fusion", "fission", "e = mc2"]
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Calcy.Modes.Convert.ConvertStyles">
+
+  <Styles.Resources>
+    <!-- A row in the category list or the unit search results -->
+    <ControlTheme x:Key="ConvertListItem" TargetType="ListBoxItem">
+      <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Key}" />
+      <Setter Property="BorderThickness" Value="0,0,0,2" />
+      <Setter Property="Padding" Value="14,0" />
+      <Setter Property="MinHeight" Value="33" />
+      <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Panel>
+            <Border Name="PART_Back"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}">
+              <ContentPresenter Name="PART_ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Foreground="{TemplateBinding Foreground}" />
+            </Border>
+            <Border Name="PART_Focus" BorderBrush="{DynamicResource Calcy.Ink}" BorderThickness="2" Margin="2" IsVisible="False" />
+          </Panel>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:pointerover /template/ Border#PART_Back">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+      </Style>
+      <Style Selector="^:selected /template/ Border#PART_Back">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+      </Style>
+      <Style Selector="^:focus-visible /template/ Border#PART_Focus">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+    </ControlTheme>
+
+    <!-- A cell of the "in every unit" grid: value on top, unit name below -->
+    <ControlTheme x:Key="ConvertCell" TargetType="Button">
+      <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+      <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Key}" />
+      <Setter Property="BorderThickness" Value="0,0,2,2" />
+      <Setter Property="Padding" Value="12,7" />
+      <Setter Property="MinHeight" Value="56" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Panel>
+            <Border Name="PART_Back"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}">
+              <ContentPresenter Content="{TemplateBinding Content}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Foreground="{TemplateBinding Foreground}" />
+            </Border>
+            <Border Name="PART_Focus" BorderBrush="{DynamicResource Calcy.Ink}" BorderThickness="2" Margin="3,3,5,5" IsVisible="False" />
+          </Panel>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:pointerover /template/ Border#PART_Back">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+      </Style>
+      <Style Selector="^.sel /template/ Border#PART_Back">
+        <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+      </Style>
+      <Style Selector="^:focus-visible /template/ Border#PART_Focus">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+    </ControlTheme>
+  </Styles.Resources>
+
+  <!-- Panels -->
+  <Style Selector="Border.panel">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="4" />
+    <Setter Property="BoxShadow" Value="{DynamicResource Calcy.ShadowLarge}" />
+  </Style>
+  <Style Selector="Border.strip">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Key}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="0,0,0,3" />
+    <Setter Property="Padding" Value="14,8" />
+  </Style>
+  <Style Selector="Border.result">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="4" />
+    <Setter Property="Padding" Value="12,4" />
+    <Setter Property="MinHeight" Value="56" />
+  </Style>
+  <Style Selector="Border.tile">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="Padding" Value="10,8" />
+  </Style>
+  <Style Selector="Border.tile.sel">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+  </Style>
+  <Style Selector="Border.chip">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="Padding" Value="10,6" />
+    <Setter Property="MinHeight" Value="44" />
+  </Style>
+
+  <!-- Text -->
+  <Style Selector="TextBlock.ink">
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+  </Style>
+  <Style Selector="TextBlock.formula">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.formula.err">
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+  <Style Selector="TextBlock.big">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="28" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.cellvalue">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.cellname">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+  </Style>
+  <Style Selector="TextBlock.tilevalue">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="22" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.mathline">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.hint">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
+  <!-- Inputs -->
+  <Style Selector="TextBox.big">
+    <Setter Property="FontSize" Value="28" />
+    <Setter Property="MinHeight" Value="56" />
+    <Setter Property="Padding" Value="12,0" />
+  </Style>
+  <Style Selector="TextBox.date">
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="MinHeight" Value="48" />
+    <Setter Property="Padding" Value="10,0" />
+  </Style>
+  <Style Selector="TextBox.error">
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+  <Style Selector="TextBox.error:focus /template/ Border#PART_BorderElement">
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+  <Style Selector="TextBox.search">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="MinHeight" Value="36" />
+  </Style>
+  <Style Selector="ComboBox.unit">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="MinHeight" Value="44" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+  </Style>
+  <Style Selector="ComboBox.unit ComboBoxItem">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="15" />
+  </Style>
+</Styles>

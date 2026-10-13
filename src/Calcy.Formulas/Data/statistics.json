@@ -1,0 +1,971 @@
+{
+  "category": "statistics",
+  "formulas": [
+    {
+      "id": "mean",
+      "name": "Arithmetic mean",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "x_bar = S_x / n",
+      "displayLatex": "\\bar x = \\frac{\\sum x}{n}",
+      "variables": [
+        { "symbol": "x_bar", "name": "mean", "unit": "", "description": "The average of the data." },
+        { "symbol": "S_x", "name": "sum of the values", "unit": "", "description": "Σx, all the data values added together." },
+        { "symbol": "n", "name": "number of values", "unit": "", "description": "How many data values there are.", "positive": true, "integer": true }
+      ],
+      "explanation": "The mean shares the total equally among all the values: add them up and divide by how many there are. It is the balance point of the data on a number line. A single extreme value can pull it a long way, which is why the median is sometimes preferred.",
+      "whenToUse": "Use it to summarise a typical value of numerical data without strong outliers.",
+      "assumptions": ["numerical data"],
+      "example": {
+        "story": "Five students scored a total of 340 points on a quiz. What is the mean score?",
+        "given": { "S_x": 340, "n": 5 },
+        "solveFor": "x_bar",
+        "result": 68,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["x̄ = 340 / 5", "x̄ = 68"]
+      },
+      "related": ["weighted-mean", "population-variance", "sample-variance", "mean-value-of-function"],
+      "tags": ["mean", "average", "arithmetic mean", "x bar", "expected value"]
+    },
+    {
+      "id": "weighted-mean",
+      "name": "Weighted mean of two values",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "x_w = (w_1*x_1 + w_2*x_2) / (w_1 + w_2)",
+      "displayLatex": "\\bar x_w = \\frac{\\sum w_i x_i}{\\sum w_i}",
+      "variables": [
+        { "symbol": "x_w", "name": "weighted mean", "unit": "", "description": "The average with each value counted according to its weight." },
+        { "symbol": "w_1", "name": "first weight", "unit": "", "description": "Importance of the first value.", "min": 0 },
+        { "symbol": "x_1", "name": "first value", "unit": "", "description": "The first value." },
+        { "symbol": "w_2", "name": "second weight", "unit": "", "description": "Importance of the second value.", "min": 0 },
+        { "symbol": "x_2", "name": "second value", "unit": "", "description": "The second value." }
+      ],
+      "explanation": "In a weighted mean some values count more than others. Multiply each value by its weight, add, and divide by the total weight. With equal weights it is the ordinary mean; the same pattern extends to any number of values.",
+      "whenToUse": "Use it for course grades with weighted components, averages of grouped data, or combining means of groups of different sizes.",
+      "assumptions": ["weights are not all zero"],
+      "example": {
+        "story": "An exam counts 60 % and coursework 40 %. A student scores 80 on the exam and 70 on the coursework. What is the final grade?",
+        "given": { "w_1": 0.6, "x_1": 80, "w_2": 0.4, "x_2": 70 },
+        "solveFor": "x_w",
+        "result": 76,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["0.6 × 80 + 0.4 × 70 = 48 + 28 = 76", "Total weight is 1, so the grade is 76"]
+      },
+      "related": ["mean", "expected-value-two-outcomes"],
+      "tags": ["weighted mean", "weighted average", "grade average", "gpa"]
+    },
+    {
+      "id": "population-variance",
+      "name": "Population variance",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "σ^2 = S_xx / n",
+      "displayLatex": "\\sigma^2 = \\frac{\\sum (x - \\mu)^2}{n}",
+      "variables": [
+        { "symbol": "σ", "name": "population standard deviation", "unit": "", "description": "σ is the standard deviation; σ² is the variance.", "min": 0 },
+        { "symbol": "S_xx", "name": "sum of squared deviations", "unit": "", "description": "Σ(x - μ)², the squared distances from the mean added up.", "min": 0 },
+        { "symbol": "n", "name": "population size", "unit": "", "description": "Number of values in the whole population.", "positive": true, "integer": true }
+      ],
+      "explanation": "Variance measures spread: it is the average squared distance of the values from their mean. Squaring stops positive and negative deviations from cancelling and makes big deviations count more. Its square root, the standard deviation σ, is back in the units of the data.",
+      "whenToUse": "Use it when your data is the entire population, not a sample from a larger group.",
+      "assumptions": ["data is the whole population (for a sample divide by n - 1)"],
+      "example": {
+        "story": "The values 2, 4, 4, 4, 5, 5, 7, 9 have mean 5 and squared deviations adding up to 32. Find the variance and standard deviation.",
+        "given": { "S_xx": 32, "n": 8 },
+        "solveFor": "σ",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Squared deviations: 9, 1, 1, 1, 0, 0, 4, 16, total 32", "Variance σ² = 32 / 8 = 4", "Standard deviation σ = 2"]
+      },
+      "related": ["sample-variance", "population-standard-deviation", "mean", "z-score"],
+      "tags": ["variance", "population variance", "sigma squared", "spread", "dispersion"]
+    },
+    {
+      "id": "sample-variance",
+      "name": "Sample variance",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "s^2 = S_xx / (n - 1)",
+      "displayLatex": "s^2 = \\frac{\\sum (x - \\bar x)^2}{n - 1}",
+      "variables": [
+        { "symbol": "s", "name": "sample standard deviation", "unit": "", "description": "s is the standard deviation; s² is the variance.", "min": 0 },
+        { "symbol": "S_xx", "name": "sum of squared deviations", "unit": "", "description": "Σ(x - x̄)², using the sample mean.", "min": 0 },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values in the sample (at least 2).", "positive": true, "integer": true, "min": 2 }
+      ],
+      "explanation": "When the data is a sample, deviations are measured from the sample mean, which sits a little closer to the data than the true mean does. Dividing by n - 1 instead of n (Bessel's correction) compensates, so s² is an unbiased estimate of the population variance.",
+      "whenToUse": "Use it whenever your data is a sample used to estimate the spread of a larger population, which is the usual case.",
+      "assumptions": ["a random sample", "n ≥ 2"],
+      "example": {
+        "story": "A sample has values 2, 4, 6, 8 (mean 5, squared deviations totalling 20). Estimate the population standard deviation.",
+        "given": { "S_xx": 20, "n": 4 },
+        "solveFor": "s",
+        "result": 2.5819889,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["Squared deviations: 9, 1, 1, 9, total 20", "s² = 20 / 3 ≈ 6.667", "s ≈ 2.582"]
+      },
+      "related": ["population-variance", "sample-standard-deviation", "standard-error"],
+      "tags": ["sample variance", "bessel correction", "n minus 1", "variance", "unbiased estimator"]
+    },
+    {
+      "id": "population-standard-deviation",
+      "name": "Population standard deviation (computational form)",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "σ = sqrt(S_x2 / n - μ^2)",
+      "displayLatex": "\\sigma = \\sqrt{\\frac{\\sum x^2}{n} - \\mu^2}",
+      "variables": [
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "The population standard deviation.", "min": 0 },
+        { "symbol": "S_x2", "name": "sum of squares", "unit": "", "description": "Σx², each value squared and then added.", "min": 0 },
+        { "symbol": "n", "name": "population size", "unit": "", "description": "Number of values.", "positive": true, "integer": true },
+        { "symbol": "μ", "name": "mean", "unit": "", "description": "The population mean." }
+      ],
+      "explanation": "Expanding Σ(x - μ)² shows that the variance equals the mean of the squares minus the square of the mean. This form is quicker by hand because you only need Σx and Σx², which calculators keep as you enter data. Take the square root for the standard deviation.",
+      "whenToUse": "Use it with summary statistics (Σx, Σx², n), for example from a calculator's statistics mode or a frequency table.",
+      "assumptions": ["whole population", "watch for rounding errors when the mean is large compared with the spread"],
+      "example": {
+        "story": "For the values 1, 2, 3, 4, 5: Σx² = 55, n = 5 and μ = 3. Find σ.",
+        "given": { "S_x2": 55, "n": 5, "μ": 3 },
+        "solveFor": "σ",
+        "result": 1.4142136,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["Mean of squares: 55 / 5 = 11", "Variance: 11 - 3² = 2", "σ = √2 ≈ 1.414"]
+      },
+      "related": ["population-variance", "sample-standard-deviation", "coefficient-of-variation"],
+      "tags": ["standard deviation", "sd", "sigma", "population", "mean of squares minus square of mean"]
+    },
+    {
+      "id": "sample-standard-deviation",
+      "name": "Sample standard deviation (computational form)",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "s = sqrt((S_x2 - n*x_bar^2) / (n - 1))",
+      "displayLatex": "s = \\sqrt{\\frac{\\sum x^2 - n\\bar x^2}{n - 1}}",
+      "variables": [
+        { "symbol": "s", "name": "standard deviation", "unit": "", "description": "The sample standard deviation.", "min": 0 },
+        { "symbol": "S_x2", "name": "sum of squares", "unit": "", "description": "Σx², each value squared and then added.", "min": 0 },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values (at least 2).", "positive": true, "integer": true, "min": 2 },
+        { "symbol": "x_bar", "name": "sample mean", "unit": "", "description": "The mean of the sample." }
+      ],
+      "explanation": "The sum of squared deviations Σ(x - x̄)² equals Σx² - n x̄². Dividing by n - 1 and taking the square root gives the sample standard deviation from summary statistics. Calculators label it s or σₙ₋₁.",
+      "whenToUse": "Use it to estimate a population's spread from sample totals, for example in experiments and surveys.",
+      "assumptions": ["a random sample", "n ≥ 2"],
+      "example": {
+        "story": "A sample 1, 2, 3, 4, 5 has Σx² = 55, n = 5 and x̄ = 3. Find s.",
+        "given": { "S_x2": 55, "n": 5, "x_bar": 3 },
+        "solveFor": "s",
+        "result": 1.5811388,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["Σx² - n x̄² = 55 - 45 = 10", "s² = 10 / 4 = 2.5", "s ≈ 1.581"]
+      },
+      "related": ["sample-variance", "population-standard-deviation", "t-statistic"],
+      "tags": ["standard deviation", "sample sd", "s", "n minus 1", "bessel correction"]
+    },
+    {
+      "id": "coefficient-of-variation",
+      "name": "Coefficient of variation",
+      "subcategory": "Descriptive statistics",
+      "level": "university",
+      "equation": "C_v = σ / μ*100",
+      "displayLatex": "C_v = \\frac{\\sigma}{\\mu} \\times 100\\%",
+      "variables": [
+        { "symbol": "C_v", "name": "coefficient of variation", "unit": "%", "description": "Spread relative to the size of the mean." },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Standard deviation of the data.", "min": 0 },
+        { "symbol": "μ", "name": "mean", "unit": "", "description": "Mean of the data (positive)." }
+      ],
+      "explanation": "The coefficient of variation expresses the standard deviation as a percentage of the mean. Because it has no units, it lets you compare the variability of quantities measured on different scales, such as the weights of mice and of elephants.",
+      "whenToUse": "Use it to compare the consistency of measurements with very different means or units.",
+      "assumptions": ["data on a ratio scale with a positive mean"],
+      "example": {
+        "story": "Bags of flour have mean mass 50 (in tenths of a kg) and standard deviation 4. What is the coefficient of variation?",
+        "given": { "σ": 4, "μ": 50 },
+        "solveFor": "C_v",
+        "result": 8,
+        "unit": "%",
+        "tolerance": 1e-9,
+        "steps": ["C_v = 4 / 50 × 100", "C_v = 8 %"]
+      },
+      "related": ["population-standard-deviation", "mean"],
+      "tags": ["coefficient of variation", "relative standard deviation", "rsd", "cv", "relative spread"]
+    },
+    {
+      "id": "outlier-fence-upper",
+      "name": "Upper fence for outliers (1.5 IQR rule)",
+      "subcategory": "Descriptive statistics",
+      "level": "school",
+      "equation": "F_u = Q_3 + 1.5*(Q_3 - Q_1)",
+      "displayLatex": "F_u = Q_3 + 1.5 \\times \\text{IQR}",
+      "variables": [
+        { "symbol": "F_u", "name": "upper fence", "unit": "", "description": "Values above this are flagged as outliers." },
+        { "symbol": "Q_3", "name": "upper quartile", "unit": "", "description": "The value three quarters of the way through the sorted data." },
+        { "symbol": "Q_1", "name": "lower quartile", "unit": "", "description": "The value one quarter of the way through the sorted data." }
+      ],
+      "explanation": "The interquartile range Q₃ - Q₁ measures the spread of the middle half of the data. Values more than 1.5 IQRs above the upper quartile are unusually large and are commonly treated as outliers. The lower fence is Q₁ - 1.5 IQR. Box plots draw their whiskers up to these limits.",
+      "whenToUse": "Use it to identify outliers before choosing summary statistics or drawing a box plot.",
+      "assumptions": ["a convention (Tukey's rule), not a law"],
+      "example": {
+        "story": "Commute times have Q₁ = 20 min and Q₃ = 32 min. Above what time is a commute an outlier?",
+        "given": { "Q_3": 32, "Q_1": 20 },
+        "solveFor": "F_u",
+        "result": 50,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["IQR = 32 - 20 = 12", "F_u = 32 + 1.5 × 12 = 50"]
+      },
+      "related": ["mean", "z-score"],
+      "tags": ["outlier", "interquartile range", "iqr", "box plot", "quartiles", "tukey fence"]
+    },
+    {
+      "id": "z-score",
+      "name": "Z-score (standard score)",
+      "subcategory": "Distributions",
+      "level": "school",
+      "equation": "z = (x - μ) / σ",
+      "displayLatex": "z = \\frac{x - \\mu}{\\sigma}",
+      "variables": [
+        { "symbol": "z", "name": "z-score", "unit": "", "description": "How many standard deviations x is above (or below) the mean." },
+        { "symbol": "x", "name": "value", "unit": "", "description": "The data value." },
+        { "symbol": "μ", "name": "mean", "unit": "", "description": "Mean of the distribution." },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Standard deviation of the distribution.", "positive": true }
+      ],
+      "explanation": "A z-score measures position relative to the mean in units of standard deviations. Subtracting the mean shifts the centre to zero and dividing by σ rescales the spread to 1. For a normal distribution, this standardisation lets one table of probabilities serve every mean and standard deviation.",
+      "whenToUse": "Use it to compare results from different tests, to look up normal probabilities, or to spot unusual values (|z| > 2 or 3).",
+      "assumptions": ["μ and σ known"],
+      "example": {
+        "story": "A test has mean 70 and standard deviation 8. How many standard deviations above the mean is a score of 82?",
+        "given": { "x": 82, "μ": 70, "σ": 8 },
+        "solveFor": "z",
+        "result": 1.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["z = (82 - 70) / 8", "z = 12 / 8 = 1.5"]
+      },
+      "related": ["sample-mean-standardisation", "normal-pdf", "population-variance"],
+      "tags": ["z score", "standard score", "standardise", "standardize", "normal distribution", "z value"]
+    },
+    {
+      "id": "normal-pdf",
+      "name": "Normal distribution density",
+      "subcategory": "Distributions",
+      "level": "university",
+      "equation": "f = e^(-(x - μ)^2 / (2*σ^2)) / (σ*sqrt(2*pi))",
+      "displayLatex": "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x - \\mu)^2}{2\\sigma^2}}",
+      "variables": [
+        { "symbol": "f", "name": "probability density", "unit": "", "description": "Height of the bell curve at x (not itself a probability)." },
+        { "symbol": "x", "name": "value", "unit": "", "description": "Where the density is evaluated." },
+        { "symbol": "μ", "name": "mean", "unit": "", "description": "Centre of the bell curve." },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Width of the bell curve.", "positive": true }
+      ],
+      "explanation": "The normal (Gaussian) distribution is the familiar bell curve, symmetric about μ with width set by σ. The factor in front makes the total area under the curve equal to 1. Probabilities are areas under the curve, not heights; about 68 % of values lie within one σ of the mean and 95 % within two.",
+      "whenToUse": "Use it to plot the bell curve, compare likelihoods of values, or model measurement errors and many natural quantities.",
+      "assumptions": ["the data is approximately normally distributed"],
+      "example": {
+        "story": "What is the height of the standard normal curve (μ = 0, σ = 1) at x = 1?",
+        "given": { "x": 1, "μ": 0, "σ": 1 },
+        "solveFor": "f",
+        "result": 0.24197072,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["Exponent: -(1 - 0)² / 2 = -0.5", "e^(-0.5) ≈ 0.606531", "f ≈ 0.606531 / 2.506628 ≈ 0.24197"]
+      },
+      "related": ["z-score", "binomial-probability", "sample-mean-standardisation"],
+      "tags": ["normal distribution", "gaussian", "bell curve", "pdf", "probability density function"]
+    },
+    {
+      "id": "sample-mean-standardisation",
+      "name": "Standardising a sample mean",
+      "subcategory": "Inference",
+      "level": "school",
+      "equation": "z = (x_bar - μ) / (σ / sqrt(n))",
+      "displayLatex": "z = \\frac{\\bar x - \\mu}{\\sigma / \\sqrt{n}}",
+      "variables": [
+        { "symbol": "z", "name": "test statistic", "unit": "", "description": "Standard score of the sample mean." },
+        { "symbol": "x_bar", "name": "sample mean", "unit": "", "description": "Mean of the sample." },
+        { "symbol": "μ", "name": "population mean", "unit": "", "description": "The (claimed) population mean." },
+        { "symbol": "σ", "name": "population standard deviation", "unit": "", "description": "Known spread of individual values.", "positive": true },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values in the sample.", "positive": true, "integer": true }
+      ],
+      "explanation": "Means of samples vary less than single values: their standard deviation is σ/√n, the standard error. Standardising a sample mean with that smaller spread tells you how surprising the sample is if the population mean really is μ. By the central limit theorem this works for large samples even when the data is not normal.",
+      "whenToUse": "Use it for hypothesis tests about a mean when the population standard deviation is known (a z-test).",
+      "assumptions": ["σ known", "normal population or large n (central limit theorem)", "random sample"],
+      "example": {
+        "story": "A machine fills bags with mean 500 g and σ = 20 g. A sample of 16 bags has mean 508 g. What is the z value?",
+        "given": { "x_bar": 508, "μ": 500, "σ": 20, "n": 16 },
+        "solveFor": "z",
+        "result": 1.6,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Standard error: 20 / √16 = 5", "z = (508 - 500) / 5 = 1.6"]
+      },
+      "related": ["z-score", "standard-error", "t-statistic", "margin-of-error"],
+      "tags": ["z test", "standardisation", "sample mean", "central limit theorem", "hypothesis test", "normal standardisation"]
+    },
+    {
+      "id": "t-statistic",
+      "name": "One-sample t statistic",
+      "subcategory": "Inference",
+      "level": "university",
+      "equation": "t = (x_bar - μ) / (s / sqrt(n))",
+      "displayLatex": "t = \\frac{\\bar x - \\mu}{s / \\sqrt{n}}",
+      "variables": [
+        { "symbol": "t", "name": "t statistic", "unit": "", "description": "Standardised distance of the sample mean from μ." },
+        { "symbol": "x_bar", "name": "sample mean", "unit": "", "description": "Mean of the sample." },
+        { "symbol": "μ", "name": "hypothesised mean", "unit": "", "description": "The population mean under the null hypothesis." },
+        { "symbol": "s", "name": "sample standard deviation", "unit": "", "description": "Standard deviation computed from the sample.", "positive": true },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values.", "positive": true, "integer": true, "min": 2 }
+      ],
+      "explanation": "When σ is unknown it is estimated by the sample standard deviation s. The extra uncertainty means the statistic follows Student's t distribution with n - 1 degrees of freedom, which has heavier tails than the normal distribution. For large samples t and z become almost the same.",
+      "whenToUse": "Use it to test a claim about a mean, or to compare a measured mean with a reference value, when the population spread is unknown.",
+      "assumptions": ["random sample", "approximately normal population (or large n)"],
+      "example": {
+        "story": "16 measurements have mean 10.4 and s = 1.2. Test against a claimed mean of 10: what is t?",
+        "given": { "x_bar": 10.4, "μ": 10, "s": 1.2, "n": 16 },
+        "solveFor": "t",
+        "result": 1.3333333,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["Standard error: 1.2 / √16 = 0.3", "t = (10.4 - 10) / 0.3 ≈ 1.33", "Compare with the t distribution with 15 degrees of freedom"]
+      },
+      "related": ["sample-mean-standardisation", "sample-standard-deviation", "standard-error"],
+      "tags": ["t test", "student t", "t statistic", "hypothesis test", "degrees of freedom"]
+    },
+    {
+      "id": "standard-error",
+      "name": "Standard error of the mean",
+      "subcategory": "Inference",
+      "level": "school",
+      "equation": "σ_m = σ / sqrt(n)",
+      "displayLatex": "\\sigma_{\\bar x} = \\frac{\\sigma}{\\sqrt{n}}",
+      "variables": [
+        { "symbol": "σ_m", "name": "standard error", "unit": "", "description": "Standard deviation of the sample mean.", "min": 0 },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Spread of individual values (use s if σ is unknown).", "min": 0 },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values averaged.", "positive": true, "integer": true }
+      ],
+      "explanation": "Averaging n independent values cancels out some of their random variation. The spread of the mean shrinks with the square root of n, so four times as many measurements halve the uncertainty. This is why repeating measurements improves precision, but with diminishing returns.",
+      "whenToUse": "Use it to give the uncertainty of an average, and inside confidence intervals and hypothesis tests.",
+      "assumptions": ["independent values"],
+      "example": {
+        "story": "Individual measurements have a standard deviation of 12. What is the standard error of the mean of 36 measurements?",
+        "given": { "σ": 12, "n": 36 },
+        "solveFor": "σ_m",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["√36 = 6", "σ_m = 12 / 6 = 2"]
+      },
+      "related": ["margin-of-error", "sample-mean-standardisation", "sample-variance"],
+      "tags": ["standard error", "sem", "se", "uncertainty of mean", "square root of n"]
+    },
+    {
+      "id": "margin-of-error",
+      "name": "Margin of error for a mean",
+      "subcategory": "Inference",
+      "level": "school",
+      "equation": "E_m = z*σ / sqrt(n)",
+      "displayLatex": "E = z^{*} \\frac{\\sigma}{\\sqrt{n}}",
+      "variables": [
+        { "symbol": "E_m", "name": "margin of error", "unit": "", "description": "Half the width of the confidence interval.", "min": 0 },
+        { "symbol": "z", "name": "critical value", "unit": "", "description": "From the normal distribution: 1.645 for 90 %, 1.96 for 95 %, 2.576 for 99 % confidence.", "positive": true },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Population standard deviation.", "min": 0 },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values in the sample.", "positive": true, "integer": true }
+      ],
+      "explanation": "The margin of error is how far the true mean could plausibly be from the sample mean at a chosen confidence level. It is the critical z value times the standard error. Solving for n tells you how big a sample you need for a desired margin.",
+      "whenToUse": "Use it to report the precision of a survey or experiment, or to plan the sample size.",
+      "assumptions": ["σ known (use t and s for small samples with unknown σ)", "random sample"],
+      "example": {
+        "story": "A sample of 100 has σ = 15. What is the 95 % margin of error for the mean?",
+        "given": { "z": 1.96, "σ": 15, "n": 100 },
+        "solveFor": "E_m",
+        "result": 2.94,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Standard error: 15 / √100 = 1.5", "E = 1.96 × 1.5 = 2.94"]
+      },
+      "related": ["confidence-interval-lower", "confidence-interval-upper", "standard-error"],
+      "tags": ["margin of error", "confidence level", "sample size", "precision", "critical value"]
+    },
+    {
+      "id": "confidence-interval-lower",
+      "name": "Confidence interval for a mean (lower limit)",
+      "subcategory": "Inference",
+      "level": "school",
+      "equation": "L = x_bar - z*σ / sqrt(n)",
+      "displayLatex": "L = \\bar x - z^{*}\\frac{\\sigma}{\\sqrt{n}}",
+      "variables": [
+        { "symbol": "L", "name": "lower limit", "unit": "", "description": "Lower end of the confidence interval." },
+        { "symbol": "x_bar", "name": "sample mean", "unit": "", "description": "Mean of the sample." },
+        { "symbol": "z", "name": "critical value", "unit": "", "description": "1.96 for 95 % confidence.", "positive": true },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Population standard deviation.", "min": 0 },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values.", "positive": true, "integer": true }
+      ],
+      "explanation": "A confidence interval is a range built so that, over many repeated samples, the stated percentage of such ranges contain the true mean. Its lower limit is the sample mean minus the margin of error.",
+      "whenToUse": "Use it with the upper limit to report an estimate of a population mean with its uncertainty.",
+      "assumptions": ["σ known", "normal population or large n", "random sample"],
+      "example": {
+        "story": "A sample of 100 has mean 120 and σ = 15. Find the lower limit of the 95 % confidence interval.",
+        "given": { "x_bar": 120, "z": 1.96, "σ": 15, "n": 100 },
+        "solveFor": "L",
+        "result": 117.06,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Margin: 1.96 × 15 / 10 = 2.94", "L = 120 - 2.94 = 117.06"]
+      },
+      "related": ["confidence-interval-upper", "margin-of-error"],
+      "tags": ["confidence interval", "ci", "lower bound", "interval estimate", "95 percent"]
+    },
+    {
+      "id": "confidence-interval-upper",
+      "name": "Confidence interval for a mean (upper limit)",
+      "subcategory": "Inference",
+      "level": "school",
+      "equation": "U = x_bar + z*σ / sqrt(n)",
+      "displayLatex": "U = \\bar x + z^{*}\\frac{\\sigma}{\\sqrt{n}}",
+      "variables": [
+        { "symbol": "U", "name": "upper limit", "unit": "", "description": "Upper end of the confidence interval." },
+        { "symbol": "x_bar", "name": "sample mean", "unit": "", "description": "Mean of the sample." },
+        { "symbol": "z", "name": "critical value", "unit": "", "description": "1.96 for 95 % confidence.", "positive": true },
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "Population standard deviation.", "min": 0 },
+        { "symbol": "n", "name": "sample size", "unit": "", "description": "Number of values.", "positive": true, "integer": true }
+      ],
+      "explanation": "The upper limit is the sample mean plus the margin of error. Together with the lower limit it gives the interval x̄ ± z σ/√n. A wider interval gives more confidence but less precision.",
+      "whenToUse": "Use it with the lower limit to report an interval estimate of a population mean.",
+      "assumptions": ["σ known", "normal population or large n", "random sample"],
+      "example": {
+        "story": "A sample of 100 has mean 120 and σ = 15. Find the upper limit of the 95 % confidence interval.",
+        "given": { "x_bar": 120, "z": 1.96, "σ": 15, "n": 100 },
+        "solveFor": "U",
+        "result": 122.94,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Margin: 1.96 × 15 / 10 = 2.94", "U = 120 + 2.94 = 122.94", "The interval is (117.06, 122.94)"]
+      },
+      "related": ["confidence-interval-lower", "margin-of-error"],
+      "tags": ["confidence interval", "ci", "upper bound", "interval estimate", "95 percent"]
+    },
+    {
+      "id": "combinations",
+      "name": "Combinations (n choose r)",
+      "subcategory": "Counting",
+      "level": "school",
+      "equation": "C = n! / (r!*(n - r)!)",
+      "displayLatex": "\\binom{n}{r} = \\frac{n!}{r!(n - r)!}",
+      "variables": [
+        { "symbol": "C", "name": "number of combinations", "unit": "", "description": "Ways to choose r items from n when order does not matter.", "min": 0 },
+        { "symbol": "n", "name": "number of items", "unit": "", "description": "How many items there are to choose from.", "integer": true, "min": 0 },
+        { "symbol": "r", "name": "number chosen", "unit": "", "description": "How many are picked (0 ≤ r ≤ n).", "integer": true, "min": 0 }
+      ],
+      "explanation": "There are n!/(n - r)! ordered ways to pick r items, but every group of r items appears r! times in that list in different orders. Dividing by r! counts each group once. These numbers form Pascal's triangle and are the coefficients in the binomial theorem.",
+      "whenToUse": "Use it when order does not matter: lottery tickets, committees, hands of cards, choosing which trials succeed.",
+      "assumptions": ["items are distinct", "no repetition"],
+      "example": {
+        "story": "In how many ways can a team of 3 be chosen from 10 students?",
+        "given": { "n": 10, "r": 3 },
+        "solveFor": "C",
+        "result": 120,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["10! / (3! × 7!) = (10 × 9 × 8) / (3 × 2 × 1)", "= 720 / 6 = 120"]
+      },
+      "related": ["permutations", "binomial-probability"],
+      "tags": ["combinations", "ncr", "n choose k", "binomial coefficient", "choose", "pascal triangle"]
+    },
+    {
+      "id": "permutations",
+      "name": "Permutations (arrangements)",
+      "subcategory": "Counting",
+      "level": "school",
+      "equation": "P = n! / (n - r)!",
+      "displayLatex": "{}^nP_r = \\frac{n!}{(n - r)!}",
+      "variables": [
+        { "symbol": "P", "name": "number of permutations", "unit": "", "description": "Ordered ways to pick r items from n.", "min": 0 },
+        { "symbol": "n", "name": "number of items", "unit": "", "description": "How many items there are.", "integer": true, "min": 0 },
+        { "symbol": "r", "name": "number arranged", "unit": "", "description": "How many positions are filled (0 ≤ r ≤ n).", "integer": true, "min": 0 }
+      ],
+      "explanation": "For the first position there are n choices, then n - 1, and so on for r positions: n × (n - 1) × ... × (n - r + 1). That product equals n!/(n - r)!. Unlike combinations, ABC and CBA count as different.",
+      "whenToUse": "Use it when order matters: podium places, codes without repeated digits, seating arrangements.",
+      "assumptions": ["items are distinct", "no repetition"],
+      "example": {
+        "story": "8 runners race. In how many ways can gold, silver and bronze be awarded?",
+        "given": { "n": 8, "r": 3 },
+        "solveFor": "P",
+        "result": 336,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["8! / 5! = 8 × 7 × 6", "= 336"]
+      },
+      "related": ["combinations"],
+      "tags": ["permutations", "npr", "arrangements", "ordered selection", "factorial"]
+    },
+    {
+      "id": "binomial-probability",
+      "name": "Binomial probability",
+      "subcategory": "Distributions",
+      "level": "school",
+      "equation": "P = n! / (k!*(n - k)!)*p^k*(1 - p)^(n - k)",
+      "displayLatex": "P(X = k) = \\binom{n}{k} p^k (1 - p)^{n - k}",
+      "variables": [
+        { "symbol": "P", "name": "probability", "unit": "", "description": "Probability of exactly k successes.", "min": 0, "max": 1 },
+        { "symbol": "n", "name": "number of trials", "unit": "", "description": "How many independent trials.", "integer": true, "min": 0 },
+        { "symbol": "k", "name": "number of successes", "unit": "", "description": "Exactly how many successes (0 ≤ k ≤ n).", "integer": true, "min": 0 },
+        { "symbol": "p", "name": "success probability", "unit": "", "description": "Probability of success in one trial.", "min": 0, "max": 1 }
+      ],
+      "explanation": "Any particular sequence with k successes and n - k failures has probability p^k (1 - p)^(n - k). The number of such sequences is n choose k, so multiply. The trials must be independent with the same p each time.",
+      "whenToUse": "Use it for a fixed number of independent yes/no trials: coin flips, defective items in a batch, correct guesses on a test.",
+      "assumptions": ["fixed number of trials", "independent trials", "same probability of success each time", "two outcomes per trial"],
+      "example": {
+        "story": "A fair coin is flipped 10 times. What is the probability of exactly 6 heads?",
+        "given": { "n": 10, "k": 6, "p": 0.5 },
+        "solveFor": "P",
+        "result": 0.20507813,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["10 choose 6 = 210", "0.5⁶ × 0.5⁴ = 1/1024", "P = 210 / 1024 ≈ 0.2051"]
+      },
+      "related": ["combinations", "binomial-mean", "binomial-variance", "poisson-probability"],
+      "tags": ["binomial distribution", "bernoulli trials", "binomial pmf", "successes", "binompdf"]
+    },
+    {
+      "id": "binomial-mean",
+      "name": "Mean of a binomial distribution",
+      "subcategory": "Distributions",
+      "level": "school",
+      "equation": "μ = n*p",
+      "displayLatex": "E(X) = np",
+      "variables": [
+        { "symbol": "μ", "name": "expected number of successes", "unit": "", "description": "The long-run average number of successes." },
+        { "symbol": "n", "name": "number of trials", "unit": "", "description": "How many independent trials.", "integer": true, "min": 0 },
+        { "symbol": "p", "name": "success probability", "unit": "", "description": "Probability of success in one trial.", "min": 0, "max": 1 }
+      ],
+      "explanation": "Each trial contributes p successes on average, so n trials give np. For example, rolling a die 60 times you expect about 10 sixes, although the actual number varies.",
+      "whenToUse": "Use it to find the expected number of successes in repeated independent trials.",
+      "assumptions": ["binomial setting: fixed n, independent trials, constant p"],
+      "example": {
+        "story": "A die is rolled 20 times. How many sixes do you expect?",
+        "given": { "n": 20, "p": 0.16666666666666666 },
+        "solveFor": "μ",
+        "result": 3.3333333,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["μ = 20 × 1/6", "μ ≈ 3.33 sixes"]
+      },
+      "related": ["binomial-variance", "binomial-probability", "expected-value-two-outcomes"],
+      "tags": ["binomial mean", "expected value", "np", "expectation"]
+    },
+    {
+      "id": "binomial-variance",
+      "name": "Variance of a binomial distribution",
+      "subcategory": "Distributions",
+      "level": "school",
+      "equation": "σ^2 = n*p*(1 - p)",
+      "displayLatex": "\\operatorname{Var}(X) = np(1 - p)",
+      "variables": [
+        { "symbol": "σ", "name": "standard deviation", "unit": "", "description": "σ is the standard deviation of the number of successes; σ² is the variance.", "min": 0 },
+        { "symbol": "n", "name": "number of trials", "unit": "", "description": "How many independent trials.", "integer": true, "min": 0 },
+        { "symbol": "p", "name": "success probability", "unit": "", "description": "Probability of success in one trial.", "min": 0, "max": 1 }
+      ],
+      "explanation": "One trial has variance p(1 - p), which is largest when p = 0.5 and zero when the outcome is certain. Variances of independent trials add, giving np(1 - p) for n trials.",
+      "whenToUse": "Use it to describe how much the number of successes varies, or for a normal approximation to the binomial.",
+      "assumptions": ["binomial setting: fixed n, independent trials, constant p"],
+      "example": {
+        "story": "A fair coin is flipped 20 times. Find the variance and standard deviation of the number of heads.",
+        "given": { "n": 20, "p": 0.5 },
+        "solveFor": "σ",
+        "result": 2.236068,
+        "unit": "",
+        "tolerance": 1e-6,
+        "steps": ["Variance: 20 × 0.5 × 0.5 = 5", "σ = √5 ≈ 2.236"]
+      },
+      "related": ["binomial-mean", "binomial-probability", "population-variance"],
+      "tags": ["binomial variance", "npq", "standard deviation", "spread"]
+    },
+    {
+      "id": "poisson-probability",
+      "name": "Poisson probability",
+      "subcategory": "Distributions",
+      "level": "school",
+      "equation": "P = λ^k*e^(-λ) / k!",
+      "displayLatex": "P(X = k) = \\frac{\\lambda^k e^{-\\lambda}}{k!}",
+      "variables": [
+        { "symbol": "P", "name": "probability", "unit": "", "description": "Probability of exactly k events.", "min": 0, "max": 1 },
+        { "symbol": "λ", "name": "mean rate", "unit": "", "description": "Average number of events in the interval.", "positive": true },
+        { "symbol": "k", "name": "number of events", "unit": "", "description": "Exactly how many events (0, 1, 2, ...).", "integer": true, "min": 0 }
+      ],
+      "explanation": "The Poisson distribution counts random events that happen independently at a constant average rate, such as calls to a help desk per hour. Its mean and variance are both λ. It is also the limit of the binomial distribution for many trials with a small success probability.",
+      "whenToUse": "Use it for counts of rare or random events in a fixed time, area or volume: radioactive decays, typos per page, customers per minute.",
+      "assumptions": ["events independent", "constant average rate", "two events cannot happen at exactly the same moment"],
+      "example": {
+        "story": "A help desk gets on average 3 calls per hour. What is the probability of exactly 5 calls in an hour?",
+        "given": { "λ": 3, "k": 5 },
+        "solveFor": "P",
+        "result": 0.10081881,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["3⁵ = 243 and 5! = 120", "e^(-3) ≈ 0.049787", "P ≈ 243 × 0.049787 / 120 ≈ 0.1008"]
+      },
+      "related": ["binomial-probability", "radioactive-decay"],
+      "tags": ["poisson distribution", "poisson pmf", "rare events", "counts", "rate", "poissonpdf"]
+    },
+    {
+      "id": "geometric-probability",
+      "name": "Geometric distribution (first success)",
+      "subcategory": "Distributions",
+      "level": "school",
+      "equation": "P = (1 - p)^(k - 1)*p",
+      "displayLatex": "P(X = k) = (1 - p)^{k - 1} p",
+      "variables": [
+        { "symbol": "P", "name": "probability", "unit": "", "description": "Probability that the first success happens on trial k.", "min": 0, "max": 1 },
+        { "symbol": "p", "name": "success probability", "unit": "", "description": "Probability of success in each trial.", "min": 0, "max": 1 },
+        { "symbol": "k", "name": "trial number", "unit": "", "description": "The trial on which the first success occurs (1, 2, 3, ...).", "positive": true, "integer": true }
+      ],
+      "explanation": "For the first success to come on trial k, the first k - 1 trials must all fail and trial k must succeed. Multiplying these independent probabilities gives the formula. The expected waiting time is 1/p trials.",
+      "whenToUse": "Use it for waiting-time questions: how many rolls until the first six, how many attempts until the first success.",
+      "assumptions": ["independent trials", "constant p"],
+      "example": {
+        "story": "What is the probability that the first six appears on the third roll of a die?",
+        "given": { "p": 0.16666666666666666, "k": 3 },
+        "solveFor": "P",
+        "result": 0.11574074,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["Two failures: (5/6)² = 25/36", "Then a six: × 1/6", "P = 25/216 ≈ 0.1157"]
+      },
+      "related": ["binomial-probability", "independent-events"],
+      "tags": ["geometric distribution", "first success", "waiting time", "trials until success"]
+    },
+    {
+      "id": "expected-value-two-outcomes",
+      "name": "Expected value (two outcomes)",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "E = p*x_1 + (1 - p)*x_2",
+      "displayLatex": "E(X) = \\sum x_i p_i = p x_1 + (1 - p) x_2",
+      "variables": [
+        { "symbol": "E", "name": "expected value", "unit": "", "description": "The long-run average outcome." },
+        { "symbol": "p", "name": "probability of the first outcome", "unit": "", "description": "Probability of outcome x₁; the other outcome has 1 - p.", "min": 0, "max": 1 },
+        { "symbol": "x_1", "name": "first outcome", "unit": "", "description": "Value of the first outcome." },
+        { "symbol": "x_2", "name": "second outcome", "unit": "", "description": "Value of the second outcome." }
+      ],
+      "explanation": "The expected value weights every outcome by its probability and adds them up. It is what you would average per play if you repeated the game many times. For more outcomes, add one term x p for each.",
+      "whenToUse": "Use it to judge whether a bet, game or decision pays off on average, or as the mean of a random variable.",
+      "assumptions": ["the probabilities of all outcomes add up to 1"],
+      "example": {
+        "story": "A raffle ticket costs 1. With probability 0.01 you win 50 (a net gain of 49), otherwise you lose your 1. What is the expected gain?",
+        "given": { "p": 0.01, "x_1": 49, "x_2": -1 },
+        "solveFor": "E",
+        "result": -0.5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["0.01 × 49 = 0.49", "0.99 × (-1) = -0.99", "E = 0.49 - 0.99 = -0.5, a loss of 0.5 per ticket on average"]
+      },
+      "related": ["binomial-mean", "weighted-mean", "net-present-value"],
+      "tags": ["expected value", "expectation", "mean of random variable", "fair game", "ev"]
+    },
+    {
+      "id": "classical-probability",
+      "name": "Probability of equally likely outcomes",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_A = n_A / n_S",
+      "displayLatex": "P(A) = \\frac{\\text{favourable outcomes}}{\\text{possible outcomes}}",
+      "variables": [
+        { "symbol": "P_A", "name": "probability of A", "unit": "", "description": "The chance that event A happens.", "min": 0, "max": 1 },
+        { "symbol": "n_A", "name": "favourable outcomes", "unit": "", "description": "Number of outcomes in event A.", "integer": true, "min": 0 },
+        { "symbol": "n_S", "name": "possible outcomes", "unit": "", "description": "Total number of equally likely outcomes.", "positive": true, "integer": true }
+      ],
+      "explanation": "When every outcome is equally likely, the probability of an event is the fraction of outcomes that belong to it. A probability of 0 means impossible and 1 means certain.",
+      "whenToUse": "Use it for fair dice, coins, well-shuffled cards and random draws.",
+      "assumptions": ["all outcomes equally likely"],
+      "example": {
+        "story": "A card is drawn from a standard 52-card deck. What is the probability that it is a heart?",
+        "given": { "n_A": 13, "n_S": 52 },
+        "solveFor": "P_A",
+        "result": 0.25,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["13 hearts out of 52 cards", "P = 13 / 52 = 0.25"]
+      },
+      "related": ["complement-rule", "addition-rule", "independent-events"],
+      "tags": ["probability", "equally likely", "favourable outcomes", "chance", "laplace"]
+    },
+    {
+      "id": "complement-rule",
+      "name": "Complement rule",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_notA = 1 - P_A",
+      "displayLatex": "P(A') = 1 - P(A)",
+      "variables": [
+        { "symbol": "P_notA", "name": "probability of not A", "unit": "", "description": "The chance that A does not happen.", "min": 0, "max": 1 },
+        { "symbol": "P_A", "name": "probability of A", "unit": "", "description": "The chance that A happens.", "min": 0, "max": 1 }
+      ],
+      "explanation": "Either A happens or it does not, so the two probabilities add up to 1. Working out the complement is often easier, as in the probability of at least one six in several rolls, which is 1 minus the probability of no sixes.",
+      "whenToUse": "Use it for 'at least one' problems and whenever the opposite event is easier to count.",
+      "assumptions": [],
+      "example": {
+        "story": "The chance of rain tomorrow is 0.3. What is the chance it stays dry?",
+        "given": { "P_A": 0.3 },
+        "solveFor": "P_notA",
+        "result": 0.7,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["P(dry) = 1 - 0.3", "P(dry) = 0.7"]
+      },
+      "related": ["classical-probability", "addition-rule"],
+      "tags": ["complement", "not a", "at least one", "opposite event", "probability rules"]
+    },
+    {
+      "id": "addition-rule",
+      "name": "Addition rule (A or B)",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_AorB = P_A + P_B - P_AandB",
+      "displayLatex": "P(A \\cup B) = P(A) + P(B) - P(A \\cap B)",
+      "variables": [
+        { "symbol": "P_AorB", "name": "probability of A or B", "unit": "", "description": "Chance that at least one of A and B happens.", "min": 0, "max": 1 },
+        { "symbol": "P_A", "name": "probability of A", "unit": "", "description": "Chance of A.", "min": 0, "max": 1 },
+        { "symbol": "P_B", "name": "probability of B", "unit": "", "description": "Chance of B.", "min": 0, "max": 1 },
+        { "symbol": "P_AandB", "name": "probability of A and B", "unit": "", "description": "Chance that both happen.", "min": 0, "max": 1 }
+      ],
+      "explanation": "Adding P(A) and P(B) counts the outcomes in both events twice, so the overlap is subtracted once. For mutually exclusive events the overlap is zero and the probabilities simply add.",
+      "whenToUse": "Use it for 'either or both' questions, such as drawing a heart or a king.",
+      "assumptions": [],
+      "example": {
+        "story": "A card is drawn from a 52-card deck. What is the probability of a heart or a king?",
+        "given": { "P_A": 0.25, "P_B": 0.07692307692307693, "P_AandB": 0.019230769230769232 },
+        "solveFor": "P_AorB",
+        "result": 0.30769231,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["P(heart) = 13/52, P(king) = 4/52, P(king of hearts) = 1/52", "P = (13 + 4 - 1) / 52 = 16/52", "P ≈ 0.3077"]
+      },
+      "related": ["complement-rule", "independent-events", "conditional-probability"],
+      "tags": ["addition rule", "union", "or", "inclusion exclusion", "mutually exclusive"]
+    },
+    {
+      "id": "independent-events",
+      "name": "Multiplication rule for independent events",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_AandB = P_A*P_B",
+      "displayLatex": "P(A \\cap B) = P(A)\\,P(B)",
+      "variables": [
+        { "symbol": "P_AandB", "name": "probability of A and B", "unit": "", "description": "Chance that both events happen.", "min": 0, "max": 1 },
+        { "symbol": "P_A", "name": "probability of A", "unit": "", "description": "Chance of A.", "min": 0, "max": 1 },
+        { "symbol": "P_B", "name": "probability of B", "unit": "", "description": "Chance of B.", "min": 0, "max": 1 }
+      ],
+      "explanation": "Two events are independent when one happening does not change the chance of the other. Then the probability that both happen is the product of their probabilities. This equation is also the test for independence.",
+      "whenToUse": "Use it for separate coin flips, dice rolls, or draws with replacement.",
+      "assumptions": ["A and B are independent (otherwise use P(A) P(B | A))"],
+      "example": {
+        "story": "Two dice are rolled. What is the probability that both show a six?",
+        "given": { "P_A": 0.16666666666666666, "P_B": 0.16666666666666666 },
+        "solveFor": "P_AandB",
+        "result": 0.027777778,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["P = 1/6 × 1/6", "P = 1/36 ≈ 0.0278"]
+      },
+      "related": ["conditional-probability", "addition-rule", "geometric-probability"],
+      "tags": ["independent events", "and", "multiplication rule", "product rule", "intersection"]
+    },
+    {
+      "id": "conditional-probability",
+      "name": "Conditional probability",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_AgivenB = P_AandB / P_B",
+      "displayLatex": "P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}",
+      "variables": [
+        { "symbol": "P_AgivenB", "name": "probability of A given B", "unit": "", "description": "Chance of A when you already know B happened.", "min": 0, "max": 1 },
+        { "symbol": "P_AandB", "name": "probability of A and B", "unit": "", "description": "Chance that both happen.", "min": 0, "max": 1 },
+        { "symbol": "P_B", "name": "probability of B", "unit": "", "description": "Chance of B (not zero).", "min": 0, "max": 1 }
+      ],
+      "explanation": "Knowing that B happened shrinks the set of possibilities to B. The chance of A is then the part of B where A also happens, as a fraction of all of B. In a two-way table it is a cell divided by its row or column total.",
+      "whenToUse": "Use it whenever information changes the odds: medical tests, two-way tables, drawing without replacement.",
+      "assumptions": ["P(B) > 0"],
+      "example": {
+        "story": "In a school, 40 % of students play sport and 12 % play sport and music. What fraction of the sporty students play music?",
+        "given": { "P_AandB": 0.12, "P_B": 0.4 },
+        "solveFor": "P_AgivenB",
+        "result": 0.3,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["P(music | sport) = 0.12 / 0.4", "= 0.3"]
+      },
+      "related": ["bayes-theorem", "independent-events", "total-probability"],
+      "tags": ["conditional probability", "given", "p(a|b)", "two way table", "dependent events"]
+    },
+    {
+      "id": "bayes-theorem",
+      "name": "Bayes' theorem",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_AgivenB = P_BgivenA*P_A / P_B",
+      "displayLatex": "P(A \\mid B) = \\frac{P(B \\mid A)\\,P(A)}{P(B)}",
+      "variables": [
+        { "symbol": "P_AgivenB", "name": "posterior", "unit": "", "description": "Probability of A after observing B.", "min": 0, "max": 1 },
+        { "symbol": "P_BgivenA", "name": "likelihood", "unit": "", "description": "Probability of observing B if A is true.", "min": 0, "max": 1 },
+        { "symbol": "P_A", "name": "prior", "unit": "", "description": "Probability of A before the observation.", "min": 0, "max": 1 },
+        { "symbol": "P_B", "name": "evidence", "unit": "", "description": "Overall probability of observing B.", "min": 0, "max": 1 }
+      ],
+      "explanation": "Bayes' theorem turns P(B | A) around into P(A | B). Both equal P(A and B) divided by something, which links them. It explains why a positive result for a rare disease is often a false alarm: the prior P(A) is small.",
+      "whenToUse": "Use it to update a probability with new evidence: diagnostic tests, spam filters, forensic evidence.",
+      "assumptions": ["P(B) > 0", "P(B) usually comes from the law of total probability"],
+      "example": {
+        "story": "A disease affects 1 % of people. A test detects it 95 % of the time, and 5.9 % of all tests come back positive. If you test positive, what is the chance you have the disease?",
+        "given": { "P_BgivenA": 0.95, "P_A": 0.01, "P_B": 0.059 },
+        "solveFor": "P_AgivenB",
+        "result": 0.16101695,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["P(B | A) P(A) = 0.95 × 0.01 = 0.0095", "P(A | B) = 0.0095 / 0.059", "P ≈ 0.161, only about 16 %"]
+      },
+      "related": ["conditional-probability", "total-probability"],
+      "tags": ["bayes", "bayes theorem", "bayes rule", "posterior", "prior", "false positive", "inverse probability"]
+    },
+    {
+      "id": "total-probability",
+      "name": "Law of total probability",
+      "subcategory": "Probability",
+      "level": "school",
+      "equation": "P_B = P_BgivenA*P_A + P_BgivenNotA*(1 - P_A)",
+      "displayLatex": "P(B) = P(B \\mid A)P(A) + P(B \\mid A')P(A')",
+      "variables": [
+        { "symbol": "P_B", "name": "probability of B", "unit": "", "description": "Overall chance of B.", "min": 0, "max": 1 },
+        { "symbol": "P_BgivenA", "name": "B given A", "unit": "", "description": "Chance of B when A is true.", "min": 0, "max": 1 },
+        { "symbol": "P_A", "name": "probability of A", "unit": "", "description": "Chance of A.", "min": 0, "max": 1 },
+        { "symbol": "P_BgivenNotA", "name": "B given not A", "unit": "", "description": "Chance of B when A is false.", "min": 0, "max": 1 }
+      ],
+      "explanation": "B can happen in two separate ways: with A or without A. Add the probabilities of both branches of the tree diagram. This gives the denominator needed in Bayes' theorem.",
+      "whenToUse": "Use it with tree diagrams to find an overall probability from conditional ones.",
+      "assumptions": ["A and not A cover all cases"],
+      "example": {
+        "story": "1 % of people have a disease. The test is positive for 95 % of those with it and 5 % of those without it. What fraction of all tests are positive?",
+        "given": { "P_BgivenA": 0.95, "P_A": 0.01, "P_BgivenNotA": 0.05 },
+        "solveFor": "P_B",
+        "result": 0.059,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["With disease: 0.95 × 0.01 = 0.0095", "Without: 0.05 × 0.99 = 0.0495", "P(positive) = 0.059"]
+      },
+      "related": ["bayes-theorem", "conditional-probability"],
+      "tags": ["total probability", "tree diagram", "partition", "law of total probability"]
+    },
+    {
+      "id": "pearson-correlation",
+      "name": "Pearson correlation coefficient",
+      "subcategory": "Correlation and regression",
+      "level": "school",
+      "equation": "r = S_xy / sqrt(S_xx*S_yy)",
+      "displayLatex": "r = \\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}}",
+      "variables": [
+        { "symbol": "r", "name": "correlation coefficient", "unit": "", "description": "Strength and direction of the linear relationship, from -1 to 1.", "min": -1, "max": 1 },
+        { "symbol": "S_xy", "name": "sum of cross products", "unit": "", "description": "Σ(x - x̄)(y - ȳ)." },
+        { "symbol": "S_xx", "name": "sum of squares of x", "unit": "", "description": "Σ(x - x̄)².", "positive": true },
+        { "symbol": "S_yy", "name": "sum of squares of y", "unit": "", "description": "Σ(y - ȳ)².", "positive": true }
+      ],
+      "explanation": "r measures how closely points lie along a straight line. S_xy is positive when x and y tend to be above or below their means together, and dividing by √(S_xx S_yy) scales the result to lie between -1 and 1. Values near ±1 mean a strong linear relationship; correlation does not prove causation.",
+      "whenToUse": "Use it to describe the strength of a linear relationship in paired data, for example height and arm span.",
+      "assumptions": ["paired numerical data", "measures linear relationships only"],
+      "example": {
+        "story": "Paired data give S_xy = 42, S_xx = 50 and S_yy = 40. Find the correlation coefficient.",
+        "given": { "S_xy": 42, "S_xx": 50, "S_yy": 40 },
+        "solveFor": "r",
+        "result": 0.93914855,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["√(50 × 40) = √2000 ≈ 44.721", "r = 42 / 44.721 ≈ 0.939", "A strong positive correlation"]
+      },
+      "related": ["regression-slope", "spearman-rank-correlation"],
+      "tags": ["correlation", "pearson", "pmcc", "product moment correlation", "r value", "linear relationship"]
+    },
+    {
+      "id": "spearman-rank-correlation",
+      "name": "Spearman's rank correlation coefficient",
+      "subcategory": "Correlation and regression",
+      "level": "school",
+      "equation": "r_s = 1 - 6*S_d2 / (n*(n^2 - 1))",
+      "displayLatex": "r_s = 1 - \\frac{6\\sum d^2}{n(n^2 - 1)}",
+      "variables": [
+        { "symbol": "r_s", "name": "rank correlation", "unit": "", "description": "Agreement between two rankings, from -1 to 1.", "min": -1, "max": 1 },
+        { "symbol": "S_d2", "name": "sum of squared rank differences", "unit": "", "description": "Σd², where d is the difference between the two ranks of each item.", "min": 0 },
+        { "symbol": "n", "name": "number of pairs", "unit": "", "description": "How many items are ranked.", "positive": true, "integer": true, "min": 2 }
+      ],
+      "explanation": "Rank each variable separately, then compare the ranks. If the rankings agree perfectly every d is 0 and r_s = 1; if they are exactly reversed r_s = -1. Because it uses ranks, it detects any monotonic relationship and is not upset by outliers.",
+      "whenToUse": "Use it for ranked data, such as two judges scoring contestants, or when the relationship is not linear.",
+      "assumptions": ["this simple formula assumes no tied ranks"],
+      "example": {
+        "story": "Two judges rank 8 dancers. The squared differences between their ranks add up to 10. How well do they agree?",
+        "given": { "S_d2": 10, "n": 8 },
+        "solveFor": "r_s",
+        "result": 0.88095238,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["n(n² - 1) = 8 × 63 = 504", "r_s = 1 - 60 / 504", "r_s ≈ 0.881"]
+      },
+      "related": ["pearson-correlation"],
+      "tags": ["spearman", "rank correlation", "rho", "ranks", "non-parametric"]
+    },
+    {
+      "id": "regression-slope",
+      "name": "Least squares regression slope",
+      "subcategory": "Correlation and regression",
+      "level": "school",
+      "equation": "b = S_xy / S_xx",
+      "displayLatex": "b = \\frac{S_{xy}}{S_{xx}}",
+      "variables": [
+        { "symbol": "b", "name": "slope", "unit": "", "description": "Gradient of the best-fit line y = a + b x." },
+        { "symbol": "S_xy", "name": "sum of cross products", "unit": "", "description": "Σ(x - x̄)(y - ȳ)." },
+        { "symbol": "S_xx", "name": "sum of squares of x", "unit": "", "description": "Σ(x - x̄)².", "positive": true }
+      ],
+      "explanation": "The least squares line makes the total of the squared vertical distances from the points to the line as small as possible. Calculus shows its gradient is S_xy / S_xx, and the line always passes through the mean point (x̄, ȳ).",
+      "whenToUse": "Use it to fit a straight line to paired data for prediction, such as fuel use against distance.",
+      "assumptions": ["roughly linear relationship", "predict y from x (not the other way round)"],
+      "example": {
+        "story": "Paired data give S_xy = 42 and S_xx = 50. Find the gradient of the regression line of y on x.",
+        "given": { "S_xy": 42, "S_xx": 50 },
+        "solveFor": "b",
+        "result": 0.84,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["b = 42 / 50", "b = 0.84"]
+      },
+      "related": ["regression-intercept", "pearson-correlation", "line-slope-intercept"],
+      "tags": ["regression", "least squares", "line of best fit", "slope", "linear regression", "trend line"]
+    },
+    {
+      "id": "regression-intercept",
+      "name": "Least squares regression intercept",
+      "subcategory": "Correlation and regression",
+      "level": "school",
+      "equation": "a = y_bar - b*x_bar",
+      "displayLatex": "a = \\bar y - b\\bar x",
+      "variables": [
+        { "symbol": "a", "name": "intercept", "unit": "", "description": "Value of y on the regression line when x = 0." },
+        { "symbol": "y_bar", "name": "mean of y", "unit": "", "description": "Mean of the y values." },
+        { "symbol": "b", "name": "slope", "unit": "", "description": "Gradient of the regression line." },
+        { "symbol": "x_bar", "name": "mean of x", "unit": "", "description": "Mean of the x values." }
+      ],
+      "explanation": "The least squares line passes through the mean point (x̄, ȳ). Substituting that point into y = a + b x and rearranging gives the intercept.",
+      "whenToUse": "Use it after finding the slope to complete the regression equation y = a + b x.",
+      "assumptions": ["the intercept may have no real meaning if x = 0 is far outside the data"],
+      "example": {
+        "story": "Data have x̄ = 10 and ȳ = 20, and the regression slope is 0.84. Find the intercept.",
+        "given": { "y_bar": 20, "b": 0.84, "x_bar": 10 },
+        "solveFor": "a",
+        "result": 11.6,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["a = 20 - 0.84 × 10", "a = 11.6, so the line is y = 11.6 + 0.84x"]
+      },
+      "related": ["regression-slope", "mean"],
+      "tags": ["regression", "intercept", "line of best fit", "least squares", "linear regression"]
+    }
+  ]
+}

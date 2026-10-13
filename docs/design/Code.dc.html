@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Code mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Code" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+
+    <section aria-label="Editor" style="flex: 999 1 640px; min-width: 0; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 8px 10px; background-color: var(--key); border-bottom: 4px solid var(--line)">
+        <div role="tablist" aria-label="Files" style="display: flex; flex-wrap: wrap">
+          <sc-for list="{{files}}" as="f" hint-placeholder-count="3">
+            <button type="button" role="tab" aria-selected="{{f.selected}}" onClick="{{f.pick}}" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--ink); min-height: 40px; padding: 0 12px; border: 2px solid var(--line); margin-right: -2px; cursor: pointer; background-color: {{f.bg}}">{{f.name}}</button>
+          </sc-for>
+          <button type="button" aria-label="New file" style="font-family: 'Silkscreen', monospace; font-size: 14px; color: var(--ink); min-height: 40px; width: 40px; border: 2px solid var(--line); background-color: var(--paper)">+</button>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center">
+          <button type="button" onClick="{{run}}" style="display: flex; align-items: center; gap: 8px; font-family: 'Silkscreen', monospace; font-size: 13px; color: var(--ink); background-color: var(--ok); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); min-height: 44px; padding: 0 14px; cursor: pointer">
+            <svg width="14" height="14" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M4 2h2v12H4z M6 3h2v10H6z M8 4h2v8H8z M10 6h2v4h-2z"/></svg>
+            Run
+          </button>
+          <button type="button" onClick="{{stop}}" style="display: flex; align-items: center; gap: 8px; font-family: 'Silkscreen', monospace; font-size: 13px; color: var(--ink); background-color: var(--paper); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); min-height: 44px; padding: 0 14px; cursor: pointer">
+            <svg width="14" height="14" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 3h10v10H3z"/></svg>
+            Stop
+          </button>
+          <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 13px; color: var(--ink); background-color: var(--paper); border: 3px solid var(--line); min-height: 44px; padding: 0 12px">Debug</button>
+        </div>
+      </div>
+      <div style="display: flex; font-family: 'JetBrains Mono', monospace; font-size: 15px; line-height: 24px; background-color: var(--card); min-height: 470px">
+        <div aria-hidden="true" style="padding: 10px 10px; text-align: right; color: var(--muted); background-color: var(--paper); border-right: 3px solid var(--line); user-select: none">
+          <sc-for list="{{lines}}" as="l" hint-placeholder-count="14"><div>{{l.n}}</div></sc-for>
+        </div>
+        <div style="flex: 1; padding: 10px 14px; overflow-x: auto; white-space: pre">
+          <sc-for list="{{lines}}" as="l" hint-placeholder-count="14">
+            <div style="min-height: 24px; background-color: {{l.bg}}"><sc-for list="{{l.tokens}}" as="t" hint-placeholder-count="4"><span style="color: {{t.color}}; font-weight: {{t.weight}}; font-style: {{t.style}}">{{t.text}}</span></sc-for></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 8px 12px; border-top: 3px solid var(--line); font-size: 13px">
+        <span style="font-family: 'Silkscreen', monospace; font-size: 11px; background-color: var(--ok); border: 2px solid var(--line); padding: 4px 8px">Sandbox: no files, no network, no system</span>
+        <span style="color: var(--muted)">Modules: math, random, time, calc, turtle, ti_plotlib, casioplot</span>
+        <span style="font-family: 'JetBrains Mono', monospace; color: var(--muted)">{{status}}</span>
+      </div>
+    </section>
+
+    <div style="flex: 1 1 340px; max-width: 420px; display: flex; flex-direction: column; gap: 16px">
+      <section aria-label="Canvas" style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+        <h2 style="margin: 0; padding: 8px 14px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 13px">Canvas</h2>
+        <svg viewBox="0 0 320 220" role="img" aria-label="{{canvasLabel}}" style="width: 100%; height: auto; display: block; background-color: var(--card)">
+          <sc-if value="{{showStar}}" hint-placeholder-val="{{ false }}"><polyline points="{{star}}" fill="none" stroke-linejoin="miter" style="stroke: var(--g2); stroke-width: 4"></polyline></sc-if>
+          <sc-if value="{{showPlot}}" hint-placeholder-val="{{ false }}">
+            <line x1="0" y1="110" x2="320" y2="110" style="stroke: var(--ink); stroke-width: 2"></line>
+            <line x1="160" y1="0" x2="160" y2="220" style="stroke: var(--ink); stroke-width: 2"></line>
+            <sc-for list="{{plotDots}}" as="d" hint-placeholder-count="20"><rect x="{{d.x}}" y="{{d.y}}" width="4" height="4" style="fill: var(--g1)"></rect></sc-for>
+          </sc-if>
+          <sc-if value="{{showEmpty}}" hint-placeholder-val="{{ true }}"><text x="160" y="115" font-family="Silkscreen, monospace" font-size="12" text-anchor="middle" style="fill: var(--muted)">Drawings from turtle and ti_plotlib appear here</text></sc-if>
+        </svg>
+      </section>
+      <section aria-label="Console" style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column; max-height: 420px">
+        <h2 style="margin: 0; padding: 8px 14px; background-color: var(--sel); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 13px">Runs</h2>
+        <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto">
+          <sc-for list="{{runs}}" as="r" hint-placeholder-count="2">
+            <article style="border: 3px solid {{r.border}}; background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+              <div style="display: flex; justify-content: space-between; padding: 4px 8px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px"><span>#{{r.n}}  {{r.file}}</span><span>{{r.meta}}</span></div>
+              <pre style="margin: 0; padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 14px; white-space: pre-wrap">{{r.out}}</pre>
+            </article>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 8px; padding: 8px 10px; border-top: 3px solid var(--line); align-items: center">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700">&gt;&gt;&gt;</span>
+          <span style="flex: 1; min-height: 36px; border: 2px dashed var(--muted); display: flex; align-items: center; padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted)">type Python here to try a line</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      file: 'primes.py', canvas: null, status: 'Ready',
+      runs: [
+        { file: 'primes.py', meta: '12 ms · 1,204 steps', out: '15 primes: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]', border: 'var(--line)' },
+        { file: 'loop.py', meta: 'stopped at 10.0 s', out: 'Stopped: the program ran longer than 10 s.\nwhile True: on line 3 never ends. Press Stop or Esc any time.', border: 'var(--err)' }
+      ]
+    };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); }
+  programs() {
+    return {
+      'primes.py': {
+        src: '# Primes below 50 with a sieve\ndef primes(n):\n    is_p = [True] * n\n    is_p[0] = is_p[1] = False\n    for i in range(2, int(n ** 0.5) + 1):\n        if is_p[i]:\n            for j in range(i * i, n, i):\n                is_p[j] = False\n    return [i for i in range(n) if is_p[i]]\n\nfound = primes(50)\nprint(len(found), "primes:", found)',
+        out: '15 primes: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]', meta: '12 ms · 1,204 steps', canvas: null
+      },
+      'star.py': {
+        src: 'import turtle\n\nt = turtle.Turtle()\nt.color("red")\nfor i in range(5):\n    t.forward(150)\n    t.right(144)\nprint("done")',
+        out: 'done', meta: '30 ms · 41 steps', canvas: 'star'
+      },
+      'roots.py': {
+        src: 'from calc import solve, diff\nimport ti_plotlib as plt\n\nf = "x^3 - 3x"\nprint("roots:", solve(f + " = 0", "x"))\nprint("f\'(x) =", diff(f, "x"))\n\nxs = [i / 10 for i in range(-30, 31)]\nys = [x ** 3 - 3 * x for x in xs]\nplt.window(-3, 3, -4, 4)\nplt.plot(xs, ys, ".")\nplt.show_plot()',
+        out: 'roots: [-√3, 0, √3]\nf\'(x) = 3x² − 3', meta: '18 ms · 433 steps', canvas: 'plot'
+      }
+    };
+  }
+  tokenize(line) {
+    const kw = new Set(['def', 'return', 'for', 'in', 'if', 'elif', 'else', 'while', 'import', 'from', 'as', 'and', 'or', 'not', 'True', 'False', 'None', 'class', 'try', 'except', 'lambda', 'break', 'continue', 'pass']);
+    const builtins = new Set(['print', 'range', 'len', 'int', 'float', 'str', 'list', 'abs', 'min', 'max', 'sum']);
+    const out = [];
+    const re = /(#.*$)|("[^"]*"|'[^']*')|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_]*)|(\s+)|(.)/g;
+    let m;
+    while ((m = re.exec(line)) !== null) {
+      if (m[0] === '') break;
+      let color = 'var(--ink)', weight = '400', style = 'normal';
+      if (m[1]) { color = 'var(--muted)'; style = 'italic'; }
+      else if (m[2]) color = 'var(--g1)';
+      else if (m[3]) color = 'var(--g2)';
+      else if (m[4] && kw.has(m[4])) { color = 'var(--g4)'; weight = '700'; }
+      else if (m[4] && builtins.has(m[4])) { color = 'var(--g4)'; }
+      out.push({ text: m[0], color, weight, style });
+    }
+    return out;
+  }
+  run() {
+    if (this.timer) return;
+    const name = this.state.file, p = this.programs()[name];
+    this.setState({ status: 'Running ' + name + ' …' });
+    this.timer = setTimeout(() => {
+      this.timer = null;
+      this.setState({ status: 'Finished ' + name, canvas: p.canvas, runs: [{ file: name, meta: p.meta, out: p.out, border: 'var(--line)' }, ...this.state.runs] });
+    }, 450);
+  }
+  stop() {
+    if (!this.timer) return;
+    clearTimeout(this.timer); this.timer = null;
+    this.setState({ status: 'Stopped', runs: [{ file: this.state.file, meta: 'stopped by you', out: 'KeyboardInterrupt: stopped with the Stop button.', border: 'var(--err)' }, ...this.state.runs] });
+  }
+  renderVals() {
+    const s = this.state;
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const progs = this.programs();
+    const src = progs[s.file].src.split('\n');
+    let x = 0, y = 0, h = 0; const pts = [[0, 0]];
+    for (let i = 0; i < 5; i++) { x += 150 * Math.cos(h * Math.PI / 180); y += 150 * Math.sin(h * Math.PI / 180); pts.push([x, y]); h -= 144; }
+    const minX = Math.min(...pts.map(p => p[0])), maxX = Math.max(...pts.map(p => p[0])), minY = Math.min(...pts.map(p => p[1])), maxY = Math.max(...pts.map(p => p[1]));
+    const sx = v => 160 + (v - (minX + maxX) / 2), sy = v => 110 - (v - (minY + maxY) / 2);
+    const dots = []; for (let i = -30; i <= 30; i++) { const xv = i / 10, yv = xv ** 3 - 3 * xv; if (yv >= -4 && yv <= 4) dots.push({ x: (160 + xv / 3 * 155 - 2).toFixed(1), y: (110 - yv / 4 * 105 - 2).toFixed(1) }); }
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      files: Object.keys(progs).map(name => ({ name, selected: name === s.file ? 'true' : 'false', bg: name === s.file ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ file: name }) })),
+      lines: src.map((line, i) => ({ n: i + 1, tokens: this.tokenize(line), bg: i === 0 ? 'var(--card)' : 'var(--card)' })),
+      run: () => this.run(),
+      stop: () => this.stop(),
+      status: s.status,
+      showStar: s.canvas === 'star', showPlot: s.canvas === 'plot', showEmpty: !s.canvas,
+      canvasLabel: s.canvas === 'star' ? 'A five-pointed star drawn by turtle' : s.canvas === 'plot' ? 'Plot of x cubed minus 3x' : 'Empty canvas',
+      star: pts.map(p => sx(p[0]).toFixed(1) + ',' + sy(p[1]).toFixed(1)).join(' '),
+      plotDots: dots,
+      runs: s.runs.map((r, i) => ({ ...r, n: s.runs.length - i }))
+    };
+  }
+}
+</script>
+</body>
+</html>

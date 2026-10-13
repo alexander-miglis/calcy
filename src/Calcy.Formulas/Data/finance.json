@@ -1,0 +1,642 @@
+{
+  "category": "finance",
+  "formulas": [
+    {
+      "id": "simple-interest",
+      "name": "Simple interest",
+      "subcategory": "Interest",
+      "level": "school",
+      "equation": "I = P*r*t",
+      "displayLatex": "I = Prt",
+      "variables": [
+        { "symbol": "I", "name": "interest", "unit": "", "description": "Interest earned or owed, in currency units." },
+        { "symbol": "P", "name": "principal", "unit": "", "description": "Amount invested or borrowed.", "min": 0 },
+        { "symbol": "r", "name": "interest rate per year", "unit": "", "description": "Annual rate as a decimal (4 % = 0.04)." },
+        { "symbol": "t", "name": "time", "unit": "", "description": "Number of years.", "min": 0 }
+      ],
+      "explanation": "With simple interest, you earn the same amount every year because interest is only ever calculated on the original principal. The total interest grows in a straight line with time.",
+      "whenToUse": "Use it for short-term loans, some bonds and savings where interest is paid out rather than added on.",
+      "assumptions": ["interest is not reinvested", "rate and time use the same period"],
+      "example": {
+        "story": "2000 is invested at 4 % simple interest per year for 3 years. How much interest is earned?",
+        "given": { "P": 2000, "r": 0.04, "t": 3 },
+        "solveFor": "I",
+        "result": 240,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Interest per year: 2000 × 0.04 = 80", "I = 80 × 3 = 240"]
+      },
+      "related": ["simple-interest-amount", "compound-interest"],
+      "tags": ["simple interest", "prt", "interest", "savings", "loan"]
+    },
+    {
+      "id": "simple-interest-amount",
+      "name": "Total amount with simple interest",
+      "subcategory": "Interest",
+      "level": "school",
+      "equation": "A = P*(1 + r*t)",
+      "displayLatex": "A = P(1 + rt)",
+      "variables": [
+        { "symbol": "A", "name": "final amount", "unit": "", "description": "Principal plus interest." },
+        { "symbol": "P", "name": "principal", "unit": "", "description": "Amount invested.", "min": 0 },
+        { "symbol": "r", "name": "interest rate per year", "unit": "", "description": "Annual rate as a decimal." },
+        { "symbol": "t", "name": "time", "unit": "", "description": "Number of years.", "min": 0 }
+      ],
+      "explanation": "Adding the simple interest P r t to the principal gives the total amount. Rearranging it answers questions like how long an investment takes to reach a target.",
+      "whenToUse": "Use it to find the final balance or the time needed with simple interest.",
+      "assumptions": ["interest is not compounded"],
+      "example": {
+        "story": "How many years does it take 2000 to grow to 2500 at 5 % simple interest?",
+        "given": { "A": 2500, "P": 2000, "r": 0.05 },
+        "solveFor": "t",
+        "result": 5,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["2500 = 2000 × (1 + 0.05 t)", "1 + 0.05 t = 1.25", "t = 5 years"]
+      },
+      "related": ["simple-interest", "compound-interest"],
+      "tags": ["simple interest", "final amount", "accumulated value", "savings"]
+    },
+    {
+      "id": "compound-interest",
+      "name": "Compound interest",
+      "subcategory": "Interest",
+      "level": "school",
+      "equation": "A = P*(1 + r / n)^(n*t)",
+      "displayLatex": "A = P\\left(1 + \\frac{r}{n}\\right)^{nt}",
+      "variables": [
+        { "symbol": "A", "name": "final amount", "unit": "", "description": "Balance after t years." },
+        { "symbol": "P", "name": "principal", "unit": "", "description": "Starting amount.", "min": 0 },
+        { "symbol": "r", "name": "nominal annual rate", "unit": "", "description": "Yearly rate as a decimal (3 % = 0.03)." },
+        { "symbol": "n", "name": "compounding periods per year", "unit": "", "description": "12 for monthly, 4 for quarterly, 1 for yearly.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "", "description": "Number of years.", "min": 0 }
+      ],
+      "explanation": "With compound interest, interest is added to the balance and then earns interest itself. Each period the balance is multiplied by 1 + r/n, and there are n t periods. Over long times this grows much faster than simple interest.",
+      "whenToUse": "Use it for savings accounts, investments and debts where interest is added to the balance.",
+      "assumptions": ["constant rate", "no deposits or withdrawals"],
+      "example": {
+        "story": "5000 is saved at 3 % per year compounded monthly for 10 years. What is the final balance?",
+        "given": { "P": 5000, "r": 0.03, "n": 12, "t": 10 },
+        "solveFor": "A",
+        "result": 6746.77,
+        "unit": "",
+        "tolerance": 0.01,
+        "steps": ["Monthly multiplier: 1 + 0.03/12 = 1.0025", "1.0025¹²⁰ ≈ 1.349354", "A ≈ 5000 × 1.349354 ≈ 6746.77"]
+      },
+      "related": ["compound-interest-continuous", "effective-annual-rate", "present-and-future-value", "compound-growth"],
+      "tags": ["compound interest", "compounding", "interest on interest", "savings", "investment"]
+    },
+    {
+      "id": "compound-interest-continuous",
+      "name": "Continuously compounded interest",
+      "subcategory": "Interest",
+      "level": "university",
+      "equation": "A = P*e^(r*t)",
+      "displayLatex": "A = Pe^{rt}",
+      "variables": [
+        { "symbol": "A", "name": "final amount", "unit": "", "description": "Balance after t years." },
+        { "symbol": "P", "name": "principal", "unit": "", "description": "Starting amount.", "min": 0 },
+        { "symbol": "r", "name": "annual rate", "unit": "", "description": "Continuous rate as a decimal." },
+        { "symbol": "t", "name": "time", "unit": "", "description": "Number of years.", "min": 0 }
+      ],
+      "explanation": "Compounding more and more often approaches a limit: interest added continuously multiplies the balance by e^(rt). It is the upper bound of what compounding can achieve at a given nominal rate, and it is widely used in finance theory.",
+      "whenToUse": "Use it in financial models, option pricing and as a close approximation for very frequent compounding.",
+      "assumptions": ["constant rate"],
+      "example": {
+        "story": "5000 is invested at 3 % per year compounded continuously for 10 years. What is the final amount?",
+        "given": { "P": 5000, "r": 0.03, "t": 10 },
+        "solveFor": "A",
+        "result": 6749.29,
+        "unit": "",
+        "tolerance": 0.01,
+        "steps": ["r t = 0.3", "e^0.3 ≈ 1.349859", "A ≈ 6749.29, slightly more than with monthly compounding"]
+      },
+      "related": ["compound-interest", "continuous-growth-limit", "continuous-exponential-growth"],
+      "tags": ["continuous compounding", "pert", "e", "compound interest", "exponential growth"]
+    },
+    {
+      "id": "effective-annual-rate",
+      "name": "Effective annual rate",
+      "subcategory": "Interest",
+      "level": "school",
+      "equation": "r_e = (1 + r / n)^n - 1",
+      "displayLatex": "r_{\\text{eff}} = \\left(1 + \\frac{r}{n}\\right)^n - 1",
+      "variables": [
+        { "symbol": "r_e", "name": "effective annual rate", "unit": "", "description": "The real yearly growth, as a decimal (also called AER or APY)." },
+        { "symbol": "r", "name": "nominal annual rate", "unit": "", "description": "The quoted yearly rate as a decimal." },
+        { "symbol": "n", "name": "compounding periods per year", "unit": "", "description": "12 for monthly, 365 for daily.", "positive": true }
+      ],
+      "explanation": "A rate of 12 % compounded monthly actually grows money by more than 12 % in a year, because each month's interest earns interest. The effective rate is the true yearly growth, which lets you compare offers with different compounding.",
+      "whenToUse": "Use it to compare savings accounts, loans and credit cards with different compounding periods.",
+      "assumptions": [],
+      "example": {
+        "story": "A credit card charges 12 % per year compounded monthly. What is the effective annual rate?",
+        "given": { "r": 0.12, "n": 12 },
+        "solveFor": "r_e",
+        "result": 0.12682503,
+        "unit": "",
+        "tolerance": 1e-8,
+        "steps": ["Monthly rate: 1 %", "1.01¹² ≈ 1.126825", "Effective rate ≈ 0.1268, or 12.68 %"]
+      },
+      "related": ["compound-interest", "real-interest-rate"],
+      "tags": ["effective annual rate", "aer", "apy", "ear", "nominal rate", "annual equivalent rate"]
+    },
+    {
+      "id": "present-and-future-value",
+      "name": "Present and future value",
+      "subcategory": "Time value of money",
+      "level": "school",
+      "equation": "F = P*(1 + i)^n",
+      "displayLatex": "FV = PV(1 + i)^n",
+      "variables": [
+        { "symbol": "F", "name": "future value", "unit": "", "description": "Value at the end of n periods." },
+        { "symbol": "P", "name": "present value", "unit": "", "description": "Value today." },
+        { "symbol": "i", "name": "rate per period", "unit": "", "description": "Interest or discount rate per period, as a decimal." },
+        { "symbol": "n", "name": "number of periods", "unit": "", "description": "How many periods.", "min": 0 }
+      ],
+      "explanation": "Money today is worth more than the same amount later, because it can earn interest. Growing a present value forward gives its future value; dividing a future amount by (1 + i)ⁿ discounts it back to today. Solving for P is called discounting.",
+      "whenToUse": "Use it to compare payments at different times, value a future sum, or decide how much to invest now for a goal.",
+      "assumptions": ["constant rate per period"],
+      "example": {
+        "story": "You need 10 000 in 10 years. How much must you invest today at 5 % per year?",
+        "given": { "F": 10000, "i": 0.05, "n": 10 },
+        "solveFor": "P",
+        "result": 6139.1325,
+        "unit": "",
+        "tolerance": 0.001,
+        "steps": ["1.05¹⁰ ≈ 1.628895", "P = 10 000 / 1.628895", "P ≈ 6139.13"]
+      },
+      "related": ["compound-interest", "net-present-value", "annuity-present-value"],
+      "tags": ["present value", "future value", "discounting", "time value of money", "pv", "fv"]
+    },
+    {
+      "id": "loan-payment",
+      "name": "Loan or mortgage payment (annuity payment)",
+      "subcategory": "Loans and annuities",
+      "level": "school",
+      "equation": "M = P*i / (1 - (1 + i)^(-n))",
+      "displayLatex": "M = \\frac{P\\,i}{1 - (1 + i)^{-n}}",
+      "variables": [
+        { "symbol": "M", "name": "payment per period", "unit": "", "description": "Fixed payment each period (the PMT)." },
+        { "symbol": "P", "name": "loan amount", "unit": "", "description": "Amount borrowed.", "min": 0 },
+        { "symbol": "i", "name": "rate per period", "unit": "", "description": "Interest rate per payment period, as a decimal (annual rate / 12 for monthly).", "positive": true },
+        { "symbol": "n", "name": "number of payments", "unit": "", "description": "Total number of payments.", "positive": true }
+      ],
+      "explanation": "A repayment loan is paid off with equal payments that cover the interest and slowly reduce the debt. The payment is chosen so that the present value of all the payments equals the amount borrowed. Early payments are mostly interest; later ones mostly repay the principal.",
+      "whenToUse": "Use it for mortgages, car loans and student loans with fixed payments.",
+      "assumptions": ["fixed rate", "payments at the end of each period"],
+      "example": {
+        "story": "A 200 000 mortgage at 6 % per year is repaid monthly over 30 years (360 payments at 0.5 %). What is the monthly payment?",
+        "given": { "P": 200000, "i": 0.005, "n": 360 },
+        "solveFor": "M",
+        "result": 1199.10,
+        "unit": "",
+        "tolerance": 0.01,
+        "steps": ["(1.005)⁻³⁶⁰ ≈ 0.166042", "M = 200 000 × 0.005 / (1 - 0.166042)", "M ≈ 1199.10 per month"]
+      },
+      "related": ["annuity-present-value", "loan-remaining-balance", "annuity-future-value"],
+      "tags": ["loan payment", "mortgage", "pmt", "annuity", "amortisation", "amortization", "repayment"]
+    },
+    {
+      "id": "annuity-present-value",
+      "name": "Present value of an annuity",
+      "subcategory": "Loans and annuities",
+      "level": "school",
+      "equation": "P = M*(1 - (1 + i)^(-n)) / i",
+      "displayLatex": "PV = M\\,\\frac{1 - (1 + i)^{-n}}{i}",
+      "variables": [
+        { "symbol": "P", "name": "present value", "unit": "", "description": "Value today of all the future payments." },
+        { "symbol": "M", "name": "payment per period", "unit": "", "description": "Fixed payment each period." },
+        { "symbol": "i", "name": "rate per period", "unit": "", "description": "Discount rate per period, as a decimal.", "positive": true },
+        { "symbol": "n", "name": "number of payments", "unit": "", "description": "Total number of payments.", "positive": true }
+      ],
+      "explanation": "An annuity is a series of equal payments. Discounting each one back to today and adding them gives a geometric series, which sums to this formula. It tells you how much a stream of payments is worth now, or how big a pension pot is needed for a given income.",
+      "whenToUse": "Use it to value pensions, lottery payouts, leases or how much you can borrow for a given payment.",
+      "assumptions": ["payments at the end of each period", "constant rate"],
+      "example": {
+        "story": "A pension should pay 1000 per month for 20 years (240 months). If the pot earns 0.4 % per month, how big must it be at the start?",
+        "given": { "M": 1000, "i": 0.004, "n": 240 },
+        "solveFor": "P",
+        "result": 154093.1,
+        "unit": "",
+        "tolerance": 0.5,
+        "steps": ["1.004⁻²⁴⁰ ≈ 0.383628", "(1 - 0.383628) / 0.004 ≈ 154.093", "P ≈ 1000 × 154.093 ≈ 154 093"]
+      },
+      "related": ["loan-payment", "annuity-future-value", "present-and-future-value", "perpetuity"],
+      "tags": ["annuity", "present value", "pension", "pv of annuity", "discounted payments"]
+    },
+    {
+      "id": "annuity-future-value",
+      "name": "Future value of an annuity (regular saving)",
+      "subcategory": "Loans and annuities",
+      "level": "school",
+      "equation": "F = M*((1 + i)^n - 1) / i",
+      "displayLatex": "FV = M\\,\\frac{(1 + i)^n - 1}{i}",
+      "variables": [
+        { "symbol": "F", "name": "future value", "unit": "", "description": "Balance after the last payment." },
+        { "symbol": "M", "name": "payment per period", "unit": "", "description": "Amount saved each period." },
+        { "symbol": "i", "name": "rate per period", "unit": "", "description": "Interest rate per period, as a decimal.", "positive": true },
+        { "symbol": "n", "name": "number of payments", "unit": "", "description": "Number of deposits.", "positive": true }
+      ],
+      "explanation": "Saving the same amount every period, each deposit grows for a different number of periods. Adding all the grown deposits gives a geometric series whose sum is this formula. It shows how regular small savings add up thanks to compounding.",
+      "whenToUse": "Use it for savings plans, pension contributions and sinking funds.",
+      "assumptions": ["deposits at the end of each period", "constant rate"],
+      "example": {
+        "story": "You save 200 at the end of every month for 10 years at 0.4 % per month. How much will you have?",
+        "given": { "M": 200, "i": 0.004, "n": 120 },
+        "solveFor": "F",
+        "result": 30726.39,
+        "unit": "",
+        "tolerance": 0.05,
+        "steps": ["1.004¹²⁰ ≈ 1.614528", "(1.614528 - 1) / 0.004 ≈ 153.632", "F ≈ 200 × 153.632 ≈ 30 726, of which 24 000 is deposits"]
+      },
+      "related": ["annuity-present-value", "geometric-series-sum", "loan-payment"],
+      "tags": ["annuity", "future value", "regular savings", "sinking fund", "pension contributions"]
+    },
+    {
+      "id": "loan-remaining-balance",
+      "name": "Remaining balance of a loan",
+      "subcategory": "Loans and annuities",
+      "level": "university",
+      "equation": "B = P*(1 + i)^k - M*((1 + i)^k - 1) / i",
+      "displayLatex": "B_k = P(1 + i)^k - M\\,\\frac{(1 + i)^k - 1}{i}",
+      "variables": [
+        { "symbol": "B", "name": "remaining balance", "unit": "", "description": "Amount still owed after k payments." },
+        { "symbol": "P", "name": "loan amount", "unit": "", "description": "Amount originally borrowed.", "min": 0 },
+        { "symbol": "i", "name": "rate per period", "unit": "", "description": "Interest rate per period, as a decimal.", "positive": true },
+        { "symbol": "k", "name": "payments made", "unit": "", "description": "Number of payments already made.", "min": 0 },
+        { "symbol": "M", "name": "payment per period", "unit": "", "description": "Fixed payment each period." }
+      ],
+      "explanation": "The debt grows with interest as if no payments were made, while each payment grows like a savings deposit. The balance is the grown loan minus the grown payments. It shows how slowly a long mortgage is paid down at first.",
+      "whenToUse": "Use it to find how much is left on a mortgage or loan, for example when refinancing or selling a house.",
+      "assumptions": ["fixed rate and payment"],
+      "example": {
+        "story": "After 5 years (60 payments) of the 200 000 mortgage at 0.5 % per month with payments of 1199.10, how much is still owed?",
+        "given": { "P": 200000, "i": 0.005, "k": 60, "M": 1199.10 },
+        "solveFor": "B",
+        "result": 186108.8,
+        "unit": "",
+        "tolerance": 0.5,
+        "steps": ["1.005⁶⁰ ≈ 1.348850", "Grown loan ≈ 269 770; grown payments ≈ 1199.10 × 69.770 ≈ 83 661", "B ≈ 186 109, so only about 14 000 has been repaid"]
+      },
+      "related": ["loan-payment", "annuity-future-value"],
+      "tags": ["outstanding balance", "loan balance", "mortgage", "amortisation", "amortization", "principal remaining"]
+    },
+    {
+      "id": "net-present-value",
+      "name": "Net present value (three years)",
+      "subcategory": "Investment appraisal",
+      "level": "university",
+      "equation": "V = -C_0 + C_1 / (1 + i) + C_2 / (1 + i)^2 + C_3 / (1 + i)^3",
+      "displayLatex": "NPV = -C_0 + \\sum_{t=1}^{T} \\frac{C_t}{(1 + i)^t}",
+      "variables": [
+        { "symbol": "V", "name": "net present value", "unit": "", "description": "Today's value of all cash flows; positive means worthwhile." },
+        { "symbol": "C_0", "name": "initial investment", "unit": "", "description": "Cash paid out now." },
+        { "symbol": "C_1", "name": "cash flow in year 1", "unit": "", "description": "Net cash received after one year." },
+        { "symbol": "i", "name": "discount rate", "unit": "", "description": "Required return per year, as a decimal." },
+        { "symbol": "C_2", "name": "cash flow in year 2", "unit": "", "description": "Net cash received after two years." },
+        { "symbol": "C_3", "name": "cash flow in year 3", "unit": "", "description": "Net cash received after three years." }
+      ],
+      "explanation": "Net present value discounts every future cash flow back to today and subtracts the initial investment. A positive NPV means the project earns more than the discount rate; a negative one means you would do better elsewhere. The rate that makes NPV zero is the internal rate of return (IRR), which you can find by solving this equation for i.",
+      "whenToUse": "Use it to decide whether an investment or project is worth doing, and to compare alternatives.",
+      "assumptions": ["cash flows at the end of each year", "constant discount rate", "add more terms for longer projects"],
+      "example": {
+        "story": "A machine costs 1000 and brings in 400 at the end of each of the next three years. At a discount rate of 8 %, is it worth buying?",
+        "given": { "C_0": 1000, "C_1": 400, "i": 0.08, "C_2": 400, "C_3": 400 },
+        "solveFor": "V",
+        "result": 30.8388,
+        "unit": "",
+        "tolerance": 0.001,
+        "steps": ["400/1.08 + 400/1.08² + 400/1.08³ ≈ 370.37 + 342.94 + 317.53", "Sum ≈ 1030.84", "NPV ≈ 30.84 > 0, so yes"]
+      },
+      "related": ["present-and-future-value", "annuity-present-value", "expected-value-two-outcomes"],
+      "tags": ["npv", "net present value", "discounted cash flow", "dcf", "irr", "investment appraisal"]
+    },
+    {
+      "id": "perpetuity",
+      "name": "Present value of a perpetuity",
+      "subcategory": "Loans and annuities",
+      "level": "university",
+      "equation": "P = M / i",
+      "displayLatex": "PV = \\frac{M}{i}",
+      "variables": [
+        { "symbol": "P", "name": "present value", "unit": "", "description": "Value today of payments that go on forever." },
+        { "symbol": "M", "name": "payment per period", "unit": "", "description": "Fixed payment each period." },
+        { "symbol": "i", "name": "rate per period", "unit": "", "description": "Discount rate per period, as a decimal.", "positive": true }
+      ],
+      "explanation": "A perpetuity pays the same amount forever. Letting n grow without limit in the annuity formula makes (1 + i)⁻ⁿ vanish, leaving M/i. In other words, a capital of M/i earning interest i pays M every period without ever running down.",
+      "whenToUse": "Use it to value endowments, preferred shares, ground rents and the terminal value in company valuations.",
+      "assumptions": ["constant payments forever", "constant rate"],
+      "example": {
+        "story": "A scholarship fund must pay 500 every year forever. If it earns 4 % per year, how much must be invested?",
+        "given": { "M": 500, "i": 0.04 },
+        "solveFor": "P",
+        "result": 12500,
+        "unit": "",
+        "tolerance": 1e-6,
+        "steps": ["P = 500 / 0.04", "P = 12 500"]
+      },
+      "related": ["annuity-present-value", "geometric-series-infinite"],
+      "tags": ["perpetuity", "endowment", "infinite annuity", "present value"]
+    },
+    {
+      "id": "real-interest-rate",
+      "name": "Real interest rate (Fisher equation)",
+      "subcategory": "Interest",
+      "level": "university",
+      "equation": "1 + r_r = (1 + r_n) / (1 + i_f)",
+      "displayLatex": "1 + r_{\\text{real}} = \\frac{1 + r_{\\text{nominal}}}{1 + \\text{inflation}}",
+      "variables": [
+        { "symbol": "r_r", "name": "real rate", "unit": "", "description": "Growth in purchasing power per year, as a decimal." },
+        { "symbol": "r_n", "name": "nominal rate", "unit": "", "description": "Quoted interest rate per year, as a decimal." },
+        { "symbol": "i_f", "name": "inflation rate", "unit": "", "description": "Yearly rise in prices, as a decimal." }
+      ],
+      "explanation": "If your savings grow by 5 % but prices rise by 2 %, your purchasing power grows by less than 5 %. Dividing the growth factor of money by the growth factor of prices gives the real growth. For small rates it is close to nominal minus inflation.",
+      "whenToUse": "Use it to judge whether savings or investments really keep up with inflation.",
+      "assumptions": ["rates over the same period"],
+      "example": {
+        "story": "A savings account pays 5 % while inflation is 2 %. What is the real interest rate?",
+        "given": { "r_n": 0.05, "i_f": 0.02 },
+        "solveFor": "r_r",
+        "result": 0.029411765,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["1 + r = 1.05 / 1.02 ≈ 1.029412", "r ≈ 0.0294, about 2.94 %, a little below 5 % - 2 % = 3 %"]
+      },
+      "related": ["effective-annual-rate", "compound-interest"],
+      "tags": ["real interest rate", "fisher equation", "inflation", "purchasing power", "nominal"]
+    },
+    {
+      "id": "rule-of-72",
+      "name": "Rule of 72",
+      "subcategory": "Interest",
+      "level": "school",
+      "equation": "t = 72 / r",
+      "displayLatex": "t \\approx \\frac{72}{r\\,(\\%)}",
+      "variables": [
+        { "symbol": "t", "name": "doubling time", "unit": "", "description": "Approximate number of periods to double.", "positive": true },
+        { "symbol": "r", "name": "rate in percent", "unit": "%", "description": "Growth rate per period in percent (6 for 6 %).", "positive": true }
+      ],
+      "explanation": "A quick mental shortcut: divide 72 by the percentage growth rate to estimate how long it takes to double. It works because ln 2 ≈ 0.693 and ln(1 + r) ≈ r for small r; 72 is used instead of 69.3 because it is easy to divide and corrects for compounding at typical rates.",
+      "whenToUse": "Use it for quick estimates of doubling times for investments, debts, inflation or populations.",
+      "assumptions": ["approximation, best for rates of roughly 4 % to 12 %"],
+      "example": {
+        "story": "Roughly how long does an investment growing at 6 % per year take to double?",
+        "given": { "r": 6 },
+        "solveFor": "t",
+        "result": 12,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["t ≈ 72 / 6", "t ≈ 12 years (exact: 11.9)"]
+      },
+      "related": ["doubling-time-exact", "doubling-time"],
+      "tags": ["rule of 72", "doubling time", "mental math", "rule of 70", "investment"]
+    },
+    {
+      "id": "doubling-time-exact",
+      "name": "Exact doubling time with compound growth",
+      "subcategory": "Interest",
+      "level": "school",
+      "equation": "t = ln(2) / ln(1 + r)",
+      "displayLatex": "t = \\frac{\\ln 2}{\\ln(1 + r)}",
+      "variables": [
+        { "symbol": "t", "name": "doubling time", "unit": "", "description": "Number of periods to double.", "positive": true },
+        { "symbol": "r", "name": "rate per period", "unit": "", "description": "Growth rate per period as a decimal.", "positive": true }
+      ],
+      "explanation": "Doubling means (1 + r)ᵗ = 2. Taking logarithms and solving for t gives this exact formula, which the rule of 72 approximates.",
+      "whenToUse": "Use it for an exact doubling time with periodic compounding.",
+      "assumptions": ["constant rate", "compounding once per period"],
+      "example": {
+        "story": "Exactly how long does an investment growing at 6 % per year take to double?",
+        "given": { "r": 0.06 },
+        "solveFor": "t",
+        "result": 11.895661,
+        "unit": "",
+        "tolerance": 1e-6,
+        "steps": ["ln 1.06 ≈ 0.058269", "t = 0.693147 / 0.058269", "t ≈ 11.9 years"]
+      },
+      "related": ["rule-of-72", "doubling-time", "compound-interest"],
+      "tags": ["doubling time", "compound interest", "logarithm", "investment growth"]
+    },
+    {
+      "id": "cagr",
+      "name": "Compound annual growth rate",
+      "subcategory": "Investment appraisal",
+      "level": "school",
+      "equation": "g = (V_f / V_i)^(1 / n) - 1",
+      "displayLatex": "\\text{CAGR} = \\left(\\frac{V_{\\text{final}}}{V_{\\text{initial}}}\\right)^{1/n} - 1",
+      "variables": [
+        { "symbol": "g", "name": "annual growth rate", "unit": "", "description": "Constant yearly rate that gives the same overall growth, as a decimal." },
+        { "symbol": "V_f", "name": "final value", "unit": "", "description": "Value at the end.", "positive": true },
+        { "symbol": "V_i", "name": "initial value", "unit": "", "description": "Value at the start.", "positive": true },
+        { "symbol": "n", "name": "number of years", "unit": "", "description": "Length of the period.", "positive": true }
+      ],
+      "explanation": "Growth over several years is rarely even, but the CAGR is the single steady rate that would turn the starting value into the final value. It is the geometric mean growth rate, not the average of the yearly percentages.",
+      "whenToUse": "Use it to summarise investment performance, company revenue growth or population growth over several years.",
+      "assumptions": ["ignores the path in between"],
+      "example": {
+        "story": "An investment grew from 10 000 to 16 105.10 over 5 years. What was its compound annual growth rate?",
+        "given": { "V_f": 16105.1, "V_i": 10000, "n": 5 },
+        "solveFor": "g",
+        "result": 0.1,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Growth factor: 16 105.10 / 10 000 = 1.61051", "Fifth root: 1.61051^(1/5) = 1.1", "CAGR = 0.1, or 10 % per year"]
+      },
+      "related": ["compound-growth", "compound-interest"],
+      "tags": ["cagr", "compound annual growth rate", "average growth", "geometric mean", "annualised return"]
+    },
+    {
+      "id": "profit-markup",
+      "name": "Markup (profit as a percentage of cost)",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "p = (S - C) / C*100",
+      "displayLatex": "\\text{markup} = \\frac{S - C}{C} \\times 100\\%",
+      "variables": [
+        { "symbol": "p", "name": "markup", "unit": "%", "description": "Profit as a percentage of the cost price." },
+        { "symbol": "S", "name": "selling price", "unit": "", "description": "Price the item is sold for." },
+        { "symbol": "C", "name": "cost price", "unit": "", "description": "What the item cost.", "positive": true }
+      ],
+      "explanation": "Markup compares the profit with the cost price. It answers: by what percentage did we raise the price above cost? It is always larger than the profit margin for the same sale, which is a common source of confusion.",
+      "whenToUse": "Use it when pricing goods from their cost, as shops and wholesalers often do.",
+      "assumptions": [],
+      "example": {
+        "story": "A shop buys a lamp for 80 and sells it for 100. What is the markup?",
+        "given": { "S": 100, "C": 80 },
+        "solveFor": "p",
+        "result": 25,
+        "unit": "%",
+        "tolerance": 1e-9,
+        "steps": ["Profit: 100 - 80 = 20", "Markup = 20 / 80 × 100 = 25 %"]
+      },
+      "related": ["profit-margin", "percentage-change"],
+      "tags": ["markup", "mark up", "profit percentage", "cost price", "pricing"]
+    },
+    {
+      "id": "profit-margin",
+      "name": "Profit margin",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "m = (S - C) / S*100",
+      "displayLatex": "\\text{margin} = \\frac{S - C}{S} \\times 100\\%",
+      "variables": [
+        { "symbol": "m", "name": "profit margin", "unit": "%", "description": "Profit as a percentage of the selling price." },
+        { "symbol": "S", "name": "selling price", "unit": "", "description": "Price the item is sold for.", "positive": true },
+        { "symbol": "C", "name": "cost", "unit": "", "description": "What the item cost." }
+      ],
+      "explanation": "The margin is the share of the selling price that is profit. A 20 % margin means 20 of every 100 in sales is profit. Businesses usually report margins, while markups are used to set prices.",
+      "whenToUse": "Use it to measure profitability of products or companies.",
+      "assumptions": [],
+      "example": {
+        "story": "A lamp that cost 80 is sold for 100. What is the profit margin?",
+        "given": { "S": 100, "C": 80 },
+        "solveFor": "m",
+        "result": 20,
+        "unit": "%",
+        "tolerance": 1e-9,
+        "steps": ["Profit: 100 - 80 = 20", "Margin = 20 / 100 × 100 = 20 %"]
+      },
+      "related": ["profit-markup", "break-even-point"],
+      "tags": ["profit margin", "gross margin", "margin", "profitability", "selling price"]
+    },
+    {
+      "id": "vat-gross-net",
+      "name": "Adding or removing VAT",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "G = N*(1 + v / 100)",
+      "displayLatex": "\\text{gross} = \\text{net} \\times \\left(1 + \\frac{v}{100}\\right)",
+      "variables": [
+        { "symbol": "G", "name": "gross price", "unit": "", "description": "Price including VAT." },
+        { "symbol": "N", "name": "net price", "unit": "", "description": "Price excluding VAT." },
+        { "symbol": "v", "name": "VAT rate", "unit": "%", "description": "VAT or sales tax rate in percent (for example 20 or 21).", "min": 0 }
+      ],
+      "explanation": "Adding VAT multiplies the net price by 1 + v/100. To remove VAT from a gross price, divide by the same multiplier: you cannot just subtract v % of the gross price, because the tax was calculated on the smaller net price.",
+      "whenToUse": "Use it to add VAT to a quote or to find the price before tax from a receipt.",
+      "assumptions": ["a single VAT rate applies"],
+      "example": {
+        "story": "An item costs 121 including 21 % VAT. What is the price without VAT?",
+        "given": { "G": 121, "v": 21 },
+        "solveFor": "N",
+        "result": 100,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Multiplier: 1.21", "N = 121 / 1.21 = 100", "Note: 121 - 21 % of 121 = 95.59 would be wrong"]
+      },
+      "related": ["vat-amount-from-gross", "percentage-multiplier"],
+      "tags": ["vat", "sales tax", "gst", "including vat", "excluding vat", "btw", "mwst", "tva"]
+    },
+    {
+      "id": "vat-amount-from-gross",
+      "name": "VAT amount contained in a gross price",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "T = G*v / (100 + v)",
+      "displayLatex": "\\text{VAT} = \\text{gross} \\times \\frac{v}{100 + v}",
+      "variables": [
+        { "symbol": "T", "name": "VAT amount", "unit": "", "description": "Tax included in the gross price." },
+        { "symbol": "G", "name": "gross price", "unit": "", "description": "Price including VAT." },
+        { "symbol": "v", "name": "VAT rate", "unit": "%", "description": "VAT rate in percent.", "min": 0 }
+      ],
+      "explanation": "Out of every 100 + v paid, v is tax. So the VAT inside a gross price is the fraction v/(100 + v) of it: one sixth at 20 %, 21/121 at 21 %.",
+      "whenToUse": "Use it to find how much tax is included in a receipt or to reclaim VAT.",
+      "assumptions": ["a single VAT rate applies"],
+      "example": {
+        "story": "A receipt shows 121 including 21 % VAT. How much of that is VAT?",
+        "given": { "G": 121, "v": 21 },
+        "solveFor": "T",
+        "result": 21,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["T = 121 × 21 / 121", "T = 21"]
+      },
+      "related": ["vat-gross-net"],
+      "tags": ["vat amount", "tax included", "sales tax", "reclaim vat", "vat fraction"]
+    },
+    {
+      "id": "depreciation-straight-line",
+      "name": "Straight-line depreciation",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "D = (C - S) / n",
+      "displayLatex": "D = \\frac{C - S}{n}",
+      "variables": [
+        { "symbol": "D", "name": "yearly depreciation", "unit": "", "description": "Value lost each year." },
+        { "symbol": "C", "name": "cost", "unit": "", "description": "Purchase price of the asset.", "min": 0 },
+        { "symbol": "S", "name": "residual value", "unit": "", "description": "Expected value at the end (salvage or scrap value).", "min": 0 },
+        { "symbol": "n", "name": "useful life", "unit": "", "description": "Years the asset will be used.", "positive": true }
+      ],
+      "explanation": "Straight-line depreciation spreads the loss in value evenly over an asset's useful life. Each year the same amount is written off, so the book value falls in a straight line from the cost to the residual value.",
+      "whenToUse": "Use it in accounting for machines, vehicles, computers and buildings.",
+      "assumptions": ["value lost evenly over time"],
+      "example": {
+        "story": "A machine costs 50 000, will be used for 9 years and then sold for 5 000. What is the yearly depreciation?",
+        "given": { "C": 50000, "S": 5000, "n": 9 },
+        "solveFor": "D",
+        "result": 5000,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Total loss: 50 000 - 5 000 = 45 000", "D = 45 000 / 9 = 5 000 per year"]
+      },
+      "related": ["depreciation-declining-balance"],
+      "tags": ["depreciation", "straight line", "linear depreciation", "book value", "accounting"]
+    },
+    {
+      "id": "depreciation-declining-balance",
+      "name": "Declining balance depreciation",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "V = C*(1 - d)^t",
+      "displayLatex": "V = C(1 - d)^t",
+      "variables": [
+        { "symbol": "V", "name": "book value", "unit": "", "description": "Value after t years." },
+        { "symbol": "C", "name": "cost", "unit": "", "description": "Purchase price.", "min": 0 },
+        { "symbol": "d", "name": "depreciation rate", "unit": "", "description": "Fraction of value lost each year, as a decimal.", "min": 0, "max": 1 },
+        { "symbol": "t", "name": "years", "unit": "", "description": "Years since purchase.", "min": 0 }
+      ],
+      "explanation": "With declining balance depreciation the asset loses the same percentage of its remaining value each year, so it loses most value early on, much like a real car. The value decays exponentially and never quite reaches zero.",
+      "whenToUse": "Use it for vehicles and equipment that lose value fastest when new, and in tax rules that use reducing balance.",
+      "assumptions": ["constant percentage rate"],
+      "example": {
+        "story": "A 30 000 car loses 20 % of its value each year. What is it worth after 4 years?",
+        "given": { "C": 30000, "d": 0.2, "t": 4 },
+        "solveFor": "V",
+        "result": 12288,
+        "unit": "",
+        "tolerance": 1e-6,
+        "steps": ["0.8⁴ = 0.4096", "V = 30 000 × 0.4096", "V = 12 288"]
+      },
+      "related": ["depreciation-straight-line", "compound-decay"],
+      "tags": ["reducing balance", "declining balance", "depreciation", "car value", "book value"]
+    },
+    {
+      "id": "break-even-point",
+      "name": "Break-even point",
+      "subcategory": "Business",
+      "level": "school",
+      "equation": "Q = F / (p - v)",
+      "displayLatex": "Q = \\frac{F}{p - v}",
+      "variables": [
+        { "symbol": "Q", "name": "break-even quantity", "unit": "", "description": "Units to sell so that revenue equals total cost." },
+        { "symbol": "F", "name": "fixed costs", "unit": "", "description": "Costs that do not depend on sales (rent, salaries).", "min": 0 },
+        { "symbol": "p", "name": "price per unit", "unit": "", "description": "Selling price of one unit." },
+        { "symbol": "v", "name": "variable cost per unit", "unit": "", "description": "Cost of making one more unit." }
+      ],
+      "explanation": "Each unit sold contributes p - v towards paying off the fixed costs. Dividing the fixed costs by this contribution gives how many units must be sold to break even; beyond that every sale makes profit.",
+      "whenToUse": "Use it in business plans, pricing decisions and small business projects.",
+      "assumptions": ["constant price and variable cost per unit", "p > v"],
+      "example": {
+        "story": "A food stall has fixed costs of 12 000 per year, sells meals at 25 and spends 10 on ingredients per meal. How many meals must it sell to break even?",
+        "given": { "F": 12000, "p": 25, "v": 10 },
+        "solveFor": "Q",
+        "result": 800,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["Contribution per meal: 25 - 10 = 15", "Q = 12 000 / 15 = 800 meals"]
+      },
+      "related": ["profit-margin", "line-slope-intercept"],
+      "tags": ["break even", "breakeven", "contribution margin", "fixed costs", "variable costs"]
+    }
+  ]
+}

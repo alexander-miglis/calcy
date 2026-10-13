@@ -1,0 +1,15 @@
+# Text files are stored with LF; Windows checkouts may convert them, except the files below.
+* text=auto
+
+# Packaging files read on Linux and macOS: always LF.
+*.sh text eol=lf
+*.spec text eol=lf
+*.desktop text eol=lf
+*.plist text eol=lf
+build/linux/deb-control text eol=lf
+*.yml text eol=lf
+
+# Binary assets.
+*.png binary
+*.ico binary
+*.icns binary

@@ -1,0 +1,186 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Calcy.Modes.Solver.Views.SolverStyles">
+
+  <!-- Boxes -->
+  <Style Selector="Border.tabstrip">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Key}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="0,0,0,4" />
+    <Setter Property="Padding" Value="10,8,10,8" />
+  </Style>
+  <Style Selector="Border.box">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="Padding" Value="10,8" />
+    <Setter Property="MinHeight" Value="48" />
+  </Style>
+  <Style Selector="Border.box.sel">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Sel}" />
+  </Style>
+  <Style Selector="Border.box.problem">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Paper}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+  <Style Selector="Border.answer">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="Padding" Value="12,10" />
+  </Style>
+  <Style Selector="Border.chart">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="Border.steps">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Card}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Key}" />
+    <Setter Property="BorderThickness" Value="3" />
+    <Setter Property="Padding" Value="12,10" />
+  </Style>
+  <Style Selector="Border.chip">
+    <Setter Property="Background" Value="{DynamicResource Calcy.Mem}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Line}" />
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="Padding" Value="5,2" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Border.rule">
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Key}" />
+    <Setter Property="BorderThickness" Value="0,0,0,3" />
+  </Style>
+
+  <!-- Text -->
+  <Style Selector="TextBlock.hint">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.note">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.words">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.step">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.stepno">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Label}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+  </Style>
+  <Style Selector="TextBlock.problem">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.term">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.name">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.approx">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.big">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="24" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.medium">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.cardinput">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.cardline">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.cardapprox">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Math}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.cardnote">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Muted}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+  <Style Selector="TextBlock.carderror">
+    <Setter Property="FontFamily" Value="{DynamicResource Calcy.Font.Body}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource Calcy.Ink}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
+  <!-- Inputs -->
+  <Style Selector="TextBox.coef">
+    <Setter Property="Width" Value="64" />
+    <Setter Property="MinHeight" Value="44" />
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="Padding" Value="4,0" />
+    <Setter Property="TextAlignment" Value="Center" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBox.coef.grid">
+    <Setter Property="Width" Value="60" />
+  </Style>
+  <Style Selector="TextBox.range">
+    <Setter Property="MinHeight" Value="48" />
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="Padding" Value="10,0" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBox.guess">
+    <Setter Property="Width" Value="96" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="Padding" Value="8,0" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBox.error /template/ Border#PART_BorderElement">
+    <Setter Property="BorderBrush" Value="{DynamicResource Calcy.Err}" />
+  </Style>
+</Styles>

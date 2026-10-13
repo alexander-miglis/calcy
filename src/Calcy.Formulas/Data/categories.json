@@ -1,0 +1,102 @@
+{
+  "categories": [
+    {
+      "id": "algebra",
+      "name": "Algebra",
+      "description": "Quadratics, algebraic identities, sequences and series, exponent and logarithm rules, percentages, growth and decay, variation and coordinate geometry.",
+      "icon": "variable",
+      "order": 1
+    },
+    {
+      "id": "geometry",
+      "name": "Geometry",
+      "description": "Areas and perimeters of flat shapes, circles and arcs, and volumes and surface areas of solids.",
+      "icon": "shapes",
+      "order": 2
+    },
+    {
+      "id": "trigonometry",
+      "name": "Trigonometry",
+      "description": "Right-angled triangles, the sine and cosine rules, trigonometric identities, angle units and polar coordinates.",
+      "icon": "triangle",
+      "order": 3
+    },
+    {
+      "id": "calculus",
+      "name": "Calculus and analysis",
+      "description": "Differentiation rules, standard integrals, the fundamental theorem, Taylor approximations and numerical methods.",
+      "icon": "integral",
+      "order": 4
+    },
+    {
+      "id": "vectors",
+      "name": "Vectors and matrices",
+      "description": "Magnitudes, dot and cross products, angles between vectors, projections, determinants, inverses and eigenvalues.",
+      "icon": "arrow",
+      "order": 5
+    },
+    {
+      "id": "statistics",
+      "name": "Statistics and probability",
+      "description": "Averages and spread, counting, probability rules, common distributions, confidence intervals, correlation and regression.",
+      "icon": "chart",
+      "order": 6
+    },
+    {
+      "id": "mechanics",
+      "name": "Mechanics",
+      "description": "Motion, forces, energy, momentum, circular motion, oscillations, gravitation, pressure and materials.",
+      "icon": "rocket",
+      "order": 7
+    },
+    {
+      "id": "waves",
+      "name": "Waves, optics and sound",
+      "description": "Wave speed, refraction, lenses, interference and diffraction, the Doppler effect, sound levels and photons.",
+      "icon": "wave",
+      "order": 8
+    },
+    {
+      "id": "electricity",
+      "name": "Electricity and magnetism",
+      "description": "Circuits, power, capacitors, electric fields, magnetic forces and fields, induction, transformers and AC circuits.",
+      "icon": "bolt",
+      "order": 9
+    },
+    {
+      "id": "thermodynamics",
+      "name": "Thermodynamics and gases",
+      "description": "Heating and phase changes, the gas laws, thermal expansion, radiation, heat engines and heat transfer.",
+      "icon": "flame",
+      "order": 10
+    },
+    {
+      "id": "modern-physics",
+      "name": "Modern physics",
+      "description": "Mass-energy equivalence, radioactive decay, the photoelectric effect, atomic spectra, special relativity and quantum limits.",
+      "icon": "atom",
+      "order": 11
+    },
+    {
+      "id": "chemistry",
+      "name": "Chemistry",
+      "description": "Amount of substance, concentrations, acids and bases, yields, reaction rates, equilibria, thermodynamics and electrochemistry.",
+      "icon": "flask",
+      "order": 12
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "description": "Interest, present and future value, loans and annuities, investment appraisal, profit, VAT and depreciation.",
+      "icon": "coins",
+      "order": 13
+    },
+    {
+      "id": "everyday",
+      "name": "Units and everyday",
+      "description": "Speed and travel, fuel and energy costs, temperature and unit conversions, prices, discounts and body mass index.",
+      "icon": "home",
+      "order": 14
+    }
+  ]
+}

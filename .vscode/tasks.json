@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build: Calcy",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/src/Calcy.App/Calcy.App.csproj", "/property:GenerateFullPaths=true", "/consoleloggerparameters:NoSummary"],
+      "problemMatcher": "$msCompile",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "silent", "clear": true }
+    },
+    {
+      "label": "build: calcy-cli",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/src/Calcy.Cli/Calcy.Cli.csproj", "/property:GenerateFullPaths=true", "/consoleloggerparameters:NoSummary"],
+      "problemMatcher": "$msCompile",
+      "group": "build",
+      "presentation": { "reveal": "silent", "clear": true }
+    },
+    {
+      "label": "build: everything",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/Calcy.slnx", "/property:GenerateFullPaths=true", "/consoleloggerparameters:NoSummary"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "test: everything",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["test", "${workspaceFolder}/Calcy.slnx"],
+      "problemMatcher": "$msCompile",
+      "group": { "kind": "test", "isDefault": true }
+    }
+  ]
+}

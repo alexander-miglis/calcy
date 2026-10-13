@@ -1,0 +1,1196 @@
+{
+  "category": "electricity",
+  "formulas": [
+    {
+      "id": "ohms-law",
+      "name": "Ohm's law",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "V = I*R",
+      "displayLatex": "V = IR",
+      "variables": [
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Potential difference across the component." },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current through the component." },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "How strongly the component opposes current.", "positive": true }
+      ],
+      "explanation": "For many conductors at constant temperature, the current is proportional to the voltage across them. The constant ratio V/I is the resistance, measured in ohms. Components like filament lamps and diodes do not obey Ohm's law, but V = IR still defines their resistance at each moment.",
+      "whenToUse": "Use it in every circuit calculation linking voltage, current and resistance.",
+      "assumptions": ["ohmic conductor at constant temperature"],
+      "example": {
+        "story": "A lamp draws 0.5 A from a 12 V supply. What is its resistance?",
+        "given": { "V": 12, "I": 0.5 },
+        "solveFor": "R",
+        "result": 24,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["R = V / I", "R = 12 / 0.5", "R = 24 Ω"]
+      },
+      "related": ["electric-power-vi", "resistivity", "resistors-in-series", "emf-internal-resistance"],
+      "tags": ["ohm", "ohms law", "uri", "voltage current resistance", "v = ir", "resistance"]
+    },
+    {
+      "id": "electric-power-vi",
+      "name": "Electric power (voltage and current)",
+      "subcategory": "Power and energy",
+      "level": "school",
+      "equation": "P = V*I",
+      "displayLatex": "P = VI",
+      "variables": [
+        { "symbol": "P", "name": "power", "unit": "W", "description": "Rate of electrical energy transfer." },
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Potential difference across the device." },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current through the device." }
+      ],
+      "explanation": "Voltage is energy per coulomb and current is coulombs per second, so their product is energy per second: power. A 230 V kettle drawing 10 A transfers 2300 joules every second.",
+      "whenToUse": "Use it to find the power rating of appliances, or the current they draw, and to choose fuses.",
+      "assumptions": ["DC, or AC with rms values and a resistive load"],
+      "example": {
+        "story": "A kettle on a 230 V supply draws 10 A. What is its power?",
+        "given": { "V": 230, "I": 10 },
+        "solveFor": "P",
+        "result": 2300,
+        "unit": "W",
+        "tolerance": 1e-9,
+        "steps": ["P = 230 × 10", "P = 2300 W (2.3 kW)"]
+      },
+      "related": ["electric-power-i2r", "electric-power-v2r", "ohms-law", "electrical-energy"],
+      "tags": ["electric power", "p = vi", "watt", "power rating", "appliance"]
+    },
+    {
+      "id": "electric-power-i2r",
+      "name": "Electric power (current and resistance)",
+      "subcategory": "Power and energy",
+      "level": "school",
+      "equation": "P = I^2*R",
+      "displayLatex": "P = I^2 R",
+      "variables": [
+        { "symbol": "P", "name": "power", "unit": "W", "description": "Heat produced per second in the resistance.", "min": 0 },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current through the resistance." },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Resistance of the component or cable.", "positive": true }
+      ],
+      "explanation": "Substituting V = IR into P = VI gives P = I²R. Because the power lost grows with the square of the current, power is sent along transmission lines at high voltage and low current to waste less energy as heat.",
+      "whenToUse": "Use it for heating in resistors and cables, especially when the current is known.",
+      "assumptions": ["ohmic resistance"],
+      "example": {
+        "story": "A current of 2 A flows through a 50 Ω resistor. How much power does it dissipate?",
+        "given": { "I": 2, "R": 50 },
+        "solveFor": "P",
+        "result": 200,
+        "unit": "W",
+        "tolerance": 1e-9,
+        "steps": ["P = 2² × 50", "P = 200 W"]
+      },
+      "related": ["electric-power-vi", "electric-power-v2r", "transformer-turns-ratio"],
+      "tags": ["power", "i squared r", "joule heating", "power loss", "transmission"]
+    },
+    {
+      "id": "electric-power-v2r",
+      "name": "Electric power (voltage and resistance)",
+      "subcategory": "Power and energy",
+      "level": "school",
+      "equation": "P = V^2 / R",
+      "displayLatex": "P = \\frac{V^2}{R}",
+      "variables": [
+        { "symbol": "P", "name": "power", "unit": "W", "description": "Rate of energy transfer.", "min": 0 },
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Potential difference across the component." },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Resistance of the component.", "positive": true }
+      ],
+      "explanation": "Substituting I = V/R into P = VI gives P = V²/R. At a fixed voltage, such as the mains, a smaller resistance gives more power, which is why heaters have low resistance elements.",
+      "whenToUse": "Use it for devices on a known supply voltage, such as heaters, lamps and resistors across a battery.",
+      "assumptions": ["ohmic resistance"],
+      "example": {
+        "story": "A 1150 W heater runs on a 230 V supply. What is the resistance of its element?",
+        "given": { "P": 1150, "V": 230 },
+        "solveFor": "R",
+        "result": 46,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["R = V² / P", "R = 52 900 / 1150", "R = 46 Ω"]
+      },
+      "related": ["electric-power-vi", "electric-power-i2r", "ohms-law"],
+      "tags": ["power", "v squared over r", "heater", "resistance", "watt"]
+    },
+    {
+      "id": "resistors-in-series",
+      "name": "Resistors in series",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "R_T = R_1 + R_2 + R_3",
+      "displayLatex": "R_T = R_1 + R_2 + R_3 + \\dots",
+      "variables": [
+        { "symbol": "R_T", "name": "total resistance", "unit": "Ω", "description": "Resistance of the whole chain.", "positive": true },
+        { "symbol": "R_1", "name": "first resistance", "unit": "Ω", "description": "First resistor.", "min": 0 },
+        { "symbol": "R_2", "name": "second resistance", "unit": "Ω", "description": "Second resistor.", "min": 0 },
+        { "symbol": "R_3", "name": "third resistance", "unit": "Ω", "description": "Third resistor (set to 0 for two resistors).", "min": 0 }
+      ],
+      "explanation": "In series the same current passes through each resistor one after another, and the voltages across them add up. So the resistances add. The total is always larger than the largest single resistor.",
+      "whenToUse": "Use it for components connected end to end in a single path, such as a chain of LEDs and their resistor.",
+      "assumptions": ["ideal connecting wires"],
+      "example": {
+        "story": "Resistors of 100 Ω, 220 Ω and 330 Ω are connected in series. What is the total resistance?",
+        "given": { "R_1": 100, "R_2": 220, "R_3": 330 },
+        "solveFor": "R_T",
+        "result": 650,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["R_T = 100 + 220 + 330", "R_T = 650 Ω"]
+      },
+      "related": ["resistors-in-parallel", "two-resistors-in-parallel", "potential-divider"],
+      "tags": ["series", "resistors in series", "total resistance", "series circuit"]
+    },
+    {
+      "id": "resistors-in-parallel",
+      "name": "Resistors in parallel",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "1 / R_T = 1 / R_1 + 1 / R_2 + 1 / R_3",
+      "displayLatex": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3} + \\dots",
+      "variables": [
+        { "symbol": "R_T", "name": "total resistance", "unit": "Ω", "description": "Resistance of the parallel combination.", "positive": true },
+        { "symbol": "R_1", "name": "first resistance", "unit": "Ω", "description": "First branch.", "positive": true },
+        { "symbol": "R_2", "name": "second resistance", "unit": "Ω", "description": "Second branch.", "positive": true },
+        { "symbol": "R_3", "name": "third resistance", "unit": "Ω", "description": "Third branch.", "positive": true }
+      ],
+      "explanation": "In parallel each branch has the same voltage, and the currents through the branches add. Since current is V/R, the reciprocals of the resistances add. The total is always smaller than the smallest branch, because every extra branch gives the current another path.",
+      "whenToUse": "Use it for components side by side across the same two points, such as lamps in a household circuit.",
+      "assumptions": ["ideal connecting wires"],
+      "example": {
+        "story": "Resistors of 10 Ω, 20 Ω and 20 Ω are connected in parallel. What is the combined resistance?",
+        "given": { "R_1": 10, "R_2": 20, "R_3": 20 },
+        "solveFor": "R_T",
+        "result": 5,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["1/R = 1/10 + 1/20 + 1/20 = 0.2", "R = 1 / 0.2 = 5 Ω"]
+      },
+      "related": ["two-resistors-in-parallel", "resistors-in-series", "capacitors-in-series"],
+      "tags": ["parallel", "resistors in parallel", "total resistance", "parallel circuit", "reciprocal"]
+    },
+    {
+      "id": "two-resistors-in-parallel",
+      "name": "Two resistors in parallel (product over sum)",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "R_T = R_1*R_2 / (R_1 + R_2)",
+      "displayLatex": "R_T = \\frac{R_1 R_2}{R_1 + R_2}",
+      "variables": [
+        { "symbol": "R_T", "name": "total resistance", "unit": "Ω", "description": "Resistance of the pair.", "positive": true },
+        { "symbol": "R_1", "name": "first resistance", "unit": "Ω", "description": "First branch.", "positive": true },
+        { "symbol": "R_2", "name": "second resistance", "unit": "Ω", "description": "Second branch.", "positive": true }
+      ],
+      "explanation": "For exactly two branches, the reciprocal rule simplifies to product over sum. Two equal resistors in parallel give half of one of them.",
+      "whenToUse": "Use it for quick calculations with two parallel branches, or to find which resistor to add to reach a target value.",
+      "assumptions": ["exactly two branches"],
+      "example": {
+        "story": "You have a 12 Ω resistor and need 4 Ω. What resistor must you put in parallel with it?",
+        "given": { "R_T": 4, "R_1": 12 },
+        "solveFor": "R_2",
+        "result": 6,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["4 = 12 R₂ / (12 + R₂)", "48 + 4R₂ = 12R₂", "R₂ = 6 Ω"]
+      },
+      "related": ["resistors-in-parallel", "resistors-in-series"],
+      "tags": ["parallel", "product over sum", "two resistors", "combined resistance"]
+    },
+    {
+      "id": "charge-current-time",
+      "name": "Charge, current and time",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "Q = I*t",
+      "displayLatex": "Q = It",
+      "variables": [
+        { "symbol": "Q", "name": "charge", "unit": "C", "description": "Charge that flows past a point." },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Steady current." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "How long the current flows.", "min": 0 }
+      ],
+      "explanation": "Current is the rate of flow of charge: one ampere is one coulomb per second. So the charge that passes is current times time. One coulomb is about 6.24 × 10¹⁸ electrons.",
+      "whenToUse": "Use it to find how much charge a current delivers, for example in electrolysis or battery capacity (1 Ah = 3600 C).",
+      "assumptions": ["constant current (otherwise use the area under the I-t graph)"],
+      "example": {
+        "story": "A current of 2 A flows for 30 s. How much charge passes?",
+        "given": { "I": 2, "t": 30 },
+        "solveFor": "Q",
+        "result": 60,
+        "unit": "C",
+        "tolerance": 1e-9,
+        "steps": ["Q = 2 × 30", "Q = 60 C"]
+      },
+      "related": ["energy-voltage-charge", "capacitance", "drift-velocity"],
+      "tags": ["charge", "coulomb", "current", "q = it", "ampere"]
+    },
+    {
+      "id": "energy-voltage-charge",
+      "name": "Energy transferred by charge",
+      "subcategory": "Power and energy",
+      "level": "school",
+      "equation": "E = V*Q",
+      "displayLatex": "E = VQ",
+      "variables": [
+        { "symbol": "E", "name": "energy", "unit": "J", "description": "Energy transferred." },
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Potential difference the charge moves through." },
+        { "symbol": "Q", "name": "charge", "unit": "C", "description": "Charge that moves." }
+      ],
+      "explanation": "Voltage is defined as energy transferred per unit charge: one volt is one joule per coulomb. So each coulomb pushed through 9 V gains or delivers 9 J.",
+      "whenToUse": "Use it to find the energy delivered by a battery, or the energy gained by charges accelerated through a voltage.",
+      "assumptions": [],
+      "example": {
+        "story": "A 9 V battery pushes 120 C of charge round a circuit. How much energy does it transfer?",
+        "given": { "V": 9, "Q": 120 },
+        "solveFor": "E",
+        "result": 1080,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["E = 9 × 120", "E = 1080 J"]
+      },
+      "related": ["charge-current-time", "electrical-energy", "capacitor-energy"],
+      "tags": ["energy", "voltage", "charge", "w = vq", "joule per coulomb", "electronvolt"]
+    },
+    {
+      "id": "electrical-energy",
+      "name": "Electrical energy from power and time",
+      "subcategory": "Power and energy",
+      "level": "school",
+      "equation": "E = P*t",
+      "displayLatex": "E = Pt",
+      "variables": [
+        { "symbol": "E", "name": "energy", "unit": "J", "description": "Energy transferred." },
+        { "symbol": "P", "name": "power", "unit": "W", "description": "Power of the appliance." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time it runs.", "min": 0 }
+      ],
+      "explanation": "Power is energy per second, so energy is power times time. Electricity bills use kilowatt-hours: a 1 kW appliance running for 1 hour uses 1 kWh, which is 3.6 million joules.",
+      "whenToUse": "Use it to find the energy used by appliances and, with a price per kWh, what it costs.",
+      "assumptions": ["constant power"],
+      "example": {
+        "story": "A 2 kW heater runs for 3 hours (10 800 s). How much energy does it use?",
+        "given": { "P": 2000, "t": 10800 },
+        "solveFor": "E",
+        "result": 21600000,
+        "unit": "J",
+        "tolerance": 1e-3,
+        "steps": ["E = 2000 × 10 800", "E = 2.16 × 10⁷ J", "That is 6 kWh"]
+      },
+      "related": ["electric-power-vi", "power-work-time", "electricity-cost"],
+      "tags": ["energy", "kilowatt hour", "kwh", "power times time", "energy use"]
+    },
+    {
+      "id": "potential-divider",
+      "name": "Potential divider",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "V_out = V_in*R_2 / (R_1 + R_2)",
+      "displayLatex": "V_{out} = V_{in}\\frac{R_2}{R_1 + R_2}",
+      "variables": [
+        { "symbol": "V_out", "name": "output voltage", "unit": "V", "description": "Voltage across R₂." },
+        { "symbol": "V_in", "name": "input voltage", "unit": "V", "description": "Voltage across both resistors." },
+        { "symbol": "R_2", "name": "lower resistor", "unit": "Ω", "description": "Resistor the output is taken across.", "positive": true },
+        { "symbol": "R_1", "name": "upper resistor", "unit": "Ω", "description": "The other resistor.", "positive": true }
+      ],
+      "explanation": "Two resistors in series share the supply voltage in proportion to their resistances, because the same current flows through both. Replacing R₂ by a thermistor or light-dependent resistor turns this into a sensor circuit.",
+      "whenToUse": "Use it to get a smaller voltage from a larger one, and in sensor circuits with thermistors and LDRs.",
+      "assumptions": ["no current drawn from the output (or a load much larger than R₂)"],
+      "example": {
+        "story": "A 12 V supply feeds 1 kΩ and 2 kΩ resistors in series. What is the voltage across the 2 kΩ resistor?",
+        "given": { "V_in": 12, "R_2": 2000, "R_1": 1000 },
+        "solveFor": "V_out",
+        "result": 8,
+        "unit": "V",
+        "tolerance": 1e-9,
+        "steps": ["V_out = 12 × 2000 / 3000", "V_out = 8 V"]
+      },
+      "related": ["resistors-in-series", "ohms-law"],
+      "tags": ["potential divider", "voltage divider", "sensor circuit", "thermistor", "ldr"]
+    },
+    {
+      "id": "emf-internal-resistance",
+      "name": "EMF and internal resistance",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "ε = I*(R + r)",
+      "displayLatex": "\\varepsilon = I(R + r)",
+      "variables": [
+        { "symbol": "ε", "name": "electromotive force", "unit": "V", "description": "Energy given per coulomb by the source." },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current in the circuit." },
+        { "symbol": "R", "name": "external resistance", "unit": "Ω", "description": "Resistance of the load.", "min": 0 },
+        { "symbol": "r", "name": "internal resistance", "unit": "Ω", "description": "Resistance inside the battery.", "min": 0 }
+      ],
+      "explanation": "Real batteries have resistance inside them, so some of their energy is wasted heating the battery. The emf equals the voltage across the load (IR) plus the 'lost volts' inside (Ir). This is why the terminal voltage drops when a large current is drawn.",
+      "whenToUse": "Use it for real batteries and power supplies, especially when the terminal voltage changes with load.",
+      "assumptions": ["constant emf and internal resistance"],
+      "example": {
+        "story": "A 9 V battery with an internal resistance of 1 Ω powers an 8 Ω load. What current flows?",
+        "given": { "ε": 9, "R": 8, "r": 1 },
+        "solveFor": "I",
+        "result": 1,
+        "unit": "A",
+        "tolerance": 1e-9,
+        "steps": ["I = ε / (R + r)", "I = 9 / 9 = 1 A", "Terminal voltage: 1 × 8 = 8 V"]
+      },
+      "related": ["ohms-law", "electric-power-i2r"],
+      "tags": ["emf", "internal resistance", "terminal voltage", "lost volts", "battery"]
+    },
+    {
+      "id": "resistivity",
+      "name": "Resistance from resistivity",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "R = ρ*L / A",
+      "displayLatex": "R = \\frac{\\rho L}{A}",
+      "variables": [
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Resistance of the wire.", "positive": true },
+        { "symbol": "ρ", "name": "resistivity", "unit": "Ω·m", "description": "A property of the material: 1.68 × 10⁻⁸ Ω·m for copper.", "positive": true },
+        { "symbol": "L", "name": "length", "unit": "m", "description": "Length of the wire.", "positive": true },
+        { "symbol": "A", "name": "cross-section area", "unit": "m²", "description": "Area of the wire's cross-section.", "positive": true }
+      ],
+      "explanation": "A longer wire gives charges further to travel, so resistance grows with length. A thicker wire gives them more room, so resistance falls with area. Resistivity captures the material itself: copper and silver are low, nichrome high.",
+      "whenToUse": "Use it to choose cable thickness, design heating elements, or measure a material's resistivity.",
+      "assumptions": ["uniform wire", "constant temperature"],
+      "example": {
+        "story": "What is the resistance of 10 m of copper wire with a cross-section of 1 mm²?",
+        "given": { "ρ": 1.68e-8, "L": 10, "A": 1e-6 },
+        "solveFor": "R",
+        "result": 0.168,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["R = 1.68 × 10⁻⁸ × 10 / 10⁻⁶", "R = 0.168 Ω"]
+      },
+      "related": ["ohms-law", "drift-velocity"],
+      "tags": ["resistivity", "rho", "wire resistance", "cross-sectional area", "conductor"]
+    },
+    {
+      "id": "drift-velocity",
+      "name": "Current and drift velocity",
+      "subcategory": "Circuits",
+      "level": "school",
+      "equation": "I = n*A*q*v",
+      "displayLatex": "I = nAqv",
+      "variables": [
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current in the conductor." },
+        { "symbol": "n", "name": "charge carrier density", "unit": "m⁻³", "description": "Number of free charges per cubic metre (8.5 × 10²⁸ for copper).", "positive": true },
+        { "symbol": "A", "name": "cross-section area", "unit": "m²", "description": "Area of the conductor.", "positive": true },
+        { "symbol": "q", "name": "charge per carrier", "unit": "C", "description": "1.602 × 10⁻¹⁹ C for an electron.", "positive": true },
+        { "symbol": "v", "name": "drift velocity", "unit": "m/s", "description": "Average speed of the charges along the wire." }
+      ],
+      "explanation": "In one second, all the carriers within a length v of wire pass a point: that is n A v carriers, each with charge q. The drift velocity in metals turns out to be less than a millimetre per second; the signal travels fast, but the electrons themselves crawl.",
+      "whenToUse": "Use it to find drift speeds, or to compare conductors, semiconductors and insulators.",
+      "assumptions": ["uniform conductor", "one type of charge carrier"],
+      "example": {
+        "story": "A current of 1 A flows in a copper wire of cross-section 1 mm². How fast do the electrons drift?",
+        "given": { "I": 1, "n": 8.5e28, "A": 1e-6, "q": 1.602176634e-19 },
+        "solveFor": "v",
+        "result": 7.342952e-5,
+        "unit": "m/s",
+        "tolerance": 1e-11,
+        "steps": ["n A q = 8.5 × 10²⁸ × 10⁻⁶ × 1.602 × 10⁻¹⁹ ≈ 13 619", "v = 1 / 13 619", "v ≈ 7.3 × 10⁻⁵ m/s (0.07 mm/s)"]
+      },
+      "related": ["charge-current-time", "resistivity"],
+      "tags": ["drift velocity", "charge carriers", "current", "electron speed", "nAqv"]
+    },
+    {
+      "id": "capacitance",
+      "name": "Capacitance",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "C = Q / V",
+      "displayLatex": "C = \\frac{Q}{V}",
+      "variables": [
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Charge stored per volt.", "positive": true },
+        { "symbol": "Q", "name": "charge", "unit": "C", "description": "Charge on each plate." },
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Potential difference between the plates." }
+      ],
+      "explanation": "A capacitor stores charge on two plates separated by an insulator. The charge stored is proportional to the voltage, and the capacitance is the ratio. One farad is a very large capacitance; most capacitors are microfarads or smaller.",
+      "whenToUse": "Use it to find the charge on a capacitor, or its capacitance from measurements.",
+      "assumptions": [],
+      "example": {
+        "story": "A 470 µF capacitor is charged to 9 V. How much charge does it hold?",
+        "given": { "C": 0.00047, "V": 9 },
+        "solveFor": "Q",
+        "result": 0.00423,
+        "unit": "C",
+        "tolerance": 1e-9,
+        "steps": ["Q = C V", "Q = 470 × 10⁻⁶ × 9", "Q = 4.23 × 10⁻³ C"]
+      },
+      "related": ["capacitor-energy", "parallel-plate-capacitor", "rc-time-constant"],
+      "tags": ["capacitance", "capacitor", "farad", "charge storage", "q = cv"]
+    },
+    {
+      "id": "capacitor-energy",
+      "name": "Energy stored in a capacitor",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "E = C*V^2 / 2",
+      "displayLatex": "E = \\tfrac{1}{2}CV^2 = \\tfrac{1}{2}QV",
+      "variables": [
+        { "symbol": "E", "name": "stored energy", "unit": "J", "description": "Energy stored in the electric field.", "min": 0 },
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance.", "positive": true },
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Voltage across the capacitor." }
+      ],
+      "explanation": "While charging, the voltage rises from 0 to V, so the average voltage the charge moves through is V/2. The energy stored is therefore ½QV, and with Q = CV that is ½CV². It is the area under the charge-voltage graph.",
+      "whenToUse": "Use it for camera flashes, defibrillators, backup power and the energy in any charged capacitor.",
+      "assumptions": [],
+      "example": {
+        "story": "How much energy is stored in a 470 µF capacitor charged to 9 V?",
+        "given": { "C": 0.00047, "V": 9 },
+        "solveFor": "E",
+        "result": 0.019035,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["V² = 81", "E = ½ × 470 × 10⁻⁶ × 81", "E ≈ 0.019 J"]
+      },
+      "related": ["capacitance", "inductor-energy", "energy-voltage-charge"],
+      "tags": ["capacitor energy", "half c v squared", "stored energy", "electric field energy"]
+    },
+    {
+      "id": "parallel-plate-capacitor",
+      "name": "Parallel plate capacitor",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "C = ε_0*ε_r*A / d",
+      "displayLatex": "C = \\frac{\\varepsilon_0 \\varepsilon_r A}{d}",
+      "variables": [
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance of the plates.", "positive": true },
+        { "symbol": "ε_r", "name": "relative permittivity", "unit": "", "description": "Dielectric constant of the material between the plates (1 for vacuum or air).", "defaultValue": 1, "min": 1 },
+        { "symbol": "A", "name": "plate area", "unit": "m²", "description": "Area of overlap of the plates.", "positive": true },
+        { "symbol": "d", "name": "separation", "unit": "m", "description": "Distance between the plates.", "positive": true }
+      ],
+      "constants": ["vacuum-permittivity"],
+      "explanation": "Bigger plates hold more charge at a given voltage, and closer plates give a stronger field for the same voltage, so capacitance grows with area and falls with separation. Filling the gap with an insulator (a dielectric) multiplies the capacitance by ε_r.",
+      "whenToUse": "Use it to design capacitors, touch screens and capacitive sensors.",
+      "assumptions": ["plates much larger than their separation (edge effects ignored)"],
+      "example": {
+        "story": "Two metal plates of area 0.01 m² are 1 mm apart in air. What is their capacitance?",
+        "given": { "ε_r": 1, "A": 0.01, "d": 0.001 },
+        "solveFor": "C",
+        "result": 8.8541878e-11,
+        "unit": "F",
+        "tolerance": 1e-17,
+        "steps": ["C = 8.854 × 10⁻¹² × 1 × 0.01 / 0.001", "C ≈ 8.85 × 10⁻¹¹ F (88.5 pF)"]
+      },
+      "related": ["capacitance", "uniform-field-plates"],
+      "tags": ["parallel plate", "capacitor", "permittivity", "dielectric", "epsilon"]
+    },
+    {
+      "id": "capacitors-in-parallel",
+      "name": "Capacitors in parallel",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "C_T = C_1 + C_2",
+      "displayLatex": "C_T = C_1 + C_2 + \\dots",
+      "variables": [
+        { "symbol": "C_T", "name": "total capacitance", "unit": "F", "description": "Capacitance of the combination.", "positive": true },
+        { "symbol": "C_1", "name": "first capacitance", "unit": "F", "description": "First capacitor.", "min": 0 },
+        { "symbol": "C_2", "name": "second capacitance", "unit": "F", "description": "Second capacitor.", "min": 0 }
+      ],
+      "explanation": "Capacitors in parallel all have the same voltage, and the charges they store add up. So their capacitances add, the opposite of resistors. It is like making one capacitor with a bigger plate area.",
+      "whenToUse": "Use it to combine capacitors connected side by side.",
+      "assumptions": [],
+      "example": {
+        "story": "A 10 µF and a 22 µF capacitor are connected in parallel. What is the total capacitance?",
+        "given": { "C_1": 1e-5, "C_2": 2.2e-5 },
+        "solveFor": "C_T",
+        "result": 3.2e-5,
+        "unit": "F",
+        "tolerance": 1e-12,
+        "steps": ["C = 10 µF + 22 µF", "C = 32 µF"]
+      },
+      "related": ["capacitors-in-series", "resistors-in-series"],
+      "tags": ["capacitors in parallel", "total capacitance", "combining capacitors"]
+    },
+    {
+      "id": "capacitors-in-series",
+      "name": "Capacitors in series",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "1 / C_T = 1 / C_1 + 1 / C_2",
+      "displayLatex": "\\frac{1}{C_T} = \\frac{1}{C_1} + \\frac{1}{C_2} + \\dots",
+      "variables": [
+        { "symbol": "C_T", "name": "total capacitance", "unit": "F", "description": "Capacitance of the chain.", "positive": true },
+        { "symbol": "C_1", "name": "first capacitance", "unit": "F", "description": "First capacitor.", "positive": true },
+        { "symbol": "C_2", "name": "second capacitance", "unit": "F", "description": "Second capacitor.", "positive": true }
+      ],
+      "explanation": "In series each capacitor carries the same charge, and their voltages add up. Since V = Q/C, the reciprocals of the capacitances add. The total is smaller than either one, like a capacitor with a wider gap.",
+      "whenToUse": "Use it to combine capacitors connected end to end, for example to handle a higher voltage.",
+      "assumptions": [],
+      "example": {
+        "story": "A 6 µF and a 3 µF capacitor are connected in series. What is the total capacitance?",
+        "given": { "C_1": 6e-6, "C_2": 3e-6 },
+        "solveFor": "C_T",
+        "result": 2e-6,
+        "unit": "F",
+        "tolerance": 1e-13,
+        "steps": ["1/C = 1/6 + 1/3 = 1/2 (in µF⁻¹)", "C = 2 µF"]
+      },
+      "related": ["capacitors-in-parallel", "resistors-in-parallel"],
+      "tags": ["capacitors in series", "total capacitance", "reciprocal", "combining capacitors"]
+    },
+    {
+      "id": "rc-time-constant",
+      "name": "RC time constant",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "τ = R*C",
+      "displayLatex": "\\tau = RC",
+      "variables": [
+        { "symbol": "τ", "name": "time constant", "unit": "s", "description": "Time to discharge to 37 % (or charge to 63 %).", "positive": true },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Resistance the capacitor charges or discharges through.", "positive": true },
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance.", "positive": true }
+      ],
+      "explanation": "The time constant sets how quickly a capacitor charges or discharges through a resistor. A bigger resistance lets charge flow more slowly and a bigger capacitance needs more charge, so both make it slower. After about 5τ the capacitor is practically fully charged or discharged.",
+      "whenToUse": "Use it for timing circuits, filters, camera flashes and smoothing in power supplies.",
+      "assumptions": [],
+      "example": {
+        "story": "A 100 µF capacitor discharges through a 10 kΩ resistor. What is the time constant?",
+        "given": { "R": 10000, "C": 0.0001 },
+        "solveFor": "τ",
+        "result": 1,
+        "unit": "s",
+        "tolerance": 1e-9,
+        "steps": ["τ = 10 000 × 100 × 10⁻⁶", "τ = 1 s"]
+      },
+      "related": ["capacitor-discharge", "capacitor-charging", "rl-time-constant"],
+      "tags": ["time constant", "tau", "rc circuit", "capacitor", "exponential"]
+    },
+    {
+      "id": "capacitor-discharge",
+      "name": "Capacitor discharge",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "V = V_0*e^(-t / (R*C))",
+      "displayLatex": "V = V_0 e^{-t/RC}",
+      "variables": [
+        { "symbol": "V", "name": "voltage at time t", "unit": "V", "description": "Voltage across the capacitor at time t." },
+        { "symbol": "V_0", "name": "initial voltage", "unit": "V", "description": "Voltage at t = 0." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time since discharge started.", "min": 0 },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Resistance of the discharge path.", "positive": true },
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance.", "positive": true }
+      ],
+      "explanation": "As a capacitor discharges, the current is proportional to the voltage that remains, so the voltage falls by the same fraction in each equal time interval: exponential decay. Charge and current follow the same curve. After one time constant RC, 37 % of the voltage is left.",
+      "whenToUse": "Use it for discharging capacitors in timers, flashes, and data backup circuits.",
+      "assumptions": ["discharge through a fixed resistance"],
+      "example": {
+        "story": "A 100 µF capacitor charged to 12 V discharges through 10 kΩ. What is the voltage after 2 s?",
+        "given": { "V_0": 12, "t": 2, "R": 10000, "C": 0.0001 },
+        "solveFor": "V",
+        "result": 1.6240234,
+        "unit": "V",
+        "tolerance": 1e-7,
+        "steps": ["RC = 1 s", "V = 12 e⁻²", "V ≈ 12 × 0.135335 ≈ 1.62 V"]
+      },
+      "related": ["capacitor-charging", "rc-time-constant", "radioactive-decay"],
+      "tags": ["capacitor discharge", "exponential decay", "rc circuit", "time constant"]
+    },
+    {
+      "id": "capacitor-charging",
+      "name": "Capacitor charging",
+      "subcategory": "Capacitors",
+      "level": "school",
+      "equation": "V = V_0*(1 - e^(-t / (R*C)))",
+      "displayLatex": "V = V_0\\left(1 - e^{-t/RC}\\right)",
+      "variables": [
+        { "symbol": "V", "name": "capacitor voltage", "unit": "V", "description": "Voltage across the capacitor at time t." },
+        { "symbol": "V_0", "name": "supply voltage", "unit": "V", "description": "Voltage the capacitor charges towards." },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time since charging started.", "min": 0 },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Series resistance.", "positive": true },
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance.", "positive": true }
+      ],
+      "explanation": "A capacitor charging through a resistor fills quickly at first and then more and more slowly, because the current drops as the capacitor's voltage approaches the supply. The gap to the full voltage decays exponentially. After one time constant it has reached 63 %.",
+      "whenToUse": "Use it for timing circuits, delay circuits and the response of RC filters.",
+      "assumptions": ["capacitor starts uncharged", "constant supply voltage"],
+      "example": {
+        "story": "An uncharged 100 µF capacitor charges through 10 kΩ from a 12 V supply. What is its voltage after 1 s?",
+        "given": { "V_0": 12, "t": 1, "R": 10000, "C": 0.0001 },
+        "solveFor": "V",
+        "result": 7.5854467,
+        "unit": "V",
+        "tolerance": 1e-7,
+        "steps": ["RC = 1 s", "V = 12 (1 - e⁻¹)", "V ≈ 12 × 0.632121 ≈ 7.59 V"]
+      },
+      "related": ["capacitor-discharge", "rc-time-constant"],
+      "tags": ["capacitor charging", "exponential", "rc circuit", "time constant", "63 percent"]
+    },
+    {
+      "id": "coulombs-law",
+      "name": "Coulomb's law",
+      "subcategory": "Electric fields",
+      "level": "school",
+      "equation": "F = k_e*q_1*q_2 / r^2",
+      "displayLatex": "F = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1 q_2}{r^2}",
+      "variables": [
+        { "symbol": "F", "name": "electric force", "unit": "N", "description": "Positive for repulsion, negative for attraction." },
+        { "symbol": "q_1", "name": "first charge", "unit": "C", "description": "Charge on the first object." },
+        { "symbol": "q_2", "name": "second charge", "unit": "C", "description": "Charge on the second object." },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance between the charges.", "positive": true }
+      ],
+      "constants": ["coulomb-constant"],
+      "explanation": "Two charges push apart if they are alike and pull together if opposite. The force is proportional to both charges and falls with the square of the distance, the same inverse square shape as gravity but enormously stronger. It holds atoms and molecules together.",
+      "whenToUse": "Use it for forces between charged spheres, ions and particles.",
+      "assumptions": ["point charges (or spherical charge distributions)", "in vacuum or air"],
+      "example": {
+        "story": "Two small spheres each carry +1 µC and are 10 cm apart. What force acts between them?",
+        "given": { "q_1": 1e-6, "q_2": 1e-6, "r": 0.1 },
+        "solveFor": "F",
+        "result": 0.89875518,
+        "unit": "N",
+        "tolerance": 1e-8,
+        "steps": ["q₁q₂ = 10⁻¹² C²", "F = 8.988 × 10⁹ × 10⁻¹² / 0.01", "F ≈ 0.899 N (repulsive)"]
+      },
+      "related": ["electric-field-point-charge", "newtons-law-of-gravitation", "electric-field-definition"],
+      "tags": ["coulomb", "coulombs law", "electrostatic force", "inverse square", "charges"]
+    },
+    {
+      "id": "electric-field-definition",
+      "name": "Electric field strength",
+      "subcategory": "Electric fields",
+      "level": "school",
+      "equation": "E = F / q",
+      "displayLatex": "E = \\frac{F}{q}",
+      "variables": [
+        { "symbol": "E", "name": "field strength", "unit": "N/C", "description": "Force per coulomb on a positive test charge (1 N/C = 1 V/m)." },
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Force on the charge." },
+        { "symbol": "q", "name": "charge", "unit": "C", "description": "The test charge (not zero)." }
+      ],
+      "explanation": "An electric field is a region where charges feel a force. Its strength is the force per coulomb on a small positive test charge. Knowing E, the force on any charge is just qE.",
+      "whenToUse": "Use it to define or measure a field, or to find the force on a charge in a known field.",
+      "assumptions": ["the test charge is small enough not to disturb the field"],
+      "example": {
+        "story": "A charge of 4 µC feels a force of 0.002 N. What is the electric field strength?",
+        "given": { "F": 0.002, "q": 4e-6 },
+        "solveFor": "E",
+        "result": 500,
+        "unit": "N/C",
+        "tolerance": 1e-9,
+        "steps": ["E = 0.002 / 4 × 10⁻⁶", "E = 500 N/C"]
+      },
+      "related": ["electric-field-point-charge", "uniform-field-plates", "coulombs-law"],
+      "tags": ["electric field", "field strength", "force per charge", "newtons per coulomb"]
+    },
+    {
+      "id": "electric-field-point-charge",
+      "name": "Electric field of a point charge",
+      "subcategory": "Electric fields",
+      "level": "school",
+      "equation": "E = k_e*Q / r^2",
+      "displayLatex": "E = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{r^2}",
+      "variables": [
+        { "symbol": "E", "name": "field strength", "unit": "N/C", "description": "Field at distance r (pointing away from a positive charge)." },
+        { "symbol": "Q", "name": "source charge", "unit": "C", "description": "Charge creating the field." },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance from the charge.", "positive": true }
+      ],
+      "constants": ["coulomb-constant"],
+      "explanation": "Dividing Coulomb's law by the test charge gives the field of a single charge Q. It points away from positive charges and towards negative ones, and weakens with the square of the distance.",
+      "whenToUse": "Use it for the field near charged spheres, ions and nuclei.",
+      "assumptions": ["point charge or outside a charged sphere", "vacuum or air"],
+      "example": {
+        "story": "What is the electric field 3 cm from a charge of 2 nC?",
+        "given": { "Q": 2e-9, "r": 0.03 },
+        "solveFor": "E",
+        "result": 19972.337,
+        "unit": "N/C",
+        "tolerance": 0.001,
+        "steps": ["k Q = 8.988 × 10⁹ × 2 × 10⁻⁹ ≈ 17.975", "r² = 9 × 10⁻⁴ m²", "E ≈ 2.0 × 10⁴ N/C"]
+      },
+      "related": ["coulombs-law", "electric-potential-point-charge", "electric-field-definition"],
+      "tags": ["electric field", "point charge", "radial field", "inverse square", "coulomb"]
+    },
+    {
+      "id": "electric-potential-point-charge",
+      "name": "Electric potential of a point charge",
+      "subcategory": "Electric fields",
+      "level": "university",
+      "equation": "V = k_e*Q / r",
+      "displayLatex": "V = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{r}",
+      "variables": [
+        { "symbol": "V", "name": "potential", "unit": "V", "description": "Energy per coulomb, relative to zero at infinity." },
+        { "symbol": "Q", "name": "source charge", "unit": "C", "description": "Charge creating the potential." },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance from the charge.", "positive": true }
+      ],
+      "constants": ["coulomb-constant"],
+      "explanation": "The potential is the work needed per coulomb to bring a positive test charge from infinitely far away to distance r. It falls off as 1/r, more slowly than the field. Potentials are scalars, so the potentials of several charges simply add.",
+      "whenToUse": "Use it for energies of charges near other charges, and for potentials around charged spheres.",
+      "assumptions": ["zero at infinity", "point charge or outside a charged sphere"],
+      "example": {
+        "story": "What is the electric potential 3 cm from a charge of 2 nC?",
+        "given": { "Q": 2e-9, "r": 0.03 },
+        "solveFor": "V",
+        "result": 599.17012,
+        "unit": "V",
+        "tolerance": 1e-5,
+        "steps": ["k Q ≈ 17.975 V·m", "V = 17.975 / 0.03", "V ≈ 599 V"]
+      },
+      "related": ["electric-field-point-charge", "energy-voltage-charge"],
+      "tags": ["electric potential", "voltage", "point charge", "potential energy per charge"]
+    },
+    {
+      "id": "uniform-field-plates",
+      "name": "Uniform electric field between plates",
+      "subcategory": "Electric fields",
+      "level": "school",
+      "equation": "E = V / d",
+      "displayLatex": "E = \\frac{V}{d}",
+      "variables": [
+        { "symbol": "E", "name": "field strength", "unit": "V/m", "description": "Uniform field between the plates." },
+        { "symbol": "V", "name": "voltage", "unit": "V", "description": "Potential difference between the plates." },
+        { "symbol": "d", "name": "separation", "unit": "m", "description": "Distance between the plates.", "positive": true }
+      ],
+      "explanation": "Between two parallel charged plates the field is the same everywhere (away from the edges). Moving a coulomb across the gap takes V joules, which is force E times distance d, so E = V/d. This is why the field unit V/m equals N/C.",
+      "whenToUse": "Use it for capacitors, cathode ray tubes, inkjet printers and Millikan's oil drop experiment.",
+      "assumptions": ["plates much larger than their separation"],
+      "example": {
+        "story": "Two plates 2 cm apart are connected to a 500 V supply. What is the field between them?",
+        "given": { "V": 500, "d": 0.02 },
+        "solveFor": "E",
+        "result": 25000,
+        "unit": "V/m",
+        "tolerance": 1e-6,
+        "steps": ["E = 500 / 0.02", "E = 25 000 V/m"]
+      },
+      "related": ["electric-field-definition", "parallel-plate-capacitor"],
+      "tags": ["uniform field", "parallel plates", "v over d", "electric field", "capacitor"]
+    },
+    {
+      "id": "force-on-current",
+      "name": "Force on a current in a magnetic field",
+      "subcategory": "Magnetism",
+      "level": "school",
+      "equation": "F = B*I*L*sin(θ)",
+      "displayLatex": "F = BIL\\sin\\theta",
+      "variables": [
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Force on the wire." },
+        { "symbol": "B", "name": "magnetic flux density", "unit": "T", "description": "Strength of the magnetic field.", "min": 0 },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current in the wire." },
+        { "symbol": "L", "name": "length in field", "unit": "m", "description": "Length of wire inside the field.", "min": 0 },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle between the wire and the field, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "A current-carrying wire in a magnetic field feels a force at right angles to both the wire and the field (Fleming's left-hand rule). It is largest when the wire is perpendicular to the field and zero when parallel. This is the motor effect, behind every electric motor and loudspeaker.",
+      "whenToUse": "Use it for motors, loudspeakers, current balances and rail guns.",
+      "assumptions": ["uniform field", "straight wire"],
+      "example": {
+        "story": "A 0.5 m wire carrying 3 A lies at right angles across a 0.2 T field. What force acts on it?",
+        "given": { "B": 0.2, "I": 3, "L": 0.5, "θ": 1.5707963267948966 },
+        "solveFor": "F",
+        "result": 0.3,
+        "unit": "N",
+        "tolerance": 1e-9,
+        "steps": ["sin 90° = 1", "F = 0.2 × 3 × 0.5", "F = 0.3 N"]
+      },
+      "related": ["force-on-moving-charge", "magnetic-field-straight-wire"],
+      "tags": ["motor effect", "bil", "force on wire", "fleming left hand rule", "magnetic force"]
+    },
+    {
+      "id": "force-on-moving-charge",
+      "name": "Magnetic force on a moving charge",
+      "subcategory": "Magnetism",
+      "level": "school",
+      "equation": "F = q*v*B*sin(θ)",
+      "displayLatex": "F = qvB\\sin\\theta",
+      "variables": [
+        { "symbol": "F", "name": "force", "unit": "N", "description": "Magnetic (Lorentz) force on the charge." },
+        { "symbol": "q", "name": "charge", "unit": "C", "description": "Charge of the particle." },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed of the particle.", "min": 0 },
+        { "symbol": "B", "name": "magnetic flux density", "unit": "T", "description": "Strength of the field.", "min": 0 },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle between the velocity and the field, in radians.", "min": 0, "max": 3.141592653589793 }
+      ],
+      "explanation": "A charge moving through a magnetic field is pushed sideways, at right angles to both its velocity and the field. Because the force is always perpendicular to the motion, it changes direction but not speed, bending particles into circles. Charges at rest or moving along the field feel no force.",
+      "whenToUse": "Use it for particles in cyclotrons, mass spectrometers, auroras and old TV tubes.",
+      "assumptions": ["uniform field"],
+      "example": {
+        "story": "A proton (1.602 × 10⁻¹⁹ C) moves at 2.0 × 10⁶ m/s at right angles to a 0.5 T field. What force acts on it?",
+        "given": { "q": 1.602176634e-19, "v": 2000000, "B": 0.5, "θ": 1.5707963267948966 },
+        "solveFor": "F",
+        "result": 1.602176634e-13,
+        "unit": "N",
+        "tolerance": 1e-20,
+        "steps": ["F = 1.602 × 10⁻¹⁹ × 2 × 10⁶ × 0.5 × 1", "F ≈ 1.60 × 10⁻¹³ N"]
+      },
+      "related": ["charged-particle-radius", "force-on-current", "cross-product-magnitude"],
+      "tags": ["lorentz force", "qvb", "magnetic force", "moving charge", "particle in field"]
+    },
+    {
+      "id": "charged-particle-radius",
+      "name": "Radius of a charged particle's path in a magnetic field",
+      "subcategory": "Magnetism",
+      "level": "school",
+      "equation": "r = m*v / (q*B)",
+      "displayLatex": "r = \\frac{mv}{qB}",
+      "variables": [
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circular path.", "positive": true },
+        { "symbol": "m", "name": "mass", "unit": "kg", "description": "Mass of the particle.", "positive": true },
+        { "symbol": "v", "name": "speed", "unit": "m/s", "description": "Speed perpendicular to the field.", "positive": true },
+        { "symbol": "q", "name": "charge", "unit": "C", "description": "Size of the particle's charge.", "positive": true },
+        { "symbol": "B", "name": "magnetic flux density", "unit": "T", "description": "Strength of the field.", "positive": true }
+      ],
+      "explanation": "The magnetic force qvB provides the centripetal force mv²/r, so the particle moves in a circle of radius mv/(qB). Heavier or faster particles curve less. Mass spectrometers use this to sort ions by mass.",
+      "whenToUse": "Use it for mass spectrometers, cyclotrons and particle tracks in detectors.",
+      "assumptions": ["velocity perpendicular to a uniform field", "non-relativistic speed"],
+      "example": {
+        "story": "A proton (m = 1.673 × 10⁻²⁷ kg) moves at 2.0 × 10⁶ m/s perpendicular to a 0.5 T field. What is the radius of its path?",
+        "given": { "m": 1.67262192369e-27, "v": 2000000, "q": 1.602176634e-19, "B": 0.5 },
+        "solveFor": "r",
+        "result": 0.0417588,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["m v ≈ 3.345 × 10⁻²¹ kg·m/s", "q B ≈ 8.011 × 10⁻²⁰", "r ≈ 0.0418 m (4.2 cm)"]
+      },
+      "related": ["force-on-moving-charge", "centripetal-force"],
+      "tags": ["cyclotron", "mass spectrometer", "radius of curvature", "charged particle", "magnetic field"]
+    },
+    {
+      "id": "magnetic-field-straight-wire",
+      "name": "Magnetic field around a long straight wire",
+      "subcategory": "Magnetism",
+      "level": "school",
+      "equation": "B = μ_0*I / (2*pi*r)",
+      "displayLatex": "B = \\frac{\\mu_0 I}{2\\pi r}",
+      "variables": [
+        { "symbol": "B", "name": "magnetic flux density", "unit": "T", "description": "Field strength at distance r.", "min": 0 },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current in the wire." },
+        { "symbol": "r", "name": "distance", "unit": "m", "description": "Distance from the wire.", "positive": true }
+      ],
+      "constants": ["vacuum-permeability"],
+      "explanation": "A current creates circular magnetic field lines around the wire (the right-hand grip rule gives the direction). The field strength is proportional to the current and inversely proportional to the distance. Two parallel wires attract if their currents flow the same way.",
+      "whenToUse": "Use it for fields near power cables, between parallel wires, and in electromagnets.",
+      "assumptions": ["long straight wire", "point well away from the wire's ends"],
+      "example": {
+        "story": "A long wire carries 10 A. What is the magnetic field 5 cm from it?",
+        "given": { "I": 10, "r": 0.05 },
+        "solveFor": "B",
+        "result": 4e-5,
+        "unit": "T",
+        "tolerance": 1e-11,
+        "steps": ["μ₀ / (2π) ≈ 2.0 × 10⁻⁷ T·m/A", "B = 2.0 × 10⁻⁷ × 10 / 0.05", "B = 4.0 × 10⁻⁵ T, comparable with the Earth's field"]
+      },
+      "related": ["solenoid-field", "force-on-current"],
+      "tags": ["magnetic field", "straight wire", "biot savart", "ampere law", "right hand grip rule"]
+    },
+    {
+      "id": "solenoid-field",
+      "name": "Magnetic field inside a solenoid",
+      "subcategory": "Magnetism",
+      "level": "school",
+      "equation": "B = μ_0*N*I / L",
+      "displayLatex": "B = \\frac{\\mu_0 N I}{L}",
+      "variables": [
+        { "symbol": "B", "name": "magnetic flux density", "unit": "T", "description": "Uniform field inside the coil.", "min": 0 },
+        { "symbol": "N", "name": "number of turns", "unit": "", "description": "Total turns of wire.", "positive": true, "integer": true },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current in the coil." },
+        { "symbol": "L", "name": "length", "unit": "m", "description": "Length of the solenoid.", "positive": true }
+      ],
+      "constants": ["vacuum-permeability"],
+      "explanation": "Inside a long coil the fields from all the turns add up to a strong, nearly uniform field along the axis. It depends on the turns per metre N/L and the current, but not on the coil's radius. An iron core multiplies the field many times.",
+      "whenToUse": "Use it for electromagnets, MRI magnets, relays and inductors.",
+      "assumptions": ["long solenoid (length much larger than radius)", "air or vacuum core"],
+      "example": {
+        "story": "A 25 cm solenoid has 500 turns carrying 2 A. What is the field inside?",
+        "given": { "N": 500, "I": 2, "L": 0.25 },
+        "solveFor": "B",
+        "result": 0.0050265482,
+        "unit": "T",
+        "tolerance": 1e-9,
+        "steps": ["Turns per metre: 500 / 0.25 = 2000", "B = 1.2566 × 10⁻⁶ × 2000 × 2", "B ≈ 5.03 × 10⁻³ T"]
+      },
+      "related": ["magnetic-field-straight-wire", "magnetic-flux", "inductor-energy"],
+      "tags": ["solenoid", "electromagnet", "coil", "magnetic field", "turns per metre"]
+    },
+    {
+      "id": "magnetic-flux",
+      "name": "Magnetic flux",
+      "subcategory": "Induction",
+      "level": "school",
+      "equation": "Φ = B*A*cos(θ)",
+      "displayLatex": "\\Phi = BA\\cos\\theta",
+      "variables": [
+        { "symbol": "Φ", "name": "magnetic flux", "unit": "Wb", "description": "Amount of field passing through the area." },
+        { "symbol": "B", "name": "magnetic flux density", "unit": "T", "description": "Strength of the field.", "min": 0 },
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "Area of the loop.", "min": 0 },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle between the field and the normal to the loop, in radians." }
+      ],
+      "explanation": "Flux measures how much magnetic field threads through a loop. It is greatest when the field passes straight through (θ = 0) and zero when the field skims along the loop's plane. Changing the flux is what induces a voltage.",
+      "whenToUse": "Use it with Faraday's law for generators, transformers and induction.",
+      "assumptions": ["uniform field over a flat loop"],
+      "example": {
+        "story": "A 0.4 T field passes straight through a loop of area 0.05 m². What is the flux?",
+        "given": { "B": 0.4, "A": 0.05, "θ": 0 },
+        "solveFor": "Φ",
+        "result": 0.02,
+        "unit": "Wb",
+        "tolerance": 1e-9,
+        "steps": ["cos 0 = 1", "Φ = 0.4 × 0.05 = 0.02 Wb"]
+      },
+      "related": ["faradays-law", "solenoid-field"],
+      "tags": ["magnetic flux", "weber", "flux linkage", "phi", "induction"]
+    },
+    {
+      "id": "faradays-law",
+      "name": "Faraday's law of induction",
+      "subcategory": "Induction",
+      "level": "school",
+      "equation": "ε = N*ΔΦ / Δt",
+      "displayLatex": "\\varepsilon = N\\frac{\\Delta\\Phi}{\\Delta t}",
+      "variables": [
+        { "symbol": "ε", "name": "induced emf", "unit": "V", "description": "Size of the induced voltage (Lenz's law gives its direction)." },
+        { "symbol": "N", "name": "number of turns", "unit": "", "description": "Turns in the coil.", "positive": true, "integer": true },
+        { "symbol": "ΔΦ", "name": "change in flux", "unit": "Wb", "description": "Change in flux through one turn." },
+        { "symbol": "Δt", "name": "time taken", "unit": "s", "description": "Time over which the flux changes.", "positive": true }
+      ],
+      "explanation": "A changing magnetic flux through a coil induces a voltage, proportional to how fast the flux changes and to the number of turns. Lenz's law adds that the induced current opposes the change, which is the reason for the minus sign in the full form ε = -N dΦ/dt.",
+      "whenToUse": "Use it for generators, transformers, induction cooktops, guitar pickups and wireless chargers.",
+      "assumptions": ["average emf over Δt", "the minus sign of Lenz's law is left out (this gives the size)"],
+      "example": {
+        "story": "The flux through a 200-turn coil changes by 0.003 Wb in 0.1 s. What emf is induced?",
+        "given": { "N": 200, "ΔΦ": 0.003, "Δt": 0.1 },
+        "solveFor": "ε",
+        "result": 6,
+        "unit": "V",
+        "tolerance": 1e-9,
+        "steps": ["Rate of change: 0.003 / 0.1 = 0.03 Wb/s", "ε = 200 × 0.03 = 6 V"]
+      },
+      "related": ["magnetic-flux", "transformer-turns-ratio"],
+      "tags": ["faraday", "induction", "induced emf", "lenz", "generator", "electromagnetic induction"]
+    },
+    {
+      "id": "transformer-turns-ratio",
+      "name": "Transformer equation",
+      "subcategory": "Induction",
+      "level": "school",
+      "equation": "V_s / V_p = N_s / N_p",
+      "displayLatex": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p}",
+      "variables": [
+        { "symbol": "V_s", "name": "secondary voltage", "unit": "V", "description": "Output voltage." },
+        { "symbol": "V_p", "name": "primary voltage", "unit": "V", "description": "Input voltage." },
+        { "symbol": "N_s", "name": "secondary turns", "unit": "", "description": "Turns on the output coil.", "positive": true, "integer": true },
+        { "symbol": "N_p", "name": "primary turns", "unit": "", "description": "Turns on the input coil.", "positive": true, "integer": true }
+      ],
+      "explanation": "Both coils share the same changing flux in the iron core, so each turn has the same induced voltage. The voltages are therefore in the same ratio as the turns. A step-up transformer has more secondary turns, a step-down transformer fewer.",
+      "whenToUse": "Use it for phone chargers, power distribution and any AC voltage conversion.",
+      "assumptions": ["ideal transformer (no flux leakage)", "alternating current"],
+      "example": {
+        "story": "A transformer with 1150 primary turns and 60 secondary turns runs on 230 V mains. What is the output voltage?",
+        "given": { "V_p": 230, "N_s": 60, "N_p": 1150 },
+        "solveFor": "V_s",
+        "result": 12,
+        "unit": "V",
+        "tolerance": 1e-9,
+        "steps": ["V_s = 230 × 60 / 1150", "V_s = 12 V"]
+      },
+      "related": ["transformer-power", "faradays-law", "electric-power-i2r"],
+      "tags": ["transformer", "turns ratio", "step up", "step down", "voltage conversion"]
+    },
+    {
+      "id": "transformer-power",
+      "name": "Ideal transformer power balance",
+      "subcategory": "Induction",
+      "level": "school",
+      "equation": "V_p*I_p = V_s*I_s",
+      "displayLatex": "V_p I_p = V_s I_s",
+      "variables": [
+        { "symbol": "V_p", "name": "primary voltage", "unit": "V", "description": "Input voltage." },
+        { "symbol": "I_p", "name": "primary current", "unit": "A", "description": "Input current." },
+        { "symbol": "V_s", "name": "secondary voltage", "unit": "V", "description": "Output voltage." },
+        { "symbol": "I_s", "name": "secondary current", "unit": "A", "description": "Output current." }
+      ],
+      "explanation": "An ideal transformer wastes no energy, so the power in equals the power out. Stepping the voltage down steps the current up by the same factor. Real transformers are often more than 95 % efficient.",
+      "whenToUse": "Use it to find the current drawn from the mains by a transformer-powered device.",
+      "assumptions": ["100 % efficient transformer"],
+      "example": {
+        "story": "A 230 V to 12 V transformer supplies 5 A to a lamp. What current does it draw from the mains?",
+        "given": { "V_p": 230, "V_s": 12, "I_s": 5 },
+        "solveFor": "I_p",
+        "result": 0.26086957,
+        "unit": "A",
+        "tolerance": 1e-8,
+        "steps": ["Output power: 12 × 5 = 60 W", "I_p = 60 / 230 ≈ 0.261 A"]
+      },
+      "related": ["transformer-turns-ratio", "electric-power-vi"],
+      "tags": ["transformer", "power", "efficiency", "primary current", "secondary current"]
+    },
+    {
+      "id": "inductive-reactance",
+      "name": "Inductive reactance",
+      "subcategory": "AC circuits",
+      "level": "university",
+      "equation": "X_L = 2*pi*f*L",
+      "displayLatex": "X_L = 2\\pi f L",
+      "variables": [
+        { "symbol": "X_L", "name": "inductive reactance", "unit": "Ω", "description": "Opposition of the inductor to AC.", "min": 0 },
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "AC frequency.", "min": 0 },
+        { "symbol": "L", "name": "inductance", "unit": "H", "description": "Inductance of the coil.", "min": 0 }
+      ],
+      "explanation": "An inductor opposes changes in current. The faster the current alternates, the more it resists, so its reactance grows with frequency. To steady DC (f = 0) an ideal inductor is just a wire.",
+      "whenToUse": "Use it for AC circuits, filters, chokes and tuned circuits.",
+      "assumptions": ["ideal inductor (no resistance)", "sinusoidal AC"],
+      "example": {
+        "story": "What is the reactance of a 0.2 H inductor at 50 Hz?",
+        "given": { "f": 50, "L": 0.2 },
+        "solveFor": "X_L",
+        "result": 62.831853,
+        "unit": "Ω",
+        "tolerance": 1e-6,
+        "steps": ["X_L = 2π × 50 × 0.2", "X_L = 20π ≈ 62.8 Ω"]
+      },
+      "related": ["capacitive-reactance", "rlc-resonance", "impedance-series-rlc"],
+      "tags": ["reactance", "inductor", "inductive reactance", "ac circuit", "choke"]
+    },
+    {
+      "id": "capacitive-reactance",
+      "name": "Capacitive reactance",
+      "subcategory": "AC circuits",
+      "level": "university",
+      "equation": "X_C = 1 / (2*pi*f*C)",
+      "displayLatex": "X_C = \\frac{1}{2\\pi f C}",
+      "variables": [
+        { "symbol": "X_C", "name": "capacitive reactance", "unit": "Ω", "description": "Opposition of the capacitor to AC.", "positive": true },
+        { "symbol": "f", "name": "frequency", "unit": "Hz", "description": "AC frequency.", "positive": true },
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance.", "positive": true }
+      ],
+      "explanation": "A capacitor passes alternating current by repeatedly charging and discharging. At higher frequency and larger capacitance it passes more current, so its reactance is smaller. It blocks steady DC completely.",
+      "whenToUse": "Use it for filters, coupling capacitors, tone controls and tuned circuits.",
+      "assumptions": ["ideal capacitor", "sinusoidal AC"],
+      "example": {
+        "story": "What is the reactance of a 10 µF capacitor at 50 Hz?",
+        "given": { "f": 50, "C": 1e-5 },
+        "solveFor": "X_C",
+        "result": 318.30989,
+        "unit": "Ω",
+        "tolerance": 1e-5,
+        "steps": ["2π f C = 2π × 50 × 10⁻⁵ ≈ 0.0031416", "X_C = 1 / 0.0031416 ≈ 318 Ω"]
+      },
+      "related": ["inductive-reactance", "rlc-resonance", "impedance-series-rlc"],
+      "tags": ["reactance", "capacitor", "capacitive reactance", "ac circuit", "filter"]
+    },
+    {
+      "id": "impedance-series-rlc",
+      "name": "Impedance of a series RLC circuit",
+      "subcategory": "AC circuits",
+      "level": "university",
+      "equation": "Z = sqrt(R^2 + (X_L - X_C)^2)",
+      "displayLatex": "Z = \\sqrt{R^2 + (X_L - X_C)^2}",
+      "variables": [
+        { "symbol": "Z", "name": "impedance", "unit": "Ω", "description": "Total opposition to AC.", "min": 0 },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Resistance in the circuit.", "min": 0 },
+        { "symbol": "X_L", "name": "inductive reactance", "unit": "Ω", "description": "Reactance of the inductor.", "min": 0 },
+        { "symbol": "X_C", "name": "capacitive reactance", "unit": "Ω", "description": "Reactance of the capacitor.", "min": 0 }
+      ],
+      "explanation": "In an AC circuit the voltages across a resistor, inductor and capacitor are out of step, so they do not simply add. The inductor and capacitor voltages are opposite and partly cancel, and the result combines with the resistor voltage at right angles, like Pythagoras. The rms current is V/Z.",
+      "whenToUse": "Use it for AC circuits with resistors, inductors and capacitors in series, such as filters and tuned circuits.",
+      "assumptions": ["sinusoidal AC", "series connection"],
+      "example": {
+        "story": "A series circuit has R = 30 Ω, X_L = 80 Ω and X_C = 40 Ω. What is its impedance?",
+        "given": { "R": 30, "X_L": 80, "X_C": 40 },
+        "solveFor": "Z",
+        "result": 50,
+        "unit": "Ω",
+        "tolerance": 1e-9,
+        "steps": ["X_L - X_C = 40 Ω", "Z = √(30² + 40²) = √2500", "Z = 50 Ω"]
+      },
+      "related": ["inductive-reactance", "capacitive-reactance", "rlc-resonance", "ohms-law"],
+      "tags": ["impedance", "rlc", "ac circuit", "phasor", "reactance"]
+    },
+    {
+      "id": "rlc-resonance",
+      "name": "Resonant frequency of an LC circuit",
+      "subcategory": "AC circuits",
+      "level": "university",
+      "equation": "f_0 = 1 / (2*pi*sqrt(L*C))",
+      "displayLatex": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}",
+      "variables": [
+        { "symbol": "f_0", "name": "resonant frequency", "unit": "Hz", "description": "Frequency where X_L = X_C.", "positive": true },
+        { "symbol": "L", "name": "inductance", "unit": "H", "description": "Inductance.", "positive": true },
+        { "symbol": "C", "name": "capacitance", "unit": "F", "description": "Capacitance.", "positive": true }
+      ],
+      "explanation": "At resonance the inductive and capacitive reactances are equal and cancel, so a series RLC circuit has its smallest impedance and the largest current. Setting 2πfL = 1/(2πfC) and solving for f gives the formula. Radios tune to a station by adjusting C to change f₀.",
+      "whenToUse": "Use it for radio tuners, filters, oscillators and wireless charging coils.",
+      "assumptions": ["ideal components"],
+      "example": {
+        "story": "A 10 mH inductor is combined with a 1 µF capacitor. At what frequency does the circuit resonate?",
+        "given": { "L": 0.01, "C": 1e-6 },
+        "solveFor": "f_0",
+        "result": 1591.5494,
+        "unit": "Hz",
+        "tolerance": 1e-4,
+        "steps": ["√(LC) = √(10⁻⁸) = 10⁻⁴", "f₀ = 1 / (2π × 10⁻⁴)", "f₀ ≈ 1592 Hz"]
+      },
+      "related": ["inductive-reactance", "capacitive-reactance", "impedance-series-rlc"],
+      "tags": ["resonance", "lc circuit", "rlc", "resonant frequency", "tuned circuit", "tank circuit"]
+    },
+    {
+      "id": "inductor-energy",
+      "name": "Energy stored in an inductor",
+      "subcategory": "AC circuits",
+      "level": "university",
+      "equation": "E = L*I^2 / 2",
+      "displayLatex": "E = \\tfrac{1}{2}LI^2",
+      "variables": [
+        { "symbol": "E", "name": "stored energy", "unit": "J", "description": "Energy stored in the magnetic field.", "min": 0 },
+        { "symbol": "L", "name": "inductance", "unit": "H", "description": "Inductance.", "positive": true },
+        { "symbol": "I", "name": "current", "unit": "A", "description": "Current through the inductor." }
+      ],
+      "explanation": "Building up a current in an inductor takes work against the induced back-emf. That energy is stored in the magnetic field, ½LI², mirroring ½CV² for a capacitor. Releasing it suddenly causes the spark when a switch opens.",
+      "whenToUse": "Use it for switch-mode power supplies, ignition coils and energy in magnetic fields.",
+      "assumptions": [],
+      "example": {
+        "story": "A 0.5 H inductor carries a current of 2 A. How much energy does it store?",
+        "given": { "L": 0.5, "I": 2 },
+        "solveFor": "E",
+        "result": 1,
+        "unit": "J",
+        "tolerance": 1e-9,
+        "steps": ["E = ½ × 0.5 × 2²", "E = 1 J"]
+      },
+      "related": ["capacitor-energy", "rl-time-constant", "solenoid-field"],
+      "tags": ["inductor energy", "magnetic energy", "half l i squared", "inductance"]
+    },
+    {
+      "id": "rl-time-constant",
+      "name": "RL time constant",
+      "subcategory": "AC circuits",
+      "level": "university",
+      "equation": "τ = L / R",
+      "displayLatex": "\\tau = \\frac{L}{R}",
+      "variables": [
+        { "symbol": "τ", "name": "time constant", "unit": "s", "description": "Time for the current to reach 63 % of its final value.", "positive": true },
+        { "symbol": "L", "name": "inductance", "unit": "H", "description": "Inductance.", "positive": true },
+        { "symbol": "R", "name": "resistance", "unit": "Ω", "description": "Total resistance in the circuit.", "positive": true }
+      ],
+      "explanation": "When a voltage is switched on across an inductor and resistor, the current rises exponentially rather than instantly. The time constant L/R sets the pace: a large inductance slows the rise, a large resistance speeds it up.",
+      "whenToUse": "Use it for relays, motors, solenoids and switching transients.",
+      "assumptions": [],
+      "example": {
+        "story": "A 0.5 H coil has a total circuit resistance of 100 Ω. What is the time constant?",
+        "given": { "L": 0.5, "R": 100 },
+        "solveFor": "τ",
+        "result": 0.005,
+        "unit": "s",
+        "tolerance": 1e-12,
+        "steps": ["τ = 0.5 / 100", "τ = 0.005 s (5 ms)"]
+      },
+      "related": ["rc-time-constant", "inductor-energy"],
+      "tags": ["rl circuit", "time constant", "inductor", "transient", "tau"]
+    },
+    {
+      "id": "rms-voltage",
+      "name": "RMS value of a sinusoidal voltage",
+      "subcategory": "AC circuits",
+      "level": "school",
+      "equation": "V_rms = V_0 / sqrt(2)",
+      "displayLatex": "V_{rms} = \\frac{V_0}{\\sqrt{2}}",
+      "variables": [
+        { "symbol": "V_rms", "name": "rms voltage", "unit": "V", "description": "The equivalent DC voltage for heating effect.", "min": 0 },
+        { "symbol": "V_0", "name": "peak voltage", "unit": "V", "description": "Maximum value of the sine wave.", "min": 0 }
+      ],
+      "explanation": "An alternating voltage keeps changing, so we quote its root mean square value: the DC voltage that would produce the same heating in a resistor. For a sine wave the average of sin² over a cycle is one half, giving V₀/√2. The 230 V of European mains is an rms value; the peak is about 325 V.",
+      "whenToUse": "Use it to convert between peak and rms values for AC voltage or current.",
+      "assumptions": ["sinusoidal waveform"],
+      "example": {
+        "story": "An AC supply has a peak voltage of 325 V. What is its rms voltage?",
+        "given": { "V_0": 325 },
+        "solveFor": "V_rms",
+        "result": 229.80970,
+        "unit": "V",
+        "tolerance": 1e-5,
+        "steps": ["√2 ≈ 1.41421", "V_rms = 325 / 1.41421 ≈ 229.8 V"]
+      },
+      "related": ["power-reduction-sine", "electric-power-vi"],
+      "tags": ["rms", "root mean square", "peak voltage", "ac", "mains voltage"]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest something Calcy should do.
+title: "[Idea] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like Calcy to do?
+      description: Describe the problem you want to solve, for example a calculation or a school task.
+    validations:
+      required: true
+  - type: input
+    id: mode
+    attributes:
+      label: Which mode does it belong to?
+      placeholder: graphing, statistics, a new mode, ...
+  - type: textarea
+    id: example
+    attributes:
+      label: Example
+      description: An example input and the result you would expect, or how another calculator does it.

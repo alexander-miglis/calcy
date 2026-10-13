@@ -1,0 +1,41 @@
+{
+  // Press F5 (or the green play button in Run and Debug) to build and start Calcy.
+  // Shift+F5 (or the red square in the debug toolbar) stops it.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Calcy",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build: Calcy",
+      "program": "${workspaceFolder}/src/Calcy.App/bin/Debug/net10.0/Calcy.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Calcy.App/bin/Debug/net10.0",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "justMyCode": true
+    },
+    {
+      "name": "calcy-cli (terminal calculator)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build: calcy-cli",
+      "program": "${workspaceFolder}/src/Calcy.Cli/bin/Debug/net10.0/calcy-cli.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    },
+    {
+      "name": "calcy-cli (MCP server)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build: calcy-cli",
+      "program": "${workspaceFolder}/src/Calcy.Cli/bin/Debug/net10.0/calcy-cli.dll",
+      "args": ["mcp"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+    }
+  ]
+}

@@ -1,0 +1,805 @@
+{
+  "category": "chemistry",
+  "formulas": [
+    {
+      "id": "moles-from-mass",
+      "name": "Amount of substance from mass",
+      "subcategory": "Amount of substance",
+      "level": "school",
+      "equation": "n = m / M",
+      "displayLatex": "n = \\frac{m}{M}",
+      "variables": [
+        { "symbol": "n", "name": "amount", "unit": "mol", "description": "Number of moles.", "min": 0 },
+        { "symbol": "m", "name": "mass", "unit": "g", "description": "Mass of the substance.", "min": 0 },
+        { "symbol": "M", "name": "molar mass", "unit": "g/mol", "description": "Mass of one mole, numerically equal to the relative formula mass (18.015 for water).", "positive": true }
+      ],
+      "explanation": "A mole is a fixed number of particles, 6.022 × 10²³. The molar mass tells you how many grams one mole of a substance weighs, so dividing a mass by the molar mass counts the moles. This is the bridge between the balance in the lab and the equations of chemistry.",
+      "whenToUse": "Use it in almost every chemical calculation: reacting masses, yields, concentrations and gas volumes.",
+      "assumptions": ["m in grams with M in g/mol (or kg with kg/mol)"],
+      "example": {
+        "story": "How many moles of water are in 36 g of water (M = 18.015 g/mol)?",
+        "given": { "m": 36, "M": 18.015 },
+        "solveFor": "n",
+        "result": 1.9983347,
+        "unit": "mol",
+        "tolerance": 1e-7,
+        "steps": ["n = 36 / 18.015", "n ≈ 2.00 mol"]
+      },
+      "related": ["number-of-particles", "concentration", "percent-yield"],
+      "tags": ["moles", "mole calculation", "molar mass", "amount of substance", "n = m / m"]
+    },
+    {
+      "id": "number-of-particles",
+      "name": "Number of particles from moles",
+      "subcategory": "Amount of substance",
+      "level": "school",
+      "equation": "N = n*N_A",
+      "displayLatex": "N = nN_A",
+      "variables": [
+        { "symbol": "N", "name": "number of particles", "unit": "", "description": "Atoms, molecules or ions.", "min": 0 },
+        { "symbol": "n", "name": "amount", "unit": "mol", "description": "Number of moles.", "min": 0 }
+      ],
+      "constants": ["avogadro-constant"],
+      "explanation": "One mole contains exactly 6.02214076 × 10²³ particles, the Avogadro constant. Multiplying moles by it gives the actual number of atoms or molecules, an enormous number even for small samples.",
+      "whenToUse": "Use it to count atoms, molecules or ions in a sample.",
+      "assumptions": [],
+      "example": {
+        "story": "How many molecules are in 0.5 mol of carbon dioxide?",
+        "given": { "n": 0.5 },
+        "solveFor": "N",
+        "result": 3.01107038e23,
+        "unit": "",
+        "tolerance": 1e15,
+        "steps": ["N = 0.5 × 6.022 × 10²³", "N ≈ 3.01 × 10²³ molecules"]
+      },
+      "related": ["moles-from-mass", "ideal-gas-law-molecules"],
+      "tags": ["avogadro", "number of particles", "molecules", "atoms", "mole"]
+    },
+    {
+      "id": "concentration",
+      "name": "Molar concentration",
+      "subcategory": "Solutions",
+      "level": "school",
+      "equation": "c = n / V",
+      "displayLatex": "c = \\frac{n}{V}",
+      "variables": [
+        { "symbol": "c", "name": "concentration", "unit": "mol/dm³", "description": "Moles of solute per cubic decimetre (litre) of solution.", "min": 0 },
+        { "symbol": "n", "name": "amount of solute", "unit": "mol", "description": "Moles dissolved.", "min": 0 },
+        { "symbol": "V", "name": "volume of solution", "unit": "dm³", "description": "Total volume of solution (1 dm³ = 1 litre).", "positive": true }
+      ],
+      "explanation": "Concentration measures how much solute is packed into each litre of solution. Chemists write it as mol/dm³, also called molar (M). Remember to convert cm³ to dm³ by dividing by 1000.",
+      "whenToUse": "Use it for making up solutions, titrations and reaction stoichiometry in solution.",
+      "assumptions": ["V is the volume of the solution, not of the solvent added"],
+      "example": {
+        "story": "0.25 mol of sodium chloride is dissolved to make 500 cm³ of solution. What is its concentration?",
+        "given": { "n": 0.25, "V": 0.5 },
+        "solveFor": "c",
+        "result": 0.5,
+        "unit": "mol/dm³",
+        "tolerance": 1e-9,
+        "steps": ["500 cm³ = 0.5 dm³", "c = 0.25 / 0.5", "c = 0.5 mol/dm³"]
+      },
+      "related": ["dilution", "mass-concentration", "moles-from-mass"],
+      "tags": ["concentration", "molarity", "molar concentration", "mol per litre", "solution"]
+    },
+    {
+      "id": "mass-concentration",
+      "name": "Mass concentration",
+      "subcategory": "Solutions",
+      "level": "school",
+      "equation": "c_m = m / V",
+      "displayLatex": "\\rho_i = \\frac{m}{V}",
+      "variables": [
+        { "symbol": "c_m", "name": "mass concentration", "unit": "g/dm³", "description": "Grams of solute per cubic decimetre of solution.", "min": 0 },
+        { "symbol": "m", "name": "mass of solute", "unit": "g", "description": "Mass dissolved.", "min": 0 },
+        { "symbol": "V", "name": "volume of solution", "unit": "dm³", "description": "Total volume of solution.", "positive": true }
+      ],
+      "explanation": "Mass concentration is the mass of dissolved substance per unit volume of solution. Dividing it by the molar mass converts it into a molar concentration.",
+      "whenToUse": "Use it for solutions described in g/dm³ or g/L, common in biology, medicine and water quality.",
+      "assumptions": [],
+      "example": {
+        "story": "5.85 g of salt is dissolved to make 250 cm³ of solution. What is the mass concentration?",
+        "given": { "m": 5.85, "V": 0.25 },
+        "solveFor": "c_m",
+        "result": 23.4,
+        "unit": "g/dm³",
+        "tolerance": 1e-9,
+        "steps": ["250 cm³ = 0.25 dm³", "c = 5.85 / 0.25 = 23.4 g/dm³"]
+      },
+      "related": ["concentration", "density"],
+      "tags": ["mass concentration", "grams per litre", "g/dm3", "solution strength"]
+    },
+    {
+      "id": "dilution",
+      "name": "Dilution",
+      "subcategory": "Solutions",
+      "level": "school",
+      "equation": "c_1*V_1 = c_2*V_2",
+      "displayLatex": "c_1V_1 = c_2V_2",
+      "variables": [
+        { "symbol": "c_1", "name": "stock concentration", "unit": "mol/dm³", "description": "Concentration before dilution.", "positive": true },
+        { "symbol": "V_1", "name": "stock volume", "unit": "dm³", "description": "Volume of stock solution used.", "positive": true },
+        { "symbol": "c_2", "name": "diluted concentration", "unit": "mol/dm³", "description": "Concentration after dilution.", "positive": true },
+        { "symbol": "V_2", "name": "final volume", "unit": "dm³", "description": "Total volume after adding solvent.", "positive": true }
+      ],
+      "explanation": "Adding solvent does not change the number of moles of solute; it only spreads them through a bigger volume. Since moles equal concentration times volume, c V is the same before and after.",
+      "whenToUse": "Use it to plan dilutions from a stock solution in the lab.",
+      "assumptions": ["only solvent is added", "volumes in the same unit"],
+      "example": {
+        "story": "How much 2.0 mol/dm³ stock solution do you need to make 250 cm³ of 0.50 mol/dm³ solution?",
+        "given": { "c_1": 2, "c_2": 0.5, "V_2": 0.25 },
+        "solveFor": "V_1",
+        "result": 0.0625,
+        "unit": "dm³",
+        "tolerance": 1e-12,
+        "steps": ["V₁ = c₂ V₂ / c₁", "V₁ = 0.5 × 0.25 / 2.0", "V₁ = 0.0625 dm³ (62.5 cm³), topped up to 250 cm³"]
+      },
+      "related": ["concentration"],
+      "tags": ["dilution", "c1v1 = c2v2", "stock solution", "diluting"]
+    },
+    {
+      "id": "molar-volume-stp",
+      "name": "Moles of gas from volume at STP",
+      "subcategory": "Gases",
+      "level": "school",
+      "equation": "n = V / V_m",
+      "displayLatex": "n = \\frac{V}{V_m}, \\quad V_m \\approx 22.4\\ \\text{dm}^3/\\text{mol}",
+      "variables": [
+        { "symbol": "n", "name": "amount of gas", "unit": "mol", "description": "Number of moles.", "min": 0 },
+        { "symbol": "V", "name": "gas volume", "unit": "m³", "description": "Volume at 0 °C and 101.325 kPa.", "min": 0 }
+      ],
+      "constants": ["molar-volume-stp"],
+      "explanation": "By Avogadro's law, equal volumes of any ideal gas at the same temperature and pressure contain the same number of molecules. At standard temperature and pressure (273.15 K, 101.325 kPa) one mole occupies 22.414 dm³. Dividing a gas volume by it gives the amount.",
+      "whenToUse": "Use it for gas volumes in reactions measured at STP; at room conditions (about 24 dm³/mol) use the ideal gas law instead.",
+      "assumptions": ["ideal gas", "exactly 273.15 K and 101.325 kPa (the older STP definition; IUPAC now uses 100 kPa)"],
+      "example": {
+        "story": "How many moles of hydrogen occupy 11.2 dm³ (0.0112 m³) at STP?",
+        "given": { "V": 0.0112 },
+        "solveFor": "n",
+        "result": 0.4996884,
+        "unit": "mol",
+        "tolerance": 1e-6,
+        "steps": ["V_m = 0.022414 m³/mol", "n = 0.0112 / 0.022414", "n ≈ 0.500 mol"]
+      },
+      "related": ["ideal-gas-law", "molar-mass-from-gas-density"],
+      "tags": ["molar volume", "stp", "22.4 litres", "avogadro law", "gas volume"]
+    },
+    {
+      "id": "molar-mass-from-gas-density",
+      "name": "Molar mass of a gas from its density",
+      "subcategory": "Gases",
+      "level": "university",
+      "equation": "M = ρ*R*T / p",
+      "displayLatex": "M = \\frac{\\rho R T}{p}",
+      "variables": [
+        { "symbol": "M", "name": "molar mass", "unit": "kg/mol", "description": "Mass of one mole of the gas, in kg.", "positive": true },
+        { "symbol": "ρ", "name": "gas density", "unit": "kg/m³", "description": "Measured density of the gas.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true },
+        { "symbol": "p", "name": "pressure", "unit": "Pa", "description": "Gas pressure.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "Writing n = m/M in the ideal gas law and dividing by V gives p = ρRT/M. So measuring a gas's density at a known temperature and pressure reveals its molar mass, a classic way to identify an unknown gas.",
+      "whenToUse": "Use it to identify gases from density measurements or to predict gas densities.",
+      "assumptions": ["ideal gas", "SI units throughout (kg/m³, Pa, K, kg/mol)"],
+      "example": {
+        "story": "An unknown gas has a density of 1.25 kg/m³ at 273.15 K and 101 325 Pa. What is its molar mass?",
+        "given": { "ρ": 1.25, "T": 273.15, "p": 101325 },
+        "solveFor": "M",
+        "result": 0.0280175,
+        "unit": "kg/mol",
+        "tolerance": 1e-6,
+        "steps": ["ρ R T = 1.25 × 8.314 × 273.15 ≈ 2838.9", "M = 2838.9 / 101 325", "M ≈ 0.0280 kg/mol (28 g/mol, probably nitrogen)"]
+      },
+      "related": ["ideal-gas-law", "density", "molar-volume-stp"],
+      "tags": ["molar mass", "gas density", "ideal gas", "identify gas"]
+    },
+    {
+      "id": "ph",
+      "name": "pH",
+      "subcategory": "Acids and bases",
+      "level": "school",
+      "equation": "p_H = -log(c_H)",
+      "displayLatex": "\\mathrm{pH} = -\\log_{10}[\\mathrm{H^+}]",
+      "variables": [
+        { "symbol": "p_H", "name": "pH", "unit": "", "description": "Acidity on a logarithmic scale; below 7 is acidic at 25 °C." },
+        { "symbol": "c_H", "name": "hydrogen ion concentration", "unit": "mol/dm³", "description": "[H⁺] (strictly [H₃O⁺]).", "positive": true }
+      ],
+      "explanation": "Hydrogen ion concentrations range over many powers of ten, so chemists use the negative logarithm. Each pH unit is a factor of ten: pH 3 is ten times more acidic than pH 4. The minus sign makes typical values positive.",
+      "whenToUse": "Use it to convert between hydrogen ion concentration and pH for acids, bases and buffers.",
+      "assumptions": ["dilute solutions (concentration used in place of activity)"],
+      "example": {
+        "story": "A solution has [H⁺] = 3.2 × 10⁻⁴ mol/dm³. What is its pH?",
+        "given": { "c_H": 3.2e-4 },
+        "solveFor": "p_H",
+        "result": 3.49485,
+        "unit": "",
+        "tolerance": 1e-5,
+        "steps": ["log(3.2 × 10⁻⁴) ≈ -3.495", "pH ≈ 3.49, acidic"]
+      },
+      "related": ["poh", "ph-poh-sum", "ionic-product-of-water", "henderson-hasselbalch"],
+      "tags": ["ph", "acidity", "hydrogen ion", "h+", "acid", "logarithm"]
+    },
+    {
+      "id": "poh",
+      "name": "pOH",
+      "subcategory": "Acids and bases",
+      "level": "school",
+      "equation": "p_OH = -log(c_OH)",
+      "displayLatex": "\\mathrm{pOH} = -\\log_{10}[\\mathrm{OH^-}]",
+      "variables": [
+        { "symbol": "p_OH", "name": "pOH", "unit": "", "description": "Basicity on a logarithmic scale." },
+        { "symbol": "c_OH", "name": "hydroxide ion concentration", "unit": "mol/dm³", "description": "[OH⁻].", "positive": true }
+      ],
+      "explanation": "pOH does for hydroxide ions what pH does for hydrogen ions. A low pOH means a strongly basic solution. At 25 °C pH and pOH add up to 14.",
+      "whenToUse": "Use it for solutions of bases, where the hydroxide concentration is known.",
+      "assumptions": ["dilute solutions"],
+      "example": {
+        "story": "A sodium hydroxide solution has [OH⁻] = 0.01 mol/dm³. What is its pOH?",
+        "given": { "c_OH": 0.01 },
+        "solveFor": "p_OH",
+        "result": 2,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["log(0.01) = -2", "pOH = 2"]
+      },
+      "related": ["ph", "ph-poh-sum"],
+      "tags": ["poh", "hydroxide", "oh-", "base", "alkali"]
+    },
+    {
+      "id": "ph-poh-sum",
+      "name": "pH plus pOH at 25 °C",
+      "subcategory": "Acids and bases",
+      "level": "school",
+      "equation": "p_H + p_OH = 14",
+      "displayLatex": "\\mathrm{pH} + \\mathrm{pOH} = 14 \\quad (25\\,^\\circ\\mathrm{C})",
+      "variables": [
+        { "symbol": "p_H", "name": "pH", "unit": "", "description": "pH of the solution." },
+        { "symbol": "p_OH", "name": "pOH", "unit": "", "description": "pOH of the solution." }
+      ],
+      "explanation": "Taking minus the logarithm of K_w = [H⁺][OH⁻] = 10⁻¹⁴ gives pH + pOH = 14. So knowing one fixes the other. The value 14 holds at 25 °C; in hot water K_w is larger and neutral pH is below 7.",
+      "whenToUse": "Use it to find the pH of a basic solution from its hydroxide concentration.",
+      "assumptions": ["25 °C"],
+      "example": {
+        "story": "A solution has pOH = 2. What is its pH?",
+        "given": { "p_OH": 2 },
+        "solveFor": "p_H",
+        "result": 12,
+        "unit": "",
+        "tolerance": 1e-9,
+        "steps": ["pH = 14 - 2", "pH = 12, strongly basic"]
+      },
+      "related": ["ph", "poh", "ionic-product-of-water"],
+      "tags": ["ph", "poh", "14", "neutral", "water"]
+    },
+    {
+      "id": "ionic-product-of-water",
+      "name": "Ionic product of water",
+      "subcategory": "Acids and bases",
+      "level": "school",
+      "equation": "c_H*c_OH = K_w",
+      "displayLatex": "[\\mathrm{H^+}][\\mathrm{OH^-}] = K_w",
+      "variables": [
+        { "symbol": "c_H", "name": "hydrogen ion concentration", "unit": "mol/dm³", "description": "[H⁺].", "positive": true },
+        { "symbol": "c_OH", "name": "hydroxide ion concentration", "unit": "mol/dm³", "description": "[OH⁻].", "positive": true }
+      ],
+      "constants": ["ionic-product-water"],
+      "explanation": "Water splits very slightly into H⁺ and OH⁻ ions. In any aqueous solution the product of their concentrations is fixed, 1.0 × 10⁻¹⁴ at 25 °C. Adding a base increases [OH⁻], so [H⁺] must drop.",
+      "whenToUse": "Use it to find [H⁺] in basic solutions, and hence their pH.",
+      "assumptions": ["25 °C", "dilute aqueous solution"],
+      "example": {
+        "story": "A solution has [OH⁻] = 2.5 × 10⁻³ mol/dm³. What is [H⁺]?",
+        "given": { "c_OH": 0.0025 },
+        "solveFor": "c_H",
+        "result": 4e-12,
+        "unit": "mol/dm³",
+        "tolerance": 1e-18,
+        "steps": ["[H⁺] = K_w / [OH⁻]", "[H⁺] = 10⁻¹⁴ / 2.5 × 10⁻³", "[H⁺] = 4.0 × 10⁻¹² mol/dm³ (pH ≈ 11.4)"]
+      },
+      "related": ["ph", "ph-poh-sum"],
+      "tags": ["kw", "ionic product", "water", "autoionisation", "autoionization"]
+    },
+    {
+      "id": "pka",
+      "name": "pKa of an acid",
+      "subcategory": "Acids and bases",
+      "level": "school",
+      "equation": "p_Ka = -log(K_a)",
+      "displayLatex": "\\mathrm{p}K_a = -\\log_{10}K_a",
+      "variables": [
+        { "symbol": "p_Ka", "name": "pKa", "unit": "", "description": "Acid strength on a log scale; smaller means stronger." },
+        { "symbol": "K_a", "name": "acid dissociation constant", "unit": "mol/dm³", "description": "Equilibrium constant for HA ⇌ H⁺ + A⁻.", "positive": true }
+      ],
+      "explanation": "Weak acid strengths span many orders of magnitude, so they are compared on a log scale like pH. A lower pKa means a stronger acid. At a pH equal to the pKa, half of the acid is dissociated.",
+      "whenToUse": "Use it to compare acid strengths and to choose a buffer for a target pH.",
+      "assumptions": [],
+      "example": {
+        "story": "Ethanoic (acetic) acid has K_a = 1.8 × 10⁻⁵ mol/dm³. What is its pKa?",
+        "given": { "K_a": 1.8e-5 },
+        "solveFor": "p_Ka",
+        "result": 4.7447275,
+        "unit": "",
+        "tolerance": 1e-7,
+        "steps": ["log(1.8 × 10⁻⁵) ≈ -4.745", "pKa ≈ 4.74"]
+      },
+      "related": ["henderson-hasselbalch", "weak-acid-hydrogen-ions"],
+      "tags": ["pka", "ka", "acid strength", "dissociation constant", "weak acid"]
+    },
+    {
+      "id": "weak-acid-hydrogen-ions",
+      "name": "Hydrogen ions in a weak acid",
+      "subcategory": "Acids and bases",
+      "level": "school",
+      "equation": "c_H = sqrt(K_a*c_a)",
+      "displayLatex": "[\\mathrm{H^+}] \\approx \\sqrt{K_a\\,[\\mathrm{HA}]}",
+      "variables": [
+        { "symbol": "c_H", "name": "hydrogen ion concentration", "unit": "mol/dm³", "description": "[H⁺] at equilibrium.", "positive": true },
+        { "symbol": "K_a", "name": "acid dissociation constant", "unit": "mol/dm³", "description": "K_a of the weak acid.", "positive": true },
+        { "symbol": "c_a", "name": "acid concentration", "unit": "mol/dm³", "description": "Concentration of acid put into the solution.", "positive": true }
+      ],
+      "explanation": "A weak acid HA only partly dissociates. Each H⁺ comes with one A⁻, so K_a = [H⁺]²/[HA], and because so little dissociates, [HA] is close to the starting concentration. Solving gives [H⁺] ≈ √(K_a c).",
+      "whenToUse": "Use it to find the pH of weak acids such as vinegar, carbonic acid or citric acid solutions.",
+      "assumptions": ["dissociation is small (under about 5 %)", "H⁺ from water ignored"],
+      "example": {
+        "story": "What is [H⁺] in 0.1 mol/dm³ ethanoic acid (K_a = 1.8 × 10⁻⁵)?",
+        "given": { "K_a": 1.8e-5, "c_a": 0.1 },
+        "solveFor": "c_H",
+        "result": 0.0013416408,
+        "unit": "mol/dm³",
+        "tolerance": 1e-10,
+        "steps": ["K_a c = 1.8 × 10⁻⁶", "[H⁺] = √(1.8 × 10⁻⁶) ≈ 1.34 × 10⁻³ mol/dm³", "pH ≈ 2.87"]
+      },
+      "related": ["pka", "ph"],
+      "tags": ["weak acid", "ph of weak acid", "ka", "square root approximation"]
+    },
+    {
+      "id": "henderson-hasselbalch",
+      "name": "Henderson-Hasselbalch equation",
+      "subcategory": "Acids and bases",
+      "level": "university",
+      "equation": "p_H = p_Ka + log(c_A / c_HA)",
+      "displayLatex": "\\mathrm{pH} = \\mathrm{p}K_a + \\log_{10}\\frac{[\\mathrm{A^-}]}{[\\mathrm{HA}]}",
+      "variables": [
+        { "symbol": "p_H", "name": "pH", "unit": "", "description": "pH of the buffer." },
+        { "symbol": "p_Ka", "name": "pKa", "unit": "", "description": "pKa of the weak acid." },
+        { "symbol": "c_A", "name": "conjugate base concentration", "unit": "mol/dm³", "description": "[A⁻], usually from its salt.", "positive": true },
+        { "symbol": "c_HA", "name": "acid concentration", "unit": "mol/dm³", "description": "[HA].", "positive": true }
+      ],
+      "explanation": "A buffer is a weak acid mixed with its conjugate base. Taking logs of the K_a expression shows its pH is the pKa plus the log of the base-to-acid ratio. Equal amounts give pH = pKa, and the pH changes only slowly when small amounts of acid or base are added.",
+      "whenToUse": "Use it to design buffers and to find the pH of acid-salt mixtures, for example in biochemistry.",
+      "assumptions": ["both concentrations much larger than [H⁺]", "dilute solutions"],
+      "example": {
+        "story": "A buffer contains 0.2 mol/dm³ sodium ethanoate and 0.1 mol/dm³ ethanoic acid (pKa 4.76). What is its pH?",
+        "given": { "p_Ka": 4.76, "c_A": 0.2, "c_HA": 0.1 },
+        "solveFor": "p_H",
+        "result": 5.06103,
+        "unit": "",
+        "tolerance": 1e-5,
+        "steps": ["Ratio [A⁻]/[HA] = 2", "log 2 ≈ 0.301", "pH = 4.76 + 0.301 ≈ 5.06"]
+      },
+      "related": ["pka", "ph"],
+      "tags": ["henderson hasselbalch", "buffer", "buffer ph", "conjugate base", "pka"]
+    },
+    {
+      "id": "percent-yield",
+      "name": "Percentage yield",
+      "subcategory": "Amount of substance",
+      "level": "school",
+      "equation": "Y = m_a / m_t*100",
+      "displayLatex": "\\text{yield} = \\frac{\\text{actual}}{\\text{theoretical}} \\times 100\\%",
+      "variables": [
+        { "symbol": "Y", "name": "percentage yield", "unit": "%", "description": "How much product you got compared with the maximum possible.", "min": 0 },
+        { "symbol": "m_a", "name": "actual yield", "unit": "g", "description": "Mass of product actually obtained.", "min": 0 },
+        { "symbol": "m_t", "name": "theoretical yield", "unit": "g", "description": "Maximum mass predicted from the equation.", "positive": true }
+      ],
+      "explanation": "Real reactions rarely give all the product the balanced equation predicts: some reactant does not react, side reactions happen, and product is lost while purifying. The percentage yield compares what you got with the theoretical maximum.",
+      "whenToUse": "Use it to judge how successful a preparation or industrial process was.",
+      "assumptions": ["the theoretical yield is calculated from the limiting reactant"],
+      "example": {
+        "story": "A reaction should produce 5.0 g of product, but only 4.2 g is collected. What is the percentage yield?",
+        "given": { "m_a": 4.2, "m_t": 5 },
+        "solveFor": "Y",
+        "result": 84,
+        "unit": "%",
+        "tolerance": 1e-9,
+        "steps": ["Y = 4.2 / 5.0 × 100", "Y = 84 %"]
+      },
+      "related": ["atom-economy", "moles-from-mass"],
+      "tags": ["percent yield", "percentage yield", "actual yield", "theoretical yield", "efficiency"]
+    },
+    {
+      "id": "percent-composition",
+      "name": "Percentage composition by mass",
+      "subcategory": "Amount of substance",
+      "level": "school",
+      "equation": "w = N*A_r / M_r*100",
+      "displayLatex": "\\%\\text{ element} = \\frac{N \\times A_r}{M_r} \\times 100\\%",
+      "variables": [
+        { "symbol": "w", "name": "mass percentage", "unit": "%", "description": "Share of the compound's mass due to the element.", "min": 0, "max": 100 },
+        { "symbol": "N", "name": "number of atoms", "unit": "", "description": "Atoms of the element in one formula unit.", "positive": true, "integer": true },
+        { "symbol": "A_r", "name": "relative atomic mass", "unit": "", "description": "Relative atomic mass of the element.", "positive": true },
+        { "symbol": "M_r", "name": "relative formula mass", "unit": "", "description": "Relative formula mass of the compound.", "positive": true }
+      ],
+      "explanation": "The mass of a compound is shared among its elements in proportion to how many atoms of each there are and how heavy they are. Divide the element's total contribution by the formula mass and multiply by 100.",
+      "whenToUse": "Use it to compare fertilisers, check formulas against analysis results, or find the metal content of an ore.",
+      "assumptions": [],
+      "example": {
+        "story": "What percentage of the mass of water (M_r = 18.015) is oxygen (A_r = 15.999)?",
+        "given": { "N": 1, "A_r": 15.999, "M_r": 18.015 },
+        "solveFor": "w",
+        "result": 88.80933,
+        "unit": "%",
+        "tolerance": 1e-4,
+        "steps": ["One oxygen atom: 15.999", "w = 15.999 / 18.015 × 100", "w ≈ 88.8 %"]
+      },
+      "related": ["moles-from-mass", "atom-economy"],
+      "tags": ["percentage composition", "mass percent", "percent by mass", "empirical formula"]
+    },
+    {
+      "id": "atom-economy",
+      "name": "Atom economy",
+      "subcategory": "Amount of substance",
+      "level": "school",
+      "equation": "A_E = M_d / M_t*100",
+      "displayLatex": "\\text{atom economy} = \\frac{M_r(\\text{desired product})}{\\sum M_r(\\text{reactants})} \\times 100\\%",
+      "variables": [
+        { "symbol": "A_E", "name": "atom economy", "unit": "%", "description": "Share of reactant mass that ends up in the wanted product.", "min": 0, "max": 100 },
+        { "symbol": "M_d", "name": "mass of desired product", "unit": "g/mol", "description": "Formula mass of the useful product (times its coefficient).", "positive": true },
+        { "symbol": "M_t", "name": "total mass of reactants", "unit": "g/mol", "description": "Sum of the formula masses of all reactants (times their coefficients).", "positive": true }
+      ],
+      "explanation": "Atom economy measures how much of the starting materials become the product you want rather than waste by-products. Unlike percentage yield, it is fixed by the balanced equation. Green chemistry favours reactions with high atom economy.",
+      "whenToUse": "Use it to compare different routes to the same product for cost and waste.",
+      "assumptions": ["based on the balanced equation, not on what happens in practice"],
+      "example": {
+        "story": "Heating limestone, CaCO₃ (100.09) → CaO (56.08) + CO₂. What is the atom economy for making quicklime?",
+        "given": { "M_d": 56.08, "M_t": 100.09 },
+        "solveFor": "A_E",
+        "result": 56.02957,
+        "unit": "%",
+        "tolerance": 1e-4,
+        "steps": ["A_E = 56.08 / 100.09 × 100", "A_E ≈ 56.0 %; the rest leaves as CO₂"]
+      },
+      "related": ["percent-yield", "percent-composition"],
+      "tags": ["atom economy", "green chemistry", "waste", "by-product", "efficiency"]
+    },
+    {
+      "id": "arrhenius-equation",
+      "name": "Arrhenius equation",
+      "subcategory": "Reaction rates",
+      "level": "university",
+      "equation": "k = A*e^(-E_a / (R*T))",
+      "displayLatex": "k = A e^{-E_a/(RT)}",
+      "variables": [
+        { "symbol": "k", "name": "rate constant", "unit": "s⁻¹", "description": "Rate constant (units depend on the reaction order; s⁻¹ for first order).", "positive": true },
+        { "symbol": "A", "name": "pre-exponential factor", "unit": "s⁻¹", "description": "Frequency of collisions with the right orientation.", "positive": true },
+        { "symbol": "E_a", "name": "activation energy", "unit": "J/mol", "description": "Minimum energy needed for a reaction.", "positive": true },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "Only collisions with at least the activation energy lead to a reaction, and the fraction of such collisions is e^(-E_a/RT). That fraction rises steeply with temperature, so a modest temperature rise can double the rate. Catalysts work by lowering E_a.",
+      "whenToUse": "Use it to predict how rate constants change with temperature, or to find activation energies.",
+      "assumptions": ["A and E_a independent of temperature over the range"],
+      "example": {
+        "story": "A first-order reaction has A = 1.0 × 10¹³ s⁻¹ and E_a = 75 kJ/mol. What is k at 298.15 K?",
+        "given": { "A": 1e13, "E_a": 75000, "T": 298.15 },
+        "solveFor": "k",
+        "result": 0.72538,
+        "unit": "s⁻¹",
+        "tolerance": 0.0001,
+        "steps": ["E_a / RT = 75 000 / (8.314 × 298.15) ≈ 30.255", "e^(-30.255) ≈ 7.254 × 10⁻¹⁴", "k ≈ 10¹³ × 7.254 × 10⁻¹⁴ ≈ 0.725 s⁻¹"]
+      },
+      "related": ["arrhenius-two-temperatures", "first-order-integrated-rate-law"],
+      "tags": ["arrhenius", "activation energy", "rate constant", "temperature dependence", "kinetics"]
+    },
+    {
+      "id": "arrhenius-two-temperatures",
+      "name": "Arrhenius equation (two temperatures)",
+      "subcategory": "Reaction rates",
+      "level": "university",
+      "equation": "ln(k_2 / k_1) = E_a / R*(1 / T_1 - 1 / T_2)",
+      "displayLatex": "\\ln\\frac{k_2}{k_1} = \\frac{E_a}{R}\\left(\\frac{1}{T_1} - \\frac{1}{T_2}\\right)",
+      "variables": [
+        { "symbol": "k_2", "name": "rate constant at T₂", "unit": "s⁻¹", "description": "Rate constant at the second temperature.", "positive": true },
+        { "symbol": "k_1", "name": "rate constant at T₁", "unit": "s⁻¹", "description": "Rate constant at the first temperature.", "positive": true },
+        { "symbol": "E_a", "name": "activation energy", "unit": "J/mol", "description": "Activation energy.", "positive": true },
+        { "symbol": "T_1", "name": "first temperature", "unit": "K", "description": "First absolute temperature.", "positive": true },
+        { "symbol": "T_2", "name": "second temperature", "unit": "K", "description": "Second absolute temperature.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "Writing the Arrhenius equation at two temperatures and dividing removes the unknown factor A. The result links the ratio of rate constants directly to the activation energy. Only the ratio of the rates is needed, so any rate unit works.",
+      "whenToUse": "Use it to find an activation energy from rates measured at two temperatures, or to predict a rate at a new temperature.",
+      "assumptions": ["E_a constant over the temperature range"],
+      "example": {
+        "story": "A reaction goes twice as fast at 308 K as at 298 K. What is its activation energy?",
+        "given": { "k_2": 2, "k_1": 1, "T_1": 298, "T_2": 308 },
+        "solveFor": "E_a",
+        "result": 52896.5,
+        "unit": "J/mol",
+        "tolerance": 0.5,
+        "steps": ["ln 2 ≈ 0.6931", "1/298 - 1/308 ≈ 1.0895 × 10⁻⁴ K⁻¹", "E_a = 8.314 × 0.6931 / 1.0895 × 10⁻⁴ ≈ 52.9 kJ/mol"]
+      },
+      "related": ["arrhenius-equation"],
+      "tags": ["arrhenius", "activation energy", "two point", "temperature", "rate doubling"]
+    },
+    {
+      "id": "zero-order-integrated-rate-law",
+      "name": "Zero-order integrated rate law",
+      "subcategory": "Reaction rates",
+      "level": "university",
+      "equation": "c = c_0 - k*t",
+      "displayLatex": "[A] = [A]_0 - kt",
+      "variables": [
+        { "symbol": "c", "name": "concentration at time t", "unit": "mol/dm³", "description": "Concentration of the reactant at time t.", "min": 0 },
+        { "symbol": "c_0", "name": "initial concentration", "unit": "mol/dm³", "description": "Concentration at t = 0.", "positive": true },
+        { "symbol": "k", "name": "rate constant", "unit": "mol/(dm³·s)", "description": "Zero-order rate constant.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "In a zero-order reaction the rate does not depend on the concentration, so the reactant is used up at a constant rate and the concentration falls in a straight line. This happens, for example, when a catalyst surface is saturated.",
+      "whenToUse": "Use it for reactions whose concentration-time graph is a straight line, such as some enzyme and surface reactions.",
+      "assumptions": ["zero-order kinetics", "valid until the reactant runs out"],
+      "example": {
+        "story": "A zero-order reaction starts at 1.0 mol/dm³ with k = 0.002 mol/(dm³·s). What is the concentration after 100 s?",
+        "given": { "c_0": 1, "k": 0.002, "t": 100 },
+        "solveFor": "c",
+        "result": 0.8,
+        "unit": "mol/dm³",
+        "tolerance": 1e-9,
+        "steps": ["c = 1.0 - 0.002 × 100", "c = 0.8 mol/dm³"]
+      },
+      "related": ["first-order-integrated-rate-law", "second-order-integrated-rate-law"],
+      "tags": ["zero order", "rate law", "kinetics", "integrated rate equation"]
+    },
+    {
+      "id": "first-order-integrated-rate-law",
+      "name": "First-order integrated rate law",
+      "subcategory": "Reaction rates",
+      "level": "school",
+      "equation": "c = c_0*e^(-k*t)",
+      "displayLatex": "[A] = [A]_0 e^{-kt} \\iff \\ln[A] = \\ln[A]_0 - kt",
+      "variables": [
+        { "symbol": "c", "name": "concentration at time t", "unit": "mol/dm³", "description": "Concentration of the reactant at time t.", "min": 0 },
+        { "symbol": "c_0", "name": "initial concentration", "unit": "mol/dm³", "description": "Concentration at t = 0.", "positive": true },
+        { "symbol": "k", "name": "rate constant", "unit": "s⁻¹", "description": "First-order rate constant.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "In a first-order reaction the rate is proportional to the concentration, so the concentration decays exponentially, just like radioactive nuclei. A graph of ln[A] against time is a straight line with gradient -k. The half-life is constant.",
+      "whenToUse": "Use it for first-order reactions such as decompositions, drug elimination and radioactive decay.",
+      "assumptions": ["first-order kinetics"],
+      "example": {
+        "story": "A reactant starts at 0.50 mol/dm³ and decays with k = 0.01 s⁻¹. What is its concentration after 60 s?",
+        "given": { "c_0": 0.5, "k": 0.01, "t": 60 },
+        "solveFor": "c",
+        "result": 0.27440582,
+        "unit": "mol/dm³",
+        "tolerance": 1e-8,
+        "steps": ["k t = 0.6", "e^(-0.6) ≈ 0.548812", "c ≈ 0.5 × 0.548812 ≈ 0.274 mol/dm³"]
+      },
+      "related": ["first-order-half-life", "radioactive-decay", "second-order-integrated-rate-law"],
+      "tags": ["first order", "rate law", "kinetics", "exponential decay", "integrated rate equation"]
+    },
+    {
+      "id": "first-order-half-life",
+      "name": "Half-life of a first-order reaction",
+      "subcategory": "Reaction rates",
+      "level": "school",
+      "equation": "t_half = ln(2) / k",
+      "displayLatex": "t_{1/2} = \\frac{\\ln 2}{k}",
+      "variables": [
+        { "symbol": "t_half", "name": "half-life", "unit": "s", "description": "Time for the concentration to halve.", "positive": true },
+        { "symbol": "k", "name": "rate constant", "unit": "s⁻¹", "description": "First-order rate constant.", "positive": true }
+      ],
+      "explanation": "For a first-order reaction the time to halve the concentration is the same whatever the starting concentration. Setting [A] = [A]₀/2 in the integrated rate law gives t½ = ln 2 / k. A constant half-life is a quick test for first-order kinetics.",
+      "whenToUse": "Use it to convert between rate constant and half-life for first-order reactions and drug elimination.",
+      "assumptions": ["first-order kinetics"],
+      "example": {
+        "story": "A first-order reaction has k = 0.01 s⁻¹. What is its half-life?",
+        "given": { "k": 0.01 },
+        "solveFor": "t_half",
+        "result": 69.314718,
+        "unit": "s",
+        "tolerance": 1e-6,
+        "steps": ["t½ = 0.693147 / 0.01", "t½ ≈ 69.3 s"]
+      },
+      "related": ["first-order-integrated-rate-law", "half-life-decay-constant"],
+      "tags": ["half life", "first order", "kinetics", "ln 2", "rate constant"]
+    },
+    {
+      "id": "second-order-integrated-rate-law",
+      "name": "Second-order integrated rate law",
+      "subcategory": "Reaction rates",
+      "level": "university",
+      "equation": "1 / c = 1 / c_0 + k*t",
+      "displayLatex": "\\frac{1}{[A]} = \\frac{1}{[A]_0} + kt",
+      "variables": [
+        { "symbol": "c", "name": "concentration at time t", "unit": "mol/dm³", "description": "Concentration of the reactant at time t.", "positive": true },
+        { "symbol": "c_0", "name": "initial concentration", "unit": "mol/dm³", "description": "Concentration at t = 0.", "positive": true },
+        { "symbol": "k", "name": "rate constant", "unit": "dm³/(mol·s)", "description": "Second-order rate constant.", "positive": true },
+        { "symbol": "t", "name": "time", "unit": "s", "description": "Time elapsed.", "min": 0 }
+      ],
+      "explanation": "When the rate is proportional to the square of one concentration, 1/[A] grows linearly with time. Plotting 1/[A] against t gives a straight line of gradient k, which is how second-order reactions are identified. Its half-life gets longer as the reaction proceeds.",
+      "whenToUse": "Use it for second-order reactions such as the dimerisation of molecules or many gas-phase reactions.",
+      "assumptions": ["second order in a single reactant"],
+      "example": {
+        "story": "A second-order reaction starts at 0.10 mol/dm³ with k = 0.50 dm³/(mol·s). What is the concentration after 20 s?",
+        "given": { "c_0": 0.1, "k": 0.5, "t": 20 },
+        "solveFor": "c",
+        "result": 0.05,
+        "unit": "mol/dm³",
+        "tolerance": 1e-9,
+        "steps": ["1/c = 1/0.10 + 0.50 × 20 = 10 + 10 = 20", "c = 1/20 = 0.050 mol/dm³"]
+      },
+      "related": ["first-order-integrated-rate-law", "zero-order-integrated-rate-law"],
+      "tags": ["second order", "rate law", "kinetics", "integrated rate equation"]
+    },
+    {
+      "id": "gibbs-free-energy",
+      "name": "Gibbs free energy",
+      "subcategory": "Thermodynamics and equilibrium",
+      "level": "school",
+      "equation": "ΔG = ΔH - T*ΔS",
+      "displayLatex": "\\Delta G = \\Delta H - T\\Delta S",
+      "variables": [
+        { "symbol": "ΔG", "name": "Gibbs free energy change", "unit": "J/mol", "description": "Negative for a reaction that can happen by itself (feasible)." },
+        { "symbol": "ΔH", "name": "enthalpy change", "unit": "J/mol", "description": "Heat given out (negative) or taken in (positive) at constant pressure." },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true },
+        { "symbol": "ΔS", "name": "entropy change", "unit": "J/(mol·K)", "description": "Change in entropy of the system." }
+      ],
+      "explanation": "Whether a reaction can happen by itself depends on both the energy change and the entropy change. ΔG combines them: if it is negative, the reaction is feasible. Temperature decides the balance, so some reactions only become feasible above or below a certain temperature.",
+      "whenToUse": "Use it to decide whether a reaction is feasible and at what temperature it becomes so.",
+      "assumptions": ["ΔH and ΔS roughly constant with temperature", "watch the units: ΔH often in kJ/mol, ΔS in J/(mol·K)"],
+      "example": {
+        "story": "For ammonia synthesis, ΔH = -92.2 kJ/mol and ΔS = -198.7 J/(mol·K). Is it feasible at 298.15 K?",
+        "given": { "ΔH": -92200, "T": 298.15, "ΔS": -198.7 },
+        "solveFor": "ΔG",
+        "result": -32957.595,
+        "unit": "J/mol",
+        "tolerance": 0.001,
+        "steps": ["T ΔS = 298.15 × (-198.7) ≈ -59 242 J/mol", "ΔG = -92 200 - (-59 242)", "ΔG ≈ -32 958 J/mol, negative, so feasible"]
+      },
+      "related": ["gibbs-equilibrium-constant", "entropy-change", "nernst-equation"],
+      "tags": ["gibbs", "free energy", "feasibility", "spontaneous", "enthalpy", "entropy"]
+    },
+    {
+      "id": "gibbs-equilibrium-constant",
+      "name": "Gibbs free energy and the equilibrium constant",
+      "subcategory": "Thermodynamics and equilibrium",
+      "level": "university",
+      "equation": "ΔG = -R*T*ln(K)",
+      "displayLatex": "\\Delta G^\\circ = -RT\\ln K",
+      "variables": [
+        { "symbol": "ΔG", "name": "standard Gibbs energy change", "unit": "J/mol", "description": "ΔG° of the reaction." },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true },
+        { "symbol": "K", "name": "equilibrium constant", "unit": "", "description": "Dimensionless (thermodynamic) equilibrium constant.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant"],
+      "explanation": "The standard Gibbs energy change fixes how far a reaction goes. A large negative ΔG° gives K much bigger than 1 (mostly products), and a positive one gives K below 1 (mostly reactants). Every 5.7 kJ/mol at room temperature changes K by a factor of ten.",
+      "whenToUse": "Use it to calculate equilibrium constants from thermodynamic data, or ΔG° from measured K.",
+      "assumptions": ["standard states", "ideal behaviour"],
+      "example": {
+        "story": "A reaction has K = 1.0 × 10⁵ at 298.15 K. What is ΔG°?",
+        "given": { "T": 298.15, "K": 100000 },
+        "solveFor": "ΔG",
+        "result": -28540.05,
+        "unit": "J/mol",
+        "tolerance": 0.05,
+        "steps": ["R T ≈ 2479.0 J/mol", "ln(10⁵) ≈ 11.513", "ΔG° ≈ -2479.0 × 11.513 ≈ -28.5 kJ/mol"]
+      },
+      "related": ["gibbs-free-energy", "nernst-equation"],
+      "tags": ["equilibrium constant", "gibbs", "delta g standard", "rt ln k", "equilibrium"]
+    },
+    {
+      "id": "nernst-equation",
+      "name": "Nernst equation",
+      "subcategory": "Electrochemistry",
+      "level": "university",
+      "equation": "E = E_0 - R*T / (z*F)*ln(Q)",
+      "displayLatex": "E = E^\\circ - \\frac{RT}{zF}\\ln Q",
+      "variables": [
+        { "symbol": "E", "name": "cell potential", "unit": "V", "description": "Cell voltage under the actual conditions." },
+        { "symbol": "E_0", "name": "standard cell potential", "unit": "V", "description": "Cell voltage under standard conditions (1 mol/dm³, 100 kPa)." },
+        { "symbol": "T", "name": "temperature", "unit": "K", "description": "Absolute temperature.", "positive": true },
+        { "symbol": "z", "name": "electrons transferred", "unit": "", "description": "Number of electrons in the balanced redox equation.", "positive": true, "integer": true },
+        { "symbol": "Q", "name": "reaction quotient", "unit": "", "description": "Ratio of product to reactant concentrations, as in K.", "positive": true }
+      ],
+      "constants": ["molar-gas-constant", "faraday-constant"],
+      "explanation": "Cell voltages change with concentration. When the reaction quotient Q is small (lots of reactant), the voltage is above the standard value; as products build up, it falls, reaching zero at equilibrium where Q = K. At 25 °C, RT/F ln Q equals about 0.0592 log Q volts.",
+      "whenToUse": "Use it for batteries away from standard conditions, concentration cells, pH electrodes and nerve membrane potentials.",
+      "assumptions": ["dilute solutions (concentrations instead of activities)"],
+      "example": {
+        "story": "A Daniell cell (E° = 1.10 V, z = 2) has [Zn²⁺]/[Cu²⁺] = 0.01 at 298.15 K. What is its voltage?",
+        "given": { "E_0": 1.1, "T": 298.15, "z": 2, "Q": 0.01 },
+        "solveFor": "E",
+        "result": 1.1591594,
+        "unit": "V",
+        "tolerance": 1e-6,
+        "steps": ["RT / (zF) ≈ 2479.0 / 192 971 ≈ 0.012846 V", "ln 0.01 ≈ -4.6052", "E ≈ 1.10 + 0.0592 ≈ 1.159 V"]
+      },
+      "related": ["gibbs-free-energy", "gibbs-equilibrium-constant"],
+      "tags": ["nernst", "cell potential", "electrochemistry", "electrode potential", "battery voltage"]
+    },
+    {
+      "id": "beer-lambert-law",
+      "name": "Beer-Lambert law",
+      "subcategory": "Analysis",
+      "level": "school",
+      "equation": "A = ε*l*c",
+      "displayLatex": "A = \\varepsilon l c",
+      "variables": [
+        { "symbol": "A", "name": "absorbance", "unit": "", "description": "log₁₀ of incident over transmitted light intensity.", "min": 0 },
+        { "symbol": "ε", "name": "molar absorption coefficient", "unit": "dm³/(mol·cm)", "description": "How strongly the substance absorbs at this wavelength.", "positive": true },
+        { "symbol": "l", "name": "path length", "unit": "cm", "description": "Distance the light travels through the sample (usually 1 cm).", "positive": true },
+        { "symbol": "c", "name": "concentration", "unit": "mol/dm³", "description": "Concentration of the absorbing substance.", "min": 0 }
+      ],
+      "explanation": "Each thin layer of solution absorbs the same fraction of the light, so the absorbance (a logarithmic measure) is proportional to the concentration and the path length. Measuring absorbance in a spectrophotometer is therefore a quick way to find a concentration.",
+      "whenToUse": "Use it in colorimetry and UV-visible spectroscopy to find concentrations, for example of proteins, dyes or NADH.",
+      "assumptions": ["dilute solutions", "monochromatic light", "absorbance roughly below 1 to 2"],
+      "example": {
+        "story": "NADH has ε = 6220 dm³/(mol·cm) at 340 nm. A sample in a 1 cm cuvette has absorbance 0.311. What is its concentration?",
+        "given": { "A": 0.311, "ε": 6220, "l": 1 },
+        "solveFor": "c",
+        "result": 5e-5,
+        "unit": "mol/dm³",
+        "tolerance": 1e-12,
+        "steps": ["c = A / (ε l)", "c = 0.311 / 6220", "c = 5.0 × 10⁻⁵ mol/dm³"]
+      },
+      "related": ["concentration"],
+      "tags": ["beer lambert", "beers law", "absorbance", "spectrophotometry", "colorimetry", "uv vis"]
+    },
+    {
+      "id": "enthalpy-from-calorimetry",
+      "name": "Enthalpy change from calorimetry",
+      "subcategory": "Thermodynamics and equilibrium",
+      "level": "school",
+      "equation": "ΔH = -m*c*ΔT / n",
+      "displayLatex": "\\Delta H = -\\frac{mc\\Delta T}{n}",
+      "variables": [
+        { "symbol": "ΔH", "name": "enthalpy change", "unit": "J/mol", "description": "Enthalpy change per mole of the limiting reactant." },
+        { "symbol": "m", "name": "mass of solution", "unit": "kg", "description": "Mass of the water or solution being heated.", "positive": true },
+        { "symbol": "c", "name": "specific heat capacity", "unit": "J/(kg·K)", "description": "4186 J/(kg·K) for water and dilute solutions.", "defaultValue": 4186, "positive": true },
+        { "symbol": "ΔT", "name": "temperature change", "unit": "K", "description": "Temperature rise of the solution (negative if it cools)." },
+        { "symbol": "n", "name": "amount reacting", "unit": "mol", "description": "Moles of the limiting reactant.", "positive": true }
+      ],
+      "explanation": "In a calorimeter the heat released by the reaction warms the surrounding solution by Q = m c ΔT. Dividing by the moles that reacted gives the energy per mole. The minus sign is there because a temperature rise means the reaction gave out heat, an exothermic, negative ΔH.",
+      "whenToUse": "Use it for neutralisation, displacement and combustion experiments in the school lab.",
+      "assumptions": ["no heat lost to the surroundings or the cup", "the solution has the heat capacity of water"],
+      "example": {
+        "story": "Neutralising 0.025 mol of acid warms 50 g (0.05 kg) of solution by 6.5 K. What is the enthalpy change of neutralisation?",
+        "given": { "m": 0.05, "c": 4186, "ΔT": 6.5, "n": 0.025 },
+        "solveFor": "ΔH",
+        "result": -54418,
+        "unit": "J/mol",
+        "tolerance": 1e-6,
+        "steps": ["Q = 0.05 × 4186 × 6.5 = 1360.45 J", "ΔH = -1360.45 / 0.025", "ΔH ≈ -54.4 kJ/mol"]
+      },
+      "related": ["specific-heat-capacity", "gibbs-free-energy"],
+      "tags": ["calorimetry", "enthalpy change", "delta h", "exothermic", "neutralisation", "q = mc delta t"]
+    },
+    {
+      "id": "freezing-point-depression",
+      "name": "Freezing point depression",
+      "subcategory": "Solutions",
+      "level": "university",
+      "equation": "ΔT_f = i*K_f*b",
+      "displayLatex": "\\Delta T_f = iK_f b",
+      "variables": [
+        { "symbol": "ΔT_f", "name": "freezing point lowering", "unit": "K", "description": "How far below the pure solvent's freezing point the solution freezes.", "min": 0 },
+        { "symbol": "i", "name": "van 't Hoff factor", "unit": "", "description": "Particles formed per formula unit (2 for NaCl, 1 for sugar).", "positive": true },
+        { "symbol": "K_f", "name": "cryoscopic constant", "unit": "K·kg/mol", "description": "1.86 K·kg/mol for water.", "defaultValue": 1.86, "positive": true },
+        { "symbol": "b", "name": "molality", "unit": "mol/kg", "description": "Moles of solute per kilogram of solvent.", "min": 0 }
+      ],
+      "explanation": "Dissolved particles get in the way of the solvent freezing, so a solution freezes at a lower temperature. The lowering depends only on the number of dissolved particles, not on what they are. That is why salt on roads melts ice, and why antifreeze works.",
+      "whenToUse": "Use it for road gritting, antifreeze, ice cream making and measuring molar masses.",
+      "assumptions": ["dilute solution", "ideal behaviour (real ionic solutions give slightly less)"],
+      "example": {
+        "story": "Salt (i = 2) is dissolved in water at 1.0 mol per kg. By how much is the freezing point lowered?",
+        "given": { "i": 2, "K_f": 1.86, "b": 1 },
+        "solveFor": "ΔT_f",
+        "result": 3.72,
+        "unit": "K",
+        "tolerance": 1e-9,
+        "steps": ["ΔT = 2 × 1.86 × 1.0", "ΔT = 3.72 K, so it freezes at about -3.7 °C"]
+      },
+      "related": ["concentration", "latent-heat"],
+      "tags": ["freezing point depression", "colligative property", "cryoscopy", "antifreeze", "road salt"]
+    }
+  ]
+}

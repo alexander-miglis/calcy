@@ -1,0 +1,7 @@
+{
+  "dotnet.defaultSolution": "Calcy.slnx",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  }
+}

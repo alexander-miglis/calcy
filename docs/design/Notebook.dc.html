@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Notebook mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Notebook" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+
+    <nav aria-label="Outline" style="flex: 1 1 200px; max-width: 230px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Outline</h2>
+      <sc-for list="{{outline}}" as="o" hint-placeholder-count="6">
+        <a href="#{{o.id}}" style="display: block; padding: 10px 14px; min-height: 44px; box-sizing: border-box; text-decoration: none; font-size: 16px; color: var(--ink); border-bottom: 2px solid var(--key)">{{o.label}}</a>
+      </sc-for>
+      <div style="padding: 10px 14px; display: flex; flex-direction: column; gap: 8px">
+        <span style="font-family: 'Silkscreen', monospace; font-size: 11px">Export</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--key); border: 2px solid var(--line); min-height: 36px; padding: 0 8px">PDF</button>
+          <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--key); border: 2px solid var(--line); min-height: 36px; padding: 0 8px">Markdown</button>
+          <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--key); border: 2px solid var(--line); min-height: 36px; padding: 0 8px">LaTeX</button>
+        </div>
+      </div>
+    </nav>
+
+    <section aria-label="Notebook" style="flex: 999 1 640px; min-width: 0; max-height: 780px; overflow-y: auto; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <div style="position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; background-color: var(--key); border-bottom: 4px solid var(--line)">
+        <span style="font-family: 'Silkscreen', monospace; font-size: 12px; align-self: center; margin-right: 6px">Add</span>
+        <sc-for list="{{addButtons}}" as="b" hint-placeholder-count="5">
+          <button type="button" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--paper); border: 2px solid var(--line); box-shadow: 2px 2px 0 0 var(--line); min-height: 38px; padding: 0 10px">+ {{b.label}}</button>
+        </sc-for>
+        <span style="margin-left: auto; align-self: center; font-family: 'Silkscreen', monospace; font-size: 11px; background-color: var(--ok); border: 2px solid var(--line); padding: 4px 8px">LIVE: cells update together</span>
+      </div>
+      <div style="padding: 22px 28px; display: flex; flex-direction: column; gap: 16px; max-width: 860px">
+        <h1 id="intro" style="margin: 0; font-size: 40px; font-weight: 700">Pendulum lab</h1>
+        <p style="margin: 0; font-size: 17px; line-height: 1.5">We measured the period of a pendulum and compare it with the small-angle model. Change the length below and every result in this notebook follows.</p>
+
+        <div id="model" style="border: 3px solid var(--line); background-color: var(--card)">
+          <div style="padding: 4px 10px; background-color: var(--sel); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">Maths cell</div>
+          <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 20px">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+              <label for="len">L =</label>
+              <input id="len" type="range" min="0.1" max="2" step="0.01" value="{{L}}" onInput="{{setL}}" onChange="{{setL}}" style="width: 220px; accent-color: var(--ink)">
+              <span style="font-weight: 700">{{Ltext}} m</span>
+            </div>
+            <div>g = 9.81 m/s²</div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+              <span>T = 2π·√(L / g)</span>
+              <span style="font-weight: 700; background-color: var(--sel); border: 2px solid var(--line); padding: 4px 10px">= {{T}} s</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="data" style="border: 3px solid var(--line); background-color: var(--card)">
+          <div style="padding: 4px 10px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">Table cell: measured periods at L = 0.80 m</div>
+          <div style="padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+            <table style="border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 16px">
+              <thead><tr><th style="border: 2px solid var(--line); padding: 4px 10px; background-color: var(--head); font-family: 'Silkscreen', monospace; font-size: 11px">trial</th><sc-for list="{{trials}}" as="t" hint-placeholder-count="5"><th style="border: 2px solid var(--line); padding: 4px 10px; background-color: var(--head); font-family: 'Silkscreen', monospace; font-size: 11px">{{t.n}}</th></sc-for></tr></thead>
+              <tbody><tr><td style="border: 2px solid var(--line); padding: 4px 10px">T (s)</td><sc-for list="{{trials}}" as="t" hint-placeholder-count="5"><td style="border: 2px solid var(--line); padding: 4px 10px">{{t.v}}</td></sc-for></tr></tbody>
+            </table>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px">mean = <b>1.802 s</b>, model at 0.80 m = <b>1.794 s</b>, error = <b>0.4 %</b></span>
+          </div>
+        </div>
+
+        <div id="graph" style="border: 3px solid var(--line); background-color: var(--card)">
+          <div style="padding: 4px 10px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">Graph cell: T(L) with the current length</div>
+          <svg viewBox="0 0 640 220" role="img" aria-label="Period against length" style="width: 100%; height: auto; display: block">
+            <sc-for list="{{grid}}" as="g" hint-placeholder-count="4"><line x1="50" y1="{{g.y}}" x2="620" y2="{{g.y}}" style="stroke: var(--grid); stroke-width: 1"></line><text x="44" y="{{g.ty}}" font-family="Silkscreen, monospace" font-size="11" text-anchor="end" style="fill: var(--muted)">{{g.label}}</text></sc-for>
+            <line x1="50" y1="200" x2="620" y2="200" style="stroke: var(--ink); stroke-width: 2"></line>
+            <line x1="50" y1="10" x2="50" y2="200" style="stroke: var(--ink); stroke-width: 2"></line>
+            <polyline points="{{curve}}" fill="none" style="stroke: var(--g1); stroke-width: 3"></polyline>
+            <rect x="{{mx}}" y="{{my}}" width="12" height="12" style="fill: var(--sel); stroke: var(--line); stroke-width: 2"></rect>
+            <rect x="{{dx}}" y="{{dy}}" width="10" height="10" style="fill: var(--g2); stroke: var(--line); stroke-width: 2"></rect>
+            <text x="580" y="216" font-family="Silkscreen, monospace" font-size="11" style="fill: var(--muted)">L (m)</text>
+          </svg>
+        </div>
+
+        <div id="code" style="border: 3px solid var(--line); background-color: var(--card)">
+          <div style="display: flex; justify-content: space-between; padding: 4px 10px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px"><span>Code cell (Python, sandboxed)</span><span>ran in 4 ms</span></div>
+          <pre style="margin: 0; padding: 10px 14px; font-family: 'JetBrains Mono', monospace; font-size: 15px; line-height: 1.5; white-space: pre-wrap"><span style="color: var(--g4); font-weight: 700">import</span> calc
+T = calc.get(<span style="color: var(--g1)">"T"</span>)
+<span style="color: var(--g4); font-weight: 700">print</span>(f<span style="color: var(--g1)">"10 swings take {10*T:.1f} s"</span>)</pre>
+          <div style="padding: 8px 14px; border-top: 2px dashed var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 15px">{{codeOut}}</div>
+        </div>
+
+        <h2 id="conclusion" style="margin: 0; font-size: 26px; font-weight: 700">Conclusion</h2>
+        <p style="margin: 0; font-size: 17px; line-height: 1.5">The measured mean is within 0.4 % of the model, so the small-angle approximation holds for our 10° release angle.</p>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  renderVals() {
+    const sc = this.state.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const L = this.state.L ?? 0.8;
+    const g = 9.81;
+    const T = 2 * Math.PI * Math.sqrt(L / g);
+    const px = l => 50 + l / 2 * 570;
+    const py = t => 200 - t / 3 * 190;
+    const curve = []; for (let i = 0; i <= 100; i++) { const l = 2 * i / 100; curve.push(px(l).toFixed(1) + ',' + py(2 * Math.PI * Math.sqrt(l / g)).toFixed(1)); }
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      outline: [{ id: 'intro', label: 'Pendulum lab' }, { id: 'model', label: 'Model' }, { id: 'data', label: 'Measurements' }, { id: 'graph', label: 'Graph' }, { id: 'code', label: 'Code' }, { id: 'conclusion', label: 'Conclusion' }],
+      addButtons: [{ label: 'Text' }, { label: 'Maths' }, { label: 'Graph' }, { label: 'Table' }, { label: 'Code' }],
+      L, Ltext: L.toFixed(2),
+      setL: (e) => this.setState({ L: parseFloat(e.target.value) }),
+      T: T.toFixed(3),
+      trials: [{ n: 1, v: '1.81' }, { n: 2, v: '1.79' }, { n: 3, v: '1.80' }, { n: 4, v: '1.82' }, { n: 5, v: '1.79' }],
+      grid: [1, 2, 3].map(t => ({ y: py(t).toFixed(1), ty: (py(t) + 4).toFixed(1), label: t + ' s' })),
+      curve: curve.join(' '),
+      mx: (px(L) - 6).toFixed(1), my: (py(T) - 6).toFixed(1),
+      dx: (px(0.8) - 5).toFixed(1), dy: (py(1.802) - 5).toFixed(1),
+      codeOut: '10 swings take ' + (10 * T).toFixed(1) + ' s'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Finance mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Finance" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+    <section aria-label="Finance" style="flex: 999 1 640px; min-width: 0; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <div role="tablist" aria-label="Finance tools" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 10px; background-color: var(--key); border-bottom: 4px solid var(--line)">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 40px; padding: 0 12px; border: 2px solid var(--line); box-shadow: 2px 2px 0 0 var(--line); cursor: pointer; background-color: {{t.bg}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{isTvm}}" hint-placeholder-val="{{ true }}">
+        <div style="padding: 16px; display: flex; flex-wrap: wrap; gap: 20px">
+          <div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Time value of money: fill four, solve the fifth</span>
+            <sc-for list="{{fields}}" as="f" hint-placeholder-count="5">
+              <div style="display: grid; grid-template-columns: 90px minmax(0, 1fr) 88px; gap: 8px; align-items: center">
+                <label for="{{f.id}}" style="font-family: 'Silkscreen', monospace; font-size: 13px">{{f.label}}</label>
+                <input id="{{f.id}}" type="text" inputmode="decimal" value="{{f.v}}" onChange="{{f.set}}" style="min-height: 44px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 18px; text-align: right; color: var(--ink); background-color: {{f.bg}}">
+                <button type="button" onClick="{{f.solve}}" style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--ink); background-color: var(--primary); border: 3px solid var(--line); box-shadow: 2px 2px 0 0 var(--line); min-height: 44px; cursor: pointer">Solve</button>
+              </div>
+            </sc-for>
+            <div style="display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 8px; align-items: center">
+              <span style="font-family: 'Silkscreen', monospace; font-size: 13px">P/Y  C/Y</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; border: 3px solid var(--line); background-color: var(--card); padding: 8px 10px">12   12</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 8px; align-items: center">
+              <span style="font-family: 'Silkscreen', monospace; font-size: 13px">Payment</span>
+              <div role="group" aria-label="Payment timing" style="display: flex">
+                <button type="button" onClick="{{setEnd}}" aria-pressed="{{endPressed}}" style="flex: 1; font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 44px; border: 3px solid var(--line); margin-right: -3px; cursor: pointer; background-color: {{endBg}}">End</button>
+                <button type="button" onClick="{{setBegin}}" aria-pressed="{{beginPressed}}" style="flex: 1; font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); min-height: 44px; border: 3px solid var(--line); cursor: pointer; background-color: {{beginBg}}">Begin</button>
+              </div>
+            </div>
+            <div style="font-size: 13px; color: var(--muted)">Money you receive is positive, money you pay is negative (same as TI and Casio).</div>
+          </div>
+          <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 12px">
+            <div style="border: 4px solid var(--line); background-color: var(--sel); padding: 12px 14px">
+              <div style="font-family: 'Silkscreen', monospace; font-size: 12px">{{solvedLabel}}</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700">{{solvedValue}}</div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+              <div style="border: 3px solid var(--line); background-color: var(--card); padding: 8px 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">Total paid</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">{{totalPaid}}</div></div>
+              <div style="border: 3px solid var(--line); background-color: var(--card); padding: 8px 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">Total interest</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700">{{totalInterest}}</div></div>
+            </div>
+            <svg viewBox="0 0 320 150" role="img" aria-label="Remaining balance over the loan" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+              <sc-for list="{{bars}}" as="b" hint-placeholder-count="20"><rect x="{{b.x}}" y="{{b.y}}" width="12" height="{{b.h}}" style="fill: var(--head); stroke: var(--line); stroke-width: 1"></rect></sc-for>
+              <line x1="10" y1="140" x2="310" y2="140" style="stroke: var(--ink); stroke-width: 2"></line>
+              <text x="12" y="14" font-family="Silkscreen, monospace" font-size="10" style="fill: var(--muted)">balance</text>
+            </svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isAmort}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Amortization, first 12 payments</span>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 15px; background-color: var(--card); border: 3px solid var(--line)">
+              <thead><tr style="background-color: var(--head)"><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 11px">#</th><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 11px">Payment</th><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 11px">Interest</th><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 11px">Principal</th><th style="border: 2px solid var(--line); padding: 6px; font-family: 'Silkscreen', monospace; font-size: 11px">Balance</th></tr></thead>
+              <tbody>
+                <sc-for list="{{amort}}" as="a" hint-placeholder-count="12">
+                  <tr><td style="border: 2px solid var(--line); padding: 4px 8px; text-align: right">{{a.n}}</td><td style="border: 2px solid var(--line); padding: 4px 8px; text-align: right">{{a.pmt}}</td><td style="border: 2px solid var(--line); padding: 4px 8px; text-align: right">{{a.int}}</td><td style="border: 2px solid var(--line); padding: 4px 8px; text-align: right">{{a.prn}}</td><td style="border: 2px solid var(--line); padding: 4px 8px; text-align: right">{{a.bal}}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size: 13px; color: var(--muted)">Uses the loan from the TVM tab. Export the full schedule to CSV or a spreadsheet.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isCash}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Cash flows</span>
+            <sc-for list="{{flows}}" as="c" hint-placeholder-count="5">
+              <label style="display: flex; flex-direction: column; gap: 2px; font-family: 'Silkscreen', monospace; font-size: 10px">{{c.label}}
+                <input type="text" inputmode="decimal" value="{{c.v}}" onChange="{{c.set}}" style="width: 90px; min-height: 44px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 16px; text-align: right; background-color: var(--card); color: var(--ink)">
+              </label>
+            </sc-for>
+            <label style="display: flex; flex-direction: column; gap: 2px; font-family: 'Silkscreen', monospace; font-size: 10px">rate %
+              <input type="text" inputmode="decimal" value="{{rate}}" onChange="{{setRate}}" style="width: 70px; min-height: 44px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 16px; text-align: right; background-color: var(--card); color: var(--ink)">
+            </label>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+            <div style="border: 3px solid var(--line); background-color: var(--sel); padding: 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">NPV</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">{{npv}}</div></div>
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">IRR</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">{{irr}}</div></div>
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">Payback</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">{{payback}}</div></div>
+          </div>
+          <svg viewBox="0 0 640 160" role="img" aria-label="Cash flow bars" style="width: 100%; height: auto; display: block; background-color: var(--card); border: 2px solid var(--line)">
+            <line x1="20" y1="80" x2="620" y2="80" style="stroke: var(--ink); stroke-width: 2"></line>
+            <sc-for list="{{flowBars}}" as="b" hint-placeholder-count="5"><rect x="{{b.x}}" y="{{b.y}}" width="60" height="{{b.h}}" style="fill: {{b.fill}}; stroke: var(--line); stroke-width: 2"></rect></sc-for>
+          </svg>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isInterest}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px; font-size: 16px">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Nominal and effective rates</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 20px">
+            <span style="border: 3px solid var(--line); background-color: var(--card); padding: 8px 12px">6 %</span>
+            <span>nominal, compounded</span>
+            <span style="border: 3px solid var(--line); background-color: var(--card); padding: 8px 12px">12</span>
+            <span>times a year</span>
+            <span>=</span>
+            <span style="border: 3px solid var(--line); background-color: var(--sel); padding: 8px 12px; font-weight: 700">6.1678 % effective</span>
+          </div>
+          <div style="color: var(--muted)">Also here: simple and compound interest, days between dates (actual and 30/360), depreciation and bonds.</div>
+        </div>
+      </sc-if>
+    </section>
+
+    <aside aria-label="Finance cards" style="flex: 1 1 280px; max-width: 340px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--ok); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Cards</h2>
+      <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+          <article style="border: 3px solid var(--line); background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="padding: 4px 8px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">#{{c.n}}  {{c.title}}</div>
+            <div style="padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 15px; white-space: pre-line">{{c.text}}</div>
+          </article>
+        </sc-for>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: 'TVM', begin: false, solved: 'PMT',
+      t: { N: '60', I: '4.5', PV: '20000', PMT: '', FV: '0' },
+      flows: ['-1000', '300', '400', '500', '200'], rate: '8',
+      cards: [
+        { title: 'TVM: PMT', text: 'N = 60, I% = 4.5, PV = 20000\nPMT = -372.86' },
+        { title: 'IRR', text: 'CF: -1000, 300, 400, 500, 200\nIRR = 15.24 %' }
+      ]
+    };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  money(v) { if (!Number.isFinite(v)) return '?'; const s = Math.abs(v).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); return (v < 0 ? '-' : '') + s; }
+  rate(I) { return I / 100 / 12; }
+  residual(N, I, PV, PMT, FV, G) {
+    const i = this.rate(I);
+    if (i === 0) return PV + PMT * N + FV;
+    const f = Math.pow(1 + i, N);
+    return PV * f + PMT * (1 + i * G) * (f - 1) / i + FV;
+  }
+  solve(key) {
+    const s = this.state, t = s.t, G = s.begin ? 1 : 0;
+    const v = k => parseFloat(t[k]);
+    let N = v('N'), I = v('I'), PV = v('PV'), PMT = v('PMT'), FV = v('FV');
+    const i = this.rate(I);
+    let out;
+    if (key === 'PMT') { const f = Math.pow(1 + i, N); out = i === 0 ? -(PV + FV) / N : -(PV * f + FV) * i / ((1 + i * G) * (f - 1)); }
+    else if (key === 'FV') { const f = Math.pow(1 + i, N); out = i === 0 ? -(PV + PMT * N) : -(PV * f + PMT * (1 + i * G) * (f - 1) / i); }
+    else if (key === 'PV') { const f = Math.pow(1 + i, N); out = i === 0 ? -(FV + PMT * N) : -(FV + PMT * (1 + i * G) * (f - 1) / i) / f; }
+    else if (key === 'N') { const a = PMT * (1 + i * G) / i; out = Math.log((a - FV) / (a + PV)) / Math.log(1 + i); }
+    else if (key === 'I') {
+      let lo = 1e-9, hi = 200, flo = this.residual(N, lo, PV, PMT, FV, G);
+      for (let k = 0; k < 200; k++) { const mid = (lo + hi) / 2, fm = this.residual(N, mid, PV, PMT, FV, G); if (flo * fm <= 0) hi = mid; else { lo = mid; flo = fm; } }
+      out = (lo + hi) / 2;
+    }
+    const shown = key === 'N' ? String(Number(out.toFixed(4))) : key === 'I' ? String(Number(out.toFixed(6))) : String(Number(out.toFixed(2)));
+    const label = { N: 'N', I: 'I%', PV: 'PV', PMT: 'PMT', FV: 'FV' }[key];
+    const card = { title: 'TVM: ' + label, text: Object.entries({ ...t, [key]: shown }).map(([k, x]) => (k === 'I' ? 'I%' : k) + ' = ' + x).join(', ') };
+    this.setState({ t: { ...t, [key]: shown }, solved: key, cards: [card, ...s.cards] });
+  }
+  renderVals() {
+    const s = this.state, t = s.t, G = s.begin ? 1 : 0;
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const N = parseFloat(t.N), I = parseFloat(t.I), PV = parseFloat(t.PV), FV = parseFloat(t.FV);
+    const i = this.rate(I);
+    let PMT = parseFloat(t.PMT);
+    if (!Number.isFinite(PMT)) { const f = Math.pow(1 + i, N); PMT = i === 0 ? -(PV + FV) / N : -(PV * f + FV) * i / ((1 + i * G) * (f - 1)); }
+    const sched = [];
+    let bal = PV;
+    for (let k = 1; k <= Math.min(N, 600); k++) {
+      const int = -bal * i;
+      const prn = PMT - int;
+      bal = bal + PMT + bal * i;
+      sched.push({ n: k, pmt: this.money(PMT), int: this.money(int), prn: this.money(prn), bal: this.money(bal), raw: bal });
+    }
+    const totalPaid = PMT * N;
+    const totalInterest = -(totalPaid + PV + FV);
+    const step = Math.max(1, Math.ceil(N / 20));
+    const bars = [];
+    for (let k = 0; k < 20 && k * step < sched.length; k++) {
+      const b = k === 0 ? PV : sched[k * step - 1].raw;
+      const h = Math.max(0, b / PV * 120);
+      bars.push({ x: (14 + k * 14.8).toFixed(1), y: (140 - h).toFixed(1), h: h.toFixed(1) });
+    }
+    const fl = s.flows.map(v => parseFloat(v) || 0);
+    const r = (parseFloat(s.rate) || 0) / 100;
+    const npvAt = rr => fl.reduce((acc, c, k) => acc + c / Math.pow(1 + rr, k), 0);
+    let lo = -0.99, hi = 10;
+    for (let k = 0; k < 200; k++) { const mid = (lo + hi) / 2; if (npvAt(lo) * npvAt(mid) <= 0) hi = mid; else lo = mid; }
+    let cum = 0, payback = 'never';
+    for (let k = 0; k < fl.length; k++) { const prev = cum; cum += fl[k]; if (prev < 0 && cum >= 0) { payback = (k - 1 + (-prev / fl[k])).toFixed(2) + ' years'; break; } }
+    const maxAbs = Math.max(...fl.map(Math.abs), 1);
+    const fields = [['N', 'N', 'number of payments'], ['I', 'I%', 'interest per year'], ['PV', 'PV', 'present value'], ['PMT', 'PMT', 'payment'], ['FV', 'FV', 'future value']];
+    const tabs = ['TVM', 'Amortization', 'Cash flow', 'Interest'];
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      tabs: tabs.map(x => ({ label: x, selected: x === s.tab ? 'true' : 'false', bg: x === s.tab ? 'var(--sel)' : 'var(--paper)', pick: () => this.setState({ tab: x }) })),
+      isTvm: s.tab === 'TVM', isAmort: s.tab === 'Amortization', isCash: s.tab === 'Cash flow', isInterest: s.tab === 'Interest',
+      fields: fields.map(([key, label]) => ({ id: 'tvm-' + key, label, v: key === 'PMT' && t.PMT === '' ? String(Number(PMT.toFixed(2))) : t[key], bg: key === s.solved ? 'var(--sel)' : 'var(--card)', set: (e) => this.setState({ t: { ...t, [key]: e.target.value } }), solve: () => this.solve(key) })),
+      solvedLabel: 'Solved: ' + ({ N: 'N', I: 'I%', PV: 'PV', PMT: 'PMT (per month)', FV: 'FV' }[s.solved]),
+      solvedValue: s.solved === 'PMT' ? this.money(PMT) : t[s.solved],
+      totalPaid: this.money(totalPaid), totalInterest: this.money(totalInterest),
+      bars,
+      endPressed: s.begin ? 'false' : 'true', beginPressed: s.begin ? 'true' : 'false',
+      endBg: s.begin ? 'var(--card)' : 'var(--sel)', beginBg: s.begin ? 'var(--sel)' : 'var(--card)',
+      setEnd: () => this.setState({ begin: false }), setBegin: () => this.setState({ begin: true }),
+      amort: sched.slice(0, 12),
+      flows: s.flows.map((v, k) => ({ v, label: 'CF' + k, set: (e) => { const a = [...s.flows]; a[k] = e.target.value; this.setState({ flows: a }); } })),
+      rate: s.rate, setRate: (e) => this.setState({ rate: e.target.value }),
+      npv: this.money(npvAt(r)), irr: ((lo + hi) / 2 * 100).toFixed(2) + ' %', payback,
+      flowBars: fl.map((c, k) => { const h = Math.abs(c) / maxAbs * 70; return { x: (40 + k * 115).toFixed(1), y: (c >= 0 ? 80 - h : 80).toFixed(1), h: h.toFixed(1), fill: c >= 0 ? 'var(--ok)' : 'var(--mem)' }; }),
+      cards: s.cards.map((c, k) => ({ ...c, n: s.cards.length - k }))
+    };
+  }
+}
+</script>
+</body>
+</html>

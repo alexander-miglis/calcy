@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy Convert mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Convert" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; box-sizing: border-box; align-items: flex-start">
+
+    <nav aria-label="Categories" style="flex: 1 1 200px; max-width: 220px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Convert</h2>
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="12">
+        <button type="button" onClick="{{c.pick}}" aria-pressed="{{c.pressed}}" style="display: block; width: 100%; text-align: left; padding: 10px 14px; min-height: 44px; border: 0; border-bottom: 2px solid var(--key); cursor: pointer; font-family: 'Pixelify Sans', monospace; font-size: 17px; color: var(--ink); background-color: {{c.bg}}">{{c.label}}</button>
+      </sc-for>
+    </nav>
+
+    <section aria-label="Converter" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <sc-if value="{{isUnits}}" hint-placeholder-val="{{ true }}">
+        <div style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); padding: 18px; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 14px; align-items: end">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="from-val" style="font-family: 'Silkscreen', monospace; font-size: 12px">From</label>
+              <input id="from-val" type="text" inputmode="decimal" value="{{value}}" onChange="{{setValue}}" onInput="{{setValue}}" style="min-height: 56px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 28px; background-color: var(--card); color: var(--ink)">
+              <select aria-label="From unit" onChange="{{setFrom}}" value="{{from}}" style="min-height: 44px; border: 3px solid var(--line); padding: 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 16px; background-color: var(--card); color: var(--ink)">
+                <sc-for list="{{units}}" as="u" hint-placeholder-count="8"><option value="{{u.id}}">{{u.label}}</option></sc-for>
+              </select>
+            </div>
+            <button type="button" onClick="{{swap}}" aria-label="Swap units" style="width: 52px; height: 52px; margin-bottom: 52px; border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); background-color: var(--sel); color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center">
+              <svg width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 4h10v2H2z M10 2h2v2h-2z M12 4h2v2h-2z M10 6h2v2h-2z M4 10h10v2H4z M4 8h2v2H4z M2 10h2v2H2z M4 12h2v2H4z"/></svg>
+            </button>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <span style="font-family: 'Silkscreen', monospace; font-size: 12px">To</span>
+              <div aria-live="polite" style="min-height: 56px; box-sizing: border-box; border: 4px solid var(--line); padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; background-color: var(--sel); display: flex; align-items: center; overflow-wrap: anywhere">{{result}}</div>
+              <select aria-label="To unit" onChange="{{setTo}}" value="{{to}}" style="min-height: 44px; border: 3px solid var(--line); padding: 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 16px; background-color: var(--card); color: var(--ink)">
+                <sc-for list="{{units}}" as="u" hint-placeholder-count="8"><option value="{{u.id}}">{{u.label}}</option></sc-for>
+              </select>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--muted)">{{formula}}</span>
+            <button type="button" onClick="{{saveCard}}" style="font-family: 'Silkscreen', monospace; font-size: 12px; color: var(--ink); background-color: var(--primary); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line); min-height: 44px; padding: 0 14px; cursor: pointer">Save as card</button>
+          </div>
+        </div>
+        <div style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+          <h3 style="margin: 0; padding: 8px 14px; background-color: var(--key); border-bottom: 3px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 12px">{{value}} {{fromLabel}} in every unit</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0">
+            <sc-for list="{{allUnits}}" as="a" hint-placeholder-count="9">
+              <button type="button" onClick="{{a.pick}}" style="display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 8px 12px; min-height: 56px; border: 0; border-right: 2px solid var(--key); border-bottom: 2px solid var(--key); cursor: pointer; color: var(--ink); background-color: {{a.bg}}">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; overflow-wrap: anywhere">{{a.value}}</span>
+                <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: var(--muted)">{{a.label}}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isDate}}" hint-placeholder-val="{{ false }}">
+        <div style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); padding: 18px; display: flex; flex-direction: column; gap: 16px">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Days between dates</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: end">
+            <label style="display: flex; flex-direction: column; gap: 4px; font-family: 'Silkscreen', monospace; font-size: 11px">From
+              <input type="date" value="{{d1}}" onChange="{{setD1}}" style="min-height: 48px; border: 3px solid var(--line); padding: 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 17px; background-color: var(--card); color: var(--ink)">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-family: 'Silkscreen', monospace; font-size: 11px">To
+              <input type="date" value="{{d2}}" onChange="{{setD2}}" style="min-height: 48px; border: 3px solid var(--line); padding: 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 17px; background-color: var(--card); color: var(--ink)">
+            </label>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+            <div style="border: 3px solid var(--line); background-color: var(--sel); padding: 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">Days</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700">{{days}}</div></div>
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">Weeks + days</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">{{weeks}}</div></div>
+            <div style="border: 3px solid var(--line); background-color: var(--card); padding: 10px"><div style="font-family: 'Silkscreen', monospace; font-size: 11px">Weekdays</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700">{{workdays}}</div></div>
+          </div>
+          <span style="font-family: 'Silkscreen', monospace; font-size: 12px">Add or subtract days</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 18px">
+            <span>{{d1}} +</span>
+            <input type="text" inputmode="numeric" aria-label="Days to add" value="{{addDays}}" onChange="{{setAdd}}" style="width: 80px; min-height: 44px; border: 3px solid var(--line); padding: 0 8px; font-family: 'JetBrains Mono', monospace; font-size: 18px; text-align: right; background-color: var(--card); color: var(--ink)">
+            <span>days =</span>
+            <span style="border: 3px solid var(--line); background-color: var(--sel); padding: 8px 12px; font-weight: 700">{{added}}</span>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <aside aria-label="Conversion cards" style="flex: 1 1 260px; max-width: 320px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+      <h2 style="margin: 0; padding: 10px 14px; background-color: var(--key); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Cards</h2>
+      <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+          <article style="border: 3px solid var(--line); background-color: var(--card); box-shadow: 3px 3px 0 0 var(--line)">
+            <div style="padding: 4px 8px; background-color: var(--key); border-bottom: 2px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 11px">#{{c.n}}  {{c.cat}}</div>
+            <div style="padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 15px">{{c.text}}</div>
+          </article>
+        </sc-for>
+        <div style="font-size: 13px; color: var(--muted)">Units also work inline anywhere: 3 km/h · 2 h = 6 km.</div>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cat: 'Length', value: '5', from: 'km', to: 'mi', d1: '2026-10-13', d2: '2026-12-25', addDays: '100',
+      cards: [
+        { cat: 'Temperature', text: '100 °C = 212 °F' },
+        { cat: 'Data', text: '1 GiB = 1.073741824 GB' },
+        { cat: 'Speed', text: '100 km/h = 62.13711922 mph' }
+      ]
+    };
+  }
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  tables() {
+    return {
+      Length: [['mm', 'millimetre', 1e-3], ['cm', 'centimetre', 1e-2], ['m', 'metre', 1], ['km', 'kilometre', 1e3], ['in', 'inch', 0.0254], ['ft', 'foot', 0.3048], ['yd', 'yard', 0.9144], ['mi', 'mile', 1609.344], ['nmi', 'nautical mile', 1852]],
+      Area: [['mm²', 'square millimetre', 1e-6], ['cm²', 'square centimetre', 1e-4], ['m²', 'square metre', 1], ['ha', 'hectare', 1e4], ['km²', 'square kilometre', 1e6], ['in²', 'square inch', 0.00064516], ['ft²', 'square foot', 0.09290304], ['acre', 'acre', 4046.8564224], ['mi²', 'square mile', 2589988.110336]],
+      Volume: [['mL', 'millilitre', 1e-6], ['L', 'litre', 1e-3], ['m³', 'cubic metre', 1], ['tsp', 'teaspoon (US)', 4.92892159375e-6], ['tbsp', 'tablespoon (US)', 1.478676478125e-5], ['cup', 'cup (US)', 2.365882365e-4], ['fl oz', 'fluid ounce (US)', 2.95735295625e-5], ['gal', 'gallon (US)', 3.785411784e-3], ['gal UK', 'gallon (UK)', 4.54609e-3]],
+      Mass: [['mg', 'milligram', 1e-6], ['g', 'gram', 1e-3], ['kg', 'kilogram', 1], ['t', 'tonne', 1e3], ['oz', 'ounce', 0.028349523125], ['lb', 'pound', 0.45359237], ['st', 'stone', 6.35029318]],
+      Time: [['ms', 'millisecond', 1e-3], ['s', 'second', 1], ['min', 'minute', 60], ['h', 'hour', 3600], ['day', 'day', 86400], ['week', 'week', 604800], ['year', 'year (365.25 d)', 31557600]],
+      Speed: [['m/s', 'metre per second', 1], ['km/h', 'kilometre per hour', 1 / 3.6], ['mph', 'mile per hour', 0.44704], ['kn', 'knot', 1852 / 3600], ['ft/s', 'foot per second', 0.3048], ['c', 'speed of light', 299792458]],
+      Temperature: [['°C', 'degree Celsius', 0], ['°F', 'degree Fahrenheit', 0], ['K', 'kelvin', 0]],
+      Energy: [['J', 'joule', 1], ['kJ', 'kilojoule', 1e3], ['cal', 'calorie', 4.184], ['kcal', 'kilocalorie', 4184], ['Wh', 'watt hour', 3600], ['kWh', 'kilowatt hour', 3.6e6], ['eV', 'electronvolt', 1.602176634e-19], ['BTU', 'BTU', 1055.05585262]],
+      Pressure: [['Pa', 'pascal', 1], ['kPa', 'kilopascal', 1e3], ['bar', 'bar', 1e5], ['atm', 'atmosphere', 101325], ['mmHg', 'millimetre of mercury', 133.322387415], ['psi', 'pound per square inch', 6894.757293168]],
+      Data: [['bit', 'bit', 0.125], ['B', 'byte', 1], ['KB', 'kilobyte', 1e3], ['KiB', 'kibibyte', 1024], ['MB', 'megabyte', 1e6], ['MiB', 'mebibyte', 1048576], ['GB', 'gigabyte', 1e9], ['GiB', 'gibibyte', 1073741824], ['TB', 'terabyte', 1e12]],
+      Angle: [['°', 'degree', Math.PI / 180], ['rad', 'radian', 1], ['grad', 'gradian', Math.PI / 200], ['turn', 'turn', 2 * Math.PI], ['′', 'arcminute', Math.PI / 10800], ['″', 'arcsecond', Math.PI / 648000]]
+    };
+  }
+  toBase(cat, unit, v) {
+    if (cat === 'Temperature') return unit === '°C' ? v + 273.15 : unit === '°F' ? (v - 32) * 5 / 9 + 273.15 : v;
+    const u = this.tables()[cat].find(x => x[0] === unit);
+    return v * u[2];
+  }
+  fromBase(cat, unit, k) {
+    if (cat === 'Temperature') return unit === '°C' ? k - 273.15 : unit === '°F' ? (k - 273.15) * 9 / 5 + 32 : k;
+    const u = this.tables()[cat].find(x => x[0] === unit);
+    return k / u[2];
+  }
+  fmt(x) {
+    if (!Number.isFinite(x)) return '?';
+    if (x === 0) return '0';
+    const a = Math.abs(x);
+    if (a >= 1e12 || a < 1e-6) return x.toExponential(8).replace(/\.?0+e/, 'e');
+    return String(Number(x.toPrecision(10)));
+  }
+  renderVals() {
+    const s = this.state;
+    const sc = s.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const T = this.tables();
+    const cats = [...Object.keys(T), 'Dates'];
+    const isDate = s.cat === 'Dates';
+    const list = isDate ? T.Length : T[s.cat];
+    const from = list.some(u => u[0] === s.from) ? s.from : list[0][0];
+    const to = list.some(u => u[0] === s.to) ? s.to : list[Math.min(1, list.length - 1)][0];
+    const v = parseFloat(s.value);
+    const cat = isDate ? 'Length' : s.cat;
+    const base = this.toBase(cat, from, v);
+    const result = this.fromBase(cat, to, base);
+    const label = id => (list.find(u => u[0] === id) || [id, id])[1];
+    const one = this.fromBase(cat, to, this.toBase(cat, from, 1));
+    const formula = cat === 'Temperature'
+      ? (from === '°C' && to === '°F' ? '°F = °C × 9/5 + 32' : from === '°F' && to === '°C' ? '°C = (°F − 32) × 5/9' : 'K = °C + 273.15')
+      : '1 ' + from + ' = ' + this.fmt(one) + ' ' + to;
+    const d1 = new Date(s.d1 + 'T00:00:00Z'), d2 = new Date(s.d2 + 'T00:00:00Z');
+    const days = Math.round((d2 - d1) / 86400000);
+    let work = 0;
+    if (Number.isFinite(days)) { const step = days >= 0 ? 1 : -1; for (let k = 0; k !== days; k += step) { const d = new Date(d1.getTime() + k * 86400000); const wd = d.getUTCDay(); if (wd !== 0 && wd !== 6) work++; } }
+    const add = parseInt(s.addDays, 10) || 0;
+    const added = new Date(d1.getTime() + add * 86400000);
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      cats: cats.map(c => ({ label: c, pressed: c === s.cat ? 'true' : 'false', bg: c === s.cat ? 'var(--sel)' : 'var(--paper)', pick: () => { const l = c === 'Dates' ? T.Length : T[c]; this.setState({ cat: c, from: l[0][0], to: l[Math.min(1, l.length - 1)][0] }); } })),
+      isUnits: !isDate, isDate,
+      units: list.map(u => ({ id: u[0], label: u[0] + '  ' + u[1] })),
+      value: s.value, setValue: (e) => this.setState({ value: e.target.value }),
+      from, to,
+      setFrom: (e) => this.setState({ from: e.target.value }), setTo: (e) => this.setState({ to: e.target.value }),
+      swap: () => this.setState({ from: to, to: from }),
+      result: this.fmt(result) + ' ' + to,
+      fromLabel: label(from),
+      formula,
+      allUnits: list.map(u => ({ value: this.fmt(this.fromBase(cat, u[0], base)) + ' ' + u[0], label: u[1], bg: u[0] === to ? 'var(--sel)' : 'var(--card)', pick: () => this.setState({ to: u[0] }) })),
+      saveCard: () => this.setState({ cards: [{ cat: s.cat, text: s.value + ' ' + from + ' = ' + this.fmt(result) + ' ' + to }, ...s.cards] }),
+      d1: s.d1, d2: s.d2, setD1: (e) => this.setState({ d1: e.target.value }), setD2: (e) => this.setState({ d2: e.target.value }),
+      days: Number.isFinite(days) ? String(days) : '?',
+      weeks: Number.isFinite(days) ? Math.trunc(days / 7) + ' w ' + (Math.abs(days) % 7) + ' d' : '?',
+      workdays: String(work),
+      addDays: s.addDays, setAdd: (e) => this.setState({ addDays: e.target.value }),
+      added: isNaN(added) ? '?' : added.toISOString().slice(0, 10) + ' (' + dayNames[added.getUTCDay()] + ')',
+      cards: s.cards.map((c, k) => ({ ...c, n: s.cards.length - k }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+Package: calcy
+Version: $(VERSION)
+Section: math
+Priority: optional
+Architecture: $(ARCH)
+Installed-Size: $(SIZE_KB)
+Depends: libc6 (>= 2.31), libgcc-s1, libstdc++6, zlib1g, libicu76 | libicu75 | libicu74 | libicu73 | libicu72 | libicu71 | libicu70 | libicu67, libfontconfig1, libfreetype6, libx11-6, libxext6, libxrandr2, libxi6, libxcursor1, libice6, libsm6
+Recommends: fonts-dejavu-core
+Maintainer: alexander-miglis <alexander-miglis@users.noreply.github.com>
+Homepage: https://github.com/alexander-miglis/calcy
+Description: 8-bit graphing calculator with exact maths
+ Calcy is a desktop graphing calculator: exact arithmetic, a computer algebra
+ system, graphing, statistics, matrices, finance, unit conversion, a formula
+ collection, notebooks and a sandboxed Python interpreter. It also installs
+ calcy-cli, a terminal calculator and MCP server for AI assistants.

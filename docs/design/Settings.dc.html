@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calcy settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Pixelify+Sans:wght@400;600;700&amp;family=Silkscreen:wght@400;700&amp;family=VT323&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 880px; box-sizing: border-box; display: flex; flex-direction: column; font-family: 'Pixelify Sans', monospace; color: var(--on-ground); background-color: var(--ground); background-image: repeating-conic-gradient(var(--ground2) 0% 25%, var(--ground) 0% 50%); background-size: 8px 8px">
+  <dc-import name="TopBar" mode="Advanced" scheme="{{scheme}}" on-scheme="{{setScheme}}" preview-open="{{closed}}" hint-size="100%,68px"></dc-import>
+  <main style="flex: 1; display: flex; flex-wrap: wrap; gap: 24px; padding: 24px; box-sizing: border-box; align-items: flex-start">
+    <nav aria-label="Settings sections" style="flex: 1 1 240px; max-width: 280px; background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line); display: flex; flex-direction: column">
+      <div style="padding: 10px 14px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px; font-weight: 700">Settings</div>
+      <sc-for list="{{sections}}" as="s" hint-placeholder-count="8">
+        <a href="#{{s.id}}" style="display: block; padding: 12px 14px; min-height: 44px; box-sizing: border-box; text-decoration: none; font-size: 17px; color: var(--ink); border-bottom: 2px solid var(--key); background-color: {{s.bg}}">{{s.label}}</a>
+      </sc-for>
+      <a href="Advanced.dc.html" style="display: block; margin: 12px; padding: 10px 12px; text-align: center; text-decoration: none; font-family: 'Silkscreen', monospace; font-size: 13px; color: var(--ink); background-color: var(--primary); border: 3px solid var(--line); box-shadow: 3px 3px 0 0 var(--line)">Back to calculator</a>
+    </nav>
+
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+      <section id="results" style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+        <h2 style="margin: 0; padding: 10px 16px; background-color: var(--sel); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 15px">Results and input</h2>
+        <div style="padding: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px">
+          <fieldset style="margin: 0; border: 3px solid var(--line); padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+            <legend style="font-family: 'Silkscreen', monospace; font-size: 13px; padding: 0 6px">Decimals in sums show as</legend>
+            <sc-for list="{{decOptions}}" as="o" hint-placeholder-count="2">
+              <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 16px; min-height: 44px; cursor: pointer">
+                <input type="radio" name="dec" checked="{{o.checked}}" onChange="{{o.pick}}" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ink)">
+                <span style="display: flex; flex-direction: column; gap: 2px"><span>{{o.label}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted)">{{o.example}}</span></span>
+              </label>
+            </sc-for>
+          </fieldset>
+          <fieldset style="margin: 0; border: 3px solid var(--line); padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+            <legend style="font-family: 'Silkscreen', monospace; font-size: 13px; padding: 0 6px">1/2x means</legend>
+            <sc-for list="{{implicitOptions}}" as="o" hint-placeholder-count="2">
+              <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 16px; min-height: 44px; cursor: pointer">
+                <input type="radio" name="implicit" checked="{{o.checked}}" onChange="{{o.pick}}" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ink)">
+                <span style="display: flex; flex-direction: column; gap: 2px"><span>{{o.label}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted)">{{o.example}}</span></span>
+              </label>
+            </sc-for>
+          </fieldset>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 13px">Angle unit</span>
+            <div role="group" aria-label="Angle unit" style="display: flex">
+              <sc-for list="{{angles}}" as="a" hint-placeholder-count="3">
+                <button type="button" onClick="{{a.pick}}" aria-pressed="{{a.pressed}}" style="flex: 1; font-family: 'Silkscreen', monospace; font-size: 13px; color: var(--ink); min-height: 44px; border: 3px solid var(--line); margin-right: -3px; background-color: {{a.bg}}">{{a.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 13px">Number format</span>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap">
+              <select aria-label="Format" style="font-family: 'Silkscreen', monospace; font-size: 13px; min-height: 44px; border: 3px solid var(--line); background-color: var(--card); color: var(--ink); padding: 0 10px">
+                <option>Float</option><option>Fix</option><option>Sci</option><option>Eng</option>
+              </select>
+              <label for="digits" style="font-size: 15px">digits</label>
+              <input id="digits" type="number" value="10" min="1" max="30" style="width: 72px; font-family: 'JetBrains Mono', monospace; font-size: 16px; min-height: 44px; box-sizing: border-box; border: 3px solid var(--line); padding: 0 8px; background-color: var(--card); color: var(--ink)">
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 13px">Complex results</span>
+            <select aria-label="Complex results" style="font-family: 'Silkscreen', monospace; font-size: 13px; min-height: 44px; border: 3px solid var(--line); background-color: var(--card); color: var(--ink); padding: 0 10px">
+              <option>Auto: cube roots stay real, √-4 = 2i</option><option>Real only: show an error</option><option>Always a + bi</option><option>Polar r∠θ</option>
+            </select>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+            <span style="font-family: 'Silkscreen', monospace; font-size: 13px">Fixed rules</span>
+            <span><b style="font-family: 'JetBrains Mono', monospace">log</b> is base 10, <b style="font-family: 'JetBrains Mono', monospace">ln</b> is natural</span>
+            <span><b style="font-family: 'JetBrains Mono', monospace">ax</b> is a·x, <b style="font-family: 'JetBrains Mono', monospace">a = 5</b> defines a</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="look" style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+        <h2 style="margin: 0; padding: 10px 16px; background-color: var(--head); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Look and sound</h2>
+        <div style="padding: 14px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+          <div role="radiogroup" aria-label="Colour scheme" style="flex: 999 1 520px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+            <sc-for list="{{schemes}}" as="t" hint-placeholder-count="8">
+              <button type="button" role="radio" aria-checked="{{t.pressed}}" onClick="{{t.pick}}" style="display: flex; flex-direction: column; gap: 6px; align-items: stretch; padding: 6px; border: 3px solid var(--line); cursor: pointer; color: var(--ink); background-color: {{t.ring}}">
+                <span style="height: 34px; border: 2px solid var(--line); background-color: {{t.ground}}; display: flex; align-items: center; justify-content: center; gap: 4px">
+                  <span style="width: 34%; height: 16px; background-color: {{t.paper}}; border: 2px solid {{t.line}}"></span>
+                  <span style="width: 14px; height: 16px; background-color: {{t.sel}}; border: 2px solid {{t.line}}"></span>
+                  <span style="width: 14px; height: 16px; background-color: {{t.primary}}; border: 2px solid {{t.line}}"></span>
+                </span>
+                <span style="font-family: 'Silkscreen', monospace; font-size: 11px">{{t.name}}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px">
+            <label style="display: flex; justify-content: space-between; align-items: center; font-size: 15px; min-height: 44px">8-bit key sounds
+              <input type="checkbox" style="width: 22px; height: 22px; accent-color: var(--ink)">
+            </label>
+            <label style="display: flex; justify-content: space-between; align-items: center; font-size: 15px; min-height: 44px">Dither background
+              <input type="checkbox" checked="{{ true }}" style="width: 22px; height: 22px; accent-color: var(--ink)">
+            </label>
+            <label style="display: flex; justify-content: space-between; align-items: center; font-size: 15px; min-height: 44px">UI size
+              <input type="range" min="75" max="200" value="100" style="width: 120px; accent-color: var(--ink)">
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+        <section id="sandbox" style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+          <h2 style="margin: 0; padding: 10px 16px; background-color: var(--ok); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">Code sandbox</h2>
+          <div style="padding: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+            <span>No files, network or system access. Ever.</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; min-height: 40px">Stop after
+              <span style="font-family: 'JetBrains Mono', monospace; border: 3px solid var(--line); padding: 6px 10px; background-color: var(--card)">10 s</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; min-height: 40px">Max steps
+              <span style="font-family: 'JetBrains Mono', monospace; border: 3px solid var(--line); padding: 6px 10px; background-color: var(--card)">50,000,000</span>
+            </div>
+          </div>
+        </section>
+        <section id="ai" style="background-color: var(--paper); color: var(--ink); border: 4px solid var(--line); box-shadow: 6px 6px 0 0 var(--line)">
+          <h2 style="margin: 0; padding: 10px 16px; background-color: var(--mem); border-bottom: 4px solid var(--line); font-family: 'Silkscreen', monospace; font-size: 14px">AI connections (MCP)</h2>
+          <div style="padding: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+            <label style="display: flex; justify-content: space-between; align-items: center; min-height: 44px">Let AI apps use Calcy
+              <input type="checkbox" style="width: 22px; height: 22px; accent-color: var(--ink)">
+            </label>
+            <span style="font-size: 13px; color: var(--muted)">Off by default. When on, AI apps on this computer can solve and plot with Calcy. Each tool asks first unless you allow it.</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"scheme":{"editor":"enum","default":"nes","options":["nes","pico","gameboy","c64","amber","paper","mono","synth"]},"$preview":{"width":1360,"height":880}}'>
+class Component extends DCLogic {
+  schemeList() {
+    return {
+      nes: ['NES Classic', '#1C1C1C #262626 #FCFCFC #000000 #FCFCFC #F83800 #FCFCFC #FFFFFF #000000 #595959 #000000 #3CBCFC #F8B800 #F83800 #BCBCBC #F878F8 #58D854 #D82800 #000000 #FCFCFC #BCBCBC #000000 #A4A4A4 #E4E4E4 #0058F8 #D82800 #00A800 #6844FC #AC7C00'],
+      pico: ['Pico Night', '#1D2B53 #22325F #FFF1E8 #000000 #FFF1E8 #29ADFF #FFF1E8 #FFFFFF #1D2B53 #5F574F #000000 #29ADFF #FFEC27 #FFA300 #C2C3C7 #FF77A8 #00E436 #FF004D #1D2B53 #FFF1E8 #9BBC0F #0F380F #8BAC0F #E5D7CC #1E5AC8 #FF004D #008751 #7E2553 #AB5236'],
+      gameboy: ['Game Boy', '#0F380F #133F13 #9BBC0F #0F380F #9BBC0F #8BAC0F #9BBC0F #CADC9F #0F380F #1B431B #0F380F #8BAC0F #E0F8D0 #CADC9F #A8C46A #C8E0A0 #B4D27A #0F380F #0F380F #9BBC0F #9BBC0F #0F380F #8BAC0F #B5C97A #0F380F #306230 #5A7D1A #1E4D1E #6E5A12'],
+      c64: ['C64 Blue', '#352879 #3D2F88 #C9C3F5 #20165C #C9C3F5 #6C5EB5 #C9C3F5 #E6E2FF #20165C #463B8E #20165C #9A8EE0 #EEEE77 #DD8855 #ADADAD #E0A3D8 #AAFF66 #883932 #352879 #FFFFFF #6C5EB5 #FFFFFF #5A4CA6 #D6D1F7 #40318D #883932 #3E7A33 #8B3F96 #9C6A20'],
+      amber: ['Amber CRT', '#0A0700 #140E00 #FFB000 #000000 #FFB000 #FFB000 #1A1200 #241A02 #FFB000 #C98A00 #A06E00 #3D2A00 #644500 #573C00 #2E2100 #4A2B10 #2F3A00 #FF5A1F #0A0700 #FFB000 #1A1200 #FFB000 #120D00 #3A2A00 #FFB000 #FF6A00 #FFE08A #D98E04 #FFF4CC'],
+      paper: ['Paper', '#E9E4D6 #E1DBCB #2B2B2B #2B2B2B #F7F4EC #E4572E #F7F4EC #FFFFFF #2B2B2B #6B645A #2B2B2B #A8D5BA #FFD166 #F4A259 #D9D4C7 #F7A6C4 #9BE38E #D7263D #2B2B2B #F7F4EC #C7D1B1 #2B2B2B #B9C3A2 #ECE6D9 #2D6CDF #D7263D #2A9D5F #7B4FB8 #B5651D'],
+      mono: ['High contrast', '#000000 #141414 #FFFFFF #000000 #FFFFFF #FFFFFF #FFFFFF #FFFFFF #000000 #3A3A3A #000000 #D9D9D9 #FFF000 #BFBFBF #EDEDED #CFCFCF #E3E3E3 #000000 #000000 #FFFFFF #E6E6E6 #000000 #D0D0D0 #E6E6E6 #000000 #4D4D4D #000000 #6E6E6E #262626'],
+      synth: ['Synthwave', '#1B0B33 #241044 #FFE3F5 #0E0420 #FFE3F5 #FF4FD8 #2A1452 #351A66 #FFE3F5 #C9A8E8 #0E0420 #6B2FB5 #9D1789 #B8360B #3D2470 #8E1A72 #136B4F #FF4F6D #0E0420 #FFE3F5 #2A1452 #4FD8FF #22103F #3A2266 #4FD8FF #FF4FD8 #7CFF6B #FFD24F #FF8A4F']
+    };
+  }
+  schemeVars(id) {
+    const keys = 'ground ground2 on-ground bar bar-ink bar-accent paper card ink muted line head sel primary key mem ok err off off-ink lcd lcd-ink lcd-shade grid g1 g2 g3 g4 g5'.split(' ');
+    const all = this.schemeList();
+    const v = (all[id] || all.nes)[1].split(' ');
+    return keys.map((k, i) => '--' + k + ': ' + v[i] + ';').join(' ');
+  }
+  storedScheme() { try { return window.localStorage.getItem('calcy-scheme'); } catch (e) { return null; } }
+  useScheme(id) { try { window.localStorage.setItem('calcy-scheme', id); } catch (e) {} this.setState({ scheme: id }); }
+  componentDidUpdate(prev) { if (prev.scheme !== this.props.scheme && this.props.scheme) this.setState({ scheme: this.props.scheme }); }
+  renderVals() {
+    const sc = this.state.scheme ?? this.storedScheme() ?? this.props.scheme ?? 'nes';
+    const dec = this.state.dec ?? 'casio';
+    const imp = this.state.imp ?? 'casio';
+    const angle = this.state.angle ?? 'RAD';
+    const sectionsList = [
+      ['results', 'Results and input'], ['look', 'Look and sound'], ['angles', 'Angles and numbers'], ['graph', 'Graphing'],
+      ['sandbox', 'Code sandbox'], ['ai', 'AI connections'], ['keys', 'Keyboard shortcuts'], ['about', 'About Calcy']
+    ];
+    return {
+      vars: this.schemeVars(sc),
+      scheme: sc,
+      setScheme: (id) => this.useScheme(id),
+      closed: false,
+      sections: sectionsList.map(([id, label], i) => ({ id, label, bg: i === 0 ? 'var(--sel)' : 'var(--paper)' })),
+      decOptions: [
+        { label: 'Fractions first (Casio style, default)', example: '0.1 + 0.2 = 3/10  ≈ 0.3', checked: dec === 'casio', pick: () => this.setState({ dec: 'casio' }) },
+        { label: 'Decimals first (Desmos style)', example: '0.1 + 0.2 = 0.3  (S⇔D gives 3/10)', checked: dec === 'desmos', pick: () => this.setState({ dec: 'desmos' }) }
+      ],
+      implicitOptions: [
+        { label: '1/(2x): implied × binds tighter (Casio, default)', example: '1/2x = 1/(2x)', checked: imp === 'casio', pick: () => this.setState({ imp: 'casio' }) },
+        { label: 'x/2: left to right (TI, Desmos)', example: '1/2x = (1/2)·x', checked: imp === 'ti', pick: () => this.setState({ imp: 'ti' }) }
+      ],
+      angles: ['RAD', 'DEG', 'GRAD'].map(a => ({ label: a, pressed: a === angle ? 'true' : 'false', bg: a === angle ? 'var(--sel)' : 'var(--card)', pick: () => this.setState({ angle: a }) })),
+      schemes: Object.entries(this.schemeList()).map(([id, [name, vals]]) => {
+        const v = vals.split(' ');
+        return { name, ground: v[0], paper: v[6], line: v[10], sel: v[12], primary: v[13], pressed: id === sc ? 'true' : 'false', ring: id === sc ? 'var(--sel)' : 'var(--card)', pick: () => this.useScheme(id) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

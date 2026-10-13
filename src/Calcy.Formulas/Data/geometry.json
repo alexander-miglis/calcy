@@ -1,0 +1,1056 @@
+{
+  "category": "geometry",
+  "formulas": [
+    {
+      "id": "rectangle-area",
+      "name": "Area of a rectangle",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = l*w",
+      "displayLatex": "A = l w",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the rectangle.", "positive": true },
+        { "symbol": "l", "name": "length", "unit": "m", "description": "The longer side (any side works).", "positive": true },
+        { "symbol": "w", "name": "width", "unit": "m", "description": "The side at right angles to the length.", "positive": true }
+      ],
+      "explanation": "A rectangle of length l and width w can be tiled by l rows of w unit squares, so its area is l times w. Area units are squared length units, such as m² or cm².",
+      "whenToUse": "Use it for floors, walls, screens, fields and any other rectangular surface.",
+      "assumptions": ["all corners are right angles", "both lengths in the same unit"],
+      "example": {
+        "story": "A bedroom floor measures 4.5 m by 3.2 m. How much carpet is needed?",
+        "given": { "l": 4.5, "w": 3.2 },
+        "solveFor": "A",
+        "result": 14.4,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["A = 4.5 × 3.2", "A = 14.4 m²"]
+      },
+      "related": ["rectangle-perimeter", "square-area", "parallelogram-area"],
+      "tags": ["rectangle", "area", "oblong", "length times width"]
+    },
+    {
+      "id": "rectangle-perimeter",
+      "name": "Perimeter of a rectangle",
+      "subcategory": "Perimeters",
+      "level": "school",
+      "equation": "P = 2*(l + w)",
+      "displayLatex": "P = 2(l + w)",
+      "variables": [
+        { "symbol": "P", "name": "perimeter", "unit": "m", "description": "The total distance around the rectangle.", "positive": true },
+        { "symbol": "l", "name": "length", "unit": "m", "description": "One side.", "positive": true },
+        { "symbol": "w", "name": "width", "unit": "m", "description": "The side at right angles to the length.", "positive": true }
+      ],
+      "explanation": "Walking round a rectangle you pass each of the two lengths and each of the two widths once. Adding them gives 2l + 2w = 2(l + w).",
+      "whenToUse": "Use it for fencing, framing, skirting boards or any distance around a rectangular shape.",
+      "assumptions": ["all corners are right angles"],
+      "example": {
+        "story": "A rectangular garden 6 m long is enclosed by 20 m of fence. How wide is it?",
+        "given": { "P": 20, "l": 6 },
+        "solveFor": "w",
+        "result": 4,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["20 = 2 × (6 + w)", "6 + w = 10", "w = 4 m"]
+      },
+      "related": ["rectangle-area", "circle-circumference"],
+      "tags": ["perimeter", "rectangle", "fence", "boundary", "distance around"]
+    },
+    {
+      "id": "square-area",
+      "name": "Area of a square",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = s^2",
+      "displayLatex": "A = s^2",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the square.", "positive": true },
+        { "symbol": "s", "name": "side length", "unit": "m", "description": "The length of each side.", "positive": true }
+      ],
+      "explanation": "A square is a rectangle with four equal sides, so its area is side times side. This is where the word squared comes from. Going backwards, the side is the square root of the area.",
+      "whenToUse": "Use it for square tiles, plots and boards, or to find the side of a square with a known area.",
+      "assumptions": ["all sides equal and all angles right angles"],
+      "example": {
+        "story": "A square patio has an area of 49 m². How long is each side?",
+        "given": { "A": 49 },
+        "solveFor": "s",
+        "result": 7,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["49 = s²", "s = √49 = 7 m"]
+      },
+      "related": ["rectangle-area", "cube-surface-area"],
+      "tags": ["square", "area", "side squared"]
+    },
+    {
+      "id": "triangle-area",
+      "name": "Area of a triangle",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = b*h / 2",
+      "displayLatex": "A = \\tfrac{1}{2} b h",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the triangle.", "positive": true },
+        { "symbol": "b", "name": "base", "unit": "m", "description": "Any side chosen as the base.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "The perpendicular distance from the base to the opposite corner.", "positive": true }
+      ],
+      "explanation": "Two copies of any triangle fit together into a parallelogram with the same base and height, whose area is b times h. So one triangle has half of that. The height must be measured at right angles to the base, not along a sloping side.",
+      "whenToUse": "Use it whenever you know a base and the perpendicular height of a triangle.",
+      "assumptions": ["the height is perpendicular to the chosen base"],
+      "example": {
+        "story": "A triangular sail has a base of 3 m and a height of 5 m. What is its area?",
+        "given": { "b": 3, "h": 5 },
+        "solveFor": "A",
+        "result": 7.5,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["A = 3 × 5 / 2", "A = 7.5 m²"]
+      },
+      "related": ["herons-formula", "triangle-area-sine", "parallelogram-area"],
+      "tags": ["triangle", "area", "half base times height"]
+    },
+    {
+      "id": "herons-formula",
+      "name": "Heron's formula",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = sqrt((a + b + c)*(-a + b + c)*(a - b + c)*(a + b - c)) / 4",
+      "displayLatex": "A = \\sqrt{s(s-a)(s-b)(s-c)}, \\quad s = \\tfrac{a+b+c}{2}",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The area of the triangle.", "positive": true },
+        { "symbol": "a", "name": "first side", "unit": "m", "description": "Length of one side.", "positive": true },
+        { "symbol": "b", "name": "second side", "unit": "m", "description": "Length of another side.", "positive": true },
+        { "symbol": "c", "name": "third side", "unit": "m", "description": "Length of the third side.", "positive": true }
+      ],
+      "explanation": "Heron's formula gives the area of a triangle from its three sides alone, with no angles or heights needed. With the semi-perimeter s = (a + b + c)/2 it reads √(s(s-a)(s-b)(s-c)); the version in the equation is the same thing with s written out. It can be derived from the cosine rule and A = ½ ab sin C.",
+      "whenToUse": "Use it when you know all three side lengths, for example for a plot of land measured with a tape.",
+      "assumptions": ["the sides satisfy the triangle inequality (each side shorter than the other two together)"],
+      "example": {
+        "story": "A triangular field has sides of 13 m, 14 m and 15 m. What is its area?",
+        "given": { "a": 13, "b": 14, "c": 15 },
+        "solveFor": "A",
+        "result": 84,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["s = (13 + 14 + 15) / 2 = 21", "A = √(21 × 8 × 7 × 6) = √7056", "A = 84 m²"]
+      },
+      "related": ["triangle-area", "triangle-area-sine", "cosine-rule"],
+      "tags": ["heron", "hero", "triangle area from sides", "semi-perimeter", "three sides"]
+    },
+    {
+      "id": "parallelogram-area",
+      "name": "Area of a parallelogram",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = b*h",
+      "displayLatex": "A = b h",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the parallelogram.", "positive": true },
+        { "symbol": "b", "name": "base", "unit": "m", "description": "Length of one side, taken as the base.", "positive": true },
+        { "symbol": "h", "name": "perpendicular height", "unit": "m", "description": "Distance between the base and the opposite side, measured at right angles.", "positive": true }
+      ],
+      "explanation": "Cut a right-angled triangle off one end of a parallelogram and slide it to the other end: you get a rectangle with the same base and height. So the area is base times perpendicular height, not base times the slanted side.",
+      "whenToUse": "Use it for parallelograms, rhombuses and slanted shapes where you know the perpendicular height.",
+      "assumptions": ["opposite sides are parallel", "h is measured perpendicular to b"],
+      "example": {
+        "story": "A parallelogram has a base of 8 m and a perpendicular height of 5 m. Find its area.",
+        "given": { "b": 8, "h": 5 },
+        "solveFor": "A",
+        "result": 40,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["A = 8 × 5", "A = 40 m²"]
+      },
+      "related": ["rectangle-area", "triangle-area", "trapezoid-area"],
+      "tags": ["parallelogram", "area", "base times height", "rhomboid"]
+    },
+    {
+      "id": "trapezoid-area",
+      "name": "Area of a trapezium (trapezoid)",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = (a + b) / 2 * h",
+      "displayLatex": "A = \\frac{a + b}{2} h",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the trapezium.", "positive": true },
+        { "symbol": "a", "name": "first parallel side", "unit": "m", "description": "One of the two parallel sides.", "positive": true },
+        { "symbol": "b", "name": "second parallel side", "unit": "m", "description": "The other parallel side.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "The perpendicular distance between the parallel sides.", "positive": true }
+      ],
+      "explanation": "A trapezium (called a trapezoid in American English) has one pair of parallel sides. Two copies, one turned upside down, form a parallelogram with base a + b and height h. One copy is half of that: the average of the parallel sides times the height.",
+      "whenToUse": "Use it for shapes with two parallel edges, such as cross-sections of ditches, roofs and ramps, and in the trapezium rule for integration.",
+      "assumptions": ["a and b are parallel", "h is perpendicular to them"],
+      "example": {
+        "story": "A trapezium has parallel sides of 6 m and 10 m that are 4 m apart. Find its area.",
+        "given": { "a": 6, "b": 10, "h": 4 },
+        "solveFor": "A",
+        "result": 32,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["Average of parallel sides: (6 + 10) / 2 = 8", "A = 8 × 4 = 32 m²"]
+      },
+      "related": ["parallelogram-area", "trapezium-rule"],
+      "tags": ["trapezium", "trapezoid", "area", "parallel sides"]
+    },
+    {
+      "id": "rhombus-area",
+      "name": "Area of a rhombus or kite from its diagonals",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = d_1*d_2 / 2",
+      "displayLatex": "A = \\tfrac{1}{2} d_1 d_2",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the shape.", "positive": true },
+        { "symbol": "d_1", "name": "first diagonal", "unit": "m", "description": "Length of one diagonal.", "positive": true },
+        { "symbol": "d_2", "name": "second diagonal", "unit": "m", "description": "Length of the other diagonal.", "positive": true }
+      ],
+      "explanation": "The diagonals of a rhombus or a kite cross at right angles. The shape fits exactly inside a rectangle of size d₁ by d₂ and fills half of it, so its area is half the product of the diagonals.",
+      "whenToUse": "Use it for rhombuses, kites and squares when the diagonals are easier to measure than the height.",
+      "assumptions": ["the diagonals are perpendicular"],
+      "example": {
+        "story": "A kite has diagonals of 0.6 m and 0.8 m. How much fabric covers it?",
+        "given": { "d_1": 0.6, "d_2": 0.8 },
+        "solveFor": "A",
+        "result": 0.24,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["A = 0.6 × 0.8 / 2", "A = 0.24 m²"]
+      },
+      "related": ["parallelogram-area", "square-area"],
+      "tags": ["rhombus", "kite", "diagonals", "area", "diamond"]
+    },
+    {
+      "id": "circle-area",
+      "name": "Area of a circle",
+      "subcategory": "Circles",
+      "level": "school",
+      "equation": "A = pi*r^2",
+      "displayLatex": "A = \\pi r^2",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the circle.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Distance from the centre to the edge (half the diameter).", "positive": true }
+      ],
+      "explanation": "Cut a circle into many thin slices and lay them alternately point up and point down: they form a shape close to a rectangle with height r and width half the circumference, πr. The area is therefore πr times r. Doubling the radius makes the area four times larger.",
+      "whenToUse": "Use it for any round surface: pizzas, pipes, wheels, ponds, cross-sections of wires.",
+      "assumptions": ["use the radius, not the diameter"],
+      "example": {
+        "story": "A pizza has a radius of 15 cm (0.15 m). What is its area?",
+        "given": { "r": 0.15 },
+        "solveFor": "A",
+        "result": 0.0706858,
+        "unit": "m²",
+        "tolerance": 1e-7,
+        "steps": ["r² = 0.0225", "A = π × 0.0225 ≈ 0.0707 m²"]
+      },
+      "related": ["circle-circumference", "sector-area", "ellipse-area", "sphere-surface-area"],
+      "tags": ["circle", "area", "pi r squared", "disc", "disk"]
+    },
+    {
+      "id": "circle-circumference",
+      "name": "Circumference of a circle",
+      "subcategory": "Circles",
+      "level": "school",
+      "equation": "C = 2*pi*r",
+      "displayLatex": "C = 2\\pi r = \\pi d",
+      "variables": [
+        { "symbol": "C", "name": "circumference", "unit": "m", "description": "The distance around the circle.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Distance from the centre to the edge.", "positive": true }
+      ],
+      "explanation": "π is defined as the ratio of a circle's circumference to its diameter, so C = π × diameter = 2πr. For every circle, the distance around is a little more than three times the distance across.",
+      "whenToUse": "Use it to find how far a wheel rolls in one turn, the length of a circular track, or the edge of a round table.",
+      "assumptions": [],
+      "example": {
+        "story": "A bicycle wheel has a radius of 0.35 m. How far does the bike travel in one full turn?",
+        "given": { "r": 0.35 },
+        "solveFor": "C",
+        "result": 2.199115,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["C = 2 × π × 0.35", "C ≈ 2.20 m"]
+      },
+      "related": ["circle-area", "arc-length", "rectangle-perimeter"],
+      "tags": ["circumference", "perimeter of circle", "pi d", "2 pi r", "circle"]
+    },
+    {
+      "id": "arc-length",
+      "name": "Arc length (radians)",
+      "subcategory": "Circles",
+      "level": "school",
+      "equation": "s = r*θ",
+      "displayLatex": "s = r\\theta",
+      "variables": [
+        { "symbol": "s", "name": "arc length", "unit": "m", "description": "Length of the curved part of the circle.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circle.", "positive": true },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle at the centre, in radians.", "positive": true }
+      ],
+      "explanation": "A radian is defined so that an angle of 1 radian cuts off an arc equal to the radius. An angle of θ radians therefore cuts off θ radius lengths. A full turn is 2π radians, which gives the whole circumference 2πr.",
+      "whenToUse": "Use it whenever the angle is in radians: arcs, bends in roads, pendulum paths, angular motion.",
+      "assumptions": ["θ in radians"],
+      "example": {
+        "story": "A circular path has radius 2 m. How long is the arc for a centre angle of 1.2 rad?",
+        "given": { "r": 2, "θ": 1.2 },
+        "solveFor": "s",
+        "result": 2.4,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["s = 2 × 1.2", "s = 2.4 m"]
+      },
+      "related": ["arc-length-degrees", "sector-area", "degrees-to-radians", "linear-angular-speed"],
+      "tags": ["arc", "arc length", "radian", "circle", "curved length"]
+    },
+    {
+      "id": "sector-area",
+      "name": "Area of a sector (radians)",
+      "subcategory": "Circles",
+      "level": "school",
+      "equation": "A = r^2*θ / 2",
+      "displayLatex": "A = \\tfrac{1}{2} r^2 \\theta",
+      "variables": [
+        { "symbol": "A", "name": "sector area", "unit": "m²", "description": "Area of the pie-slice shaped region.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circle.", "positive": true },
+        { "symbol": "θ", "name": "angle", "unit": "rad", "description": "Angle at the centre, in radians.", "positive": true }
+      ],
+      "explanation": "A sector with angle θ is the fraction θ/(2π) of the whole circle. Multiplying that fraction by πr² gives ½r²θ. It looks like a triangle with base equal to the arc rθ and height r.",
+      "whenToUse": "Use it for pie slices, fan-shaped areas and the area swept by a wiper or a clock hand, with the angle in radians.",
+      "assumptions": ["θ in radians"],
+      "example": {
+        "story": "Find the area of a sector of radius 3 m with a centre angle of π/3 (60 degrees).",
+        "given": { "r": 3, "θ": 1.0471975511965976 },
+        "solveFor": "A",
+        "result": 4.712389,
+        "unit": "m²",
+        "tolerance": 1e-6,
+        "steps": ["A = ½ × 3² × π/3", "A = 9π/6 = 1.5π", "A ≈ 4.712 m²"]
+      },
+      "related": ["sector-area-degrees", "arc-length", "circle-area"],
+      "tags": ["sector", "pie slice", "radian", "circle", "area"]
+    },
+    {
+      "id": "arc-length-degrees",
+      "name": "Arc length (degrees)",
+      "subcategory": "Circles",
+      "level": "school",
+      "equation": "s = θ / 360 * 2*pi*r",
+      "displayLatex": "s = \\frac{\\theta}{360^\\circ} \\cdot 2\\pi r",
+      "variables": [
+        { "symbol": "s", "name": "arc length", "unit": "m", "description": "Length of the curved part.", "positive": true },
+        { "symbol": "θ", "name": "angle", "unit": "°", "description": "Angle at the centre, in degrees.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circle.", "positive": true }
+      ],
+      "explanation": "An arc with centre angle θ degrees is the fraction θ/360 of the full circle. Multiply that fraction by the circumference 2πr to get its length.",
+      "whenToUse": "Use it when the angle is given in degrees, as is usual at school.",
+      "assumptions": ["θ in degrees"],
+      "example": {
+        "story": "Find the length of a 60 degree arc on a circle of radius 6 m.",
+        "given": { "θ": 60, "r": 6 },
+        "solveFor": "s",
+        "result": 6.283185,
+        "unit": "m",
+        "tolerance": 1e-6,
+        "steps": ["Fraction of the circle: 60/360 = 1/6", "Circumference: 2π × 6 = 12π", "s = 12π / 6 = 2π ≈ 6.283 m"]
+      },
+      "related": ["arc-length", "sector-area-degrees", "circle-circumference"],
+      "tags": ["arc", "arc length", "degrees", "circle", "minor arc"]
+    },
+    {
+      "id": "sector-area-degrees",
+      "name": "Area of a sector (degrees)",
+      "subcategory": "Circles",
+      "level": "school",
+      "equation": "A = θ / 360 * pi*r^2",
+      "displayLatex": "A = \\frac{\\theta}{360^\\circ} \\cdot \\pi r^2",
+      "variables": [
+        { "symbol": "A", "name": "sector area", "unit": "m²", "description": "Area of the pie-slice shaped region.", "positive": true },
+        { "symbol": "θ", "name": "angle", "unit": "°", "description": "Angle at the centre, in degrees.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circle.", "positive": true }
+      ],
+      "explanation": "A sector with angle θ degrees is θ/360 of the whole circle, so its area is that fraction of πr². A quarter circle, for example, has θ = 90.",
+      "whenToUse": "Use it for slices of round things when the angle is in degrees.",
+      "assumptions": ["θ in degrees"],
+      "example": {
+        "story": "A quarter-circle flower bed has radius 4 m. What is its area?",
+        "given": { "θ": 90, "r": 4 },
+        "solveFor": "A",
+        "result": 12.566371,
+        "unit": "m²",
+        "tolerance": 1e-6,
+        "steps": ["Fraction: 90/360 = 1/4", "Whole circle: π × 4² = 16π", "A = 16π / 4 = 4π ≈ 12.57 m²"]
+      },
+      "related": ["sector-area", "arc-length-degrees", "circle-area"],
+      "tags": ["sector", "pie slice", "degrees", "quarter circle", "area"]
+    },
+    {
+      "id": "ellipse-area",
+      "name": "Area of an ellipse",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = pi*a*b",
+      "displayLatex": "A = \\pi a b",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the ellipse.", "positive": true },
+        { "symbol": "a", "name": "semi-major axis", "unit": "m", "description": "Half of the longest diameter.", "positive": true },
+        { "symbol": "b", "name": "semi-minor axis", "unit": "m", "description": "Half of the shortest diameter.", "positive": true }
+      ],
+      "explanation": "An ellipse is a circle stretched by different amounts in two directions. Stretching a unit circle by a in one direction and b in the other multiplies its area π by a times b. When a = b = r this is the circle formula πr².",
+      "whenToUse": "Use it for oval tables, running tracks, planetary orbits and elliptical windows.",
+      "assumptions": [],
+      "example": {
+        "story": "An oval rug has semi-axes of 5 m and 3 m. What is its area?",
+        "given": { "a": 5, "b": 3 },
+        "solveFor": "A",
+        "result": 47.12389,
+        "unit": "m²",
+        "tolerance": 1e-5,
+        "steps": ["A = π × 5 × 3", "A = 15π ≈ 47.12 m²"]
+      },
+      "related": ["circle-area", "ellipse-perimeter-ramanujan", "ellipsoid-volume"],
+      "tags": ["ellipse", "oval", "area", "semi-axes"]
+    },
+    {
+      "id": "ellipse-perimeter-ramanujan",
+      "name": "Perimeter of an ellipse (Ramanujan approximation)",
+      "subcategory": "Perimeters",
+      "level": "university",
+      "equation": "P = pi*(3*(a + b) - sqrt((3*a + b)*(a + 3*b)))",
+      "displayLatex": "P \\approx \\pi\\left[3(a + b) - \\sqrt{(3a + b)(a + 3b)}\\right]",
+      "variables": [
+        { "symbol": "P", "name": "perimeter", "unit": "m", "description": "Distance around the ellipse.", "positive": true },
+        { "symbol": "a", "name": "semi-major axis", "unit": "m", "description": "Half of the longest diameter.", "positive": true },
+        { "symbol": "b", "name": "semi-minor axis", "unit": "m", "description": "Half of the shortest diameter.", "positive": true }
+      ],
+      "explanation": "Surprisingly, the perimeter of an ellipse has no simple exact formula; it needs an elliptic integral. Ramanujan found this approximation in 1914, and it is extremely accurate: for moderate shapes the error is far below one part in a million. For a circle (a = b) it gives exactly 2πr.",
+      "whenToUse": "Use it whenever you need the distance around an ellipse, such as edging an oval table or the length of an elliptical track.",
+      "assumptions": ["approximation, accuracy decreases slowly for very flat ellipses"],
+      "example": {
+        "story": "Estimate the edge length of an elliptical table with semi-axes 5 m and 3 m.",
+        "given": { "a": 5, "b": 3 },
+        "solveFor": "P",
+        "result": 25.527,
+        "unit": "m",
+        "tolerance": 0.001,
+        "steps": ["3(a + b) = 24", "√((15 + 3)(5 + 9)) = √252 ≈ 15.8745", "P ≈ π × 8.1255 ≈ 25.527 m"]
+      },
+      "related": ["ellipse-area", "circle-circumference"],
+      "tags": ["ellipse", "circumference of ellipse", "ramanujan", "oval", "perimeter"]
+    },
+    {
+      "id": "regular-polygon-area",
+      "name": "Area of a regular polygon",
+      "subcategory": "Areas",
+      "level": "school",
+      "equation": "A = n*s^2 / (4*tan(pi / n))",
+      "displayLatex": "A = \\frac{n s^2}{4 \\tan(\\pi / n)}",
+      "variables": [
+        { "symbol": "A", "name": "area", "unit": "m²", "description": "The space inside the polygon.", "positive": true },
+        { "symbol": "n", "name": "number of sides", "unit": "", "description": "How many equal sides the polygon has (3 or more).", "integer": true, "min": 3 },
+        { "symbol": "s", "name": "side length", "unit": "m", "description": "Length of each side.", "positive": true }
+      ],
+      "explanation": "A regular polygon splits into n identical isosceles triangles meeting at the centre. Each has base s and height s/(2 tan(π/n)), the apothem. Adding the n triangle areas gives the formula.",
+      "whenToUse": "Use it for hexagonal tiles, octagonal tables, stop signs and other shapes with equal sides and equal angles.",
+      "assumptions": ["all sides and all angles are equal", "the angle π/n is in radians"],
+      "example": {
+        "story": "A hexagonal paving tile has sides of 2 m. What is its area?",
+        "given": { "n": 6, "s": 2 },
+        "solveFor": "A",
+        "result": 10.392305,
+        "unit": "m²",
+        "tolerance": 1e-6,
+        "steps": ["tan(π/6) ≈ 0.57735", "A = 6 × 4 / (4 × 0.57735)", "A ≈ 10.39 m²"]
+      },
+      "related": ["regular-polygon-interior-angle", "polygon-interior-angle-sum", "triangle-area"],
+      "tags": ["regular polygon", "hexagon", "pentagon", "octagon", "apothem", "area"]
+    },
+    {
+      "id": "polygon-interior-angle-sum",
+      "name": "Sum of the interior angles of a polygon",
+      "subcategory": "Angles",
+      "level": "school",
+      "equation": "S = (n - 2)*180",
+      "displayLatex": "S = (n - 2) \\times 180^\\circ",
+      "variables": [
+        { "symbol": "S", "name": "angle sum", "unit": "°", "description": "The total of all interior angles.", "positive": true },
+        { "symbol": "n", "name": "number of sides", "unit": "", "description": "How many sides the polygon has (3 or more).", "integer": true, "min": 3 }
+      ],
+      "explanation": "From one corner you can draw diagonals that split any n-sided polygon into n - 2 triangles. Each triangle has angles adding to 180 degrees, so all the interior angles together add to (n - 2) × 180 degrees.",
+      "whenToUse": "Use it to find a missing angle in a polygon, or to check angle measurements.",
+      "assumptions": ["convex or simple (non self-crossing) polygon"],
+      "example": {
+        "story": "What do the interior angles of a heptagon (7 sides) add up to?",
+        "given": { "n": 7 },
+        "solveFor": "S",
+        "result": 900,
+        "unit": "°",
+        "tolerance": 1e-9,
+        "steps": ["n - 2 = 5 triangles", "S = 5 × 180 = 900°"]
+      },
+      "related": ["regular-polygon-interior-angle", "regular-polygon-area"],
+      "tags": ["interior angles", "angle sum", "polygon", "triangles", "heptagon"]
+    },
+    {
+      "id": "regular-polygon-interior-angle",
+      "name": "Interior angle of a regular polygon",
+      "subcategory": "Angles",
+      "level": "school",
+      "equation": "α = (n - 2)*180 / n",
+      "displayLatex": "\\alpha = \\frac{(n - 2) \\times 180^\\circ}{n}",
+      "variables": [
+        { "symbol": "α", "name": "interior angle", "unit": "°", "description": "Each angle inside the regular polygon.", "positive": true },
+        { "symbol": "n", "name": "number of sides", "unit": "", "description": "How many equal sides the polygon has.", "integer": true, "min": 3 }
+      ],
+      "explanation": "In a regular polygon all n interior angles are equal, so each is the angle sum (n - 2) × 180 divided by n. Equivalently, each exterior angle is 360/n and the interior angle is 180 minus that.",
+      "whenToUse": "Use it for tiling questions, for example to see which regular polygons fit together around a point.",
+      "assumptions": ["regular polygon (all sides and angles equal)"],
+      "example": {
+        "story": "What is each interior angle of a regular octagon, like a stop sign?",
+        "given": { "n": 8 },
+        "solveFor": "α",
+        "result": 135,
+        "unit": "°",
+        "tolerance": 1e-9,
+        "steps": ["Angle sum: 6 × 180 = 1080°", "α = 1080 / 8 = 135°"]
+      },
+      "related": ["polygon-interior-angle-sum", "regular-polygon-area"],
+      "tags": ["interior angle", "regular polygon", "exterior angle", "octagon", "tessellation"]
+    },
+    {
+      "id": "cube-volume",
+      "name": "Volume of a cube",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = a^3",
+      "displayLatex": "V = a^3",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the cube.", "positive": true },
+        { "symbol": "a", "name": "edge length", "unit": "m", "description": "Length of each edge.", "positive": true }
+      ],
+      "explanation": "A cube with edge a holds a layers of a by a unit cubes, so its volume is a × a × a. This is where cubed comes from. Doubling the edge makes the volume eight times larger.",
+      "whenToUse": "Use it for boxes, dice and blocks with all edges equal.",
+      "assumptions": [],
+      "example": {
+        "story": "A storage cube has edges of 30 cm (0.3 m). What is its volume?",
+        "given": { "a": 0.3 },
+        "solveFor": "V",
+        "result": 0.027,
+        "unit": "m³",
+        "tolerance": 1e-9,
+        "steps": ["V = 0.3³", "V = 0.027 m³ (27 litres)"]
+      },
+      "related": ["cube-surface-area", "cuboid-volume"],
+      "tags": ["cube", "volume", "cubed"]
+    },
+    {
+      "id": "cube-surface-area",
+      "name": "Surface area of a cube",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "A = 6*a^2",
+      "displayLatex": "A = 6a^2",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Total area of the six faces.", "positive": true },
+        { "symbol": "a", "name": "edge length", "unit": "m", "description": "Length of each edge.", "positive": true }
+      ],
+      "explanation": "A cube has six identical square faces, each of area a². Adding them gives 6a².",
+      "whenToUse": "Use it to find how much material wraps or paints a cube.",
+      "assumptions": [],
+      "example": {
+        "story": "A gift box shaped like a cube needs 0.54 m² of wrapping paper to cover it exactly. How long is each edge?",
+        "given": { "A": 0.54 },
+        "solveFor": "a",
+        "result": 0.3,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["0.54 = 6a²", "a² = 0.09", "a = 0.3 m"]
+      },
+      "related": ["cube-volume", "square-area", "cuboid-surface-area"],
+      "tags": ["cube", "surface area", "net", "faces"]
+    },
+    {
+      "id": "cuboid-volume",
+      "name": "Volume of a cuboid",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = l*w*h",
+      "displayLatex": "V = l w h",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the box.", "positive": true },
+        { "symbol": "l", "name": "length", "unit": "m", "description": "Length of the box.", "positive": true },
+        { "symbol": "w", "name": "width", "unit": "m", "description": "Width of the box.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height of the box.", "positive": true }
+      ],
+      "explanation": "A cuboid (rectangular box) is h layers of a rectangle with area l × w. So its volume is length times width times height. Remember that 1 m³ is 1000 litres.",
+      "whenToUse": "Use it for rooms, boxes, tanks, bricks and swimming pools with a flat bottom.",
+      "assumptions": ["all faces are rectangles"],
+      "example": {
+        "story": "A garden planter is 2 m long, 1.5 m wide and 0.8 m tall. How much soil fills it?",
+        "given": { "l": 2, "w": 1.5, "h": 0.8 },
+        "solveFor": "V",
+        "result": 2.4,
+        "unit": "m³",
+        "tolerance": 1e-9,
+        "steps": ["V = 2 × 1.5 × 0.8", "V = 2.4 m³"]
+      },
+      "related": ["cuboid-surface-area", "cube-volume", "prism-volume", "cuboid-space-diagonal"],
+      "tags": ["cuboid", "rectangular box", "rectangular prism", "volume", "box"]
+    },
+    {
+      "id": "cuboid-surface-area",
+      "name": "Surface area of a cuboid",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "A = 2*(l*w + l*h + w*h)",
+      "displayLatex": "A = 2(lw + lh + wh)",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Total area of the six faces.", "positive": true },
+        { "symbol": "l", "name": "length", "unit": "m", "description": "Length of the box.", "positive": true },
+        { "symbol": "w", "name": "width", "unit": "m", "description": "Width of the box.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height of the box.", "positive": true }
+      ],
+      "explanation": "A cuboid has three pairs of identical opposite faces: top and bottom (l × w), front and back (l × h), and the two ends (w × h). Add one of each pair and double it.",
+      "whenToUse": "Use it for the amount of cardboard, paint or insulation needed to cover a box.",
+      "assumptions": ["all faces are rectangles"],
+      "example": {
+        "story": "How much paint area does a 2 m by 1.5 m by 0.8 m wooden chest have on all six faces?",
+        "given": { "l": 2, "w": 1.5, "h": 0.8 },
+        "solveFor": "A",
+        "result": 11.6,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["lw + lh + wh = 3 + 1.6 + 1.2 = 5.8", "A = 2 × 5.8 = 11.6 m²"]
+      },
+      "related": ["cuboid-volume", "cube-surface-area"],
+      "tags": ["cuboid", "surface area", "box", "net", "rectangular prism"]
+    },
+    {
+      "id": "cuboid-space-diagonal",
+      "name": "Space diagonal of a cuboid",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "d = sqrt(l^2 + w^2 + h^2)",
+      "displayLatex": "d = \\sqrt{l^2 + w^2 + h^2}",
+      "variables": [
+        { "symbol": "d", "name": "space diagonal", "unit": "m", "description": "Distance between opposite corners through the inside.", "positive": true },
+        { "symbol": "l", "name": "length", "unit": "m", "description": "Length of the box.", "positive": true },
+        { "symbol": "w", "name": "width", "unit": "m", "description": "Width of the box.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height of the box.", "positive": true }
+      ],
+      "explanation": "Use Pythagoras twice. The diagonal of the base is √(l² + w²); that diagonal and the height form another right-angled triangle whose hypotenuse is the space diagonal. Putting them together gives √(l² + w² + h²).",
+      "whenToUse": "Use it to see whether a long object fits in a box, or for 3D distances.",
+      "assumptions": ["rectangular box"],
+      "example": {
+        "story": "What is the longest rod that fits inside a box 3 m by 4 m by 12 m?",
+        "given": { "l": 3, "w": 4, "h": 12 },
+        "solveFor": "d",
+        "result": 13,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["l² + w² + h² = 9 + 16 + 144 = 169", "d = √169 = 13 m"]
+      },
+      "related": ["pythagoras-theorem", "distance-3d", "cuboid-volume"],
+      "tags": ["space diagonal", "box diagonal", "3d pythagoras", "longest rod"]
+    },
+    {
+      "id": "prism-volume",
+      "name": "Volume of a prism",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = A_b*h",
+      "displayLatex": "V = A_b h",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the prism.", "positive": true },
+        { "symbol": "A_b", "name": "cross-section area", "unit": "m²", "description": "Area of the end face (the shape that is repeated).", "positive": true },
+        { "symbol": "h", "name": "length", "unit": "m", "description": "Distance between the two end faces.", "positive": true }
+      ],
+      "explanation": "A prism has the same cross-section all along its length, like a loaf of sliced bread. Its volume is that cross-section area times the length. Cuboids and cylinders are special cases.",
+      "whenToUse": "Use it for any solid with a constant cross-section: tents, beams, channels, packaging.",
+      "assumptions": ["constant cross-section", "end faces parallel"],
+      "example": {
+        "story": "A tent is a triangular prism with a 6 m² triangular end and a length of 4 m. What volume of air does it hold?",
+        "given": { "A_b": 6, "h": 4 },
+        "solveFor": "V",
+        "result": 24,
+        "unit": "m³",
+        "tolerance": 1e-9,
+        "steps": ["V = 6 × 4", "V = 24 m³"]
+      },
+      "related": ["cuboid-volume", "cylinder-volume", "pyramid-volume"],
+      "tags": ["prism", "volume", "cross section", "triangular prism"]
+    },
+    {
+      "id": "cylinder-volume",
+      "name": "Volume of a cylinder",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = pi*r^2*h",
+      "displayLatex": "V = \\pi r^2 h",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the cylinder.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circular end.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height (length) of the cylinder.", "positive": true }
+      ],
+      "explanation": "A cylinder is a prism with a circular cross-section. Its volume is the circle area πr² times the height.",
+      "whenToUse": "Use it for cans, pipes, tanks, glasses and columns.",
+      "assumptions": ["right circular cylinder"],
+      "example": {
+        "story": "A drinks can has a radius of 3.3 cm and a height of 11.5 cm. What is its volume in m³?",
+        "given": { "r": 0.033, "h": 0.115 },
+        "solveFor": "V",
+        "result": 0.000393437,
+        "unit": "m³",
+        "tolerance": 1e-9,
+        "steps": ["r² = 0.001089 m²", "V = π × 0.001089 × 0.115", "V ≈ 3.93 × 10⁻⁴ m³ (about 393 ml)"]
+      },
+      "related": ["cylinder-surface-area", "prism-volume", "cone-volume", "circle-area"],
+      "tags": ["cylinder", "volume", "can", "pipe", "tank"]
+    },
+    {
+      "id": "cylinder-surface-area",
+      "name": "Surface area of a cylinder",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "A = 2*pi*r*(r + h)",
+      "displayLatex": "A = 2\\pi r(r + h) = 2\\pi r^2 + 2\\pi r h",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Two circular ends plus the curved side.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the circular ends.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Height of the cylinder.", "positive": true }
+      ],
+      "explanation": "Unroll the curved side and it becomes a rectangle of width 2πr (the circumference) and height h. Add the two circular ends, each πr², to get 2πr² + 2πrh.",
+      "whenToUse": "Use it for the metal in a can, the label area plus lids, or the heat loss surface of a tank.",
+      "assumptions": ["closed cylinder with both ends; drop 2πr² for an open tube"],
+      "example": {
+        "story": "How much aluminium sheet makes a closed can of radius 3.3 cm and height 11.5 cm?",
+        "given": { "r": 0.033, "h": 0.115 },
+        "solveFor": "A",
+        "result": 0.030687,
+        "unit": "m²",
+        "tolerance": 1e-6,
+        "steps": ["r + h = 0.148 m", "A = 2π × 0.033 × 0.148", "A ≈ 0.0307 m²"]
+      },
+      "related": ["cylinder-volume", "circle-circumference"],
+      "tags": ["cylinder", "surface area", "curved surface", "net", "can"]
+    },
+    {
+      "id": "cone-volume",
+      "name": "Volume of a cone",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = pi*r^2*h / 3",
+      "displayLatex": "V = \\tfrac{1}{3}\\pi r^2 h",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the cone.", "positive": true },
+        { "symbol": "r", "name": "base radius", "unit": "m", "description": "Radius of the circular base.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Perpendicular height from base to tip.", "positive": true }
+      ],
+      "explanation": "A cone holds exactly one third of the cylinder with the same base and height, which you can check by pouring water. The same factor of one third applies to every pyramid, and calculus proves it by adding up thin circular slices.",
+      "whenToUse": "Use it for ice cream cones, funnels, piles of sand and conical roofs.",
+      "assumptions": ["right circular cone", "h is the perpendicular height, not the slant height"],
+      "example": {
+        "story": "An ice cream cone has a radius of 2.5 cm and a height of 10 cm. What volume does it hold?",
+        "given": { "r": 0.025, "h": 0.1 },
+        "solveFor": "V",
+        "result": 6.54498e-5,
+        "unit": "m³",
+        "tolerance": 1e-10,
+        "steps": ["r² h = 0.000625 × 0.1 = 6.25 × 10⁻⁵", "V = π × 6.25 × 10⁻⁵ / 3", "V ≈ 6.54 × 10⁻⁵ m³ (about 65 ml)"]
+      },
+      "related": ["cone-surface-area", "cylinder-volume", "pyramid-volume", "frustum-volume"],
+      "tags": ["cone", "volume", "one third", "funnel"]
+    },
+    {
+      "id": "cone-surface-area",
+      "name": "Surface area of a cone",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "A = pi*r*(r + l)",
+      "displayLatex": "A = \\pi r(r + l) = \\pi r^2 + \\pi r l",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Base plus curved surface.", "positive": true },
+        { "symbol": "r", "name": "base radius", "unit": "m", "description": "Radius of the circular base.", "positive": true },
+        { "symbol": "l", "name": "slant height", "unit": "m", "description": "Distance from the tip to the edge of the base, along the surface.", "positive": true }
+      ],
+      "explanation": "The curved surface unrolls into a sector of a circle with radius l and arc length 2πr; its area is πrl. Add the circular base πr² for a closed cone.",
+      "whenToUse": "Use it for party hats, lampshades, conical tents and roofs.",
+      "assumptions": ["right circular cone", "drop πr² if the base is open"],
+      "example": {
+        "story": "A closed cone has base radius 3 m and slant height 5 m. Find its total surface area.",
+        "given": { "r": 3, "l": 5 },
+        "solveFor": "A",
+        "result": 75.398224,
+        "unit": "m²",
+        "tolerance": 1e-6,
+        "steps": ["A = π × 3 × (3 + 5)", "A = 24π ≈ 75.40 m²"]
+      },
+      "related": ["cone-volume", "cone-slant-height"],
+      "tags": ["cone", "surface area", "curved surface", "lateral area", "slant height"]
+    },
+    {
+      "id": "cone-slant-height",
+      "name": "Slant height of a cone",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "l = sqrt(r^2 + h^2)",
+      "displayLatex": "l = \\sqrt{r^2 + h^2}",
+      "variables": [
+        { "symbol": "l", "name": "slant height", "unit": "m", "description": "Distance from tip to base edge along the surface.", "positive": true },
+        { "symbol": "r", "name": "base radius", "unit": "m", "description": "Radius of the base.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Perpendicular height.", "positive": true }
+      ],
+      "explanation": "The radius, the height and the slant height form a right-angled triangle inside the cone, with the slant height as hypotenuse. Pythagoras gives l from r and h.",
+      "whenToUse": "Use it to convert between perpendicular and slant height before using the cone area or volume formulas.",
+      "assumptions": ["right circular cone"],
+      "example": {
+        "story": "A cone has radius 3 m and height 4 m. What is its slant height?",
+        "given": { "r": 3, "h": 4 },
+        "solveFor": "l",
+        "result": 5,
+        "unit": "m",
+        "tolerance": 1e-9,
+        "steps": ["l = √(9 + 16)", "l = √25 = 5 m"]
+      },
+      "related": ["cone-surface-area", "cone-volume", "pythagoras-theorem"],
+      "tags": ["cone", "slant height", "pythagoras", "generator"]
+    },
+    {
+      "id": "sphere-volume",
+      "name": "Volume of a sphere",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = 4 / 3*pi*r^3",
+      "displayLatex": "V = \\tfrac{4}{3}\\pi r^3",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the sphere.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Distance from the centre to the surface.", "positive": true }
+      ],
+      "explanation": "Archimedes showed that a sphere has two thirds of the volume of the smallest cylinder around it (radius r, height 2r, volume 2πr³). That gives (4/3)πr³. Volume grows with the cube of the radius.",
+      "whenToUse": "Use it for balls, bubbles, planets, droplets and spherical tanks.",
+      "assumptions": [],
+      "example": {
+        "story": "A football has a radius of 11 cm. How much air is inside?",
+        "given": { "r": 0.11 },
+        "solveFor": "V",
+        "result": 0.0055753,
+        "unit": "m³",
+        "tolerance": 1e-7,
+        "steps": ["r³ = 0.001331 m³", "V = 4/3 × π × 0.001331", "V ≈ 0.00558 m³ (about 5.6 litres)"]
+      },
+      "related": ["sphere-surface-area", "spherical-cap-volume", "ellipsoid-volume"],
+      "tags": ["sphere", "ball", "volume", "four thirds pi r cubed"]
+    },
+    {
+      "id": "sphere-surface-area",
+      "name": "Surface area of a sphere",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "A = 4*pi*r^2",
+      "displayLatex": "A = 4\\pi r^2",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Area of the whole surface.", "positive": true },
+        { "symbol": "r", "name": "radius", "unit": "m", "description": "Radius of the sphere.", "positive": true }
+      ],
+      "explanation": "The surface of a sphere has exactly four times the area of a circle with the same radius. Archimedes found this by comparing the sphere with the curved side of a surrounding cylinder, which has the same area 2πr × 2r.",
+      "whenToUse": "Use it for paint on a ball, the area of a planet, or the surface a star radiates from.",
+      "assumptions": [],
+      "example": {
+        "story": "Treating the Earth as a sphere of radius 6371 km, what is its surface area?",
+        "given": { "r": 6371000 },
+        "solveFor": "A",
+        "result": 5.100645e14,
+        "unit": "m²",
+        "tolerance": 1e9,
+        "steps": ["r² ≈ 4.0590 × 10¹³ m²", "A = 4π × 4.0590 × 10¹³", "A ≈ 5.10 × 10¹⁴ m²"]
+      },
+      "related": ["sphere-volume", "circle-area", "stefan-boltzmann-law"],
+      "tags": ["sphere", "surface area", "ball", "four pi r squared", "planet"]
+    },
+    {
+      "id": "pyramid-volume",
+      "name": "Volume of a pyramid",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = A_b*h / 3",
+      "displayLatex": "V = \\tfrac{1}{3} A_b h",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the pyramid.", "positive": true },
+        { "symbol": "A_b", "name": "base area", "unit": "m²", "description": "Area of the base, of any shape.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Perpendicular height from base to apex.", "positive": true }
+      ],
+      "explanation": "Any pyramid or cone has one third of the volume of the prism with the same base and height. Three square pyramids with a common apex fit together exactly into a cube, which shows the factor 1/3 in one case.",
+      "whenToUse": "Use it for pyramids with square, rectangular, triangular or any other base.",
+      "assumptions": ["h is the perpendicular height"],
+      "example": {
+        "story": "The Great Pyramid of Giza originally had a square base of side 230.3 m (area 53 038.09 m²) and a height of 146.6 m. Estimate its volume.",
+        "given": { "A_b": 53038.09, "h": 146.6 },
+        "solveFor": "V",
+        "result": 2591794.7,
+        "unit": "m³",
+        "tolerance": 1,
+        "steps": ["A_b h = 53038.09 × 146.6 ≈ 7.775 × 10⁶", "V = 7.775 × 10⁶ / 3", "V ≈ 2.59 × 10⁶ m³"]
+      },
+      "related": ["cone-volume", "prism-volume", "square-pyramid-surface-area", "frustum-volume"],
+      "tags": ["pyramid", "volume", "one third", "tetrahedron"]
+    },
+    {
+      "id": "square-pyramid-surface-area",
+      "name": "Surface area of a square pyramid",
+      "subcategory": "Surface areas",
+      "level": "school",
+      "equation": "A = s^2 + 2*s*l",
+      "displayLatex": "A = s^2 + 2 s l",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Base plus four triangular faces.", "positive": true },
+        { "symbol": "s", "name": "base side", "unit": "m", "description": "Side of the square base.", "positive": true },
+        { "symbol": "l", "name": "slant height", "unit": "m", "description": "Height of each triangular face, from the middle of a base edge to the apex.", "positive": true }
+      ],
+      "explanation": "The base is a square of area s². Each of the four triangular faces has base s and height l, so together they add 4 × ½ s l = 2 s l.",
+      "whenToUse": "Use it for the material needed for a square pyramid, such as a roof or a model.",
+      "assumptions": ["regular square pyramid (apex above the centre)"],
+      "example": {
+        "story": "A square pyramid has a 4 m base side and a slant height of 5 m. Find its total surface area.",
+        "given": { "s": 4, "l": 5 },
+        "solveFor": "A",
+        "result": 56,
+        "unit": "m²",
+        "tolerance": 1e-9,
+        "steps": ["Base: 4² = 16 m²", "Sides: 2 × 4 × 5 = 40 m²", "A = 56 m²"]
+      },
+      "related": ["pyramid-volume", "cone-surface-area"],
+      "tags": ["pyramid", "surface area", "square pyramid", "slant height"]
+    },
+    {
+      "id": "frustum-volume",
+      "name": "Volume of a frustum of a cone",
+      "subcategory": "Volumes",
+      "level": "school",
+      "equation": "V = pi*h / 3*(R^2 + R*r + r^2)",
+      "displayLatex": "V = \\frac{\\pi h}{3}\\left(R^2 + Rr + r^2\\right)",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the truncated cone.", "positive": true },
+        { "symbol": "h", "name": "height", "unit": "m", "description": "Perpendicular distance between the two circular faces.", "positive": true },
+        { "symbol": "R", "name": "large radius", "unit": "m", "description": "Radius of the larger circular face.", "positive": true },
+        { "symbol": "r", "name": "small radius", "unit": "m", "description": "Radius of the smaller circular face.", "positive": true }
+      ],
+      "explanation": "A frustum is a cone with its top cut off parallel to the base, like a bucket or a lampshade. Its volume is the big cone minus the small cone that was removed, which simplifies to this formula. If r = 0 it becomes the cone formula, and if r = R the cylinder formula.",
+      "whenToUse": "Use it for buckets, flower pots, cups and cooling towers.",
+      "assumptions": ["circular faces are parallel"],
+      "example": {
+        "story": "A bucket is 30 cm deep with a top radius of 15 cm and a bottom radius of 10 cm. How much does it hold?",
+        "given": { "h": 0.3, "R": 0.15, "r": 0.1 },
+        "solveFor": "V",
+        "result": 0.01492257,
+        "unit": "m³",
+        "tolerance": 1e-8,
+        "steps": ["R² + Rr + r² = 0.0225 + 0.015 + 0.01 = 0.0475", "V = π × 0.3 / 3 × 0.0475", "V ≈ 0.0149 m³ (about 15 litres)"]
+      },
+      "related": ["cone-volume", "cylinder-volume", "pyramid-volume"],
+      "tags": ["frustum", "truncated cone", "bucket", "volume"]
+    },
+    {
+      "id": "torus-volume",
+      "name": "Volume of a torus",
+      "subcategory": "Volumes",
+      "level": "university",
+      "equation": "V = 2*pi^2*R*r^2",
+      "displayLatex": "V = 2\\pi^2 R r^2",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the ring.", "positive": true },
+        { "symbol": "R", "name": "major radius", "unit": "m", "description": "Distance from the centre of the hole to the centre of the tube.", "positive": true },
+        { "symbol": "r", "name": "minor radius", "unit": "m", "description": "Radius of the tube.", "positive": true }
+      ],
+      "explanation": "A torus (doughnut shape) is made by sweeping a circle of radius r around a circle of radius R. Pappus' theorem says the volume equals the circle's area πr² times the distance its centre travels, 2πR.",
+      "whenToUse": "Use it for rings, inner tubes, O-rings and doughnuts.",
+      "assumptions": ["r < R (the ring has a hole)"],
+      "example": {
+        "story": "An inflatable swim ring has R = 10 cm and a tube radius r = 3 cm. What volume of air does it hold?",
+        "given": { "R": 0.1, "r": 0.03 },
+        "solveFor": "V",
+        "result": 0.00177653,
+        "unit": "m³",
+        "tolerance": 1e-8,
+        "steps": ["πr² = π × 0.0009 ≈ 0.0028274 m²", "2πR ≈ 0.62832 m", "V ≈ 0.0028274 × 0.62832 ≈ 0.00178 m³"]
+      },
+      "related": ["torus-surface-area", "cylinder-volume"],
+      "tags": ["torus", "doughnut", "donut", "ring", "pappus"]
+    },
+    {
+      "id": "torus-surface-area",
+      "name": "Surface area of a torus",
+      "subcategory": "Surface areas",
+      "level": "university",
+      "equation": "A = 4*pi^2*R*r",
+      "displayLatex": "A = 4\\pi^2 R r",
+      "variables": [
+        { "symbol": "A", "name": "surface area", "unit": "m²", "description": "Area of the ring's surface.", "positive": true },
+        { "symbol": "R", "name": "major radius", "unit": "m", "description": "Distance from the centre of the hole to the centre of the tube.", "positive": true },
+        { "symbol": "r", "name": "minor radius", "unit": "m", "description": "Radius of the tube.", "positive": true }
+      ],
+      "explanation": "By Pappus' theorem, the surface swept by a circle of circumference 2πr moving around a path of length 2πR has area 2πr × 2πR. It is the same as the curved surface of a cylinder of radius r and length 2πR.",
+      "whenToUse": "Use it for the material in rings and tubes bent into a circle.",
+      "assumptions": ["r < R"],
+      "example": {
+        "story": "How much plastic skin covers a swim ring with R = 10 cm and r = 3 cm?",
+        "given": { "R": 0.1, "r": 0.03 },
+        "solveFor": "A",
+        "result": 0.118435,
+        "unit": "m²",
+        "tolerance": 1e-6,
+        "steps": ["4π² ≈ 39.478", "A = 39.478 × 0.1 × 0.03", "A ≈ 0.118 m²"]
+      },
+      "related": ["torus-volume", "cylinder-surface-area"],
+      "tags": ["torus", "doughnut", "ring", "surface area", "pappus"]
+    },
+    {
+      "id": "ellipsoid-volume",
+      "name": "Volume of an ellipsoid",
+      "subcategory": "Volumes",
+      "level": "university",
+      "equation": "V = 4 / 3*pi*a*b*c",
+      "displayLatex": "V = \\tfrac{4}{3}\\pi a b c",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the ellipsoid.", "positive": true },
+        { "symbol": "a", "name": "first semi-axis", "unit": "m", "description": "Half the length along the first axis.", "positive": true },
+        { "symbol": "b", "name": "second semi-axis", "unit": "m", "description": "Half the length along the second axis.", "positive": true },
+        { "symbol": "c", "name": "third semi-axis", "unit": "m", "description": "Half the length along the third axis.", "positive": true }
+      ],
+      "explanation": "An ellipsoid is a sphere stretched by different factors along three perpendicular axes. Stretching multiplies volume by each factor, so the sphere's (4/3)πr³ becomes (4/3)πabc. With a = b = c = r it is the sphere formula.",
+      "whenToUse": "Use it for eggs, rugby balls, melons and the shape of the Earth.",
+      "assumptions": [],
+      "example": {
+        "story": "An ellipsoid has semi-axes of 3 m, 2 m and 1 m. What is its volume?",
+        "given": { "a": 3, "b": 2, "c": 1 },
+        "solveFor": "V",
+        "result": 25.132741,
+        "unit": "m³",
+        "tolerance": 1e-6,
+        "steps": ["abc = 6", "V = 4/3 × π × 6 = 8π ≈ 25.13 m³"]
+      },
+      "related": ["sphere-volume", "ellipse-area"],
+      "tags": ["ellipsoid", "spheroid", "egg", "volume"]
+    },
+    {
+      "id": "spherical-cap-volume",
+      "name": "Volume of a spherical cap",
+      "subcategory": "Volumes",
+      "level": "university",
+      "equation": "V = pi*h^2*(3*r - h) / 3",
+      "displayLatex": "V = \\frac{\\pi h^2 (3r - h)}{3}",
+      "variables": [
+        { "symbol": "V", "name": "volume", "unit": "m³", "description": "Space inside the cap.", "positive": true },
+        { "symbol": "h", "name": "cap height", "unit": "m", "description": "Height of the cap, from its flat face to the top.", "positive": true },
+        { "symbol": "r", "name": "sphere radius", "unit": "m", "description": "Radius of the sphere the cap is cut from.", "positive": true }
+      ],
+      "explanation": "A spherical cap is the piece cut off a sphere by a flat plane, like the top of a dome. Adding up thin circular slices with calculus gives this formula. With h = 2r it gives the whole sphere, and with h = r a hemisphere.",
+      "whenToUse": "Use it for domes, lenses, the liquid in a partly filled round flask, and bowls.",
+      "assumptions": ["0 < h ≤ 2r"],
+      "example": {
+        "story": "A dome is a cap of height 2 m cut from a sphere of radius 5 m. What volume does it enclose?",
+        "given": { "h": 2, "r": 5 },
+        "solveFor": "V",
+        "result": 54.454273,
+        "unit": "m³",
+        "tolerance": 1e-6,
+        "steps": ["h² (3r - h) = 4 × 13 = 52", "V = 52π / 3 ≈ 54.45 m³"]
+      },
+      "related": ["sphere-volume", "volume-of-revolution"],
+      "tags": ["spherical cap", "dome", "segment of sphere", "hemisphere", "volume"]
+    }
+  ]
+}
